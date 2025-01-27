@@ -16,7 +16,7 @@ The website will be developed using React as the frontend framework for creating
 
 ## Backend
 
-1. Framework : Node.js with Laravel
+1. Framework : Node.js with ExpressJS
 2. Language  : JavaScript
 3. IDE       : Visual Studio Code
 
