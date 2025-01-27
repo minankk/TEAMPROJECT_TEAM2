@@ -9,12 +9,12 @@ const validPassword = "test123";
 router.post("/login", (req, res) => {
     const { username, password } = req.body;
   
-     // Check if both username and password are provided
+     // Validate if both username and password are provided
   if (!username || !password) {
     return res.status(400).json({ message: "Username and password are required." });
   }
 
-    // Hardcoded to validate
+    // Validating the login credentials
     if (username === validUsername && password === validPassword) {
       // For successful login
       res.status(200).json({ message: "Login successful!" });
