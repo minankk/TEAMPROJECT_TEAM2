@@ -1,0 +1,114 @@
+/* General Styles */
+
+html, body {
+  height: 100%; /* Ensure the body takes up the full height of the viewport */
+  margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+  }
+
+  .banner, .content {
+    flex: 1; /* Allow these sections to grow and fill available space */
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between; /* Space between logo+navbar and search-cart */
+    align-items: center;
+    padding: 20px, 40px;
+    background-color: rgba(21,97,109,0.27);
+    flex-shrink: 0;
+    height: 80px;
+  }
+  
+  /* Group the logo and navbar together */
+  .header-left {
+    display: flex;
+    align-items: center; /* Vertically align logo and navbar */
+    gap: 20px; /* Space between logo and navbar */
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar ul li a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .search-cart {
+    display: flex;
+    gap: 10px; 
+  }
+  
+  .search-cart input {
+    width: 300px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .banner {
+    height: 300px;
+    background-color: #d8e3e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content .section {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .item {
+    width: 30%;
+    height: 150px;
+    background-color: #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+  
+  footer {
+    display: flex;
+    justify-content: space-between; /* Space between footer links and social icons */
+    align-items: flex-start; /* Align items to the top */
+    padding: 10px 20px; /* Adjust padding for height */
+    background-color: rgba(21,97,109,0.27);
+    flex-shrink: 0; /* Prevent the footer from shrinking */
+  }
+  
+  .footer-links {
+    display: flex; /* Makes the "Company" and "Customer Service" sections side by side */
+    gap: 40px; /* Add space between the two sections */
+  }
+  
+  .footer-links div {
+    margin: 0; /* Remove extra margins */
+  }
+  
+  .footer-links h4, 
+  .footer-links p {
+    margin: 5px 0; /* Tighter spacing */
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px; /* Space between social media buttons */
+  }
