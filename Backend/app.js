@@ -6,6 +6,10 @@ const dotenv = require("dotenv")
 const hbs = require("hbs")
 //This helps to parse the incoming request bodies in a middleware before your handlers (controllers) process them.
 const bodyParser = require("body-parser");
+//from the routes login
+const loginRoute = require('./routes/login');
+//useful if your frontend is running on a different port (e.g., localhost:3000).
+const cors = require('cors');
 
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
@@ -20,13 +24,13 @@ const app = express();
 //path folder for interacting with frontend file to fetch the files too
 //const publicLocation = path.join(__dirname, "./public");
 //app.use(express.static(publicLocation));
-//app.set("view engine" , "hbs")
 
-// Middleware to parse incoming request bodies as JSON
+// Middleware to parse incoming request bodies as JSON and for CORS => frontent if running on different host
 app.use(bodyParser.json());
+app.use(cors());
 
 //to use the routes for login
-app.use("/",require("./routes/login"));
+app.use('/login',loginRoute);
 
 
 //start the Express server on a specific port 
