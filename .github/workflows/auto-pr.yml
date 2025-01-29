@@ -3,13 +3,12 @@ name: Auto Pull Request
 on:
   push:
     branches:
-  - niloofar
-  - AshminBranch
-  - soheil
-  - rakshit
-  - HirokiBranch
-  - minan-branch
-
+      - niloofar
+      - AshminBranch
+      - soheil
+      - rakshit
+      - HirokiBranch
+      - minan-branch  
 jobs:
   create-pr:
     runs-on: ubuntu-latest
@@ -20,7 +19,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          base: main  # Change this if your main branch has a different name
+          base: main 
           branch: ${{ github.ref_name }}
           title: "Auto PR - ${{ github.ref_name }}"
           body: "This is an automatically generated PR from ${{ github.ref_name }} to main."
