@@ -1,16 +1,28 @@
-//This line imports the Express framework into your Node.js project and assigns it to the variable express.
-const express = require("express");
-//This line import the dotenv package into your Node.js project. The dotenv package is used for loading environment variables(.env file) into process.env in Node.js
-const dotenv = require("dotenv")
-// This line imports the hbs module a popular templating engine for Node.js applications.
-const hbs = require("hbs")
-//This helps to parse the incoming request bodies in a middleware before your handlers (controllers) process them.
-const bodyParser = require("body-parser");
-//from the routes login
-const loginRoute = require('./routes/login');
-//useful if your frontend is running on a different port (e.g., localhost:3000).
-const cors = require('cors');
+/**
+ * Importing required modules: 
+ * express (framework), 
+ * dotenv (environment variables), 
+ * hbs (templating engine), 
+ * body-parser (request body parsing), 
+ * Cors (cross-origin resource sharing).
+ */
 
+const express = require("express");
+const dotenv = require("dotenv")
+const hbs = require("hbs")
+const bodyParser = require("body-parser");
+const cors = require('cors');
+const session = require('express-session');
+
+
+//Route for login 
+const loginRoute = require('./routes/login');
+//Dashboard route
+const dashboardRoute = require('./routes/dashboard'); 
+//Landing Page Route
+const landingPageRoute = require('./routes/landingPage');
+// Logout Page Route
+const logoutRoute = require('./routes/logout');
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
@@ -20,17 +32,31 @@ dotenv.config({
 // Create an Express application instance
 const app = express(); 
 
-
-//path folder for interacting with frontend file to fetch the files too
-//const publicLocation = path.join(__dirname, "./public");
-//app.use(express.static(publicLocation));
-
-// Middleware to parse incoming request bodies as JSON and for CORS => frontent if running on different host
+// Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
 app.use(cors());
 
-//to use the routes for login
+// Session middleware to manage user login state
+app.use(session({
+    secret: 'hardcodedSecretKey123',   //process.env.SESSION_SECRET || 'your-secret-key', // Use a secret key from environment variable or hardcoded
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }  // Set to true in production with HTTPS
+ }));
+
+/***
+ * To use Routes
+ * For login
+ * For Dashboard
+ * For logout
+ * For landing page
+ */
+
+app.use("/", landingPageRoute);   // entry point
 app.use('/login',loginRoute);
+app.use('/dashboard', dashboardRoute);
+app.use('/logout', logoutRoute);
+
 
 
 //start the Express server on a specific port 
