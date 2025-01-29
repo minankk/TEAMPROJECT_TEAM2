@@ -8,3 +8,5 @@ router.get("/",(req , res) => {
 
    //Used to export all the  functionality  from this file so it can be used in another file.
    module.exports = router;
+
+   //
