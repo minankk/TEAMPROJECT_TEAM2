@@ -10,5 +10,5 @@ router.get('/', (req, res) => {
       res.redirect('/');  // Redirect to the home page after logging out
    });
 });
-
+//added
 module.exports = router;
