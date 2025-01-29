@@ -1,0 +1,16 @@
+# Node modules folder
+node_modules/
+
+# Log files
+*.log
+
+# npm debug log
+npm-debug.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Build and dist directories (if applicable)
+dist/
+build/
