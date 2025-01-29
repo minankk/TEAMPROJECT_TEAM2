@@ -3,7 +3,12 @@ name: Auto Pull Request
 on:
   push:
     branches:
-      - niloofar -AshminBranch -soheil -rakshit -hiroki -minan-branch # Change this to the branches you want auto PRs from
+  - niloofar
+  - AshminBranch
+  - soheil
+  - rakshit
+  - hiroki
+  - minan-branch
 
 jobs:
   create-pr:
