@@ -1,7 +1,7 @@
 import React from "react";
-import "./LandingPage.css"; // Assuming your styles are in App.css
+import "./LandingPage.css"; // Assuming your styles are in LandingPage.css
 
-function LandingPage() {
+function LandingPage() { //sth sth
   return (
     <div>
       <header>
