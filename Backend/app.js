@@ -44,6 +44,13 @@ app.use(session({
     cookie: { secure: false }  // Set to true in production with HTTPS
  }));
 
+ // Set Handlebars as the templating engine
+app.set('view engine', 'hbs');
+
+// Specify the views directory and partials (e.g., for header/footer)
+app.set('views', __dirname + '/views');
+hbs.registerPartials(__dirname + '/views/partials');
+
 /***
  * To use Routes
  * For login
