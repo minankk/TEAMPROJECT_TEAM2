@@ -32,11 +32,11 @@ connection.connect((err) => {
 
   // SQL query to insert data into the 'products' table
   const sql = `
-    INSERT INTO products 
+    INSERT INTO products
     (name, artist_id, album_id, genre_id, release_date, price, cover_image_url)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
-  
+
   // Execute the query with the data
   connection.query(
     sql,
@@ -52,7 +52,7 @@ connection.connect((err) => {
   );
 });
  THIS ROUTE IS FOR ADDING PRODUCTS TO OUR DATABASE.
-    */    
+    */
 // --------------------------------------------
 // ROUTE 2: Get all products (GET request)
 // --------------------------------------------
