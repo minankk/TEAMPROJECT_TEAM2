@@ -3,12 +3,7 @@ name: Auto Pull Request
 on:
   push:
     branches:
-      - niloofar
-      - AshminBranch
-      - soheil
-      - rakshit
-      - HirokiBranch
-      - minan-branch  
+      
 jobs:
   create-pr:
     runs-on: ubuntu-latest
