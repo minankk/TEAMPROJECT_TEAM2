@@ -1,0 +1,162 @@
+/* CSS - styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(255,236,209,0.27);
+}
+
+header {
+    display: flex;
+    justify-content: space-between; /* Space between logo+navbar and search-cart */
+    align-items: center;
+    padding: 20px, 40px;
+    background-color: rgba(21,97,109,0.27);
+    flex-shrink: 0;
+    height: 80px;
+  }
+  
+  /* Group the logo and navbar together */
+  .header-left {
+    display: flex;
+    align-items: center; /* Vertically align logo and navbar */
+    gap: 20px; /* Space between logo and navbar */
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar ul li a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .search-cart {
+    display: flex;
+    gap: 10px; 
+  }
+  
+  .search-cart input {
+    width: 300px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .banner {
+    height: 300px;
+    background-color: #d8e3e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content .section {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .item {
+    width: 30%;
+    height: 150px;
+    background-color: #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+main {
+    padding: 20px;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.categories-link {
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+    display: inline-block;
+    transition: background-color 0.3s ease; 
+}
+.category-link:hover {
+    background-color: #ddd;
+}
+
+.products {
+    margin-bottom: 30px;
+}
+
+.products h2 {
+    margin-bottom: 15px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.product-card {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 200px;
+    height: 350px;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease;
+}
+.product-card:hover {
+    transform: scale(1.05);
+}
+.product-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between; /* Space between footer links and social icons */
+    align-items: flex-start; /* Align items to the top */
+    padding: 10px 20px; /* Adjust padding for height */
+    background-color: rgba(21,97,109,0.27);
+    flex-shrink: 0; /* Prevent the footer from shrinking */
+  }
+  
+  .footer-links {
+    display: flex; /* Makes the "Company" and "Customer Service" sections side by side */
+    gap: 40px; /* Add space between the two sections */
+  }
+  
+  .footer-links div {
+    margin: 0; /* Remove extra margins */
+  }
+  
+  .footer-links h4, 
+  .footer-links p {
+    margin: 5px 0; /* Tighter spacing */
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px; /* Space between social media buttons */
+  }
