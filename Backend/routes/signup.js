@@ -20,3 +20,5 @@ router.post("/signup",(req , res)=>{
   if (!userName || !email || !password || !phone_num || !role) {
     return res.status(400).json({ message: 'All fields are required' });
   }
+
+  //further validation
