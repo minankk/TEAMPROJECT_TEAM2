@@ -7,8 +7,12 @@
     "cra-template": "1.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+<<<<<<< HEAD
     "react-router-dom": "^7.1.4",
     "react-scripts": "^5.0.1",
+=======
+    "react-scripts": "^3.0.1",
+>>>>>>> 432b6cefa2b08e7ea97366542fab547b3a8a0614
     "resolve-url-loader": "^5.0.0",
     "svgo": "^3.3.2",
     "web-vitals": "^4.2.4"
