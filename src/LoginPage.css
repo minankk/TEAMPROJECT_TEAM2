@@ -1,26 +1,30 @@
 /* General Styles */
 
 html, body {
-    height: 100%; /* Ensure the body takes up the full height of the viewport */
-    margin: 0;
-  }
-  
-  body {
+  height: 100%; /* Ensure the body takes up the full height of the viewport */
+  margin: 0;
+  background-color: rgba(255,236,209,0.27);
+}
+
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column; /* Stack content vertically */
-    justify-content: space-between;
+    background-color: rgba(255,236,209,0.27);
   }
-  
+
+  .banner, .content {
+    flex: 1; /* Allow these sections to grow and fill available space */
+  }
   
   header {
     display: flex;
     justify-content: space-between; /* Space between logo+navbar and search-cart */
     align-items: center;
-    padding: 20px 40px;
+    padding: 20px, 40px;
     background-color: rgba(21,97,109,0.27);
     flex-shrink: 0;
     height: 80px;
@@ -44,30 +48,27 @@ html, body {
   .navbar ul li a {
     text-decoration: none;
     color: black;
-    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for color change */
   }
-  
-  .navbar ul li a:hover {
-    color: black; /* Change text color on hover */
-    background-color: #EED9B9; /* Highlight background color (orange shade) */
-    padding: 5px; /* Add some padding for better visibility */
-    border-radius: 5px; /* Optional: rounded corners */
-  }
-  
+
   .search-cart {
     display: flex;
     gap: 10px; 
   }
   
   .search-cart input {
-    width: 500px;
-    padding: 2px;
+    width: 300px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    height: 20px;
   }
   
-  
+  .banner {
+    height: 300px;
+    background-color: #d8e3e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   .content .section {
     display: flex;
@@ -76,6 +77,16 @@ html, body {
     background-color: #f9f9f9;
   }
   
+  .item {
+    width: 30%;
+    height: 150px;
+    background-color: #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+
   footer {
     display: flex;
     justify-content: space-between; /* Space between footer links and social icons */
