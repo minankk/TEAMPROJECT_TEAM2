@@ -8,9 +8,14 @@ router.get('/',(req,res)=>{
     let loginButtonAction = '/login'; // Default action to login page if not logged in
     if (isLoggedIn) {
         loginButtonAction = '/dashboard'; // If logged in, go to the dashboard
-    }res.send(`
-        <h1>Welcome to Our Landing Page</h1> 
-        <button onclick="window.location.href='${loginButtonAction}'">${isLoggedIn ? 'Go to Dashboard' : 'Login'}</button>
+    }
+
+    res.send(`
+        <h1>Welcome to Our Landing Page</h1>
+        <a href="/"><img src="logo.png" alt="Vinyl Store Logo"></a> <!-- Logo redirects to homepage -->
+        <button onclick="window.location.href='${loginButtonAction}'">
+            ${isLoggedIn ? "Go to Dashboard" : "Login"}
+        </button>
   
     `); 
 });
