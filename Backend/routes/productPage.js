@@ -1,13 +1,13 @@
 // Load the required tools
 const express = require('express'); // Express framework
-//const mysql = require('mysql2'); // MySQL connector
-//const app = express(); // Create an Express app
-//const port = 3000; // Port to run the server on
+const mysql = require('mysql2'); // MySQL connector
+const app = express(); // Create an Express app
+const port = 3000; // Port to run the server on
 
 // Middleware: Let Express understand JSON data (like from POST requests)
 //app.use(express.json());
 // Connect to MySQL database
-  /*const connection = mysql.createConnection({
+  const connection = mysql.createConnection({
   host: 'localhost', // Where your MySQL is running (your computer)
   user: 'root', // MySQL username (default is 'root')
   password: 'Bidgoli1379', // Your MySQL password
@@ -22,7 +22,7 @@ connection.connect((err) => {
     console.log('Connected to MySQL!');
   }
 });
-*/
+
 // --------------------------------------------
 // ROUTE 1: Add a product (POST request)
 // --------------------------------------------

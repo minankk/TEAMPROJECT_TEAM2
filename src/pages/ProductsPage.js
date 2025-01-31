@@ -1,5 +1,6 @@
-import React from 'react';
-import 'C:/Users/Admin/TEAMPROJECT_TEAM2/TEAMPROJECT_TEAM2/src/ProductsPage.css'; // Adjust the path as needed
+import React from "react";
+import { Link } from "react-router-dom"; // Import Link for routing
+import './ProductsPage.css'; // Adjust the path as needed
 
 const ProductsPage = () => {
     return (
@@ -9,11 +10,11 @@ const ProductsPage = () => {
             <div className="logo">Logo</div>
             <nav className="navbar">
               <ul>
-                <li><a href="#">Homepage</a></li>
-                <li><a href="#">New in Store</a></li>
-                <li><a href="#">Best Sellers</a></li>
-                <li><a href="#">Sale</a></li>
-                <li><a href="#">Browse</a></li>
+                <li><Link to="/">Homepage</Link></li> {/* Change to Link */}
+                <li><Link to="/new-in-store">New in Store</Link></li> {/* Change to Link */}
+                <li><Link to="/best-sellers">Best Sellers</Link></li> {/* Change to Link */}
+                <li><Link to="/sale">Sale</Link></li> {/* Change to Link */}
+                <li><Link to="/browse">Browse</Link></li> {/* Change to Link */}
               </ul>
             </nav>
           </div>
@@ -24,7 +25,7 @@ const ProductsPage = () => {
             <button>👤</button>
           </div>
         </header>
-  
+
         <main>
           <section className="categories">
             <div><img src="#" alt="Albums" /></div>
@@ -32,7 +33,7 @@ const ProductsPage = () => {
             <div><img src="#" alt="Genres" /></div>
             <div><img src="#" alt="Top Rated" /></div>
           </section>
-  
+
           <section className="products">
             <h2>Newest Additions</h2>
             <div className="product-grid">
@@ -42,7 +43,7 @@ const ProductsPage = () => {
               <div className="product-card">Product 4</div>
             </div>
           </section>
-  
+
           <section className="products">
             <h2>Most Popular Items</h2>
             <div className="product-grid">
@@ -52,7 +53,7 @@ const ProductsPage = () => {
               <div className="product-card">Product 8</div>
             </div>
           </section>
-  
+
           <section className="products">
             <h2>Special Offers</h2>
             <div className="product-grid">
@@ -63,18 +64,18 @@ const ProductsPage = () => {
             </div>
           </section>
         </main>
-  
+
         <footer>
           <div className="footer-links">
             <div>
               <h4>Company</h4>
-              <p><a href="#">About Us</a></p>
-              <p><a href="#">Stakeholders</a></p>
+              <p><Link to="/about-us">About Us</Link></p> {/* Change to Link */}
+              <p><Link to="/stakeholders">Stakeholders</Link></p> {/* Change to Link */}
             </div>
             <div>
               <h4>Customer Service</h4>
-              <p><a href="#">Contact Us</a></p>
-              <p><a href="#">My Account</a></p>
+              <p><Link to="/contact-us">Contact Us</Link></p> {/* Change to Link */}
+              <p><Link to="/my-account">My Account</Link></p> {/* Change to Link */}
             </div>
           </div>
           <div className="social-icons">
@@ -85,6 +86,6 @@ const ProductsPage = () => {
         </footer>
       </div>
     );
-  };
-  
-  export default ProductsPage;
+};
+
+export default ProductsPage;
