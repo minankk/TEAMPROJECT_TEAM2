@@ -3,6 +3,8 @@ const express = require('express');
 const mysql = require('mysql2');
 const app = express();
 const port = 3000; // Port to run the server on
+const cors = require('cors');
+app.use(cors());
 
 // Middleware: Let Express understand JSON data (like from POST requests)
 app.use(express.json());
