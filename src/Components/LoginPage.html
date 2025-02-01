@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+          <div class="logo">Logo</div>
+          <nav class="navbar">
+            <ul>
+              <li><a href="#">Homepage</a></li>
+              <li><a href="#">New in Store</a></li>
+              <li><a href="#">Best Sellers</a></li>
+              <li><a href="#">Sale</a></li>
+              <li><a href="#">Browse</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="search-cart">
+          <input type="text" placeholder="Search here">
+          <button>🔍</button>
+          <button>🛒</button>
+          <button>👤</button>
+        </div>
+      </header>
+
+  <section class="banner">
+    <div class="banner-content">
+      <!-- Placeholder for banner content -->
+    </div>
+  </section>
+
+  <div class="Login-container">
+    <h1>Login to your account</h1>
+  
+    <form action="/login" method="POST">
+      <!--  UserName InputField  -->
+      <div class="InputField">
+        <label for="User-name">User name:</label>
+        <input type="text" id="User-name" placeholder="User name" required>
+      </div>
+  
+      <!--  Password InputField  -->
+      <div class="InputField">
+        <label for="Password">Password:</label>
+        <input type="password" id="Password" placeholder="Password" required>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit">Sign in</button>
+      <button type="button" class="admin-signin">Admin Sign in</button>
+      <p class="forgot-password"><a href="#">Forgot Password? Click here</a></p>
+    </form>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <div>
+        <h4>Company</h4>
+        <p><a href="#">About Us</a></p>
+        <p><a href="#">Stakeholders</a></p>
+      </div>
+      <div>
+        <h4>Customer Service</h4>
+        <p><a href="#">Contact Us</a></p>
+        <p><a href="#">My Account</a></p>
+      </div>
+    </div>
+    <div class="social-icons">
+      <button>🐦</button>
+      <button>📸</button>
+      <button>📧</button>
+    </div>
+  </footer>
