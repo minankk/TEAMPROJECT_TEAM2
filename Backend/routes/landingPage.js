@@ -1,31 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { landingPage } = require('../controllers/pageController');
 
-//Redirect user based on their login state
-router.get('/',(req,res)=>{
-
-    const isLoggedIn = req.session.loggedIn;
-    let loginButtonAction = '/login'; // Default action to login page if not logged in
-    if (isLoggedIn) {
-        loginButtonAction = '/dashboard'; // If logged in, go to the dashboard
-    }
-
-    res.send(`
-        <h1>Welcome to Our Landing Page</h1>
-        <a href="/"><img src="logo.png" alt="Vinyl Store Logo"></a> <!-- Logo redirects to homepage -->
-        <button onclick="window.location.href='${loginButtonAction}'">
-            ${isLoggedIn ? "Go to Dashboard" : "Login"}
-        </button>
-  
-    `); 
-});
-
-//Directing user to browser page (products page)
-router.get('/browse',(req,res)=>{
-    res.send('<h2>Browse our products here!</h2>');  // Simple rendering example
-});
-
-
-
-
+router.get('/', landingPage);
 module.exports = router;
