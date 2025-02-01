@@ -1,19 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { dashboard } = require('../controllers/pageController');
 
-// Serve the dashboard page (only accessible if logged in)
-
-router.get('/',(req , res )=>{
-
-    if (!req.session.loggedIn) {
-
-        return res.redirect('/login');
-        
-    } else {
-        res.send(`<h1>Welcome to your dashboard, ${req.session.username}!</h1><a href="/logout">Logout</a>`);
-
-    }
-
-});
-
+router.get('/', dashboard);
 module.exports = router;
