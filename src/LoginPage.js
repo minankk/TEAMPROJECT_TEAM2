@@ -1,67 +1,94 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './LoginPage.css'; // Import your CSS file
 
 const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    console.log('Logging in with:', { username, password });
+    // Add authentication logic here (e.g., send to backend)
+  };
+
   return (
     <div>
-        <header>
-          <div className="header-left">
-            <div className="logo">Logo</div>
-            <nav className="navbar">
-              <ul>
-                <li><a href="#">Homepage</a></li>
-                <li><a href="#">New in Store</a></li>
-                <li><a href="#">Best Sellers</a></li>
-                <li><a href="#">Sale</a></li>
-                <li><a href="#">Browse</a></li>
-              </ul>
-            </nav>
-          </div>
-          <div className="search-cart">
-            <input type="text" placeholder="Search here" />
-            <button>🔍</button>
-            <button>🛒</button>
-            <button>👤</button>
-          </div>
-        </header>
+      {/* Header Section */}
+      <header>
+        <div className="header-left">
+          <div className="logo">Logo</div>
+          <nav className="navbar">
+            <ul>
+              <li><Link to="/">Homepage</Link></li>
+              <li><Link to="/new-in-store">New in Store</Link></li>
+              <li><Link to="/best-sellers">Best Sellers</Link></li>
+              <li><Link to="/sale">Sale</Link></li>
+              <li><Link to="/browse">Browse</Link></li>
+            </ul>
+          </nav>
+        </div>
+        <div className="search-cart">
+          <input type="text" placeholder="Search here" />
+          <button>🔍</button>
+          <button>🛒</button>
+          <button>👤</button>
+        </div>
+      </header>
 
+      {/* Login Section */}
       <div className="Login-container">
         <h1>Login to your account</h1>
-        <form action="/login" method="POST">
+        <form onSubmit={handleLogin}>
           <div className="InputField">
-            <label htmlFor="User-name">User name:</label>
-            <input type="text" id="User-name" placeholder="User name" required />
+            <label htmlFor="username">User name:</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="User name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
           <div className="InputField">
-            <label htmlFor="Password">Password:</label>
-            <input type="password" id="Password" placeholder="Password" required />
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           <button type="submit">Sign in</button>
           <button type="button" className="admin-signin">Admin Sign in</button>
-          <p className="forgot-password"><a href="#">Forgot Password? Click here</a></p>
+          <p className="forgot-password"><Link to="/forgot-password">Forgot Password? Click here</Link></p>
         </form>
       </div>
 
+      {/* Footer Section */}
       <footer>
-          <div className="footer-links">
-            <div>
-              <h4>Company</h4>
-              <p><a href="#">About Us</a></p>
-              <p><a href="#">Stakeholders</a></p>
-            </div>
-            <div>
-              <h4>Customer Service</h4>
-              <p><a href="#">Contact Us</a></p>
-              <p><a href="#">My Account</a></p>
-            </div>
+        <div className="footer-links">
+          <div>
+            <h4>Company</h4>
+            <p><Link to="/about-us">About Us</Link></p>
+            <p><Link to="/stakeholders">Stakeholders</Link></p>
           </div>
-          <div className="social-icons">
-            <button>🐦</button>
-            <button>📸</button>
-            <button>📧</button>
+          <div>
+            <h4>Customer Service</h4>
+            <p><Link to="/contact-us">Contact Us</Link></p>
+            <p><Link to="/my-account">My Account</Link></p>
           </div>
-        </footer>
-      </div>
+        </div>
+        <div className="social-icons">
+          <button>🐦</button>
+          <button>📸</button>
+          <button>📧</button>
+        </div>
+      </footer>
+    </div>
   );
 };
 
