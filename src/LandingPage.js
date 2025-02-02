@@ -1,7 +1,27 @@
-import React from "react";
-import "./LandingPage.css"; // Assuming your styles are in LandingPage.css
+import React, { useEffect, useState } from "react";
+import "./LandingPage.css"; 
 
-function LandingPage() { //sth sth even more sth
+function LandingPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Fetch the login status from the backend
+    fetch('/') //the end point we have the login button
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoggedIn(data.loggedIn); // Set the login status based on the response ie, session-based
+      })
+      .catch((error) => console.error('Error fetching login status:', error));
+  }, []); 
+  const handleLoginButtonClick = () => {
+    // If not logged in, navigate to the login page, otherwise to the dashboard
+    if (!isLoggedIn) {
+      window.location.href = '/login'; // Navigate to the login page
+    } else {
+      window.location.href = '/dashboard'; // Navigate to the dashboard page
+    }
+  };
+
   return (
     <div>
       <header>
@@ -21,7 +41,7 @@ function LandingPage() { //sth sth even more sth
           <input type="text" placeholder="Search here" />
           <button>🔍</button>
           <button>🛒</button>
-          <button>👤</button>
+          <button onClick={handleLoginButtonClick}>👤</button> {/* Use the same button to check login status */}
         </div>
       </header>
 
