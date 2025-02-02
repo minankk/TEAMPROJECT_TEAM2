@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Serve the login page
 router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/login.html"));
+    res.sendFile(path.join(__dirname, "../login.html"));
 });
 
 module.exports = router;
