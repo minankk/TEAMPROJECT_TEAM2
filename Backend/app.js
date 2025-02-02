@@ -9,6 +9,7 @@ app.use(cors());
 // Middleware: Let Express understand JSON data (like from POST requests)
 app.use(express.json());
 
+
 // Connect to MySQL database
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -40,6 +41,7 @@ app.get('/products', (req, res) => {
     }
   });
 });
+
 
 // Start the server
 app.listen(port, () => {
