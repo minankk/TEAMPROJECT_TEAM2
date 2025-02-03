@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./LandingPage.css"; 
 
 function LandingPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate to use navigation
 
   useEffect(() => {
-    // Fetch the login status from the backend
-    fetch('/') //the end point we have the login button
+    // Fetch login status from the backend
+    fetch('/')
       .then((response) => response.json())
       .then((data) => {
-        setIsLoggedIn(data.loggedIn); // Set the login status based on the response ie, session-based
+        setIsLoggedIn(data.loggedIn); // Set login status based on the response
       })
       .catch((error) => console.error('Error fetching login status:', error));
   }, []); 
+
   const handleLoginButtonClick = () => {
-    // If not logged in, navigate to the login page, otherwise to the dashboard
-    if (!isLoggedIn) {
-      window.location.href = '/login'; // Navigate to the login page
-    } else {
-      window.location.href = '/dashboard'; // Navigate to the dashboard page
-    }
-  };
+    // Navigate to the correct page based on the login status
+      if (isLoggedIn) {
+        navigate('/dashboard'); // Redirect to dashboard if logged in
+      } else {
+        navigate('/login'); // Navigate to login page if not logged in
+      }
+    };
 
   return (
     <div>

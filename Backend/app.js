@@ -15,6 +15,8 @@ const session = require('express-session');
 
 
 const pageRoutes = require('./routes/landingPage');  // Import the routes
+const authRoutes = require('./routes/login');  // Import the routes
+
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
@@ -26,6 +28,8 @@ const app = express();
 
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
+
+
 app.use(cors());
 
 // Session middleware to manage user login state
@@ -36,9 +40,6 @@ app.use(session({
     cookie: { secure: false }  // Set to true in production with HTTPS
  }));
 
-
-//const port = 3000; // Port to run the server on
-
 // Middleware: Let Express understand JSON data (like from POST requests)
 app.use(express.json());
 
@@ -47,6 +48,7 @@ app.use(express.json());
  */
 
 app.use("/", pageRoutes);   // entry point
+app.use("/login", authRoutes);   
 
 //start the Express server on a specific port 
 const port = process.env.PORT || 5000;
