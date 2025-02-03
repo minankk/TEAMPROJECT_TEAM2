@@ -5,8 +5,6 @@ import Footer from './components/Footer';
 import LandingPage from './LandingPage';
 import ProductsPage from './ProductsPage';
 import LoginPage from './LoginPage';
-//import DashboardPage from './DashboardPage'; // Import the dashboard page
-
 
 function App() {
   return (

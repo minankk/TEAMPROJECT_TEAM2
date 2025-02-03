@@ -1,6 +1,6 @@
 import React from "react";
 import "./LandingPage.css";
- 
+
 function LandingPage() {
   return (
     <div className="landing-container">
@@ -9,7 +9,7 @@ function LandingPage() {
           {/* Placeholder for banner content */}
         </div>
       </section>
- 
+
       <section className="content">
         <div className="section">
           <div className="item">Item 1</div>
@@ -25,5 +25,5 @@ function LandingPage() {
     </div>
   );
 }
- 
+
 export default LandingPage;
