@@ -1,18 +1,24 @@
+
+
 exports.landingPage = (req, res) => {
-  const isLoggedIn = req.session.loggedIn;
-  let loginButtonAction = isLoggedIn ? '/dashboard' : '/login';
-  res.send(`
-      <h1>Welcome to Our Landing Page</h1>
-      <a href='/'><img src='logo.png' alt='Vinyl Store Logo'></a>
-      <button onclick="window.location.href='${loginButtonAction}'">
-          ${isLoggedIn ? 'Go to Dashboard' : 'Login'}
-      </button>
-  `);
+  const isLoggedIn = req.session.loggedIn || false;
+  // Return login status to the frontend
+  res.status(200).json({ isLoggedIn });
+  /*if (!isLoggedIn) {
+    res.redirect('/login');  // Redirect to login page if not logged in
+  } else {
+    res.redirect('/dashboard');  // Redirect to dashboard if logged in
+  }*/
 };
 
 exports.dashboard = (req, res) => {
   if (!req.session.loggedIn) {
-      return res.redirect('/login');
+    return res.status(401).json({ message: "Please log in" });
   }
-  res.send(`<h1>Welcome to your dashboard, ${req.session.username}!</h1><a href='/logout'>Logout</a>`);
+   // Return dashboard data to the frontend
+   res.status(200).json({
+    message: `Welcome to your dashboard, ${req.session.username || "User"}!`,
+   username: req.session.username || "User",
+  });
 };
+
