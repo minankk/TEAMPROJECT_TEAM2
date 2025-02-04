@@ -1,6 +1,5 @@
 const users = require('../data/mockData');
 const db = require('../db')
-const bcrypt = require('bcrypt');
 
 exports.login = (req, res) => {
     const { username, password } = req.body;
