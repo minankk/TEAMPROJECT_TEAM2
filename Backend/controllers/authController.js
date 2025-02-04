@@ -1,8 +1,19 @@
 const users = require('../data/mockData');
 const db = require('../db')
+const bcrypt = require('bcrypt');
 
 exports.login = (req, res) => {
     const { username, password } = req.body;
+
+     // Validation checks
+     if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required' });
+    }
+
+    // Check password length
+    if (password.length < 8) {
+        return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+    }
 
     // Query the database for the user
     const query = 'SELECT * FROM users WHERE user_name = ? AND password = ?';
