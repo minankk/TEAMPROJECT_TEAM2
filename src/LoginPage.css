@@ -1,0 +1,172 @@
+/* General Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: rgba(255, 236, 209, 0.27);
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Ensure main content expands to push footer down */
+#root, .app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: rgba(21, 97, 109, 0.27);
+  flex-shrink: 0;
+  height: 80px;
+}
+
+/* Navigation */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.search-cart {
+  display: flex;
+  gap: 10px;
+}
+
+.search-cart input {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Login Container */
+.Login-container {
+  margin: auto;
+  padding: 30px;
+  width: 400px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.Login-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.InputField {
+  margin-bottom: 15px;
+}
+
+.InputField label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.InputField input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  background-color: rgba(21, 97, 109, 0.27);
+}
+
+/* Buttons */
+button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #15616D;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  width: 48%;
+  margin: 10px 1%;
+}
+
+button:hover {
+  background-color: #0B4F58;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #42A5F5;
+  font-size: 14px;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 20px;
+  background-color: rgba(21, 97, 109, 0.27);
+  flex-shrink: 0;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links div {
+  margin: 0;
+}
+
+.footer-links h4,
+.footer-links p {
+  margin: 5px 0;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: black;
+}
+
+.footer-links a:hover {
+  color: #EED9B9;
+}
+
+.social-icons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Reset for the #root and .app-container for full page layout */
+#root, .app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
