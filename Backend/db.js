@@ -1,27 +1,22 @@
 //This line import the MySQL module into your Node.js project
 const mysql = require("mysql2")
 
-//to create database connection
-const db = mysql.createPool({
-    host: 'cs2410-web01pvm.aston.ac.uk' ,  //.env.DATABASE_HOST,          // Database host
-    user: 'cs4team2',          // Database username (your database name )
-    password: 'zCiGwGdHiEL4gOP',//process.env.DATABASE_PASS,      // Database password (your database password)
-    database: 'cs4team2_db',//process.env.DATABASE, 
-    port : 3306 ,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+const db = mysql.createConnection({
+  host: '127.0.0.1',               // Database host
+  user: 'root',                    // Database username
+  password: 'teamProject@01',      // Database password
+  database: 'vinyldatabase',       // Database name
+  port: 3306,                      // Database port (default MySQL port)
 });
 
-// Connect to the database
-// Test connection
-db.getConnection((err, connection) => {
+db.connect(err => {
   if (err) {
-      console.error('Error connecting to MySQL:', err);
-  } else {
-      console.log('Connected to MySQL Database successfully!');
-      connection.release(); // Release the connection
+    console.error('Database connection failed: ' + err.stack);
+    return;
   }
+  console.log('Connected to the database.');
 });
 
-module.exports = db;
+
+module.exports = db
+
