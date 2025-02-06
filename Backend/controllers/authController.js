@@ -72,7 +72,7 @@ const bcrypt = require('bcryptjs');
     });
 }
 
-//sign up
+//sign up as user
     exports.signup = async (req , res) => {
     const { firstName, email, password ,password_confirmation} = req.body;
 
@@ -87,16 +87,17 @@ const bcrypt = require('bcryptjs');
 
     try {
         //Check if email already exists
-        const [existingUser] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
-        if (existingUser.length > 0) {
+        const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
+        if (rows.length > 0) {
             return res.status(400).json({ error: 'Email already registered' });
         }
         //Hashed password
         const hashedPassword = await bcrypt.hash(password , 10);
+
         //Insert Into database
         await db.query(
             'INSERT INTO users (first_name, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
-            [first_name, email, hashedPassword, 'user']
+            [firstName, email, hashedPassword, 'user']
         );
 
         res.status(200).json({ message: 'User registered successfully' });
