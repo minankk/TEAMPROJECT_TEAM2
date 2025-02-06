@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid'); // uuid package for generating user IDs
-const moment = require('moment'); // moment package for date manipulation
-const bcrypt = require('bcrypt'); // bcrypt package for password hashing
+const authController = require('../controllers/authController');
 
+
+router.post('/',authController.signup);
+
+module.exports = router;
+
+/*
 // Import mock data (if needed)
 const users = require('./data/mockData');
 
@@ -48,7 +52,7 @@ router.post('/signup', async (req, res) => {
     },
   });
 });
-
+*/
 
 /* defined and should be defined in app.js
 // Apply the router to the Express application (add to app.js or server.js)
