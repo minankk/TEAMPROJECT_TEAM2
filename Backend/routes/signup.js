@@ -46,6 +46,8 @@ router.post('/signup', async (req, res) => {
   });
 });
 
+
+/* defined and should be defined in app.js
 // Apply the router to the Express application (add to app.js or server.js)
 const app = express();
 app.use(express.json()); // Parse JSON formatted request bodies
@@ -58,3 +60,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+*/
