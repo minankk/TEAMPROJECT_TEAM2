@@ -9,10 +9,10 @@ const users = require('./data/mockData');
 
 // Signup route
 router.post('/signup', async (req, res) => {
-  const { userName, email, password, phone_num, role } = req.body;
+  const { userName, email, password, first_name, last_name, role } = req.body;
 
   // Check if all required fields are present
-  if (!userName || !email || !password || !phone_num || !role) {
+  if (!userName || !email || !password || !first_name || !last_name|| !role) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -25,7 +25,8 @@ router.post('/signup', async (req, res) => {
     userName,
     email,
     password: hashedPassword, // Save the hashed password
-    phone_num,
+    first_name, // Added first name
+    last_name,  // Added last name
     role,
     createdAt: moment().format(), // User creation date
   };
@@ -40,6 +41,8 @@ router.post('/signup', async (req, res) => {
       user_id: newUser.user_id,
       userName: newUser.userName,
       email: newUser.email,
+      first_name: newUser.first_name, // Include first name
+      last_name: newUser.last_name,   // Include last name
       role: newUser.role,
       createdAt: newUser.createdAt,
     },
