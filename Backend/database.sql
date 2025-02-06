@@ -3,7 +3,7 @@ Pre-requisite
 Install mysql work bench
 Create new Connection
 Add a new schema name - vinyl database
-
+    
 */
 
 CREATE TABLE users (
