@@ -1,25 +1,24 @@
 const users = require('../data/mockData');
 const db = require('../db')
+const bcrypt = require('bcryptjs');
 
-exports.login = (req, res) => {
+//login
+    exports.login = (req, res) => {
     const { username, password } = req.body;
-
      // Validation checks
      if (!username || !password) {
         return res.status(400).json({ message: 'Username and password are required' });
     }
-
     // Check password length
     if (password.length < 8) {
         return res.status(400).json({ message: 'Password must be at least 8 characters long' });
     }
-
     // Query the database for the user
     const query = 'SELECT * FROM users WHERE user_name = ? AND password = ?';
     
-    db.query(query, [username, password], (err, results) => {
-        if (err) {
-            console.error('Database query error:', err);
+    db.query(query, [username, password], (error, results) => {
+        if (error) {
+            console.error('Database query error:', error);
             return res.status(500).json({ message: 'Internal server error' });
         }
 
@@ -60,15 +59,53 @@ exports.login = (req, res) => {
     }
   };*/
 
-exports.logout = (req, res) => {
+//logout
+    exports.logout = (req, res) => {
     // Destroy the session
     req.session.loggedIn = false;
-    req.session.destroy(err => {
-        if (err) {
+    req.session.destroy(error => {
+        if (error) {
             return res.status(500).json({ message: 'Could not log out' });
-        }
-        
+        }  
     // Return success response
     res.status(200).json({ message: 'Logout successful' });
     });
+}
+
+//sign up as user
+    exports.signup = async (req , res) => {
+    const { firstName, email, password ,password_confirmation} = req.body;
+
+    //Check if all fields are entered
+    if (!firstName || !email || !password || !password_confirmation) {
+        return res.status(400).json({ message: 'All fields are required' });
+      }
+    //Check if password and password confirmation is same
+    if(password !== password_confirmation){
+        return res.status(400).json({message : `Password doesnot match`});
+    }
+
+    try {
+        //Check if email already exists
+        const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
+        if (rows.length > 0) {
+            return res.status(400).json({ error: 'Email already registered' });
+        }
+        //Hashed password
+        const hashedPassword = await bcrypt.hash(password , 10);
+
+        //Insert Into database
+        await db.query(
+            'INSERT INTO users (first_name, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
+            [firstName, email, hashedPassword, 'user']
+        );
+
+        res.status(200).json({ message: 'User registered successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+
 };
+
+
