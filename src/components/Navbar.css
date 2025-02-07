@@ -1,3 +1,4 @@
+/* Navbar Container */
 .navbar-container {
   display: flex;
   justify-content: space-between;
@@ -7,17 +8,19 @@
   color: white;
 }
 
-/* Align logo and nav links more to the left */
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-right: 20px;
+/* Logo Container */
+.logo-container {
+  display: flex;
+  align-items: center;
 }
 
-.navbar {
-  flex: 1;
+.navbar-logo {
+  height: 50px; /* Adjust size */
+  width: auto;
+  cursor: pointer;
 }
 
+/* Navigation Links */
 .navbar ul {
   list-style: none;
   display: flex;
@@ -58,25 +61,25 @@
   color: #ffcc00;
 }
 
-/* Search Input Styling */
+/* Search Input */
 .search-input {
-  width: 0px;
+  width: 200px;
   padding: 8px;
   border: 1px solid #ddd;
   font-size: 14px;
   border-radius: 5px;
   background: white;
-  transition: transform 2.0s ease-in-out, opacity 2.0s ease-in-out;
   opacity: 1;
   visibility: visible;
+  transition: width 0.3s ease-in-out;
 }
 
-/* Hide the search input by default */
+/* Hide input by default */
 .search-cart .search-input {
   display: none;
 }
 
-/* Show input when search is active */
-.search-cart .search-input {
+/* Show when search is active */
+.search-cart .search-input:focus {
   display: block;
 }

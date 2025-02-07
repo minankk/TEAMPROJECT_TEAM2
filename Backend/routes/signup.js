@@ -1,71 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
 
-
-router.post('/',authController.signup);
-
-module.exports = router;
-
-/*
-// Import mock data (if needed)
+//Importing the mock data from data folder
 const users = require('./data/mockData');
 
-// Signup route
-router.post('/signup', async (req, res) => {
-  const { userName, email, password, first_name, last_name, role } = req.body;
+// For generating unique user_id ,uuid package
+const { v4: uuidv4 } = require('uuid');
 
-  // Check if all required fields are present
-  if (!userName || !email || !password || !first_name || !last_name|| !role) {
+// For date formatting
+const moment = require('moment');
+const { route } = require('./login');
+
+//Handling a POST request for signup route
+router.post("/signup",(req , res)=>{
+    const{ userName, email, password, phone_num, role } = req.body;
+})
+
+/***Validation***/
+  if (!userName || !email || !password || !phone_num || !role) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Create a new user object
-  const newUser = {
-    user_id: uuidv4(), // Generate a unique ID
-    userName,
-    email,
-    password: hashedPassword, // Save the hashed password
-    first_name, // Added first name
-    last_name,  // Added last name
-    role,
-    createdAt: moment().format(), // User creation date
-  };
-
-  // Add the new user to the mock data
-  users.push(newUser);
-
-  // Return the new user's information in the response
-  return res.status(201).json({
-    message: 'User successfully created',
-    user: {
-      user_id: newUser.user_id,
-      userName: newUser.userName,
-      email: newUser.email,
-      first_name: newUser.first_name, // Include first name
-      last_name: newUser.last_name,   // Include last name
-      role: newUser.role,
-      createdAt: newUser.createdAt,
-    },
-  });
-});
-*/
-
-/* defined and should be defined in app.js
-// Apply the router to the Express application (add to app.js or server.js)
-const app = express();
-app.use(express.json()); // Parse JSON formatted request bodies
-
-// Set up the signup route
-app.use('/api', router);
-
-// Set the server to listen on port 5000
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
-
-*/
+  //further validation
