@@ -16,6 +16,7 @@ const session = require('express-session');
 
 const pageRoutes = require('./routes/landingPage');  // Import the routes
 const authRoutes = require('./routes/login');  // Import the routes
+const dashboardRoutes = require('./routes/dashboard');
 
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
@@ -36,7 +37,7 @@ app.use(cors());
 app.use(session({
     secret: 'hardcodedSecretKey123',   //process.env.SESSION_SECRET || 'your-secret-key', // Use a secret key from environment variable or hardcoded
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: { secure: false }  // Set to true in production with HTTPS
  }));
 
@@ -48,7 +49,8 @@ app.use(express.json());
  */
 
 app.use("/", pageRoutes);   // entry point
-app.use("/login", authRoutes);   
+app.use("/login", authRoutes);  
+app.use("/dashboard", dashboardRoutes) 
 
 //start the Express server on a specific port 
 const port = process.env.PORT || 5000;
