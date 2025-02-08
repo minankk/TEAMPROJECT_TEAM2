@@ -1,104 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
-    <link rel="stylesheet" href="SignUp.css">
-</head>
-<body>
-    
-    <!--  Header HTML-->
-    
-    <header>
-        <div class="header-left">
-    <div class="logo">Logo</div>
-    <nav class="navbar">
-        <ul>
-        <li><a>Homepage</a></li>
-        <li><a>New in Stores</a></li>
-        <li><a>Best Sellers</a></li>
-        <li><a>Sale</a></li>
-        <li><a>Browse</a></li>   
-    </ul>
-</nav>
-</div>
-<div class="Search-bar">
-    <input type="text" placeholder="Search here"/>
-    <button>🔍</button>
-  <button>🛒</button>
-  <button>👤</button>
-</div>
-</header>
+import React from "react";
+import "./Signup.css"; // Ensure CSS is correctly linked
+import Navbar from "./Navbar"; // Import Navbar component
+import Footer from "./Footer"; // Import Footer component
 
-<!--  Sign up Container-->
-<main>
-    
-    <div class="Signup-container">
-        <h1>Create an account</h1>
-        <form action="/login" method="POST">
-    
- <!--  Username Input field-->
-   <div class="inputfield">
-    <label for="User-name">User name</label>
-    <input type="text" id="user name" placeholder="user name" required>
-   </div>   
+const Signup = () => {
+  return (
+    <div>
+      {/* Navbar Component */}
+      <Navbar />
 
-  <!-- Email -->
+      {/* Search Bar */}
+      <div className="search-bar">
+        <input type="text" placeholder="Search here" />
+        <button>🔍</button>
+        <button>🛒</button>
+        <button>👤</button>
+      </div>
 
-  <div class="inputfield">
-    <label for="email">Email:</label>
-    <input type="email" id="email" placeholder="email" required>
-   </div>      
+      {/* Sign Up Container */}
+      <main>
+        <div className="signup-container">
+          <h1>Create an Account</h1>
+          <form action="/signup" method="POST">
+            
+            {/* Username Input Field */}
+            <div className="input-field">
+              <label htmlFor="user-name">User Name</label>
+              <input type="text" id="user-name" placeholder="User name" required />
+            </div>
 
+            {/* Email Input Field */}
+            <div className="input-field">
+              <label htmlFor="email">Email:</label>
+              <input type="email" id="email" placeholder="Email" required />
+            </div>
 
-    <!--  Password Input field-->
+            {/* Password Input Field */}
+            <div className="input-field">
+              <label htmlFor="password">Password:</label>
+              <input type="password" id="password" placeholder="Password" required />
+            </div>
 
-    <div class="inputfield">
-        <label for="Password">Password:</label>
-        <input type="password" id="password" placeholder="password" required>
-       </div>
-             
-    <!-- Confirm password-->
-    <div class="inputfield">
-        <label for="Password">Confirm password</label>
-        <input type="password" id="Confirm-password" placeholder="confirm password" required>
-       </div>
-      
-       <!-- Sign Up Button-->
-        <div>
- <button type="submit"> Sign up</button>
- <button type="button" class="admin-signup">Admin Sign up</button>
-       </div>
-        </form>
-    
-</main>
+            {/* Confirm Password Field */}
+            <div className="input-field">
+              <label htmlFor="confirm-password">Confirm Password</label>
+              <input type="password" id="confirm-password" placeholder="Confirm password" required />
+            </div>
 
-
-<!--  Footer HTML-->
-
-<footer>
-    <div class="Footer-links">
-        
-        <div>
-           <h4>Company</h4>
-            <p><a>About Us</a></p>  
-            <p><a>Stakeholders</a></p>
+            {/* Sign Up Buttons */}
+            <div className="button-group">
+              <button type="submit">Sign Up</button>
+              <button type="button" className="admin-signup">Admin Sign Up</button>
+            </div>
+          </form>
         </div>
+      </main>
 
-        <div>
-    <h4>Customer Service</h4>
-    <p><a>Contact Us</a></p>
-        <p><a>My Account</a></p>
-</div>
-</div> 
-<div class  ="social-icons">
-<button>🐦</button>
-<button>📸</button>
-<button>📧</button>
+      {/* Footer Component */}
+      <Footer />
+    </div>
+  );
+};
 
-</div>
-</body>
-</footer>
-
-</html>
+export default Signup;
