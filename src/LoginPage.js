@@ -35,6 +35,10 @@ const LoginPage = () => {
   });
   };
 
+  const handleSignUp =()=>{
+    navigate('/Signup');
+  };
+
   return (
     <div className="Login-container">
       <h1>Login to your account</h1>
@@ -65,6 +69,12 @@ const LoginPage = () => {
         <button type="button" className="admin-signin">Admin Sign in</button>
         <p className="forgot-password"><Link to="/forgot-password">Forgot Password? Click here</Link></p>
       </form>
+      
+      {/* Adding Sign Up Button */}
+       <button type='button' className='signupbutton' onClick={handleSignUp}>
+        Sign Up?
+       </button>
+
     </div>
   );
 };
