@@ -3,114 +3,360 @@
 html, body {
   height: 100%; /* Ensure the body takes up the full height of the viewport */
   margin: 0;
-  background-color: rgba(255,236,209,0.27);
+  background-color:#F6F6F4;
+  font-family: 'Arial' , sans-serif;
+  color: #151515;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    background-color: rgba(255,236,209,0.27);
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  background-color: rgb(255, 255, 255) !important;
+}
 
-  .banner, .content {
-    flex: 1; /* Allow these sections to grow and fill available space */
-  }
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1750px; /* Adjust the width as needed */
+  margin: auto;
+  overflow: hidden;
+}
 
-  header {
-    display: flex;
-    justify-content: space-between; /* Space between logo+navbar and search-cart */
-    align-items: center;
-    padding: 20px, 40px;
-    background-color: rgba(21,97,109,0.27);
-    flex-shrink: 0;
-    height: 80px;
-  }
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
 
-  /* Group the logo and navbar together */
-  .header-left {
-    display: flex;
-    align-items: center; /* Vertically align logo and navbar */
-    gap: 20px; /* Space between logo and navbar */
-  }
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
 
-  .navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    padding: 0;
-    margin: 0;
-  }
+}
 
-  .navbar ul li a {
-    text-decoration: none;
-    color: black;
-  }
+.carousel-item img {
+  width: 100%;
+  height: auto; /* Adjust the height as needed */
+ /* object-fit: contain; /* Ensure the image scales proportionally */
+  object-fit: cover;
+  border-radius: 10px;
+}
 
-  .search-cart {
-    display: flex;
-    gap: 10px;
-  }
+.carousel-control-prev, .carousel-control-next {
+  position: absolute;
+  bottom: 10px; /* Position the arrows at the bottom */
+  transform: translateY(0);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
 
-  .search-cart input {
-    width: 300px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+.carousel-control-prev {
+  left: 10px;
+}
 
-  .banner {
-    height: 300px;
-    background-color: #d8e3e7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.carousel-control-next {
+  right: 10px;
+}
 
-  .content .section {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
+.banner {
+  height: auto; /* Adjust the height to fit the carousel */
+  background-color: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .item {
-    width: 30%;
-    height: 150px;
-    background-color: #d0d0d0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-  }
+header {
+  display: flex;
+  justify-content: space-between; /* Space between logo+navbar and search-cart */
+  align-items: center;
+  padding: 20px, 40px;
+  background-color: #151515;
+  color: white;
+  height: 80px;
+}
 
-  footer {
-    display: flex;
-    justify-content: space-between; /* Space between footer links and social icons */
-    align-items: flex-start; /* Align items to the top */
-    padding: 10px 20px; /* Adjust padding for height */
-    background-color: rgba(21,97,109,0.27);
-    flex-shrink: 0; /* Prevent the footer from shrinking */
-  }
+/* Group the logo and navbar together */
+.header-left {
+  display: flex;
+  align-items: center; /* Vertically align logo and navbar */
+  gap: 20px; /* Space between logo and navbar */
+}
 
-  .footer-links {
-    display: flex; /* Makes the "Company" and "Customer Service" sections side by side */
-    gap: 40px; /* Add space between the two sections */
-  }
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
 
-  .footer-links div {
-    margin: 0; /* Remove extra margins */
-  }
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
 
-  .footer-links h4,
-  .footer-links p {
-    margin: 5px 0; /* Tighter spacing */
-  }
+.navbar ul li a:hover{
+  color: #B74533;
+}
 
-  .social-icons {
-    display: flex;
-    gap: 10px; /* Space between social media buttons */
-  }
+.search-cart {
+  display: flex;
+  gap: 10px;
+}
+
+.search-cart input {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.banner {
+  height: 300px;
+  background-color: #d8e3e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.steps-section {
+  display: flex;
+  justify-content: space-between;
+  background-color: #eeeeee; /* Change background color if needed */
+  padding: 50px 20px;
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 60px;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  border-radius: 10px;
+}
+
+.next-section {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.steps-section, .next-section {
+  flex: 0 0 auto;
+}
+
+.content {
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.section {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.step {
+  width: 30%;
+  background-color: #F6F6F4; /* Adjust color */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.step:hover {
+  transform: scale(1.05);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background-color: #151515; /* Number background */
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+}
+
+.step h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.step button {
+  background-color: #151515;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.step button:hover {
+  background-color: #333;
+}
+
+.content {
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.items-carousel {
+  display: flex;
+  justify-content: space-between; /* Distribute the items evenly */
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: #F6F6F4;
+  gap: 20px; /* Space between items */
+}
+
+.item {
+  width: calc(25% - 20px); /* Adjust the width to fit four items in a row */
+  max-width: 300px;
+  height: 400px !important;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.05);
+}
+
+.item img {
+  width: 100%; /* Ensure the image takes up the full width of the container */
+  height: 250px; /* Ensure the image scales proportionally */
+  object-fit: contain; /* Maintain aspect ratio and crop image to fit */
+  display: block;
+  margin: auto;
+  background-color: white;
+  border-radius: 8px;
+}
+
+/*.items-carousel-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+}
+
+.carousel-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.carousel-item img {
+  max-width: 100;
+  height: auto;
+  object-fit: contain;
+}*/
+
+.item-details {
+  padding: 10px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.item-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.item-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #B74533;
+}
+
+.shop-all-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop-all-button {
+  background-color: #151515;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px auto;
+  width: fit-content;
+  transition: background-color 0.3s ease;
+}
+
+.shop-all-button:hover {
+  background-color: #333;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between; /* Space between footer links and social icons */
+  align-items: center; /* Align items to the top */
+  padding: 20px 40px; /* Adjust padding for height */
+  background-color: #151515;
+  color: white;
+  flex-shrink: 0; /* Prevent the footer from shrinking */
+}
+
+.footer-links {
+  display: flex; /* Makes the "Company" and "Customer Service" sections side by side */
+  gap: 40px; /* Add space between the two sections */
+}
+
+.footer-links div {
+  margin: 0; /* Remove extra margins */
+}
+
+.footer-links h4,
+.footer-links p {
+  margin: 5px 0; /* Tighter spacing */
+  color: #eeeeee;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px; /* Space between social media buttons */
+}
