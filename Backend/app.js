@@ -39,7 +39,8 @@ app.use((req, res, next) => {
 
 
 app.use(cors({
-  credentials: true 
+  origin: 'http://localhost:3000',  
+  credentials: true, 
 }));
 
 // Session middleware to manage user login state
