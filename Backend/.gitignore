@@ -1,6 +1,11 @@
 # Node modules folder
+<<<<<<< HEAD
 node_modules/
 .env
+=======
+/node_modules
+
+>>>>>>> 663d5e4eb10a0807f0150a2fb44bcd19e54c8fcd
 # Log files
 *.log
 

@@ -18,6 +18,7 @@ const LoginPage = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
+      credentials: "include",
     })
     .then(response => response.json())  // Convert response to JSON
   .then(data => {
