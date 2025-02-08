@@ -86,7 +86,7 @@ CREATE TABLE albums (
 -- Insert data into the albums table
 INSERT INTO albums (album_name, artist_id, genre_id, release_date, price, cover_image_url, type, best_sellers, sale)
 VALUES 
-('Nevermind', (SELECT artist_id FROM artists WHERE name = 'Nirvana'), (SELECT genre_id FROM genres WHERE genre_name = 'Alternative Rock'), '1991-09-24', 15.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Nirvana – Nevermind (1).webp', 'full album', 1, 0),
+('Nevermind', (SELECT artist_id FROM artists WHERE name = 'Nirvana'), (SELECT genre_id FROM genres WHERE genre_name = 'Alternative Rock'), '1991-09-24', 15.00, 'Backend\data\images\Nirvana – Nevermind (1).webp', 'full album', 1, 0),
 ('The Masterplan', (SELECT artist_id FROM artists WHERE name = 'Oasis'), (SELECT genre_id FROM genres WHERE genre_name = 'Alternative Rock'), '1998-11-17', 12.99, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Oasis – The Masterplan (1).webp', 'single', 0, 1),
 ('OK Computer', (SELECT artist_id FROM artists WHERE name = 'Radiohead'), (SELECT genre_id FROM genres WHERE genre_name = 'Alternative Rock'), '1997-05-21', 15.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Radiohead – OK Computer.webp', 'full album', 1, 0),
 ('Saviors', (SELECT artist_id FROM artists WHERE name = 'Green Day'), (SELECT genre_id FROM genres WHERE genre_name = 'Alternative Rock'), '2024-02-09', 5.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Green-Day-Saviors.webp', 'single', 0, 0),
@@ -111,3 +111,4 @@ VALUES
 ('The Blueprint', (SELECT artist_id FROM artists WHERE name = 'Jay-Z'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '2001-09-11', 20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Jay-Z – The Blueprint.webp', 'full album', 0, 0),
 ('The Marshall Mathers LP', (SELECT artist_id FROM artists WHERE name = 'Eminem'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '2000-05-23', 20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Eminem – The Marshall Mathers LP.jpg', 'full album', 0, 0),
 ('Ready to Die', (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '1994-09-13',  20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\51pil+A8wQL._UF894,1000_QL80_.jpg', 'full album', 1, 0);
+
