@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./LandingPage.css";
+import Carousel1 from "./assets/Carousel1.jpg";
+import Carousel2 from "./assets/Carousel2.jpg";
+import Carousel3 from "./assets/Carousel3.jpg";
+import Barbie from "./assets/Barbie.webp";
+import Eminem from "./assets/Eminem.webp";
+import HotelCalifornia from "./assets/HotelCalifornia.png";
+import Sweetener from "./assets/Sweetener.webp";
 
 function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    const slides = document.querySelectorAll('.carousel-item');
-    const carouselInner = document.querySelector('.carousel-inner');
-    const nextButton = document.querySelector('.carousel-control-next');
-    const prevButton = document.querySelector('.carousel-control-prev');
+    const slides = document.querySelectorAll(".carousel-item");
+    const carouselInner = document.querySelector(".carousel-inner");
+    const nextButton = document.querySelector(".carousel-control-next");
+    const prevButton = document.querySelector(".carousel-control-prev");
 
     if (!carouselInner || !nextButton || !prevButton) {
       console.error("Carousel elements not found");
@@ -24,7 +31,7 @@ function LandingPage() {
         setCurrentSlide(index);
       }
       const offset = -currentSlide * 100;
-      document.querySelector('.carousel-inner').style.transform = `translateX(${offset}%)`;
+      carouselInner.style.transform = `translateX(${offset}%)`;
     };
 
     showSlide(currentSlide);
@@ -32,12 +39,12 @@ function LandingPage() {
     const nextSlide = () => showSlide(currentSlide + 1);
     const prevSlide = () => showSlide(currentSlide - 1);
 
-    nextButton.addEventListener('click', nextSlide);
-    prevButton.addEventListener('click', prevSlide);
+    nextButton.addEventListener("click", nextSlide);
+    prevButton.addEventListener("click", prevSlide);
 
     return () => {
-      nextButton.removeEventListener('click', nextSlide);
-      prevButton.removeEventListener('click', prevSlide);
+      nextButton.removeEventListener("click", nextSlide);
+      prevButton.removeEventListener("click", prevSlide);
     };
   }, [currentSlide]);
 
@@ -48,13 +55,13 @@ function LandingPage() {
           <div className="carousel">
             <div className="carousel-inner">
               <div className="carousel-item active">
-                <img src="/images/Carousel1.jpg" alt="Slide 1" />
+                <img src={Carousel1} alt="Slide 1" />
               </div>
               <div className="carousel-item">
-                <img src="/images/Carousel2.jpg" alt="Slide 2" />
+                <img src={Carousel2} alt="Slide 2" />
               </div>
               <div className="carousel-item">
-                <img src="/images/Carousel3.jpg" alt="Slide 3" />
+                <img src={Carousel3} alt="Slide 3" />
               </div>
             </div>
             <button className="carousel-control-prev">❮</button>
@@ -63,7 +70,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* New Section Added Below */}
       <section className="steps-section">
         <div className="step">
           <div className="step-number">1</div>
@@ -71,14 +77,12 @@ function LandingPage() {
           <p>Join us and gain access to exclusive vinyl collections. Register now!</p>
           <button>Sign Up</button>
         </div>
-
         <div className="step">
           <div className="step-number">2</div>
           <h3>Search</h3>
           <p>Explore a vast collection of vinyl records based on genre, artist, or year.</p>
           <button>Search</button>
         </div>
-
         <div className="step">
           <div className="step-number">3</div>
           <h3>Get the Best Deals</h3>
@@ -87,99 +91,44 @@ function LandingPage() {
         </div>
       </section>
 
- {/* Editor's Choice Section */}
- <section className="content">
+      <section className="content">
         <h2 className="items-title">Editor's Choice</h2>
         <div className="items-carousel">
-          {/* Product 1 */}
           <div className="item">
-            <img src="/images/Barbie.webp" alt="Product 1" />
+            <img src={Barbie} alt="Product 1" />
             <div className="item-details">
               <h3 className="item-title">Barbie the Album Original Soundtrack</h3>
               <p className="item-price">$25.00</p>
-              {/*<button>Explore More</button>*/}
             </div>
           </div>
-
-          {/* Product 2 */}
           <div className="item">
-            <img src="/images/Eminem.webp" alt="Product 2" />
+            <img src={Eminem} alt="Product 2" />
             <div className="item-details">
               <h3 className="item-title">The Marshall Mathers LP</h3>
               <p className="item-price">$30.00</p>
-              {/*<button>Explore More</button>*/}
             </div>
           </div>
-
-          {/* Product 3 */}
           <div className="item">
-            <img src="/images/HotelCalifornia.png" alt="Product 3" />
+            <img src={HotelCalifornia} alt="Product 3" />
             <div className="item-details">
               <h3 className="item-title">Hotel California</h3>
               <p className="item-price">$20.00</p>
-              {/*<button>Explore More</button>*/}
             </div>
           </div>
-
-          {/* Product 4 */}
           <div className="item">
-            <img src="/images/Sweetener.webp" alt="Product 4" />
+            <img src={Sweetener} alt="Product 4" />
             <div className="item-details">
               <h3 className="item-title">Sweetener</h3>
               <p className="item-price">$22.00</p>
-              {/* <button>Explore More</button> */}
             </div>
           </div>
         </div>
         <div className="shop-all-container">
           <button className="shop-all-button">Shop All</button>
-
-import { Link } from "react-router-dom";
-import Carousel from "./Carousel"; // Import the carousel component
-import vinylImage1 from "../assets/vinyl1.jpg"; // Replace with actual images
-import vinylImage2 from "../assets/vinyl2.jpg";
-import vinylImage3 from "../assets/vinyl3.jpg";
-
-const LandingPage = () => {
-  return (
-    <div className="landing-container">
-      {/* Carousel Section */}
-      <section className="carousel-section">
-        <Carousel
-          images={[vinylImage1, vinylImage2, vinylImage3]}
-          altText={["Vinyl Collection", "Retro Records", "Turntable Magic"]}
-        />
-      </section>
-
-      {/* Sign Up / Browse / Buy Section */}
-      <section className="info-section">
-        <div className="info-box">
-          <h3>Sign Up</h3>
-          <p>Join our community and stay updated with exclusive vinyl drops.</p>
-          <Link to="/signup" className="info-button">Join Now</Link>
-        </div>
-        <div className="info-box">
-          <h3>Browse</h3>
-          <p>Explore our extensive collection of classic and modern records.</p>
-          <Link to="/products" className="info-button">Start Browsing</Link>
-        </div>
-        <div className="info-box">
-          <h3>Buy</h3>
-          <p>Pick your favorites and get them delivered to your doorstep.</p>
-          <Link to="/products" className="info-button">Shop Now</Link>
         </div>
       </section>
-
-      {/* Staff Picks Section */}
-      <section className="staff-picks">
-        <h2>Staff Picks</h2>
-        <div className="record-grid">
-          <img src={vinylImage1} alt="Vinyl 1" />
-          <img src={vinylImage2} alt="Vinyl 2" />
-          <img src={vinylImage3} alt="Vinyl 3" />
-          <img src={vinylImage1} alt="Vinyl 4" />
-          <img src={vinylImage2} alt="Vinyl 5" />
-          <img src={vinylImage3} alt="Vinyl 6" />
+    </div>
+  );
 }
 
 export default LandingPage;
