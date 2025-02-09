@@ -6,6 +6,15 @@ function LandingPage() {
 
   useEffect(() => {
     const slides = document.querySelectorAll('.carousel-item');
+    const carouselInner = document.querySelector('.carousel-inner');
+    const nextButton = document.querySelector('.carousel-control-next');
+    const prevButton = document.querySelector('.carousel-control-prev');
+
+    if (!carouselInner || !nextButton || !prevButton) {
+      console.error("Carousel elements not found");
+      return;
+    }
+
     const showSlide = (index) => {
       if (index >= slides.length) {
         setCurrentSlide(0);
@@ -23,12 +32,12 @@ function LandingPage() {
     const nextSlide = () => showSlide(currentSlide + 1);
     const prevSlide = () => showSlide(currentSlide - 1);
 
-    document.querySelector('.carousel-control-next').addEventListener('click', nextSlide);
-    document.querySelector('.carousel-control-prev').addEventListener('click', prevSlide);
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
 
     return () => {
-      document.querySelector('.carousel-control-next').removeEventListener('click', nextSlide);
-      document.querySelector('.carousel-control-prev').removeEventListener('click', prevSlide);
+      nextButton.removeEventListener('click', nextSlide);
+      prevButton.removeEventListener('click', prevSlide);
     };
   }, [currentSlide]);
 
