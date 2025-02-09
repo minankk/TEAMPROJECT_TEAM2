@@ -1,7 +1,7 @@
 /* Footer Container */
 .footer-container {
-  background-color: #15616d;
-  color: white;
+  background-color: #151515;
+  color: #f6f6f4;
   padding: 40px 20px;
   text-align: center;
 }
@@ -31,7 +31,7 @@
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
-  border-bottom: 2px solid #ffcc00;
+  border-bottom: 2px solid #b74533;
   display: inline-block;
   padding-bottom: 5px;
 }
@@ -49,13 +49,13 @@
 
 .footer-column a {
   text-decoration: none;
-  color: white;
+  color: #f6f6f4;
   transition: color 0.3s ease;
   font-size: 1rem;
 }
 
 .footer-column a:hover {
-  color: #ffcc00;
+  color: #b74533;
 }
 
 /* Social Icons Styling */
@@ -75,7 +75,7 @@
 }
 
 .social-icons button:hover {
-  color: #ffcc00;
+  color: #b74533;
   transform: scale(1.1);
 }
 

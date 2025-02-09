@@ -230,6 +230,7 @@ header {
   padding: 20px;
   background-color: #F6F6F4;
   gap: 20px; /* Space between items */
+  position: relative;
 }
 
 .item {
@@ -310,6 +311,9 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .shop-all-button {
