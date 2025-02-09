@@ -1,116 +1,126 @@
-/* General Styles */
-
-html, body {
-  height: 100%; /* Ensure the body takes up the full height of the viewport */
-  margin: 0;
-  background-color: rgba(255,236,209,0.27);
+/* General Page Styling */
+.landing-container {
+  background-color: #f8f8f8;
+  font-family: Arial, sans-serif;
+  color: black;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    background-color: rgba(255,236,209,0.27);
-  }
+/* Carousel Section */
+.carousel-section {
+  width: 100%;
+  height: 500px;
+}
 
-  .banner, .content {
-    flex: 1; /* Allow these sections to grow and fill available space */
-  }
+/* Info Section (Sign Up / Browse / Buy) */
+.info-section {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 50px 0;
+}
 
-  header {
-    display: flex;
-    justify-content: space-between; /* Space between logo+navbar and search-cart */
-    align-items: center;
-    padding: 20px, 40px;
-    background-color: rgba(21,97,109,0.27);
-    flex-shrink: 0;
-    height: 80px;
-  }
+.info-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 30%;
+}
 
-  /* Group the logo and navbar together */
-  .header-left {
-    display: flex;
-    align-items: center; /* Vertically align logo and navbar */
-    gap: 20px; /* Space between logo and navbar */
-  }
+.info-box:hover {
+  transform: translateY(-5px);
+}
 
-  .navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    padding: 0;
-    margin: 0;
-  }
+.info-box h3 {
+  color: #861621;
+}
 
-  .navbar ul li a {
-    text-decoration: none;
-    color: black;
-  }
+.info-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #861621;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
 
-  .search-cart {
-    display: flex;
-    gap: 10px;
-  }
+.info-button:hover {
+  background: #6e121b;
+}
 
-  .search-cart input {
-    width: 300px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+/* Staff Picks Section */
+.staff-picks {
+  text-align: center;
+  padding: 50px 0;
+  background: #fff;
+}
 
-  .banner {
-    height: 300px;
-    background-color: #d8e3e7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.staff-picks h2 {
+  color: #861621;
+}
 
-  .content .section {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
+.record-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
 
-  .item {
-    width: 30%;
-    height: 150px;
-    background-color: #d0d0d0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-  }
+.record-grid img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
-  footer {
-    display: flex;
-    justify-content: space-between; /* Space between footer links and social icons */
-    align-items: flex-start; /* Align items to the top */
-    padding: 10px 20px; /* Adjust padding for height */
-    background-color: rgba(21,97,109,0.27);
-    flex-shrink: 0; /* Prevent the footer from shrinking */
-  }
+.shop-all-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #861621;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
 
-  .footer-links {
-    display: flex; /* Makes the "Company" and "Customer Service" sections side by side */
-    gap: 40px; /* Add space between the two sections */
-  }
+.shop-all-btn:hover {
+  background: #6e121b;
+}
 
-  .footer-links div {
-    margin: 0; /* Remove extra margins */
-  }
+/* About Vinyl Section */
+.about-vinyl {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f8f8f8;
+}
 
-  .footer-links h4,
-  .footer-links p {
-    margin: 5px 0; /* Tighter spacing */
-  }
+.about-vinyl h2 {
+  color: #861621;
+}
 
-  .social-icons {
-    display: flex;
-    gap: 10px; /* Space between social media buttons */
-  }
+/* Community Section */
+.community-section {
+  text-align: center;
+  padding: 50px 20px;
+  background: #fff;
+}
+
+.community-section h2 {
+  color: #861621;
+}
+
+.community-section p {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.community-section .info-button {
+  margin-top: 15px;
+}
