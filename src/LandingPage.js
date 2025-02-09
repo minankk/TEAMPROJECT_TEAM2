@@ -131,7 +131,7 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="text-center">
+        <div className="shop-all-container">
           <button className="shop-all-button">Shop All</button>
         </div>
       </section>
