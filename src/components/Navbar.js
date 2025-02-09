@@ -49,9 +49,9 @@ const Navbar = () => {
         <button className="user-btn" onClick={handleUserClick}>
           <FaUser />
         </button>
-        <button className="cart-btn">
+        <Link to="/cart" className="cart-btn">
           <FaShoppingCart />
-        </button>
+        </Link>
       </div>
     </header>
   );
