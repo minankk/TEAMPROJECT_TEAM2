@@ -1,9 +1,23 @@
-// routes/products.js
 const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/productController');
 
 // GET /api/products - Get all products
 router.get('/', productsController.getProducts);
+
+// GET /api/products/filter/genre/:genre - Filter products by genre
+router.get('/filter/genre/:genre', productsController.filterByGenre);
+
+// GET /api/products/filter/decade/:decade - Filter products by decade
+router.get('/filter/decade/:decade', productsController.filterByDecade);
+
+// GET /api/products/filter/best-sellers - Filter best sellers
+router.get('/filter/best-sellers', productsController.filterBestSellers);
+
+// GET /api/products/filter/sale - Filter products on sale
+router.get('/filter/sale', productsController.filterOnSale);
+
+// GET /api/products/filter/artist/:artist - Filter products by artist
+router.get('/filter/artist/:artist', productsController.filterByArtist);
 
 module.exports = router;
