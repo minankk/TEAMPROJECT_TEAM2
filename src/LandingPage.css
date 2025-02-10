@@ -1,126 +1,366 @@
-/* General Page Styling */
-.landing-container {
-  background-color: #f8f8f8;
+/* General Styles */
+
+html, body {
+  height: 100%; /* Ensure the body takes up the full height of the viewport */
+  margin: 0;
+  background-color:#F6F6F4;
+  font-family: 'Arial' , sans-serif;
+  color: #151515;
+}
+
+body {
   font-family: Arial, sans-serif;
-  color: black;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  background-color: rgb(255, 255, 255) !important;
 }
 
-/* Carousel Section */
-.carousel-section {
+.carousel {
+  position: relative;
   width: 100%;
-  height: 500px;
+  max-width: 1750px; /* Adjust the width as needed */
+  margin: auto;
+  overflow: hidden;
 }
 
-/* Info Section (Sign Up / Browse / Buy) */
-.info-section {
+.carousel-inner {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 50px 0;
+  transition: transform 0.5s ease-in-out;
 }
 
-.info-box {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  width: 30%;
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+
 }
 
-.info-box:hover {
-  transform: translateY(-5px);
-}
-
-.info-box h3 {
-  color: #861621;
-}
-
-.info-button {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 15px;
-  background: #861621;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.info-button:hover {
-  background: #6e121b;
-}
-
-/* Staff Picks Section */
-.staff-picks {
-  text-align: center;
-  padding: 50px 0;
-  background: #fff;
-}
-
-.staff-picks h2 {
-  color: #861621;
-}
-
-.record-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.record-grid img {
-  width: 150px;
-  height: 150px;
+.carousel-item img {
+  width: 100%;
+  height: auto; /* Adjust the height as needed */
+ /* object-fit: contain; /* Ensure the image scales proportionally */
   object-fit: cover;
+  border-radius: 10px;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  position: absolute;
+  bottom: 10px; /* Position the arrows at the bottom */
+  transform: translateY(0);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.carousel-control-prev {
+  left: 10px;
+}
+
+.carousel-control-next {
+  right: 10px;
+}
+
+.banner {
+  height: auto; /* Adjust the height to fit the carousel */
+  background-color: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between; /* Space between logo+navbar and search-cart */
+  align-items: center;
+  padding: 20px, 40px;
+  background-color: #151515;
+  color: white;
+  height: 80px;
+}
+
+/* Group the logo and navbar together */
+.header-left {
+  display: flex;
+  align-items: center; /* Vertically align logo and navbar */
+  gap: 20px; /* Space between logo and navbar */
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover{
+  color: #B74533;
+}
+
+.search-cart {
+  display: flex;
+  gap: 10px;
+}
+
+.search-cart input {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.banner {
+  height: 300px;
+  background-color: #d8e3e7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.steps-section {
+  display: flex;
+  justify-content: space-between;
+  background-color: #eeeeee; /* Change background color if needed */
+  padding: 50px 20px;
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 60px;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  border-radius: 10px;
+}
+
+.next-section {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.steps-section, .next-section {
+  flex: 0 0 auto;
+}
+
+.content {
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.section {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.step {
+  width: 30%;
+  background-color: #F6F6F4; /* Adjust color */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.step:hover {
+  transform: scale(1.05);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background-color: #151515; /* Number background */
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+}
+
+.step h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.step button {
+  background-color: #151515;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.step button:hover {
+  background-color: #333;
+}
+
+.content {
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.items-carousel {
+  display: flex;
+  justify-content: space-between; /* Distribute the items evenly */
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: #F6F6F4;
+  gap: 20px; /* Space between items */
+  position: relative;
+}
+
+.item {
+  width: calc(25% - 20px); /* Adjust the width to fit four items in a row */
+  max-width: 300px;
+  height: 400px !important;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.05);
+}
+
+.item img {
+  width: 100%; /* Ensure the image takes up the full width of the container */
+  height: 250px; /* Ensure the image scales proportionally */
+  object-fit: contain; /* Maintain aspect ratio and crop image to fit */
+  display: block;
+  margin: auto;
+  background-color: white;
   border-radius: 8px;
 }
 
-.shop-all-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #861621;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
+/*.items-carousel-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+}
+
+.carousel-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.carousel-item img {
+  max-width: 100;
+  height: auto;
+  object-fit: contain;
+}*/
+
+.item-details {
+  padding: 10px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.item-title {
+  font-size: 18px;
   font-weight: bold;
-  font-size: 1.1rem;
+  margin-bottom: 10px;
 }
 
-.shop-all-btn:hover {
-  background: #6e121b;
+.item-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #B74533;
 }
 
-/* About Vinyl Section */
-.about-vinyl {
+.shop-all-container {
   text-align: center;
-  padding: 50px 20px;
-  background: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
-.about-vinyl h2 {
-  color: #861621;
-}
-
-/* Community Section */
-.community-section {
+.shop-all-button {
+  background-color: #151515;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
   text-align: center;
-  padding: 50px 20px;
-  background: #fff;
+  cursor: pointer;
+  margin-top: 20px auto;
+  width: fit-content;
+  transition: background-color 0.3s ease;
 }
 
-.community-section h2 {
-  color: #861621;
+.shop-all-button:hover {
+  background-color: #333;
 }
 
-.community-section p {
-  max-width: 600px;
-  margin: 0 auto;
+footer {
+  display: flex;
+  justify-content: space-between; /* Space between footer links and social icons */
+  align-items: center; /* Align items to the top */
+  padding: 20px 40px; /* Adjust padding for height */
+  background-color: #151515;
+  color: white;
+  flex-shrink: 0; /* Prevent the footer from shrinking */
 }
 
-.community-section .info-button {
-  margin-top: 15px;
+.footer-links {
+  display: flex; /* Makes the "Company" and "Customer Service" sections side by side */
+  gap: 40px; /* Add space between the two sections */
+}
+
+.footer-links div {
+  margin: 0; /* Remove extra margins */
+}
+
+.footer-links h4,
+.footer-links p {
+  margin: 5px 0; /* Tighter spacing */
+  color: #eeeeee;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px; /* Space between social media buttons */
 }
