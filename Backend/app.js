@@ -18,7 +18,8 @@ const pageRoutes = require('./routes/landingPage');
 const authRoutes = require('./routes/login');  
 const dashboardRoutes = require('./routes/dashboard');
 const signUpRoutes = require('./routes/signup');
-const contactUsRoutes = require('./routes/contactus');
+const myCartRoutes = require('./routes/myCart');  
+
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
@@ -61,7 +62,9 @@ app.use("/", pageRoutes);   // entry point
 app.use("/login", authRoutes);  
 app.use("/dashboard", dashboardRoutes);
 app.use("/signup", signUpRoutes)
-app.use("/contactUs",contactUsRoutes)
+
+app.use('/api/cart', myCartRoutes);　　// Cart-related API routes (additional part)
+
 
 
 //start the Express server on a specific port 
