@@ -1,0 +1,103 @@
+/* General Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #F6F6F4;
+    font-family: 'Arial', sans-serif;
+    color: #151515;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255) !important;
+  }
+  
+  .contact-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .contact-header {
+    background-color: #151515;
+    color: white;
+    padding: 40px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 4px solid #151515;
+  }
+  
+  .contact-form-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .contact-form {
+    background-color: #eeeeee;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    transition: transform 0.3s ease;
+  }
+
+  .contact-form:hover {
+    transform: translateY(-5px);
+  }
+  
+  .contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #151515;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #b74533;
+    outline: none;
+  }
+
+  .contact-form button {
+    background-color: #b74533;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transforn 0.3s ease;
+  }
+  
+  .contact-form button:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+  }
+  
+  .contact-footer {
+    background-color: #151515;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
