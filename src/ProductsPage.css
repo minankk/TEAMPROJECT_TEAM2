@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: rgba(255,236,209,0.27);
+    background-color: #f6f6f4;
 }
 
 header {
@@ -50,27 +50,28 @@ header {
   
   .banner {
     height: 300px;
-    background-color: #d8e3e7;
+    background-color: #eeeeee;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
   }
   
   .content .section {
     display: flex;
     justify-content: space-around;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #f6f6f4;
   }
   
   .item {
     width: 30%;
     height: 150px;
-    background-color: #d0d0d0;
+    background-color: #eeeeee;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 main {
     padding: 20px;
@@ -86,10 +87,10 @@ main {
     font-size: 16px;
     padding: 10px 20px;
     margin: 5px;
-    background-color: #f0f0f0;
+    background-color: #eeeeee;
     border: 1px solid #ccc;
     border-radius: 5px;
-    color: #333;
+    color: #151515;
     display: inline-block;
     transition: background-color 0.3s ease; 
 }
@@ -113,13 +114,13 @@ main {
 
 .product-card {
     background: white;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 15px;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 200px;
-    height: 350px;
-    border: 1px solid #ccc;
+    width: 220px;
+    height: 370px;
+    border: 1px solid #ddd;
     transition: transform 0.3s ease;
 }
 .product-card:hover {
@@ -137,8 +138,8 @@ footer {
     display: flex;
     justify-content: space-between; /* Space between footer links and social icons */
     align-items: flex-start; /* Align items to the top */
-    padding: 10px 20px; /* Adjust padding for height */
-    background-color: rgba(21,97,109,0.27);
+    padding: 20px 40px; /* Adjust padding for height */
+    background-color: #151515;
     flex-shrink: 0; /* Prevent the footer from shrinking */
   }
   
