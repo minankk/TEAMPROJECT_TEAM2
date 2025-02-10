@@ -63,7 +63,7 @@ app.use(express.json());
 app.use("/", pageRoutes);   // entry point
 app.use("/login", authRoutes);  
 app.use("/dashboard", dashboardRoutes);
-app.use("/signup", signUpRoutes)
+app.use("/signup", signUpRoutes);
 app.use("/contactUs",contactUsRoutes)
 
 //app.use('/api/cart', myCartRoutes);　　// Cart-related API routes (additional part)
@@ -71,7 +71,7 @@ app.use("/contactUs",contactUsRoutes)
 
 
 //start the Express server on a specific port 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 app.listen(port,()=>{
     console.log(`Server started on port ${port}`);
 })
