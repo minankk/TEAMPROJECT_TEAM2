@@ -74,19 +74,19 @@ function LandingPage() {
         <div className="step">
           <div className="step-number">1</div>
           <h3>Sign Up</h3>
-          <p>Join us and gain access to exclusive vinyl collections. Register now!</p>
+          <p>Join us to gain access to exclusive vinyl collections Register now!</p>
           <button>Sign Up</button>
         </div>
         <div className="step">
           <div className="step-number">2</div>
           <h3>Search</h3>
-          <p>Explore a vast collection of vinyl records based on genre, artist, or year.</p>
+          <p>Search thorugh our vast collection of vinyl records based on genre, artist, or year</p>
           <button>Search</button>
         </div>
         <div className="step">
           <div className="step-number">3</div>
           <h3>Get the Best Deals</h3>
-          <p>Find the best offers and discounts on high-quality vinyl records.</p>
+          <p>Find the best offers and discounts on high-quality vinyl records</p>
           <button>Shop Now</button>
         </div>
       </section>
@@ -98,14 +98,14 @@ function LandingPage() {
             <img src={Barbie} alt="Product 1" />
             <div className="item-details">
               <h3 className="item-title">Barbie the Album Original Soundtrack</h3>
-              <p className="item-price">$25.00</p>
+              <p className="item-price">£25.00</p>
             </div>
           </div>
           <div className="item">
             <img src={Eminem} alt="Product 2" />
             <div className="item-details">
               <h3 className="item-title">The Marshall Mathers LP</h3>
-              <p className="item-price">$30.00</p>
+              <p className="item-price">£30.00</p>
             </div>
           </div>
           <div className="item">
