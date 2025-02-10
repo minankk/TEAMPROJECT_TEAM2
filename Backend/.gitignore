@@ -1,12 +1,10 @@
 # Node modules folder
 <<<<<<< HEAD
 <<<<<<< HEAD
-node_modules
+node_modules/
 .env
 =======
 /node_modules
-/package.json
-/package-lock.json
 
 >>>>>>> 663d5e4eb10a0807f0150a2fb44bcd19e54c8fcd
 =======
