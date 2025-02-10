@@ -22,20 +22,18 @@ INSERT INTO users (username, email, password, role) VALUES
 ('Ashmin Abisha', 'ashminabishaj@gmail.com', 'Ashmin@123', 'user'),
 ('Admin user', 'admin@example.com', 'adminpass', 'admin');
 
-//creating the database
 
-create database Team_Project;
-use Team_Project;
+-- Creating the database
+CREATE DATABASE Team_Project;
+USE Team_Project;
 
-//create genres table
-
+-- Create genres table
 CREATE TABLE genres (
     genre_id INT AUTO_INCREMENT PRIMARY KEY,
     genre_name VARCHAR(255) UNIQUE NOT NULL
 );
 
-//create artists table
-
+-- Create artists table
 CREATE TABLE artists (
     artist_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
@@ -45,8 +43,7 @@ CREATE TABLE artists (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-//Insert Genres
-
+-- Insert Genres
 INSERT INTO genres (genre_name) VALUES 
 ('Alternative Rock'), 
 ('Soundtrack'), 
@@ -54,8 +51,7 @@ INSERT INTO genres (genre_name) VALUES
 ('Rock'), 
 ('Hip-hop');
 
-//Insert Artists
-
+-- Insert Artists
 INSERT INTO artists (name) VALUES 
 ('Nirvana'), ('Oasis'), ('Radiohead'), ('Green Day'), ('Barbie the Album'),
 ('Guardians of the Galaxy - Awesome Mix 1'), ('Pulp Fiction'), ('The Greatest Showman'),
@@ -64,11 +60,10 @@ INSERT INTO artists (name) VALUES
 ('The Beatles'), ('Eagles'), ('50 Cent'), ('Kendrick Lamar'), ('Jay-Z'), ('Eminem'),
 ('The Notorious B.I.G.');
 
-//creating the albums table and inserting to the albums table
-
-CREATE TABLE albums (
-    album_id INT PRIMARY KEY AUTO_INCREMENT,
-    album_name VARCHAR(255) NOT NULL,
+-- Creating the products table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(255) NOT NULL,
     artist_id INT,
     genre_id INT,
     release_date DATE,
@@ -81,10 +76,8 @@ CREATE TABLE albums (
     FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
 );
 
-//insert to albums table
-
--- Insert data into the albums table
-INSERT INTO albums (album_name, artist_id, genre_id, release_date, price, cover_image_url, type, best_sellers, sale)
+-- Insert data into the products table
+INSERT INTO products (product_name, artist_id, genre_id, release_date, price, cover_image_url, type, best_sellers, sale)
 VALUES 
 ('Nevermind', (SELECT artist_id FROM artists WHERE name = 'Nirvana'), (SELECT genre_id FROM genres WHERE genre_name = 'Alternative Rock'), '1991-09-24', 15.00, 'Backend\data\images\Nirvana – Nevermind (1).webp', 'full album', 1, 0),
 ('The Masterplan', (SELECT artist_id FROM artists WHERE name = 'Oasis'), (SELECT genre_id FROM genres WHERE genre_name = 'Alternative Rock'), '1998-11-17', 12.99, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Oasis – The Masterplan (1).webp', 'single', 0, 1),
@@ -109,6 +102,6 @@ VALUES
 ('Get Rich or Die Tryin’', (SELECT artist_id FROM artists WHERE name = '50 Cent'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '2003-02-06', 15.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\50 Cent – Get Rich or Die Tryin’.webp', 'full album', 0, 0),
 ('To Pimp a Butterfly', (SELECT artist_id FROM artists WHERE name = 'Kendrick Lamar'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '2015-03-15', 20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Kendrick Lamar – To Pimp a Butterfly.jpg', 'full album', 0, 0),
 ('The Blueprint', (SELECT artist_id FROM artists WHERE name = 'Jay-Z'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '2001-09-11', 20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Jay-Z – The Blueprint.webp', 'full album', 0, 0),
-('The Marshall Mathers LP', (SELECT artist_id FROM artists WHERE name = 'Eminem'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '2000-05-23', 20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Eminem – The Marshall Mathers LP.jpg', 'full album', 0, 0),
-('Ready to Die', (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '1994-09-13',  20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\51pil+A8wQL._UF894,1000_QL80_.jpg', 'full album', 1, 0);
+('The Eminem Show', (SELECT artist_id FROM artists WHERE name = 'Eminem'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '2002-05-28', 20.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\Eminem – The Eminem Show.webp', 'full album', 0, 0),
+('Ready to Die', (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.'), (SELECT genre_id FROM genres WHERE genre_name = 'Hip-hop'), '1994-09-13', 15.00, 'C:\\Users\\Asus\\TEAMPROJECT_TEAM2\\Backend\\data\\images\\The Notorious B.I.G. – Ready to Die.webp', 'full album', 0, 0);
 
