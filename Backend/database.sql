@@ -2,10 +2,13 @@
 Pre-requisite 
 Install mysql work bench
 Create new Connection
-Add a new schema name - vinyl database
-    
 */
 
+
+create database Team_Project;
+
+use Team_Project;
+    
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -22,10 +25,7 @@ INSERT INTO users (username, email, password, role) VALUES
 ('Ashmin Abisha', 'ashminabishaj@gmail.com', 'Ashmin@123', 'user'),
 ('Admin user', 'admin@example.com', 'adminpass', 'admin');
 
-//creating the database
 
-create database Team_Project;
-use Team_Project;
 
 //create genres table
 
