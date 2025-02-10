@@ -6,16 +6,14 @@ const Footer = () => {
   return (
     <footer className="footer-container">
       <div className="footer-content">
-        {/* Company Section */}
         <div className="footer-column">
           <h4>Company</h4>
           <ul>
             <li><Link to="/about-us">About Us</Link></li>
-            <li><Link to="/t&c">Terms and conditions</Link></li>
+            <li><Link to="/t&c">Terms & Conditions</Link></li>
           </ul>
         </div>
 
-        {/* Customer Service Section */}
         <div className="footer-column">
           <h4>Customer Service</h4>
           <ul>
@@ -24,7 +22,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Social Media Section */}
         <div className="footer-column">
           <h4>Follow Us</h4>
           <div className="social-icons">
@@ -35,7 +32,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Copyright Section */}
       <div className="footer-bottom">
         <p>&copy; {new Date().getFullYear()} Vinyl Vault. All Rights Reserved.</p>
       </div>
