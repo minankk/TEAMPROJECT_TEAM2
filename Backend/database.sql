@@ -2,10 +2,13 @@
 Pre-requisite 
 Install mysql work bench
 Create new Connection
-Add a new schema name - vinyl database
-    
 */
 
+
+create database Team_Project;
+
+use Team_Project;
+    
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -23,23 +26,8 @@ INSERT INTO users (username, email, password, role) VALUES
 ('Admin user', 'admin@example.com', 'adminpass', 'admin');
 
 
--- Creating the database
-CREATE DATABASE Team_Project;
-USE Team_Project;
 
--- Create genres table
--- Users Table
-CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(50),
-    phone_number VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
+l
 CREATE TABLE cart (
     cart_id INT AUTO_INCREMENT PRIMARY KEY, 
     user_id INT NOT NULL,                  
@@ -89,7 +77,7 @@ CREATE TABLE order_tracking (
 );
 
 -- Exhibits Table (Wishlist)
-CREATE TABLE exhibits (
+CREATE TABLE whishlist (
     wishlist_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id),
     product_id INT REFERENCES products(product_id),
@@ -135,6 +123,17 @@ CREATE TABLE products (
 );
 
 -- Artists Table
+=======
+//create genres table
+
+CREATE TABLE genres (
+    genre_id INT AUTO_INCREMENT PRIMARY KEY,
+    genre_name VARCHAR(255) UNIQUE NOT NULL
+);
+
+//create artists table
+
+
 CREATE TABLE artists (
     artist_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -259,7 +258,6 @@ VALUES
 (23, 'The Blueprint', (SELECT artist_id FROM artists WHERE name = 'Jay-Z'), 23, (SELECT genre_id FROM genres WHERE name = 'Hip-hop'), '2001-09-11', 40.00, 'Backend\data\images\Jay-Z – The Blueprint.webp', NOW(), NOW()),
 (24, 'The Marshall Mathers LP', (SELECT artist_id FROM artists WHERE name = 'Eminem'), 24, (SELECT genre_id FROM genres WHERE name = 'Hip-hop'), '2000-05-23', 40.00, 'Backend\data\images\Eminem – The Marshall Mathers LP.jpg', NOW(), NOW()),
 (25, 'Ready to Die', (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.'), 25, (SELECT genre_id FROM genres WHERE name = 'Hip-hop'), '1994-09-13', 50.00, 'Backend\data\images\51pil+A8wQL._UF894,1000_QL80_.jpg', NOW(), NOW());
-
 
 -- Insert Inventory
 INSERT INTO inventory (product_id, stock_quantity, created_at, updated_at)
