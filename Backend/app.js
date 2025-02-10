@@ -65,11 +65,6 @@ app.use("/signup", signUpRoutes)
 app.use('/cart', myCartRoutes);// Cart-related API routes (additional part)
 app.use('/products', productsRoutes);
 
-console.log("productsRoutes:", productsRoutes);
-console.log("pageRoutes:", pageRoutes);
-console.log("authRoutes:", authRoutes);
-console.log("dashboardRoutes:", dashboardRoutes);
-console.log("signUpRoutes:", signUpRoutes);
 
 //start the Express server on a specific port 
 const port = process.env.PORT || 5000;
