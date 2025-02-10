@@ -2,7 +2,7 @@
 .navbar-container {
   display: flex;
   align-items: center;
-  background: black;
+  background: #151515;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   padding: 15px 40px;
   color: white;
@@ -27,21 +27,21 @@
 .navbar ul {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 30px;
   margin: 0;
   padding: 0;
 }
 
 .navbar ul li a {
   text-decoration: none;
-  color: #efdac4 !important;
+  color: #f6f6f4 !important;
   font-size: 1rem;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .navbar ul li a:hover {
-  color: #d72638 !important; /* Matching red color */
+  color: #b74533 !important; /* Matching red color */
 }
 
 /* Search & Icons - Right Side */
@@ -53,30 +53,32 @@
 
 /* Larger, More Rounded Search Bar */
 .search-input {
-  width: 350px; /* Wider */
+  width: 450px; /* Wider */
   padding: 10px 15px;
   border-radius: 25px; /* More rounded */
-  border: 1px solid #444;
+  border: 1px solid #eeeeee;
   background: #222;
   color: white;
   font-size: 14px;
-  transition: 0.3s;
+  transition: border-color 0.3s;
 }
 
 .search-input::placeholder {
-  color: #efdac4;
+  color: #f6f6f4;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #861621;
+
+  border-color: #b74533;
+
 }
 
 /* Icons Styling */
 .user-btn, .cart-btn {
   background: transparent;
   border: none;
-  color: #efdac4;
+  color: #f6f6f4;
   font-size: 22px;
   cursor: pointer;
   transition: color 0.3s;
@@ -84,5 +86,5 @@
 
 .user-btn:hover,
 .cart-btn:hover {
-  color: #d72638;
+  color: #b74533;
 }

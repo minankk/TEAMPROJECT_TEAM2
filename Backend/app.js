@@ -62,7 +62,9 @@ app.use("/", pageRoutes);   // entry point
 app.use("/login", authRoutes);  
 app.use("/dashboard", dashboardRoutes);
 app.use("/signup", signUpRoutes)
+
 app.use('/api/cart', myCartRoutes);　　// Cart-related API routes (additional part)
+
 
 
 //start the Express server on a specific port 

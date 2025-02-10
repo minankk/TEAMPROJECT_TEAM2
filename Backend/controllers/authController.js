@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
-
+        console.log('Received login request');
         // Validation checks
         if (!username || !password) {
             return res.status(400).json({ message: 'username and password are required' });
@@ -26,13 +26,16 @@ exports.login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
-
+      
         // Set session variables
         req.session.loggedIn = true;
         req.session.username = user.user_name;
         req.session.user_id = user.user_id;
         req.session.role = user.role;
-
+        
+        // Log the session data for debugging
+        console.log(req.session);
+        
         return res.status(200).json({ 
             message: 'Login successful', 
             user: { username: user.user_name }
@@ -40,7 +43,7 @@ exports.login = async (req, res) => {
 
     } catch (error) {
         console.error('Login error:', error.stack);
-        return res.status(500).json({ message: 'Internal server error' , error: error.message});
+        return res.status(500).json({ message: 'Internal server error'});
     }
 };
 
