@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { dashboard } = require('../controllers/pageController');
-const userController  = require('../controllers/userController');
+
+const { viewDashboard, changePassword} = require('../controllers/userController');
 
 
-router.get('/', dashboard);
+router.get('/', viewDashboard);
 
-router.get('/profile', userController.viewProfile);
-router.post('/change-password', userController.changePassword);
+router.post('/change-password', changePassword);
 
 module.exports = router;
