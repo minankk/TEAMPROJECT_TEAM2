@@ -6,7 +6,7 @@ exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
         console.log('Received login request');
-        // Validation checks
+        // Validation
         if (!username || !password) {
             return res.status(400).json({ message: 'username and password are required' });
         }
@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
 
         const user = results[0];
 
-        // Compare hashed password asynchronously
+        // Compare hashed password 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
