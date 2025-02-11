@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import './ProductsPage.css';
 
 const ProductsPage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/products')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched products:', data); // Log the fetched data
+        setProducts(data);
+      })
+      .catch(error => console.error('Error fetching products:', error));
+  }, []);
+
   return (
     <main>
-      <section className="categories">
-        <div><img src="#" alt="Albums" /></div>
-        <div><img src="#" alt="Artists" /></div>
-        <div><img src="#" alt="Genres" /></div>
-        <div><img src="#" alt="Top Rated" /></div>
-      </section>
-
       <section className="products">
         <h2>Newest Additions</h2>
         <div className="product-grid">
-          <div className="product-card">Product 1</div>
-          <div className="product-card">Product 2</div>
-          <div className="product-card">Product 3</div>
-          <div className="product-card">Product 4</div>
+          {products.map(product => (
+            <div key={product.product_id} className="product-card">
+              <img src={product.cover_image_url} alt={product.album_name} />
+              <h3>{product.album_name}</h3>
+              <p>{product.artist_name}</p>
+              <p>{product.genre}</p>
+              <p>{product.release_date}</p>
+              <p>${product.price}</p>
+            </div>
+          ))}
         </div>
       </section>
     </main>
