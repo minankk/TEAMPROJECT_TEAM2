@@ -41,7 +41,7 @@
 }
 
 .navbar ul li a:hover {
-  color: #b74533 !important; /* Matching red color */
+  color: #7c1816 !important; /* Matching red color */
 }
 
 /* Search & Icons - Right Side */
@@ -70,7 +70,7 @@
 .search-input:focus {
   outline: none;
 
-  border-color: #b74533;
+  border-color: #7c1816;
 
 }
 
@@ -86,5 +86,5 @@
 
 .user-btn:hover,
 .cart-btn:hover {
-  color: #b74533;
+  color: #7c1816;
 }
