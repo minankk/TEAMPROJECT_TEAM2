@@ -1,7 +1,7 @@
 // routes/myCart.js
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db'); // Database connection configuration
+const db = require('../db'); 
 
 // POST /api/cart/add (Add item to the cart)
 router.post('/add', (req, res) => {

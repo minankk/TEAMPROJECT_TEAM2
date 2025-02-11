@@ -12,7 +12,7 @@ USE Team_Project;
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY, 
-    first_name VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
@@ -22,7 +22,7 @@ CREATE TABLE users (
 
 //to insert the values into the user table
 
-INSERT INTO users (username, email, password, role) VALUES 
+INSERT INTO users (user_name, email, password, role) VALUES 
 ('Ashmin Abisha', 'ashminabishaj@gmail.com', 'Ashmin@123', 'user'),
 ('Admin user', 'admin@example.com', 'adminpass', 'admin');
 
@@ -223,7 +223,7 @@ VALUES
   ('Led Zeppelin IV', 12, '1971-11-08'),         
   ('Abbey Road', 13, '1969-09-26'),               
   ('Hotel California', 14, '1976-12-08'),         
-  ('The Wall', 11, '1979-11-30'),                 -
+  ('The Wall', 11, '1979-11-30'),                 
   ('Get Rich or Die Tryin’', 15, '2003-02-06'),    
   ('To Pimp a Butterfly', 16, '2015-03-15'),      
   ('The Blueprint', 17, '2001-09-11'),            
