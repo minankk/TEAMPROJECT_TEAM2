@@ -7,6 +7,7 @@ import ProductsPage from './ProductsPage';
 import LoginPage from './LoginPage';
 import CartPage from './CartPage'; 
 import ContactUsPage from './ContactUsPage';
+import DashboardPage from './Dashboard';
 
 //import DashboardPage from './DashboardPage'; // Import the dashboard page
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<CartPage userId={userId} />} />
         <Route path="contact-us" element={<ContactUsPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
 
       </Routes>
       <Footer />
