@@ -6,7 +6,7 @@ exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
         console.log('Received login request');
-        // Validation
+        // Validation for fields present
         if (!username || !password) {
             return res.status(400).json({ message: 'username and password are required' });
         }
