@@ -22,9 +22,9 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
 
         <Route path="/cart" element={<CartPage />} />
-//         <Route path="/cart" element={<CartPage userId={userId} />} />
-//         <Route path="contact-us" element={<ContactUsPage />} />
-//         <Route path="/dashboard" element={<DashboardPage />} />
+         <Route path="/cart" element={<CartPage userId={userId} />} />
+         <Route path="contact-us" element={<ContactUsPage />} />
+         <Route path="/dashboard" element={<DashboardPage />} />
 
       </Routes>
       <Footer />
