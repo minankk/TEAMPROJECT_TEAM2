@@ -10,11 +10,13 @@ const Navbar = () => {
 
   useEffect(() => {
     // Fetch login status from the backend
-    fetch("/")
+    fetch('http://localhost:5000/checksession', { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setIsLoggedIn(data.loggedIn);
+        
       })
+      
       .catch((error) => console.error("Error fetching login status:", error));
   }, []);
 
