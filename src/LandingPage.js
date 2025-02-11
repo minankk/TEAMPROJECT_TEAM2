@@ -98,14 +98,14 @@ function LandingPage() {
             <img src={Barbie} alt="Product 1" />
             <div className="item-details">
               <h3 className="item-title">Barbie the Album Original Soundtrack</h3>
-              <p className="item-price">£25.00</p>
+              <p className="item-price">25.00</p>
             </div>
           </div>
           <div className="item">
             <img src={Eminem} alt="Product 2" />
             <div className="item-details">
               <h3 className="item-title">The Marshall Mathers LP</h3>
-              <p className="item-price">£30.00</p>
+              <p className="item-price">$30.00</p>
             </div>
           </div>
           <div className="item">
