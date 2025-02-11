@@ -1,14 +1,13 @@
 
 
-exports.landingPage = (req, res) => {
-  const isLoggedIn = req.session.loggedIn || false;
-  // Return login status to the frontend
-  res.status(200).json({ isLoggedIn });
-  /*if (!isLoggedIn) {
-    res.redirect('/login');  // Redirect to login page if not logged in
-  } else {
-    res.redirect('/dashboard');  // Redirect to dashboard if logged in
-  }*/
+exports.landingPage = async (req, res) => {
+  if (req.session.loggedIn) {
+      // Redirect to dashboard if already logged in
+      return res.redirect('/dashboard'); 
+  }
+
+  // Otherwise, show the landing page
+  res.status(200).json({ message: 'Welcome to the landing page' }); 
 };
 
 exports.dashboard = (req, res) => {
