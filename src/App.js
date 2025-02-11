@@ -5,10 +5,9 @@ import Footer from './components/Footer';
 import LandingPage from './LandingPage';
 import ProductsPage from './ProductsPage';
 import LoginPage from './LoginPage';
-
+import ContactUsPage from './ContactUsPage';
 import CartPage from './CartPage';
-
-//import DashboardPage from './DashboardPage'; // Import the dashboard page
+import DashboardPage from './DashboardPage';
 
 
 function App() {
