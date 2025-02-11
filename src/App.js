@@ -12,7 +12,7 @@ import DashboardPage from './DashboardPage';
 
 function App() {
   const userId = 1;　// Temporary user ID. It can be dynamically changed later when the login feature is added
-  
+
   return (
     <Router>
       <Navbar />
