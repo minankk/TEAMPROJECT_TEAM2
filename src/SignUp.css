@@ -1,0 +1,174 @@
+/* General Styles */
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial,  sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+}
+main {
+  flex: 1;
+}
+
+/* Styling the Header */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: rgba(21,97,109,0.27);
+  flex-shrink: 0;
+
+}
+
+  .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+  }
+
+/* Styling the Nav-Bar */
+
+.navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+}
+
+.navbar ul li {
+  display: inline;
+}
+
+.navbar ul li a{
+  text-decoration: none;
+  color: black;
+
+}
+
+.navbar ul li a:hover{
+  background-color: rgba(15,70,79,0.27);
+}
+
+
+.Search-bar {
+  display: flex;
+  gap: 10px;
+
+}
+
+.Search-bar input {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/*Styling the Signup-container */
+
+.Signup-container{
+  position: absolute;
+  top:40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  width: 400px;
+  background-color: white;
+  border: 1px solid #ccc ;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.Signup-container h1{
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inputfield{
+  margin-bottom: 20px;
+}
+
+.inputfield label{
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.inputfield input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  background-color: rgba(21,97,109,0.27);
+
+}
+
+/* Admin Sign Up Button gap */
+.admin-signup{
+  margin-left: 150px;
+
+}
+
+
+/* Styling the footer*/
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 20px;
+  background-color: rgba(21,97,109,0.27);
+  flex-shrink: 0;
+}
+
+.Footer-links{
+  display: flex;
+  gap: 10px;
+
+}
+
+.Footer-links div{
+  margin: 0;
+}
+
+.Footer-links h4,
+.Footer-links p {
+  margin: 5px 0;
+
+}
+
+
+.Footer-links a{
+  text-decoration: none;
+  color: black;
+}
+
+.Footer-links a:hover{
+  background-color: rgba(15,70,79,0.27);
+}
+
+
+/* Styling of buttons */
+button {
+  background-color: #f5f5dc;;
+  color:black;
+  border: none;
+  border-radius: 50px;
+
+}
+
+button:hover{
+  background-color: #666666;
+}
