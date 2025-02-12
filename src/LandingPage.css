@@ -1,72 +1,84 @@
-.carousel {
+/* General Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Titan One', sans-serif;
+  background-color: #f6f5f3;
+  color: #000;
+}
+
+/* Landing Page Container */
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Ensure everything is centered */
+}
+
+/* Hero Section */
+.hero {
   position: relative;
   width: 100%;
-  max-width: 1750px;
-  margin: auto;
+  max-height: 600px;
   overflow: hidden;
 }
 
-.carousel-inner {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.carousel-item {
-  min-width: 100%;
-  box-sizing: border-box;
-}
-
-.carousel-item img {
+.hero-image {
   width: 100%;
-  height: auto;
   object-fit: cover;
-  border-radius: 10px;
 }
 
-.carousel-control-prev, .carousel-control-next {
+.hero-text {
   position: absolute;
   top: 50%;
+  left: 10%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
+  text-align: left;
   color: white;
+  max-width: 40%;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.shop-all-button {
+  background-color: #7c1816;
+  color: white;
+  padding: 12px 24px;
   border: none;
-  padding: 10px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-.carousel-control-prev {
-  left: 10px;
+.shop-all-button:hover {
+  background-color: black;
 }
 
-.carousel-control-next {
-  right: 10px;
-}
-
-.banner {
-  height: auto;
-  background-color: #ffffff !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* Steps Section */
 .steps-section {
   display: flex;
-  justify-content: space-between;
-  background-color: #eeeeee;
-  padding: 50px 20px;
-  text-align: center;
-  margin-top: 40px;
-  border-radius: 10px;
+  justify-content: center; /* Center the steps section */
+  align-items: center;
+  width: 80%;
+  margin: 40px auto; /* Centered */
+  gap: 20px;
 }
 
 .step {
-  width: 30%;
-  background-color: #F6F6F4;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+  border-radius: 5px;
+  background: rgb(237, 236, 236);
   transition: transform 0.3s ease-in-out;
+  width: 25%;
+  min-width: 180px; /* Ensure they don't shrink too much */
 }
 
 .step:hover {
@@ -74,41 +86,122 @@
 }
 
 .step-number {
-  width: 50px;
-  height: 50px;
-  background-color: #151515;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  margin: 0 auto 10px;
-}
-
-.step h3 {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 2rem;
+  color: #7c1816;
   margin-bottom: 10px;
 }
 
+.step h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #7c1816;
+}
+
 .step p {
-  font-size: 14px;
+  font-size: 0.9rem;
   margin-bottom: 15px;
 }
 
 .step button {
-  background-color: #151515;
+  background-color: black;
   color: white;
+  padding: 8px 16px;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
 }
 
 .step button:hover {
-  background-color: #333;
+  background-color: #7c1816;
+}
+
+/* Staff Picks Section */
+.staff-picks {
+  width: 80%;
+  text-align: center;
+  margin: 40px auto; /* Centered */
+}
+
+.staff-picks h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Ensure exactly 4 items per row */
+.staff-picks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Force 4 items in a row */
+  gap: 20px;
+  width: 100%;
+}
+
+/* Individual item container */
+.item-lanidng {
+  background: white;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  height: 350px; /* Increased height */
+  width: 100%; /* Ensures proper spacing */
+}
+
+.item-lanidng:hover {
+  transform: scale(1.05);
+}
+
+.item-lanidng img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.item-lanidng h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.item-lanidng p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #7c1816;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .staff-picks-grid {
+    grid-template-columns: repeat(2, 1fr); /* Adjust to 2 per row */
+  }
+
+  .steps-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .staff-picks-grid {
+    grid-template-columns: 1fr; /* Show one item per row on small screens */
+  }
+
+  .item-lanidng {
+    width: 80%;
+    height: auto;
+  }
+
+  .hero-text {
+    max-width: 80%;
+  }
 }
