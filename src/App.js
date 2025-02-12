@@ -12,7 +12,6 @@ import CartPage from './CartPage'
 
 //import DashboardPage from './DashboardPage'; // Import the dashboard page
 
-
 function App() {
   const userId = 1;　// Temporary user ID. It can be dynamically changed later when the login feature is added
 
