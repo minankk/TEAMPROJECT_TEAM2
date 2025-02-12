@@ -11,7 +11,7 @@ const LoginPage = () => {
     e.preventDefault();
     console.log('Logging in with:', { username, password });
 
-    fetch('http://localhost:5000/login', {
+    fetch('http://localhost:5001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const LoginPage = () => {
           alert(data.message);
 
           // After successful login, check session status and redirect
-          fetch('http://localhost:5000/checksession', { credentials: 'include' })
+          fetch('http://localhost:5001/checksession', { credentials: 'include' })
             .then((res) => res.json())
             .then((sessionData) => {
               if (sessionData.loggedIn) {

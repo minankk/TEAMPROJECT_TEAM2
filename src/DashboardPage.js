@@ -1,10 +1,56 @@
+import React, { useEffect, useState } from 'react';
+import './DashboardPage.css';
+
+const Sidebar = () => (
+  <div className="sidebar">
+    <ul>
+      <li><a href="#">Overview</a></li>
+      <li><a href="#">Cart</a></li>
+      <li><a href="#">Order Tracking</a></li>
+      <li><a href="#">Order History</a></li>
+      <li><a href="#">Favorites</a></li>
+      <li><a href="#">Personal Info</a></li>
+      <li><a href="#">Messages</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
+);
+
+const Overview = () => {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/dashboard");
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div className="overview">
+      <h2>Overview</h2>
+      <p>Personal Info: {data.username || 'Loading...'}</p>
+      <p>Message: {data.message || 'Loading...'}</p>
+    </div>
+  );
+};
+
 const DashboardPage = () => {
-    return (
-      <div>
-        <h1>Dashboard</h1>
-        <p>Welcome to the dashboard!</p>
+  return (
+    <div className="dashboard">
+      <Sidebar />
+      <div className="main-content">
+        <Overview />
       </div>
-    );
-  };
-  
-  export default DashboardPage;
+    </div>
+  );
+};
+
+export default DashboardPage;
