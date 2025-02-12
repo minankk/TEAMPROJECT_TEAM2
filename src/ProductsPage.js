@@ -21,7 +21,7 @@ const ProductsPage = () => {
         <div className="product-grid">
           {products.map(product => (
             <div key={product.product_id} className="product-card">
-              <img src={product.cover_image_url} alt={product.album_name} />
+              <img src={`http://localhost:5000${product.cover_image_url}`} alt={product.name} />
               <h3>{product.album_name}</h3>
               <p>{product.artist_name}</p>
               <p>{product.genre}</p>
