@@ -10,13 +10,13 @@ const Navbar = () => {
 
   useEffect(() => {
     // Fetch login status from the backend
-    fetch('http://localhost:5000/checksession', { credentials: 'include' })
+    fetch('http://localhost:5001/checksession', { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setIsLoggedIn(data.loggedIn);
-        
+
       })
-      
+
       .catch((error) => console.error("Error fetching login status:", error));
   }, []);
 
@@ -38,7 +38,6 @@ const Navbar = () => {
           <li><Link to="/about-us">ABOUT US</Link></li>
           <li><Link to="/products">BROWSE PRODUCTS</Link></li>
           <li><Link to="/sale">SALE</Link></li>
-          <li><Link to="/contact-us">CONTACT US</Link></li>
         </ul>
       </nav>
 
