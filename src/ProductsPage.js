@@ -26,7 +26,7 @@ const ProductsPage = () => {
               <p>{product.artist_name}</p>
               <p>{product.genre}</p>
               <p>{product.release_date}</p>
-              <p>${product.price}</p>
+              <p>{product.price}</p>
             </div>
           ))}
         </div>
