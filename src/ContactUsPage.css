@@ -6,29 +6,29 @@ html, body {
     font-family: 'Arial', sans-serif;
     color: #151515;
   }
-  
+
   body {
     display: flex;
     flex-direction: column;
     background-color: rgb(255, 255, 255) !important;
   }
-  
+
   .contact-page {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
   }
-  
+
   .contact-header {
     background-color: #151515;
     color: white;
     padding: 40px;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
     border-bottom: 4px solid #151515;
   }
-  
+
   .contact-form-container {
     flex: 1;
     display: flex;
@@ -36,7 +36,7 @@ html, body {
     align-items: center;
     padding: 20px;
   }
-  
+
   .contact-form {
     background-color: #eeeeee;
     padding: 30px;
@@ -50,7 +50,7 @@ html, body {
   .contact-form:hover {
     transform: translateY(-5px);
   }
-  
+
   .contact-form label {
     display: block;
     margin-bottom: 8px;
@@ -58,7 +58,7 @@ html, body {
     font-size: 16px;
     color: #151515;
   }
-  
+
   .contact-form input,
   .contact-form textarea {
     width: 100%;
@@ -70,29 +70,29 @@ html, body {
     font-size: 14px;
     transition: border-color 0.3s ease;
   }
-  
+
   .contact-form input:focus,
   .contact-form textarea:focus {
-    border-color: #b74533;
+    border-color: #7c1816;
     outline: none;
   }
 
   .contact-form button {
-    background-color: #b74533;
+    background-color: #7c1816;
     color: white;
     border: none;
     padding: 12px 20px;
-    border-radius: 8px;
+    border-radius: 3px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease, transforn 0.3s ease;
   }
-  
+
   .contact-form button:hover {
     background-color: #333;
     transform: translateY(-2px);
   }
-  
+
   .contact-footer {
     background-color: #151515;
     color: white;
