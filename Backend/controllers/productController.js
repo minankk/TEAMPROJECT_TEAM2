@@ -1,17 +1,17 @@
 
-const db = require('../db'); // Adjust the path if needed
+const db = require('../db'); 
+const formatDate = require('../helpers/dateFormatter');
+const formatCurrency = require('../helpers/currencyFormatter')
 
-
-/*exports.getAllProducts = (req, res) => {
-    connection.query('SELECT * FROM products', (err, results) => {
-        if (err) return res.status(500).send('Failed to fetch products');
-        res.status(200).json(results);
-    });
-};*/
 
 exports.getAllProducts = (req, res) => {
   db.execute("SELECT * FROM products")
       .then(([results]) => {
+          results.forEach(product => {
+              product.release_date = formatDate(product.release_date); 
+              product.price = formatCurrency(product.price);
+              
+          });
           res.status(200).json(results);
       })
       .catch((err) => {
@@ -19,8 +19,6 @@ exports.getAllProducts = (req, res) => {
           res.status(500).json({ error: "Failed to fetch products" });
       });
 };
-
-
 
 
 // Controller function to filter products by genre

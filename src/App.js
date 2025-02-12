@@ -8,6 +8,7 @@ import LoginPage from './LoginPage';
 import ContactUsPage from './ContactUsPage';
 import FAQ from './faq'; 
 import TermsAndConditions from './termsandconditions';
+import CartPage from './CartPage';
 
 //import DashboardPage from './DashboardPage'; // Import the dashboard page
 
