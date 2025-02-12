@@ -1,9 +1,9 @@
 /**
- * Importing required modules: 
- * express (framework), 
- * dotenv (environment variables), 
- * hbs (templating engine), 
- * body-parser (request body parsing), 
+ * Importing required modules:
+ * express (framework),
+ * dotenv (environment variables),
+ * hbs (templating engine),
+ * body-parser (request body parsing),
  * Cors (cross-origin resource sharing).
  */
 const express = require("express");
@@ -17,7 +17,7 @@ const path = require('path');
 const pageRoutes = require('./routes/landingPage');  
 const authRoutes = require('./routes/login');  
 const dashboardRoutes = require('./routes/dashboard');
-const signUpRoutes = require('./routes/signup'); 
+const signUpRoutes = require('./routes/signup');
 const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
@@ -30,7 +30,7 @@ dotenv.config({
 })
 
 // Create an Express application instance
-const app = express(); 
+const app = express();
 
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
@@ -44,13 +44,13 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 
 app.use(cors({
-  origin: 'http://localhost:3000',  
-  credentials: true, 
+  origin: 'http://localhost:3000',
+  credentials: true,
 }));
 
 // To manage user login state
 app.use(session({
-    secret: 'hardcodedSecretKey123', 
+    secret: 'hardcodedSecretKey123',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }  // Set to true in production with HTTPS
@@ -61,7 +61,7 @@ app.use(session({
  */
 app.use(express.json());
 app.use("/", pageRoutes);   // entry point
-app.use("/login", authRoutes);  
+app.use("/login", authRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/signup", signUpRoutes);
 app.use('/cart', myCartRoutes);
@@ -70,9 +70,8 @@ app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",sessionRoutes)
 
 
-//start the Express server on a specific port 
-const port = process.env.PORT || 5000;
+//start the Express server on a specific port
+const port = process.env.PORT || 5001;
 app.listen(port,()=>{
     console.log(`Server started on port ${port}`);
 })
-
