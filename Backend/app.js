@@ -23,6 +23,7 @@ const signUpRoutes = require('./routes/signup');
 const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
+const myCartRoutes = require('./routes/myCart');
 
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
