@@ -8,8 +8,9 @@ import LoginPage from './LoginPage';
 import ContactUsPage from './ContactUsPage';
 import FAQ from './faq'; 
 import TermsAndConditions from './termsandconditions';
-
-//import DashboardPage from './DashboardPage'; // Import the dashboard page
+import CartPage from './CartPage';
+import DashboardPage from './DashboardPage';
+import Signup from './signup';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <Router>
+
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -26,7 +28,8 @@ function App() {
         <Route path="contact-us" element={<ContactUsPage />} />
         <Route path="/FAQs" element={<FAQ />} /> 
         <Route path="/t&c" element={<TermsAndConditions/>} />
-
+        <Route path="/dashboard" element={<DashboardPage/>} />
+        <Route path="/signup" element={<Signup/>} />
       </Routes>
       <Footer />
     </Router>
