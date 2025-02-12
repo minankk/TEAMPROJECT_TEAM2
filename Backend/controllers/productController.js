@@ -2,15 +2,29 @@
 const db = require('../db'); // Adjust the path if needed
 
 
-exports.getAllProducts = (req, res) => {
+/*exports.getAllProducts = (req, res) => {
     connection.query('SELECT * FROM products', (err, results) => {
         if (err) return res.status(500).send('Failed to fetch products');
         res.status(200).json(results);
     });
+};*/
+
+exports.getAllProducts = (req, res) => {
+  db.execute("SELECT * FROM products")
+      .then(([results]) => {
+          res.status(200).json(results);
+      })
+      .catch((err) => {
+          console.error("Error fetching products:", err);
+          res.status(500).json({ error: "Failed to fetch products" });
+      });
 };
 
+
+
+
 // Controller function to filter products by genre
-exports.filterByGenre = async (req, res) => {
+/*exports.filterByGenre = async (req, res) => {
   const { genre } = req.params;
 
   try {
@@ -155,4 +169,4 @@ exports.filterByArtist = async (req, res) => {
     console.error('Error filtering products by artist:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-};
+};*/
