@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 import "./SignUp.css"; // Ensure CSS is correctly linked
 
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
