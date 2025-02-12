@@ -1,7 +1,6 @@
 import React from "react";
 import "./SignUp.css"; // Ensure CSS is correctly linked
-import Navbar from "./Navbar"; // Import Navbar component
-import Footer from "./Footer"; // Import Footer component
+
 
 const Signup = () => {
   const handleSubmit = (event) => {

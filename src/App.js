@@ -10,6 +10,7 @@ import FAQ from './faq';
 import TermsAndConditions from './termsandconditions';
 import CartPage from './CartPage';
 import Signup from './signup';
+import DashboardPage from './DashboardPage';
 
 
 function App() {
