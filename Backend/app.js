@@ -12,7 +12,7 @@ const hbs = require("hbs")
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const session = require('express-session');
-
+const path = require('path');
 
 const pageRoutes = require('./routes/landingPage');  
 const authRoutes = require('./routes/login');  
@@ -21,6 +21,8 @@ const signUpRoutes = require('./routes/signup');
 const myCartRoutes = require('./routes/myCart');  
 const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
+const productsRoutes = require('./routes/products');
+
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
@@ -38,6 +40,8 @@ app.use((req, res, next) => {
   next();  // Allow request to proceed
 });
 
+// Serve images from the 'data/images' folder
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 
 app.use(cors({
   origin: 'http://localhost:3000',  
@@ -64,7 +68,7 @@ app.use("/login", authRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/signup", signUpRoutes);
 app.use('/cart', myCartRoutes);
-//app.use('/products', productsRoutes);
+app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",sessionRoutes)
 

@@ -1,4 +1,3 @@
-const users = require('../data/mockData');
 const db = require('../db');
 const nodemailer = require("nodemailer");
 

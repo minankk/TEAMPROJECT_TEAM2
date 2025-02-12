@@ -3,9 +3,9 @@ const router = express.Router();
 const productsController = require('../controllers/productController');
 
 // GET /api/products - Get all products
-router.get('/', productsController.getProducts);
+router.get('/', productsController.getAllProducts);
 
-// GET /api/products/filter/genre/:genre - Filter products by genre
+/*// GET /api/products/filter/genre/:genre - Filter products by genre
 router.get('/filter/genre/:genre', productsController.filterByGenre);
 
 // GET /api/products/filter/decade/:decade - Filter products by decade
@@ -18,6 +18,6 @@ router.get('/filter/best-sellers', productsController.filterBestSellers);
 router.get('/filter/sale', productsController.filterOnSale);
 
 // GET /api/products/filter/artist/:artist - Filter products by artist
-router.get('/filter/artist/:artist', productsController.filterByArtist);
+router.get('/filter/artist/:artist', productsController.filterByArtist);*/
 
 module.exports = router;
