@@ -12,12 +12,14 @@ function LandingPage() {
       {/* Hero Section */}
       <section className="hero">
         <img src={Carousel3} alt="Vinyl Collection" className="hero-image" />
-        <div className="hero-text hero-text-left">
+        <div className="hero-text">
           <h1>Enjoyment in Every Sound</h1>
           <p>
             We are your local record store - online. A record store created and stocked by vinyl lovers for vinyl lovers.
           </p>
-          <button className="shop-all-button">Shop All</button>
+          <button className="shop-all-button">
+            Shop All <span className="arrow">→</span>
+          </button>
         </div>
       </section>
 
@@ -45,30 +47,34 @@ function LandingPage() {
 
       {/* Staff Picks Section */}
       <section className="staff-picks">
-        <h2>Staff pics</h2>
+        <div className="staff-picks-header">
+          <h2>STAFF PICKS</h2>
+          <button className="shop-all-button">
+            Shop All <span className="arrow">→</span>
+          </button>
+        </div>
         <div className="staff-picks-grid">
-          <div className="item-lanidng">
+          <div className="item-landing">
             <img src={Barbie} alt="Barbie Vinyl" />
             <h3>Barbie The Album</h3>
             <p>£25.00</p>
           </div>
-          <div className="item-lanidng">
+          <div className="item-landing">
             <img src={Eminem} alt="Eminem Vinyl" />
             <h3>The Marshall Mathers LP</h3>
             <p>£30.00</p>
           </div>
-          <div className="item-lanidng">
+          <div className="item-landing">
             <img src={HotelCalifornia} alt="Hotel California Vinyl" />
             <h3>Hotel California</h3>
             <p>$20.00</p>
           </div>
-          <div className="item-lanidng">
+          <div className="item-landing">
             <img src={Sweetener} alt="Sweetener Vinyl" />
             <h3>Sweetener</h3>
             <p>$22.00</p>
           </div>
         </div>
-        <button className="shop-all-button">Shop All</button>
       </section>
     </div>
   );
