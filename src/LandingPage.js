@@ -27,7 +27,7 @@ function LandingPage() {
           <div className="step-number">1</div>
           <h3>Sign Up</h3>
           <p>Join us to gain access to exclusive vinyl collections.</p>
-          <button>Sign Up</button>
+          <button onClick={() => window.location.href = '/signup'}>Sign Up</button>
         </div>
         <div className="step">
           <div className="step-number">2</div>
