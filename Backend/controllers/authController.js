@@ -9,24 +9,21 @@ exports.login = async (req, res) => {
         if (!username || !password) {
             return res.status(400).json({ message: 'username and password are required' });
         }
-
-        // Query the database 
         const [results] = await db.execute('SELECT * FROM users WHERE user_name = ?', [username]);
 
         // If no user found
         if (results.length === 0) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Please Sign Up' });
         }
-
         const user = results[0];
 
         // Compare hashed password 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Password do not match' });
         }
       
-        // Set session variables
+        // Set session variables for
         req.session.loggedIn = true;
         req.session.username = user.user_name;
         req.session.user_id = user.user_id;
