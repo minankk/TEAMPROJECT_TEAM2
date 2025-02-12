@@ -42,8 +42,8 @@ function ContactUs() {
   return (
     <div className="contact-page">
       <header className="contact-header">
-        <h1>Contact Us</h1>
-        <p>We'd love to hear from you! Get in touch with us below.</p>
+        <h1>CONTACT US</h1>
+        <p>We'd love to hear from you! Get in touch with us below</p>
       </header>
 
       <div className="contact-form-container">
