@@ -5,7 +5,7 @@ const ProductsPage = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/products')
+    fetch('http://localhost:5001/products')
       .then(response => response.json())
       .then(data => {
         console.log('Fetched products:', data); // Log the fetched data
@@ -21,7 +21,7 @@ const ProductsPage = () => {
         <div className="product-grid">
           {products.map(product => (
             <div key={product.product_id} className="product-card">
-              <img src={`http://localhost:5000${product.cover_image_url}`} alt={product.name} />
+              <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.name} />
               <h3>{product.album_name}</h3>
               <p>{product.artist_name}</p>
               <p>{product.genre}</p>

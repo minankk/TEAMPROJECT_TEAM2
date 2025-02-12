@@ -1,22 +1,15 @@
 import React from "react";
-import "./Signup.css"; // Ensure CSS is correctly linked
+import "./SignUp.css"; // Ensure CSS is correctly linked
 import Navbar from "./Navbar"; // Import Navbar component
 import Footer from "./Footer"; // Import Footer component
 
 const Signup = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div>
-      {/* Navbar Component */}
-      <Navbar />
-
-      {/* Search Bar */}
-      <div className="search-bar">
-        <input type="text" placeholder="Search here" />
-        <button>🔍</button>
-        <button>🛒</button>
-        <button>👤</button>
-      </div>
-
       {/* Sign Up Container */}
       <main>
         <div className="signup-container">
@@ -56,8 +49,6 @@ const Signup = () => {
         </div>
       </main>
 
-      {/* Footer Component */}
-      <Footer />
     </div>
   );
 };
