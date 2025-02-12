@@ -1,6 +1,7 @@
 import React from "react";
 import "./SignUp.css"; // Ensure CSS is correctly linked
 
+
 const Signup = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
