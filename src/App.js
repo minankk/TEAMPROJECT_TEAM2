@@ -8,15 +8,16 @@ import LoginPage from './LoginPage';
 import ContactUsPage from './ContactUsPage';
 import FAQ from './faq';
 import TermsAndConditions from './termsandconditions';
-import CartPage from './CartPage'
+import CartPage from './CartPage';
+import Signup from './signup';
 
-//import DashboardPage from './DashboardPage'; // Import the dashboard page
 
 function App() {
   const userId = 1;　// Temporary user ID. It can be dynamically changed later when the login feature is added
 
   return (
     <Router>
+
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -26,7 +27,8 @@ function App() {
         <Route path="contact-us" element={<ContactUsPage />} />
         <Route path="/FAQs" element={<FAQ />} />
         <Route path="/t&c" element={<TermsAndConditions/>} />
-
+        <Route path="/dashboard" element={<DashboardPage/>} />
+        <Route path="/signup" element={<Signup/>} />
       </Routes>
       <Footer />
     </Router>

@@ -17,62 +17,6 @@ main {
   flex: 1;
 }
 
-/* Styling the Header */
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 30px;
-  background-color: rgba(21,97,109,0.27);
-  flex-shrink: 0;
-
-}
-
-  .header-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-
-  }
-
-/* Styling the Nav-Bar */
-
-.navbar ul {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-      margin: 0;
-      padding: 0;
-}
-
-.navbar ul li {
-  display: inline;
-}
-
-.navbar ul li a{
-  text-decoration: none;
-  color: black;
-
-}
-
-.navbar ul li a:hover{
-  background-color: rgba(15,70,79,0.27);
-}
-
-
-.Search-bar {
-  display: flex;
-  gap: 10px;
-
-}
-
-.Search-bar input {
-  width: 300px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
 
 /*Styling the Signup-container */
 
