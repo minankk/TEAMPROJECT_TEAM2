@@ -6,12 +6,11 @@ import LandingPage from './LandingPage';
 import ProductsPage from './ProductsPage';
 import LoginPage from './LoginPage';
 import ContactUsPage from './ContactUsPage';
-import FAQ from './faq'; 
+import FAQ from './faq';
 import TermsAndConditions from './termsandconditions';
-import CartPage from './CartPage';
+import CartPage from './CartPage'
 
 //import DashboardPage from './DashboardPage'; // Import the dashboard page
-
 
 function App() {
   const userId = 1;　// Temporary user ID. It can be dynamically changed later when the login feature is added
@@ -25,7 +24,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<CartPage userId={userId} />} />
         <Route path="contact-us" element={<ContactUsPage />} />
-        <Route path="/FAQs" element={<FAQ />} /> 
+        <Route path="/FAQs" element={<FAQ />} />
         <Route path="/t&c" element={<TermsAndConditions/>} />
 
       </Routes>
