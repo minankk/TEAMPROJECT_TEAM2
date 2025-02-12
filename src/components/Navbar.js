@@ -10,7 +10,7 @@ const Navbar = () => {
 
   useEffect(() => {
     // Fetch login status from the backend
-    fetch('http://localhost:5001/checksession', { credentials: 'include' })
+    fetch('http://localhost:5000/checksession', { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setIsLoggedIn(data.loggedIn);
