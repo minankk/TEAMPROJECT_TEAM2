@@ -20,7 +20,7 @@ function ContactUs() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5001/contactUs", {
+      const response = await fetch("http://localhost:5000/contactUs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -42,8 +42,8 @@ function ContactUs() {
   return (
     <div className="contact-page">
       <header className="contact-header">
-        <h1>CONTACT US</h1>
-        <p>We'd love to hear from you! Get in touch with us below</p>
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you! Get in touch with us below.</p>
       </header>
 
       <div className="contact-form-container">

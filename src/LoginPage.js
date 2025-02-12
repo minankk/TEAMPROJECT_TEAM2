@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Import your CSS file
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log('Logging in with:', { username, password });
 
-    fetch('http://localhost:5001/login', {
+    fetch('http://localhost:5000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
-      credentials: 'include',
+      credentials: 'include', 
     })
       .then((response) => response.json())
       .then((data) => {
@@ -27,7 +27,7 @@ const LoginPage = () => {
           alert(data.message);
 
           // After successful login, check session status and redirect
-          fetch('http://localhost:5001/checksession', { credentials: 'include' })
+          fetch('http://localhost:5000/checksession', { credentials: 'include' })
             .then((res) => res.json())
             .then((sessionData) => {
               if (sessionData.loggedIn) {
