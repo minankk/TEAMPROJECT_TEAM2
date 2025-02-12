@@ -84,7 +84,7 @@ exports.changePassword = (req , res) => {
     })
 }
 
-// Contact us page logic after clicking submit
+// Contact us page logic after clicking submit will be sent to the gmail
 
     exports.contact_us = async (req , res) => {
      const {name , email , message} = req.body;
@@ -103,7 +103,7 @@ exports.changePassword = (req , res) => {
             }
         });
 
-        // Email options - template
+        // Email format
         let mailFormat = {
             from: process.env.EMAIL_USER,
             to: "vinylteamproject@gmail.com", 
