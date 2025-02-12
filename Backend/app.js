@@ -12,13 +12,14 @@ const hbs = require("hbs")
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const session = require('express-session');
+
 const path = require('path');
+
 
 const pageRoutes = require('./routes/landingPage');  
 const authRoutes = require('./routes/login');  
 const dashboardRoutes = require('./routes/dashboard');
-const signUpRoutes = require('./routes/signup');
-const myCartRoutes = require('./routes/myCart');  
+const signUpRoutes = require('./routes/signup'); 
 const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
