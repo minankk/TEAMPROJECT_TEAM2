@@ -6,9 +6,10 @@ import LandingPage from './LandingPage';
 import ProductsPage from './ProductsPage';
 import LoginPage from './LoginPage';
 import ContactUsPage from './ContactUsPage';
-import FAQ from './faq';
+import FAQ from './faq'; 
 import TermsAndConditions from './termsandconditions';
 import CartPage from './CartPage';
+import DashboardPage from './DashboardPage';
 import Signup from './signup';
 import DashboardPage from './DashboardPage';
 
@@ -26,7 +27,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cart" element={<CartPage userId={userId} />} />
         <Route path="contact-us" element={<ContactUsPage />} />
-        <Route path="/FAQs" element={<FAQ />} />
+        <Route path="/FAQs" element={<FAQ />} /> 
         <Route path="/t&c" element={<TermsAndConditions/>} />
         <Route path="/dashboard" element={<DashboardPage/>} />
         <Route path="/signup" element={<Signup/>} />
