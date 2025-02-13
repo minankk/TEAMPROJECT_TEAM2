@@ -71,7 +71,7 @@ main {
 }
 
 .input-field input:focus {
-  border-color: #b74533;
+  border-color: #7c1816;
   outline: none;
 }
 
@@ -93,7 +93,7 @@ main {
 
 /* Button Styles */
 .login-container button {
-  background-color: #b74533;
+  background-color: #7c1816;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -138,7 +138,7 @@ main {
 }
 
 .signup-link {
-  background-color: #b74533;
+  background-color: #7c1816;
   color: white;
   padding: 12px 20px;
   border-radius: 20px;
