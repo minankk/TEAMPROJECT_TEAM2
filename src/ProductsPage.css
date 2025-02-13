@@ -12,10 +12,10 @@ body {
   width: 100%;
   max-height: 600px;
   overflow: hidden;
-  margin: 0 !important; 
+  margin: 0 !important;
   padding: 0 !important;
 }
- 
+
 .products-banner-image {
   width: 100%;
   height: 100%;
@@ -52,6 +52,7 @@ body {
 
 main {
   padding: 20px;
+  background: url('./assets/plain-backdrop-decorative-gray-textured.jpg') no-repeat center center fixed;
 }
 
 .categories {
@@ -72,7 +73,7 @@ main {
   border-radius: 5px;
   color: white;
   display: inline-block;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 
 .category-link:hover {
@@ -129,8 +130,8 @@ main {
 .product-image {
   width: 100%;
   height: 100%;
-  max-height: 270px; 
-  object-fit: cover; 
+  max-height: 270px;
+  object-fit: cover;
   border-radius: 10px;
 }
 
