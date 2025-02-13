@@ -256,3 +256,8 @@ html, body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Remove box-shadow from specific buttons */
+.step button {
+  box-shadow: none !important;
+}
