@@ -5,13 +5,18 @@ import Footer from './components/Footer';
 import LandingPage from './LandingPage';
 import ProductsPage from './ProductsPage';
 import LoginPage from './LoginPage';
-import CartPage from './CartPage'; 
 import ContactUsPage from './ContactUsPage';
 import FAQ from './faq'; 
 import TermsAndConditions from './termsandconditions';
+<<<<<<< HEAD
 import Signup from './signup.js'; 
 
 //import DashboardPage from './DashboardPage'; // Import the dashboard page
+=======
+import CartPage from './CartPage';
+import DashboardPage from './DashboardPage';
+import Signup from './signup';
+>>>>>>> 858ba35224f0eb683ac8753ab53fa0ccb8999886
 
 
 function App() {
@@ -19,6 +24,7 @@ function App() {
 
   return (
     <Router>
+
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -28,7 +34,8 @@ function App() {
         <Route path="contact-us" element={<ContactUsPage />} />
         <Route path="/FAQs" element={<FAQ />} /> 
         <Route path="/t&c" element={<TermsAndConditions/>} />
-
+        <Route path="/dashboard" element={<DashboardPage/>} />
+        <Route path="/signup" element={<Signup/>} />
       </Routes>
       <Footer />
     </Router>

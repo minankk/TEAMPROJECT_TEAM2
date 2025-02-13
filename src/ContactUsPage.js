@@ -20,7 +20,7 @@ function ContactUs() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/contact", {
+      const response = await fetch("http://localhost:5001/contactUs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -96,9 +96,6 @@ function ContactUs() {
         </form>
       </div>
 
-      <footer className="contact-footer">
-        <p>&copy; 2025 Your Company. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
