@@ -50,15 +50,8 @@ button:hover {
 }
 
 /* Retro-Style Links */
-.forgot-password a,
-.signup-link {
+.forgot-password a {
   text-decoration: none;
   color: #8bc8fd;
   font-size: 14px;
-  text-shadow: 0 0 5px rgba(255, 204, 0, 0.8);
-}
-
-.forgot-password a:hover,
-.signup-link:hover {
-  text-shadow: 0 0 10px rgba(255, 204, 0, 1);
 }
