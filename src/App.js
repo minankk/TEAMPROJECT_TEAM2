@@ -8,18 +8,17 @@ import LoginPage from './LoginPage';
 import ContactUsPage from './ContactUsPage';
 import FAQ from './faq';
 import TermsAndConditions from './termsandconditions';
-
-import Signup from './signup.js'; 
-import DashboardPage from './DashboardPage';
 import CartPage from './CartPage';
 import DashboardPage from './DashboardPage';
-
+import Signup from './signup';
 import AboutUs from './AboutUs'
-import PaymentsPage from './PaymentsPage';
+import PaymentsPage from './PaymentsPage'; 
+import ThankYouPage from './ThankYouPage';
 
+ 
 function App() {
   const userId = 1; // Temporary user ID. It can be dynamically changed later when the login feature is added
-
+ 
   return (
     <Router>
       <Navbar />
@@ -34,10 +33,12 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/about-us" element={<AboutUs />} /> {/* Added About Us Route */}
-        <Route path="/payment" element={<PaymentsPage />} />      </Routes>
+        <Route path="/payment" element={<PaymentsPage />} />
+        <Route path="/thank-you" element={<ThankYouPage />} /> 
+      </Routes>
       <Footer />
     </Router>
   );
 }
-
+ 
 export default App;

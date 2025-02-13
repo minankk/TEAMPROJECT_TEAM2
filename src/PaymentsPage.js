@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./PaymentPage.css"; // Import the CSS file
 
 const PaymentsPage = () => {
@@ -10,6 +11,8 @@ const PaymentsPage = () => {
   const [cardHolderName, setCardHolderName] = useState("");
   const [cvc, setCvc] = useState("");
 
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const handlePayment = () => {
     // Validate inputs before proceeding
     if (!amount || !address || !cardNumber || !cardHolderName || !cvc) {
@@ -17,12 +20,18 @@ const PaymentsPage = () => {
       return;
     }
 
-    alert(`Thank you for a ${method} payment of £${amount}`);
+    // Simulate payment processing
+    console.log(`Processing ${method} payment of £${amount}`);
+
+    // Redirect to the Thank You page with payment details
+    navigate("/thank-you", {
+      state: { amount, method }, // Pass payment details to the Thank You page
+    });
   };
 
   return (
     <motion.div
-      className="payment-container" // New CSS class
+      className="payment-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
@@ -47,7 +56,7 @@ const PaymentsPage = () => {
           >
             <option value="credit_card">Credit Card</option>
             <option value="Debit_card">Debit Card</option>
-            </select>
+          </select>
         </div>
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">Address</label>
