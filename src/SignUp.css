@@ -1,118 +1,143 @@
 /* General Styles */
-html, body{
+html, body {
   height: 100%;
   margin: 0;
+  background-color: #F6F6F4;
+  font-family: 'Arial', sans-serif;
+  color: #151515;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
-  font-family: Arial,  sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-
+  background-color: rgb(255, 255, 255) !important;
+  box-sizing: border-box;
 }
+
 main {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-
-/*Styling the Signup-container */
-
-.Signup-container{
-  position: absolute;
-  top:40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 30px;
-  width: 400px;
-  background-color: white;
-  border: 1px solid #ccc ;
+/* Styling the Signup-container */
+.signup-container {
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  background-color: #eeeeee;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
-.Signup-container h1{
+.signup-container:hover {
+  transform: translateY(-5px);
+}
+
+.signup-container h1 {
   font-size: 24px;
   margin-bottom: 20px;
-  text-align: center;
 }
 
-.inputfield{
-  margin-bottom: 20px;
+.input-field {
+  margin-bottom: 15px;
 }
 
-.inputfield label{
+.input-field label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-weight: bold;
+  font-size: 16px;
+  color: #151515;
 }
 
-.inputfield input {
+.input-field input {
   width: 100%;
-  padding: 10px;
-  font-size: 16px;
+  padding: 12px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 50px;
-  background-color: rgba(21,97,109,0.27);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  background-color: white;
+}
 
+.input-field input:focus {
+  border-color: #7c1816;
+  outline: none;
 }
 
 /* Admin Sign Up Button gap */
-.admin-signup{
-  margin-left: 150px;
-
+.admin-signup {
+  margin-left: 10px;
+  margin-right: 10px;
 }
-
-
-/* Styling the footer*/
-
-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 10px 20px;
-  background-color: rgba(21,97,109,0.27);
-  flex-shrink: 0;
-}
-
-.Footer-links{
-  display: flex;
-  gap: 10px;
-
-}
-
-.Footer-links div{
-  margin: 0;
-}
-
-.Footer-links h4,
-.Footer-links p {
-  margin: 5px 0;
-
-}
-
-
-.Footer-links a{
-  text-decoration: none;
-  color: black;
-}
-
-.Footer-links a:hover{
-  background-color: rgba(15,70,79,0.27);
-}
-
 
 /* Styling of buttons */
 button {
-  background-color: #f5f5dc;;
-  color:black;
+  background-color: #7c1816;
+  color: white;
   border: none;
-  border-radius: 50px;
-
+  padding: 12px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-button:hover{
-  background-color: #666666;
+button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+/* Styling the Login-container */
+.login-container {
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.login-container:hover {
+  transform: translateY(-5px);
+}
+
+.login-container h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.login-container p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.login-link {
+  background-color: #7c1816;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-link:hover {
+  background-color: #333;
+  transform: translateY(-2px);
 }
