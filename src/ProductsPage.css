@@ -6,7 +6,7 @@
   background-color: #f6f6f4;
   color: #000;
   display: flex;
-  flex-direction: column; /* Ensures banner and products stack vertically */
+  flex-direction: column; 
   align-items: center;
 }
 
@@ -14,7 +14,7 @@
 .products-page .products-banner {
   position: relative;
   width: 100%;
-  max-height: 400px; /* Adjust banner height */
+  max-height: 400px; 
   height: auto;
   overflow: hidden;
   margin: 0;
@@ -37,7 +37,7 @@
   text-align: left;
   color: white;
   font-size: 2rem;
-  max-width: 50%; /* Adjust the max width of the text */
+  max-width: 28%; 
 }
 
 .products-page .products-banner-text h1 {
@@ -48,9 +48,11 @@
 
 /* Product Grid */
 .products-page .products {
-  width: 80%;
-  margin-top: 40px; /* Add margin to separate banner from products */
+  width: 95%;
+  margin-top: 40px; 
   margin-bottom: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
   text-align: center;
 }
 

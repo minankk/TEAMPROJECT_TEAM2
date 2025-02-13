@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import './CartPage.css';
 import OriginalSoundtrackBarbietheAlbum from './assets/OriginalSoundtrackBarbietheAlbum.webp';
 import NirvanaNevermind from './assets/NirvanaNevermind.webp'; 
@@ -58,6 +59,8 @@ export default function ShoppingCart() {
   };
 
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const navigate = useNavigate();
+
 
   return (
     <div className="cart-container">
@@ -72,7 +75,7 @@ export default function ShoppingCart() {
               <img src={item.image} alt={item.name} className="cart-item-img" />
               <div className="cart-item-details">
                 <span className="cart-item-title">{item.name}</span>
-                <span className="cart-item-price">${item.price}</span>
+                <span className="cart-item-price">£{item.price}</span>
               </div>
               <div className="quantity-controls">
                 <button
@@ -106,7 +109,7 @@ export default function ShoppingCart() {
       </div>
 
       <div className="cart-summary">
-        <div className="total-price">Total: ${totalPrice}</div>
+        <div className="total-price">Total: £{totalPrice}</div>
         <button className="checkout-button" onClick={() => navigate("/payment-page")}>
           Checkout
         </button>
