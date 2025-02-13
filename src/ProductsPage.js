@@ -18,20 +18,37 @@ const ProductsPage = () => {
     fetch('http://localhost:5001/products')
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched products:', data); // Log the fetched data
-        setProducts(data);
+        console.log("Fetched products:", data);
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          console.error("Unexpected response format:", data);
+          setProducts([]);
+        }
       })
-      .catch(error => console.error('Error fetching products:', error));
+      .catch(error => {
+        console.error("Error fetching products:", error);
+        setProducts([]);
+      });
   }, []);
  
-  const groupedProducts = products.reduce((acc, product, index) => {
+  const groupedProducts = Array.isArray(products) ? products.reduce((acc, product) => {
+    const genre = product.genre_name;
+    if (!acc[genre]) {
+      acc[genre] = [];
+    }
+    acc[genre].push(product);
+    return acc;
+  }, {}) : {};
+ 
+   /* const groupedProducts = products.reduce((acc, product, index) => {
     const genre = product.genre;
     if (!acc[genre]) {
       acc[genre] = [];
     }
     acc[genre].push(product);
     return acc;
-  }, {});
+  }, {});*/
  
  
   return (
@@ -61,5 +78,5 @@ const ProductsPage = () => {
     </main>
   );
 };
-
+ 
 export default ProductsPage;
