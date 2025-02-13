@@ -11,30 +11,31 @@
   
   /* Style the payment box */
   .payment-box {
-    background-color: #ffffff; /* White background */
-    border-radius: 12px; /* Rounded corners */
+    background-color: #ffffff; 
+    border-radius: 12px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    padding: 2rem; /* Spacing inside the box */
-    max-width: 400px; /* Limit the width */
+    padding: 2rem; 
+    max-width: 400px; 
     width: 100%; /* Full width within the max-width constraint */
     margin-top: -5rem; /* Move the box upward */
   }
   
   /* Style the heading */
   .payment-heading {
-    font-size: 1.5rem; /* Larger font size */
-    font-weight: 600; /* Semi-bold */
-    margin-bottom: 1.5rem; /* Spacing below the heading */
-    text-align: center; /* Center the text */
+    font-size: 1.5rem; 
+    font-weight: 600; 
+    margin-bottom: 1.5rem; 
+    text-align: center; 
+    color: black;
   }
   
   /* Style the input fields */
   .payment-input {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #d1d5db; /* Light gray border */
-    border-radius: 8px; /* Rounded corners */
-    margin-bottom: 1rem; /* Spacing below the input */
+    border: 1px solid #d1d5db; 
+    border-radius: 8px; 
+    margin-bottom: 1rem; 
     font-size: 1rem; /* Font size */
   }
   

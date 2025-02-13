@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './CartPage.css';
+import { useNavigate } from "react-router-dom"
 
 const initialCart = [
   { id: 1, name: "Vinyl Record A", price: 25, quantity: 1, image: "https://via.placeholder.com/150" },
@@ -9,6 +10,8 @@ const initialCart = [
 
 export default function ShoppingCart() {
   const [cart, setCart] = useState(initialCart);
+  const navigate = useNavigate(); // Hook for navigation
+
 
   const increaseQuantity = (id) => {
     setCart((prevCart) =>
@@ -82,7 +85,7 @@ export default function ShoppingCart() {
 
       <div className="cart-summary">
         <div className="total-price">Total: ${totalPrice}</div>
-        <button className="checkout-button">Checkout</button>
+        <button className="checkout-button" onClick={() => navigate('/payment')} >Checkout</button>
       </div>
     </div>
   );
