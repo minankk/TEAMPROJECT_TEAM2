@@ -11,7 +11,6 @@ import TermsAndConditions from './termsandconditions';
 import CartPage from './CartPage';
 import DashboardPage from './DashboardPage';
 import Signup from './signup';
-import DashboardPage from './DashboardPage';
 
 
 function App() {
