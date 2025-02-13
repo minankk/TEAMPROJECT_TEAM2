@@ -4,7 +4,7 @@ const mysql = require("mysql2/promise")
 const db = mysql.createPool({
   host:     '127.0.0.1'  ,          //'cs2410-web01pvm.aston.ac.uk' ,   
   user:   'root',               //'cs4team2' ,                                 
-  password:  'bidgoli_1379',            //'zCiGwGdHiEL4gOP' ,                                   
+  password:  'teamProject@01',            //'zCiGwGdHiEL4gOP' ,                                   
   database:   'team_project' ,      //'cs4team2_db',                               
   port: 3306,                      // Database port (default MySQL port)
 });
