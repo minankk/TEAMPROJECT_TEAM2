@@ -19,18 +19,19 @@ html, body {
     min-height: 100vh;
   }
 
-  .contact-header {
-    background-color: white;
-    color: white;
-    padding: 40px;
-    position: absolute;
-    top: 25%;
-    left: 37%;
-    transform: translateY(-50%);
-    text-align: left;
-    color: black;
-    max-width: 20%
-  }
+.contact-header {
+  width: 100%;
+  background-color: black; /* Black banner */
+  color: white; /* White text */
+  padding: 40px 0;
+  text-align: center;
+  position: relative; /* No absolute positioning */
+  top: 0;
+  left: 0;
+  transform: none; /* Remove unwanted transform */
+  max-width: 100%; /* Full width */
+}
+
 
   .contact-form-container {
     flex: 1;
@@ -59,7 +60,7 @@ html, body {
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 16px;
-    color: #151515;
+    color: #ffffff;
   }
 
   .contact-form input,
