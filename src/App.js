@@ -9,6 +9,7 @@ import CartPage from './CartPage';
 import ContactUsPage from './ContactUsPage';
 import FAQ from './faq'; 
 import TermsAndConditions from './termsandconditions';
+import Signup from './signup.js'; 
 
 //import DashboardPage from './DashboardPage'; // Import the dashboard page
 
