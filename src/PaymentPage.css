@@ -1,0 +1,85 @@
+/* PaymentPage.css */
+
+/* Center the payment form on the page */
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Keep it centered */
+    min-height: 100vh;
+    background-color: #f3f4f6; /* Light gray background */
+  }
+  
+  /* Style the payment box */
+  .payment-box {
+    background-color: #ffffff; /* White background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 2rem; /* Spacing inside the box */
+    max-width: 400px; /* Limit the width */
+    width: 100%; /* Full width within the max-width constraint */
+    margin-top: -5rem; /* Move the box upward */
+  }
+  
+  /* Style the heading */
+  .payment-heading {
+    font-size: 1.5rem; /* Larger font size */
+    font-weight: 600; /* Semi-bold */
+    margin-bottom: 1.5rem; /* Spacing below the heading */
+    text-align: center; /* Center the text */
+  }
+  
+  /* Style the input fields */
+  .payment-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 1rem; /* Spacing below the input */
+    font-size: 1rem; /* Font size */
+  }
+  
+  .payment-input:focus {
+    outline: none;
+    border-color: #3b82f6; /* Blue border on focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); /* Subtle focus effect */
+  }
+  
+  /* Style the select dropdown */
+  .payment-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 1rem; /* Spacing below the select */
+    font-size: 1rem; /* Font size */
+    background-color: #ffffff; /* White background */
+  }
+  
+  .payment-select:focus {
+    outline: none;
+    border-color: #3b82f6; /* Blue border on focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); /* Subtle focus effect */
+  }
+  
+  /* Style the button */
+  .payment-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #7c1816;
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1rem; /* Font size */
+    font-weight: 600; /* Semi-bold */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.2s ease; /* Smooth transition */
+  }
+  
+  .payment-button:hover {
+    transform: translateY(-5px);
+}
+  
+  .payment-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Subtle focus effect */
+  }

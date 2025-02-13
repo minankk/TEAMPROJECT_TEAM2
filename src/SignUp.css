@@ -4,7 +4,7 @@ html, body {
   margin: 0;
   background-color: #F6F6F4;
   font-family: 'Arial', sans-serif;
-  color: #151515;
+  color: white;
   display: flex;
   flex-direction: column;
 }
@@ -26,11 +26,10 @@ main {
 
 /* Styling the Signup-container */
 .signup-container {
-  padding: 20px;
+  padding: 30px;
   width: 100%;
   max-width: 400px;
   height: auto;
-  background-color: #eeeeee;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -38,7 +37,7 @@ main {
 }
 
 .signup-container:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 .signup-container h1 {
@@ -55,7 +54,7 @@ main {
   margin-bottom: 8px;
   font-weight: bold;
   font-size: 16px;
-  color: #151515;
+  color: white;
 }
 
 .input-field input {
@@ -96,7 +95,7 @@ button {
 }
 
 button:hover {
-  background-color: #333;
+  background-color: rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
@@ -106,7 +105,6 @@ button:hover {
   width: 100%;
   max-width: 400px;
   height: auto;
-  background-color: #eeeeee;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -135,9 +133,20 @@ button:hover {
   text-decoration: none;
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(140, 0, 0, 0.8);
 }
 
 .login-link:hover {
-  background-color: #333;
   transform: translateY(-2px);
+}
+
+.signup-link {
+  background-color: #7c1816;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(140, 0, 0, 0.8);
 }

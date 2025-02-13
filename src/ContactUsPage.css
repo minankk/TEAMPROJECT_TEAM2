@@ -1,36 +1,41 @@
 /* General Styles */
 html, body {
-    height: 100%;
-    margin: 0;
-    background-color: #F6F6F4;
-    font-family: 'Arial', sans-serif;
-    color: #151515;
+  height: 100%;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: #151515;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the full viewport height */
+  background: url('./assets/vinyl-texture.webp') no-repeat center center;
+  background-size: cover; /* Ensures the image covers the entire screen */
+}
+
+main {
+  padding: 20px;
+}
+
+.contact-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(255, 255, 255) !important;
-  }
-
-  .contact-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  .contact-header {
-    background-color: white;
-    color: white;
-    padding: 40px;
-    position: absolute;
-    top: 25%;
-    left: 37%;
-    transform: translateY(-50%);
-    text-align: left;
-    color: black;
-    max-width: 20%
-  }
+.contact-header {
+  width: 100%;
+  background-color: black; /* Black banner */
+  color: white; /* White text */
+  padding: 40px 0;
+  text-align: center;
+  position: relative; /* No absolute positioning */
+  top: 0;
+  left: 0;
+  transform: none; /* Remove unwanted transform */
+  max-width: 100%; /* Full width */
+}
 
   .contact-form-container {
     flex: 1;
@@ -41,7 +46,7 @@ html, body {
   }
 
   .contact-form {
-    background-color: #eeeeee;
+    background: rgba(0, 0, 0, 0.5);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -59,7 +64,7 @@ html, body {
     margin-bottom: 8px;
     font-weight: bold;
     font-size: 16px;
-    color: #151515;
+    color: #ffffff;
   }
 
   .contact-form input,
@@ -80,18 +85,13 @@ html, body {
     outline: none;
   }
 
-  .contact-form button {
-    background-color: #7c1816;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transforn 0.3s ease;
+  .contact-form button:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
   }
 
-  .contact-form button:hover {
-    background-color: #333;
-    transform: translateY(-2px);
+  html {
+    height: 100%;
+    background: url('./assets/vinyl-texture.webp') no-repeat center center;
+    background-size: cover;
   }
