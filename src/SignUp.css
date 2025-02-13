@@ -1,0 +1,143 @@
+/* General Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #F6F6F4;
+  font-family: 'Arial', sans-serif;
+  color: #151515;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255) !important;
+  box-sizing: border-box;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Styling the Signup-container */
+.signup-container {
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.signup-container:hover {
+  transform: translateY(-5px);
+}
+
+.signup-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  margin-bottom: 15px;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #151515;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  background-color: white;
+}
+
+.input-field input:focus {
+  border-color: #7c1816;
+  outline: none;
+}
+
+/* Admin Sign Up Button gap */
+.admin-signup {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* Styling of buttons */
+button {
+  background-color: #7c1816;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+/* Styling the Login-container */
+.login-container {
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.login-container:hover {
+  transform: translateY(-5px);
+}
+
+.login-container h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.login-container p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.login-link {
+  background-color: #7c1816;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-link:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}

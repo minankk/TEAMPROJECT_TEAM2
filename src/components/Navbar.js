@@ -10,7 +10,7 @@ const Navbar = () => {
 
   useEffect(() => {
     // Fetch login status from the backend
-    fetch("/")
+    fetch('http://localhost:5000/checksession', { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setIsLoggedIn(data.loggedIn);
@@ -36,17 +36,18 @@ const Navbar = () => {
           <li><Link to="/about-us">ABOUT US</Link></li>
           <li><Link to="/products">BROWSE PRODUCTS</Link></li>
           <li><Link to="/sale">SALE</Link></li>
-          <li><Link to="/contact-us">CONTACT US</Link></li>
         </ul>
       </nav>
 
       {/* Right: Search & Icons */}
       <div className="search-cart">
-        <input
-          type="text"
-          placeholder="Search records, artists, genres..."
-          className="search-input"
-        />
+        <div className="search-box">
+          <input
+            type="text"
+            placeholder="Search records, artists, genres..."
+            className="search-input"
+          />
+        </div>
         <button className="user-btn" onClick={handleUserClick}>
           <FaUser />
         </button>

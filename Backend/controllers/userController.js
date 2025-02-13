@@ -1,27 +1,37 @@
 const db = require('../db');
 const nodemailer = require("nodemailer");
 
-// Get User Profile 
-exports.viewProfile = (req, res) => {
-    const userId = req.session.user_id; // Get user_id from the session
-
-    if (!userId) {
-        return res.status(401).json({ message: 'Unauthorized. Please log in.' });
-    }
-    // Query the database to fetch user details
-    const query = 'SELECT user_name, email, phone_number, created_at FROM users WHERE user_id = ?';
-    
-    db.query(query, [userId], (err, results) => {
-        if (err) {
-            console.error('Database query error:', err);
-            return res.status(500).json({ message: 'Error fetching profile data' });
+exports.viewDashboard = async (req, res) => {
+    try {
+        // Check if user is logged in
+        const userId = req.session.user_id;
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized. Please log in.' });
         }
-        if (results.length === 0) {
+        // Query the database to fetch user details
+        const [userDetails] = await db.execute('SELECT user_name, email, created_at FROM users WHERE user_id = ?', [userId]);
+
+        // If user not found
+        if (userDetails.length === 0) {
             return res.status(404).json({ message: 'User not found' });
         }
-        const user = results[0];
-        return res.status(200).json({ profile: user });
-    });
+
+        const user = userDetails[0];
+
+        // Send the user data as response
+        return res.status(200).json({ 
+            message: 'User profile fetched successfully',
+            profile: {
+                user_name: user.user_name,
+                email: user.email,
+                created_at: user.created_at
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 };
 
 
@@ -74,7 +84,7 @@ exports.changePassword = (req , res) => {
     })
 }
 
-// Contact us page logic after clicking submit
+// Contact us page logic after clicking submit will be sent to the gmail
 
     exports.contact_us = async (req , res) => {
      const {name , email , message} = req.body;
@@ -93,7 +103,7 @@ exports.changePassword = (req , res) => {
             }
         });
 
-        // Email options - template
+        // Email format
         let mailFormat = {
             from: process.env.EMAIL_USER,
             to: "vinylteamproject@gmail.com", 
