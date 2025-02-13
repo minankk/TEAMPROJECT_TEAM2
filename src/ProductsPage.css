@@ -183,3 +183,22 @@ main {
     font-size: 1.8rem;
   }
 }
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.products-banner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.products {
+  width: 100%;
+  margin-top: 20px; /* Ensures spacing between the banner and products */
+}
