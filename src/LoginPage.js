@@ -55,7 +55,6 @@ const LoginPage = () => {
     <div className="login-page">
       <main>
       <img src={vinylIcon} alt="Vinyl Icon" className="vinyl-icon" />
-
         <div className="login-container">
           <h1>Login to your account</h1>
           <form onSubmit={handleLogin}>
