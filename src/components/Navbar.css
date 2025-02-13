@@ -92,7 +92,7 @@
 }
 
 /* Icons */
-.user-btn, .cart-btn {
+.cart-btn {
   background: transparent;
   border: none;
   color: #f6f6f4;
@@ -101,9 +101,34 @@
   transition: color 0.3s;
 }
 
+.user-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #f6f6f4 !important;
+  font-size: 22px !important;
+  cursor: pointer !important;
+  transition: color 0.3s ease !important;
+  box-shadow: none !important;
+  line-height: 1 !important; /* Ensure consistent line height */
+  vertical-align: middle !important; /* Aligns with other elements */
+}
+
+
 .user-btn:hover,
 .cart-btn:hover {
   color: #7c1816;
+}
+
+.user-btn:hover {
+  color: #7c1816 !important;
+}
+
+.user-btn:focus,
+.user-btn:active {
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 /* Remove weird grey hover effect */

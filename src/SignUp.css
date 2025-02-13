@@ -26,7 +26,7 @@ main {
 
 /* Styling the Signup-container */
 .signup-container {
-  padding: 20px;
+  padding: 30px;
   width: 100%;
   max-width: 400px;
   height: auto;
@@ -95,7 +95,7 @@ button {
 }
 
 button:hover {
-  background-color: #333;
+  background-color: rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
@@ -133,9 +133,21 @@ button:hover {
   text-decoration: none;
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(140, 0, 0, 0.8);
 }
 
 .login-link:hover {
-  background-color: #333;
+  background-color: rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
+}
+
+.signup-link {
+  background-color: #7c1816;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(140, 0, 0, 0.8);
 }
