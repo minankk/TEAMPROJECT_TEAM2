@@ -65,6 +65,7 @@ const LoginPage = () => {
         <button type="submit">Sign in</button>
         <button type="button" className="admin-signin">Admin Sign in</button>
         <p className="forgot-password"><Link to="/forgot-password">Forgot Password? Click here</Link></p>
+        <button type="button" className="sign-Up" onClick={() => navigate('/signup')}>Sign Up</button>  
       </form>
     </div>
   );

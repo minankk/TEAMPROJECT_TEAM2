@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "./faq.css"; // Import the CSS file (ensure the file name matches exactly)
-
+import "./faq.css"; 
 const FAQ = () => {
   const faqData = [
     { question: "What does your company do?", answer: "It sells vinyls" },
