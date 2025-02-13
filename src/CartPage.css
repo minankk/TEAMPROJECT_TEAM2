@@ -55,13 +55,16 @@
   .cart-item-title {
     font-size: 18px;
     font-weight: bold;
-    color: #151515;
+    color: white;
+    display: block;
   }
 
   .cart-item-price {
     font-size: 16px;
     font-weight: bold;
     color: #7c1816;
+    margin-top: 5px;
+    display: block;
   }
 
 .quantity-controls {

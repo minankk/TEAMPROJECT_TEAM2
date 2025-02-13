@@ -66,7 +66,7 @@ const ProductsPage = () => {
                     <p>{product.release_date}</p>
                     <p>{product.price}</p>
                   </div>
-                  <button className="buy-button">Add to Cart</button>
+                  <button className="buy-button" onClick={() => handleAddToCart(product.product_id)}>Add to Cart</button>
                 </div>
               ))}
             </div>
