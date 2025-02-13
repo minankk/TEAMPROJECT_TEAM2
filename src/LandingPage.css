@@ -31,18 +31,20 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Titan One', sans-serif;
-  background-color: #f6f5f3;
   color: #000;
 }
 
-/* Landing Page Container */
+/* Landing Page Background */
 .landing-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: url('./assets/plain-backdrop-decorative-gray-textured.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
 }
 
-/* Hero Section */
 /* Hero Section */
 .hero {
   position: relative;
@@ -66,7 +68,7 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Adjust opacity for desired darkness */
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
@@ -79,7 +81,7 @@ html, body {
   text-align: left;
   color: white;
   max-width: 40%;
-  z-index: 2; /* Ensures text appears above the overlay */
+  z-index: 2;
 }
 
 .hero-text h1 {
@@ -132,7 +134,7 @@ html, body {
   text-align: center;
   padding: 15px;
   border-radius: 5px;
-  background: rgb(237, 236, 236);
+  background: rgba(237, 236, 236, 0.861);
   transition: transform 0.3s ease-in-out;
   width: 25%;
 }
@@ -157,6 +159,7 @@ html, body {
 .step p {
   font-size: 0.9rem;
   margin-bottom: 15px;
+  color: #000;
 }
 
 .step button {
@@ -207,7 +210,7 @@ html, body {
 
 /* Individual Item Card */
 .item-landing {
-  background: white;
+  background: rgba(237, 236, 236, 0.861);
   padding: 20px;
   text-align: center;
   border-radius: 5px;
@@ -231,6 +234,7 @@ html, body {
 .item-landing h3 {
   font-size: 1.2rem;
   margin: 10px 0;
+  color: #000;
 }
 
 /* Item Price */
@@ -251,4 +255,9 @@ html, body {
   .staff-picks-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Remove box-shadow from specific buttons */
+.step button {
+  box-shadow: none !important;
 }
