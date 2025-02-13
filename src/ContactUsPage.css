@@ -20,13 +20,16 @@ html, body {
   }
   
   .contact-header {
-    background-color: #151515;
+    background-color: white;
     color: white;
     padding: 40px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    border-bottom: 4px solid #151515;
+    position: absolute;
+    top: 25%;
+    left: 37%;
+    transform: translateY(-50%);
+    text-align: left;
+    color: black;
+    max-width: 20%
   }
   
   .contact-form-container {
@@ -93,11 +96,4 @@ html, body {
     transform: translateY(-2px);
   }
   
-  .contact-footer {
-    background-color: #151515;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    font-size: 14px;
-    letter-spacing: 1px;
-  }
+ 
