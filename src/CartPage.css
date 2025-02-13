@@ -47,22 +47,22 @@
   border-radius: 8px;
 }
 
-.item-details {
-  flex-grow: 1;
-  padding-left: 20px;
-}
+  .cart-item-details {
+    flex-grow: 1;
+    padding-left: 20px;
+  }
 
-.item-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-}
+  .cart-item-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #151515;
+  }
 
-.item-price {
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-}
+  .cart-item-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #7c1816;
+  }
 
 .quantity-controls {
   display: flex;

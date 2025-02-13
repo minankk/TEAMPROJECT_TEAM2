@@ -83,6 +83,10 @@
   transition: transform 0.3s ease-in-out;
 }
 
+.products .product-info h3 {
+  color: black;
+}
+
 .products-page .product-card:hover {
   transform: scale(1.05);
 }
