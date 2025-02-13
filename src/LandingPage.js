@@ -67,12 +67,12 @@ function LandingPage() {
           <div className="item-landing">
             <img src={HotelCalifornia} alt="Hotel California Vinyl" />
             <h3>Hotel California</h3>
-            <p>$20.00</p>
+            <p>£20.00</p>
           </div>
           <div className="item-landing">
             <img src={Sweetener} alt="Sweetener Vinyl" />
             <h3>Sweetener</h3>
-            <p>$22.00</p>
+            <p>£22.00</p>
           </div>
         </div>
       </section>
