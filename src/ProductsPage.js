@@ -38,23 +38,28 @@ const ProductsPage = () => {
     <main>
       <Banner />
       <section className="products">
-        <div className="product-grid">
-          {products.map(product => (
-            <div key={product.product_id} className="product-card">
-
-              <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.name} />
-              <h3>{product.album_name}</h3>
-              <p>{product.artist_name}</p>
-              <p>{product.genre}</p>
-              <p>{product.release_date}</p>
-              <p>{product.price}</p>
-
+        {Object.keys(groupedProducts).map((genre, index) => (
+          <div key={index} className="genre-section">
+            <h2>{genre}</h2>
+            <div className="product-grid">
+              {groupedProducts[genre].map(product => (
+                <div key={product.product_id} className="product-card">
+                  <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.name} className="product-image" />
+                  <div className="product-info">
+                    <h3>{product.album_name}</h3>
+                    <p>{product.artist_name}</p>
+                    <p>{product.release_date}</p>
+                    <p>£{product.price}</p>
+                  </div>
+                  <button className="buy-button">Add to Cart</button>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
     </main>
   );
 };
- 
+
 export default ProductsPage;
