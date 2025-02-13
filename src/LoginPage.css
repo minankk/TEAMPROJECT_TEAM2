@@ -1,22 +1,12 @@
-/* General Styles */
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: #F6F6F4;
-  font-family: 'Arial', sans-serif;
-  color: #151515;
-  display: flex;
-  flex-direction: column;
-}
-
-body {
+/* General Styles for Login Page */
+.login-page body {
   display: flex;
   flex-direction: column;
   background-color: rgb(255, 255, 255) !important;
   box-sizing: border-box;
 }
 
-main {
+.login-page main {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -46,11 +36,11 @@ main {
   margin-bottom: 20px;
 }
 
-.input-field {
+.login-input-field {
   margin-bottom: 15px;
 }
 
-.input-field label {
+.login-input-field label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
@@ -58,7 +48,7 @@ main {
   color: #151515;
 }
 
-.input-field input {
+.login-input-field input {
   width: 100%;
   padding: 12px;
   margin-bottom: 20px;
@@ -70,7 +60,7 @@ main {
   background-color: white;
 }
 
-.input-field input:focus {
+.login-input-field input:focus {
   border-color: #b74533;
   outline: none;
 }
