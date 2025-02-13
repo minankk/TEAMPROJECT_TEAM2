@@ -24,6 +24,15 @@ const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 
+console.log('pageRoutes:', typeof pageRoutes);
+console.log('authRoutes:', typeof authRoutes);
+console.log('dashboardRoutes:', typeof dashboardRoutes);
+console.log('signUpRoutes:', typeof signUpRoutes);
+console.log('contactUsRoutes:', typeof contactUsRoutes);
+console.log('sessionRoutes:', typeof sessionRoutes);
+console.log('productsRoutes:', typeof productsRoutes);
+console.log('myCartRoutes:', typeof myCartRoutes);
+
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
