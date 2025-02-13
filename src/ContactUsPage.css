@@ -1,22 +1,27 @@
 /* General Styles */
 html, body {
-    height: 100%;
-    margin: 0;
-    background-color: #F6F6F4;
-    font-family: 'Arial', sans-serif;
-    color: #151515;
-  }
+  height: 100%;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: #151515;
+}
 
-  body {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(255, 255, 255) !important;
-  }
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the full viewport height */
+  background: url('./assets/vinyl-texture.webp') no-repeat center center;
+  background-size: cover; /* Ensures the image covers the entire screen */
+}
 
-  .contact-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+main {
+  padding: 20px;
+}
+
+.contact-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   }
 
 .contact-header {
@@ -31,7 +36,6 @@ html, body {
   transform: none; /* Remove unwanted transform */
   max-width: 100%; /* Full width */
 }
-
 
   .contact-form-container {
     flex: 1;
@@ -81,18 +85,13 @@ html, body {
     outline: none;
   }
 
-  .contact-form button {
-    background-color: #7c1816;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transforn 0.3s ease;
+  .contact-form button:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
   }
 
-  .contact-form button:hover {
-    background-color: #333;
-    transform: translateY(-2px);
+  html {
+    height: 100%;
+    background: url('./assets/vinyl-texture.webp') no-repeat center center;
+    background-size: cover;
   }

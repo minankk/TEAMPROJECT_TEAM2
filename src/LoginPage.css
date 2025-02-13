@@ -1,6 +1,6 @@
 /* Background */
 html, body {
-  background: url('./assets/vinyl-texture.webp') no-repeat center center fixed;
+  /* background: url('./assets/vinyl-texture.webp') no-repeat center center fixed; */
   background-size: cover;
   color: white;
   font-family: 'Arial', sans-serif;
@@ -8,7 +8,7 @@ html, body {
 
 .login-container, .signup-container {
   background: rgba(0, 0, 0, 0.5); /* Increased transparency */
-  backdrop-filter: blur(15px);
+  /* backdrop-filter: blur(15px); */
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   padding: 20px;
