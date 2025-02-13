@@ -1,5 +1,5 @@
-/* General Styles for Products Page */
-.products-page body {
+/* CSS - styles.css */
+body {
   font-family: 'Titan One', sans-serif;
   margin: 0;
   padding: 0;
@@ -50,7 +50,7 @@
   border-radius: 10px;
 }
 
-.products-page main {
+main {
   padding: 20px;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .products h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-bottom: 20px;
   color: #7c1816;
 }
@@ -94,7 +94,7 @@
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+  gap: 20px;
   justify-items: center;
 }
 
@@ -106,7 +106,7 @@
   text-align: center;
   width: 100%;
   max-width: 280px;
-  height: 450px;
+  height: 400px;
   border: 1px solid #ddd;
   transition: transform 0.3s ease-in-out;
   display: flex;
@@ -129,7 +129,7 @@
 .product-image {
   width: 100%;
   height: 100%;
-  max-height: 320px; 
+  max-height: 270px; 
   object-fit: cover; 
   border-radius: 10px;
 }
@@ -140,12 +140,12 @@
   margin-top: 10px;
 }
 .product-info h3 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin: 10px 0;
 }
 
 .product-info p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #7c1816;
 }
@@ -179,6 +179,6 @@
   }
 
   .products h2 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
 }
