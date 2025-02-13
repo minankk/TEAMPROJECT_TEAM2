@@ -1,3 +1,31 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600&family=Oswald:wght@400;700&display=swap');
+
+/* Root Variables */
+:root {
+  --primary-color: #7c1816;
+  --secondary-color: black;
+  --bg-color: #f6f5f3;
+  --text-color: #000;
+}
+
+/* Global Styles */
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Headings */
+h1, h2, h3 {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* Buttons */
+button, .shop-all-button {
+  font-family: 'Montserrat', sans-serif;
+}
+
 /* General Styles */
 html, body {
   margin: 0;
@@ -15,6 +43,7 @@ html, body {
 }
 
 /* Hero Section */
+/* Hero Section */
 .hero {
   position: relative;
   width: 100%;
@@ -22,23 +51,39 @@ html, body {
   overflow: hidden;
 }
 
+/* Hero Image */
 .hero-image {
   width: 100%;
   object-fit: cover;
+  display: block;
 }
 
+/* Dark Overlay */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust opacity for desired darkness */
+  z-index: 1;
+}
+
+/* Hero Text */
 .hero-text {
   position: absolute;
   top: 50%;
-  left: 10%;
+  left: 5%;
   transform: translateY(-50%);
   text-align: left;
   color: white;
   max-width: 40%;
+  z-index: 2; /* Ensures text appears above the overlay */
 }
 
 .hero-text h1 {
-  font-size: 3rem;
+  font-size: 3.16rem;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
