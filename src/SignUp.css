@@ -1,22 +1,12 @@
-/* General Styles */
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: #F6F6F4;
-  font-family: 'Arial', sans-serif;
-  color: #151515;
-  display: flex;
-  flex-direction: column;
-}
-
-body {
+/* General Styles for Signup Page */
+.signup-page body {
   display: flex;
   flex-direction: column;
   background-color: rgb(255, 255, 255) !important;
   box-sizing: border-box;
 }
 
-main {
+.signup-page main {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -24,7 +14,7 @@ main {
   gap: 20px;
 }
 
-/* Styling the Signup-container */
+/* Signup Container */
 .signup-container {
   padding: 20px;
   width: 100%;
@@ -46,11 +36,11 @@ main {
   margin-bottom: 20px;
 }
 
-.input-field {
+.signup-input-field {
   margin-bottom: 15px;
 }
 
-.input-field label {
+.signup-input-field label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
@@ -58,7 +48,7 @@ main {
   color: #151515;
 }
 
-.input-field input {
+.signup-input-field input {
   width: 100%;
   padding: 12px;
   margin-bottom: 20px;
@@ -70,7 +60,7 @@ main {
   background-color: white;
 }
 
-.input-field input:focus {
+.signup-input-field input:focus {
   border-color: #7c1816;
   outline: none;
 }
@@ -81,8 +71,8 @@ main {
   margin-right: 10px;
 }
 
-/* Styling of buttons */
-button {
+/* Button Styles */
+.signup-container button {
   background-color: #7c1816;
   color: white;
   border: none;
@@ -95,12 +85,12 @@ button {
   margin-right: 10px;
 }
 
-button:hover {
+.signup-container button:hover {
   background-color: #333;
   transform: translateY(-2px);
 }
 
-/* Styling the Login-container */
+/* Login Container */
 .login-container {
   padding: 20px;
   width: 100%;
