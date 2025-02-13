@@ -1,0 +1,99 @@
+/* General Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: url('./assets/vinyl-texture.webp') no-repeat center center;
+  background-size: cover;
+}
+
+.payment-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.payment-header {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.payment-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.payment-form {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  transition: transform 0.3s ease;
+}
+
+.payment-form:hover {
+  transform: translateY(-5px);
+}
+
+.payment-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.payment-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.payment-form input:focus {
+  border-color: #7c1816;
+  outline: none;
+}
+
+.card-details {
+  display: flex;
+  gap: 10px;
+}
+
+.card-details div {
+  flex: 1;
+}
+
+.payment-form button {
+  width: 100%;
+  background: #7c1816;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.payment-form button:hover {
+  background: black;
+  transform: translateY(-2px);
+}
