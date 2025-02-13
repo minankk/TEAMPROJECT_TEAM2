@@ -1,5 +1,5 @@
 // controllers/salesController.js
-const db = require('../db'); // database connection module
+const db = require('../db'); 
 
 exports.getSalesProducts = async (req, res) => {
   try {
@@ -20,10 +20,8 @@ exports.getSalesProducts = async (req, res) => {
     `;
     const [rows] = await db.execute(query);
     
-    // Render the sales page using your templating engine (hbs)
     //res.render('sales', { products: rows });
     res.json({ products: rows });
-    // Alternatively, if you prefer to return JSON for an API endpoint:
     // res.json({ products: rows });
     
   } catch (err) {
