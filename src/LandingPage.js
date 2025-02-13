@@ -11,7 +11,6 @@ function LandingPage() {
     <div className="landing-container">
       {/* Hero Section */}
       <section className="hero">
-        <img src={Carousel3} alt="Vinyl Collection" className="hero-image" />
         <div className="hero-text">
           <h1>Enjoyment in Every Sound</h1>
           <p>
@@ -21,6 +20,7 @@ function LandingPage() {
             Shop All <span className="arrow">→</span>
           </button>
         </div>
+        <img src={Carousel3} alt="Vinyl Collection" className="hero-image" />
       </section>
 
       {/* Steps Section */}
