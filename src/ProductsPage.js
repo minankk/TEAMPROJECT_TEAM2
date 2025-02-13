@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ProductsPage.css';
 import Carousel1 from './assets/Carousel1.jpg';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   const Banner = () => (
     <section className="products-banner">
@@ -18,20 +20,34 @@ const ProductsPage = () => {
     fetch('http://localhost:5001/products')
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched products:', data);
-        setProducts(data);
+        console.log("Fetched products:", data);
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          console.error("Unexpected response format:", data);
+          setProducts([]);
+        }
       })
-      .catch(error => console.error('Error fetching products:', error));
+      .catch(error => {
+        console.error("Error fetching products:", error);
+        setProducts([]);
+      });
   }, []);
 
-  const groupedProducts = products.reduce((acc, product) => {
-    const genre = product.genre;
+  const groupedProducts = Array.isArray(products) ? products.reduce((acc, product) => {
+    const genre = product.genre_name;
     if (!acc[genre]) {
       acc[genre] = [];
     }
     acc[genre].push(product);
     return acc;
-  }, {});
+  }, {}) : {};
+
+  const handleAddToCart = (productId) => {
+    console.log('Adding product to cart:', productId);
+    // Redirect to cart page
+    navigate('/cart');
+  };
 
   return (
     <main className="products-page">

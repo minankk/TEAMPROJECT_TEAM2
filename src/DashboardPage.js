@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './DashboardPage.css';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => (
   <div className="sidebar">
     <ul>
-      <li><a href="#">Overview</a></li>
-      <li><a href="#">Cart</a></li>
+      <li><a href="#">Overview</a></li>  
+      <li><Link to="/cart/">Cart</Link></li>
+
       <li><a href="#">Order Tracking</a></li>
       <li><a href="#">Order History</a></li>
       <li><a href="#">Favorites</a></li>
@@ -24,6 +26,7 @@ const Overview = () => {
       try {
         const response = await fetch("http://localhost:5001/dashboard");
         const result = await response.json();
+        console.log("Fetched data:", result); 
         setData(result);
       } catch (error) {
         console.error('Error fetching data:', error);

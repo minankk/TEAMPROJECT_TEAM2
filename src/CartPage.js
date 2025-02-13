@@ -1,16 +1,39 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useState, useEffect } from "react";
 import './CartPage.css';
+import OriginalSoundtrackBarbietheAlbum from './assets/OriginalSoundtrackBarbietheAlbum.webp';
+import NirvanaNevermind from './assets/NirvanaNevermind.webp'; 
+import ArianaGrandeSweetener from './assets/ArianaGrandeSweetener.webp';
+import TheBeatleAbbyRoad from './assets/TheBeatleAbbyRoad.webp';
 
 const initialCart = [
-  { id: 1, name: "Vinyl Record A", price: 25, quantity: 1, image: "https://via.placeholder.com/150" },
-  { id: 2, name: "Vinyl Record B", price: 30, quantity: 2, image: "https://via.placeholder.com/150" },
-  { id: 3, name: "Vinyl Record C", price: 40, quantity: 1, image: "https://via.placeholder.com/150" }
+  { id: 0, name: "Nirvana - Nevermind", price: 20, quantity: 1, image: NirvanaNevermind },
+  { id: 1, name: "Barbie the Album", price: 30, quantity: 1, image: OriginalSoundtrackBarbietheAlbum },
+  { id: 2, name: "Ariana Grande - Sweetener", price: 30, quantity: 2, image: ArianaGrandeSweetener },
+  { id: 3, name: "The Beatles - Abby Road", price: 50, quantity: 1, image: TheBeatleAbbyRoad }
 ];
 
 export default function ShoppingCart() {
   const [cart, setCart] = useState(initialCart);
-  const navigate = useNavigate(); // Initialize navigate
+
+  useEffect(() => {
+    fetch('http://localhost:5001/myCart') 
+      .then(response => response.json())
+      .then(data => {
+        if (data.cartItems) {
+          const fetchedCartItems = data.cartItems.map(item => ({
+            id: item.cart_id,
+            name: item.product_name,
+            price: item.price,
+            quantity: item.quantity,
+            image: `http://localhost:5001${item.cover_image_url}`
+          }));
+          setCart(prevCart => [...prevCart, ...fetchedCartItems]);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching cart items:', error);
+      });
+  }, []);
 
   const increaseQuantity = (id) => {
     setCart((prevCart) =>
@@ -47,9 +70,9 @@ export default function ShoppingCart() {
           cart.map((item) => (
             <div key={item.id} className="cart-item">
               <img src={item.image} alt={item.name} className="cart-item-img" />
-              <div className="item-details">
-                <span className="item-title">{item.name}</span>
-                <span className="item-price">${item.price}</span>
+              <div className="cart-item-details">
+                <span className="cart-item-title">{item.name}</span>
+                <span className="cart-item-price">${item.price}</span>
               </div>
               <div className="quantity-controls">
                 <button
