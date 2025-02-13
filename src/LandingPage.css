@@ -145,6 +145,7 @@ html, body {
   font-size: 2rem;
   color: #7c1816;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .step h3 {
