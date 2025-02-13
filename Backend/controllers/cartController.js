@@ -1,8 +1,7 @@
 // controllers/cartController.js
 
-const db = require('../db'); // Make sure this file exports your database connection
+const db = require('../db');
 
-// POST /cart/add (Add item to the cart)
 exports.addToCart = async (req, res) => {
   const { user_id, product_id, quantity } = req.body;
 
@@ -41,7 +40,6 @@ exports.addToCart = async (req, res) => {
   }
 };
 
-// GET /cart/:user_id (Fetch items in the user's cart)
 exports.getCartItems = async (req, res) => {
   const { user_id } = req.params;
 
@@ -70,7 +68,6 @@ exports.getCartItems = async (req, res) => {
   }
 };
 
-// DELETE /cart/remove/:cart_id (Remove item from the cart)
 exports.removeFromCart = async (req, res) => {
   const { cart_id } = req.params;
 
