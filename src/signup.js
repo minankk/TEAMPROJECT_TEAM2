@@ -53,7 +53,7 @@ const Signup = () => {
           <h1>Create an Account</h1>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>
-            <div className="signup-input-field">
+            <div className="input-field">
               <label htmlFor="username">User Name</label>
               <input
                 type="text"
@@ -65,7 +65,7 @@ const Signup = () => {
                 required
               />
             </div>
-            <div className="signup-input-field">
+            <div className="input-field">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -77,7 +77,7 @@ const Signup = () => {
                 required
               />
             </div>
-            <div className="signup-input-field">
+            <div className="input-field">
               <label htmlFor="password">Password</label>
               <input
                 type="password"
@@ -89,7 +89,7 @@ const Signup = () => {
                 required
               />
             </div>
-            <div className="signup-input-field">
+            <div className="input-field">
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 type="password"
