@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import "./SignUp.css"; // Ensure CSS is correctly linked
-
+import { useNavigate, Link } from "react-router-dom";
+import "./SignUp.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -12,19 +11,16 @@ const Signup = () => {
   });
 
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
-  // Handle form changes
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(null);
 
-    // Check if passwords match before sending request
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
@@ -34,19 +30,14 @@ const Signup = () => {
       const response = await fetch("http://localhost:5001/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          password_confirmation: formData.confirmPassword,
-        }),
-        credentials: "include", // Ensure cookies are sent for session management
+        body: JSON.stringify(formData),
+        credentials: "include",
       });
 
       const data = await response.json();
       if (response.ok) {
         alert("Signup successful!");
-        navigate("/dashboard"); // Redirect to DashboardPage
+        navigate("/dashboard");
       } else {
         setError(data.message || "Signup failed");
       }
@@ -56,13 +47,12 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="signup-page">
       <main>
         <div className="signup-container">
           <h1>Create an Account</h1>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>
-            {/* Username Input */}
             <div className="input-field">
               <label htmlFor="username">User Name</label>
               <input
@@ -75,10 +65,8 @@ const Signup = () => {
                 required
               />
             </div>
-
-            {/* Email Input */}
             <div className="input-field">
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
@@ -89,10 +77,8 @@ const Signup = () => {
                 required
               />
             </div>
-
-            {/* Password Input */}
             <div className="input-field">
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
@@ -103,8 +89,6 @@ const Signup = () => {
                 required
               />
             </div>
-
-            {/* Confirm Password Input */}
             <div className="input-field">
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
@@ -117,8 +101,6 @@ const Signup = () => {
                 required
               />
             </div>
-
-            {/* Submit Button */}
             <div className="button-group">
               <button type="submit">Sign Up</button>
               <button type="button" className="admin-signup">
@@ -126,6 +108,11 @@ const Signup = () => {
               </button>
             </div>
           </form>
+        </div>
+        <div className="login-container">
+          <h2>Already have an account?</h2>
+          <p>If you already have an account, you can log in here:</p>
+          <Link to="/login" className="login-link">Login</Link>
         </div>
       </main>
     </div>

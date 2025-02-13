@@ -49,7 +49,7 @@ const ProductsPage = () => {
                     <h3>{product.album_name}</h3>
                     <p>{product.artist_name}</p>
                     <p>{product.release_date}</p>
-                    <p>£{product.price}</p>
+                    <p>{product.price}</p>
                   </div>
                   <button className="buy-button">Add to Cart</button>
                 </div>
