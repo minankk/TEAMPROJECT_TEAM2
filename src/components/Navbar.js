@@ -14,9 +14,7 @@ const Navbar = () => {
       .then((response) => response.json())
       .then((data) => {
         setIsLoggedIn(data.loggedIn);
-
       })
-
       .catch((error) => console.error("Error fetching login status:", error));
   }, []);
 
@@ -43,11 +41,13 @@ const Navbar = () => {
 
       {/* Right: Search & Icons */}
       <div className="search-cart">
-        <input
-          type="text"
-          placeholder="Search records, artists, genres..."
-          className="search-input"
-        />
+        <div className="search-box">
+          <input
+            type="text"
+            placeholder="Search records, artists, genres..."
+            className="search-input"
+          />
+        </div>
         <button className="user-btn" onClick={handleUserClick}>
           <FaUser />
         </button>
