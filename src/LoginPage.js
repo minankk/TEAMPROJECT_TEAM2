@@ -54,7 +54,7 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <main>
-      <img src={vinylIcon} alt="Vinyl Icon" className="vinyl-icon" />
+      {/* <img src={vinylIcon} alt="Vinyl Icon" className="vinyl-icon" GONNA ADD DIFF ICON LATER DONT REMOVE THIS LINE/> */}
         <div className="login-container">
           <h1>Login to your account</h1>
           <form onSubmit={handleLogin}>
