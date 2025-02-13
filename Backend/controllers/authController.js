@@ -5,7 +5,7 @@ exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
         console.log('Received login request');
-        // Validation for fields present
+        // Validation for the username and password
         if (!username || !password) {
             return res.status(400).json({ message: 'username and password are required' });
         }
@@ -17,19 +17,18 @@ exports.login = async (req, res) => {
         }
         const user = results[0];
 
-        // Compare hashed password 
+        // Comparing the hashed password in db to check if it matches with the user  
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Password do not match' });
         }
       
-        // Set session variables for
+        // Set session variables for the logged in user
         req.session.loggedIn = true;
         req.session.username = user.user_name;
         req.session.user_id = user.user_id;
         req.session.role = user.role;
         
-        // Log the session data for debugging
         console.log(req.session);
         
         return res.status(200).json({ 
@@ -45,13 +44,11 @@ exports.login = async (req, res) => {
 
 //logout
     exports.logout = (req, res) => {
-    // Destroy the session
     req.session.loggedIn = false;
     req.session.destroy(error => {
         if (error) {
             return res.status(500).json({ message: 'Could not log out' });
         }  
-    // Return success response
     res.status(200).json({ message: 'Logout successful' });
     });
 }
@@ -72,7 +69,7 @@ exports.login = async (req, res) => {
     // Validate email format
     /**
      * ^ -> start of the string
-     * [a-zA-Z0-9._-]+ -> before @ symbol consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
+     * [a-zA-Z0-9._-]+ -> before @ consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
      * @ -> domain in email address
      * [a-zA-Z0-9.-]+
      * \. -> '.' should be there
@@ -98,12 +95,12 @@ exports.login = async (req, res) => {
         //Check if email already exists
         const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
         if (rows.length > 0) {
-            return res.status(400).json({ error: 'Email already registered' });
+            return res.status(400).json({ error: 'Email already registered. Please login' });
         }
         //Hashed password
         const hashedPassword = await bcrypt.hash(password , 8);
 
-        //Insert Into database
+        //Inserting Into database
         await db.query(
             'INSERT INTO users (user_name, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
             [username, email, hashedPassword, 'user']
@@ -112,7 +109,7 @@ exports.login = async (req, res) => {
          // Create a session for the user after signup
          req.session.loggedIn = true;
          req.session.username = username;
-         req.session.role = 'user'; // Default role
+         req.session.role = 'user'; // Default role is assigned as user
         
         res.status(200).json({ message: 'User registered successfully' });
     } catch (error) {

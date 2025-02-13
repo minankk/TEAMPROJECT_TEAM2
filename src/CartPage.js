@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import './CartPage.css';
 import { useNavigate } from "react-router-dom"
 
@@ -10,8 +11,7 @@ const initialCart = [
 
 export default function ShoppingCart() {
   const [cart, setCart] = useState(initialCart);
-  const navigate = useNavigate(); // Hook for navigation
-
+  const navigate = useNavigate(); // Initialize navigate
 
   const increaseQuantity = (id) => {
     setCart((prevCart) =>
@@ -85,7 +85,9 @@ export default function ShoppingCart() {
 
       <div className="cart-summary">
         <div className="total-price">Total: ${totalPrice}</div>
-        <button className="checkout-button" onClick={() => navigate('/payment')} >Checkout</button>
+        <button className="checkout-button" onClick={() => navigate("/payment-page")}>
+          Checkout
+        </button>
       </div>
     </div>
   );

@@ -11,11 +11,12 @@ import TermsAndConditions from './termsandconditions';
 import CartPage from './CartPage';
 import DashboardPage from './DashboardPage';
 import Signup from './signup';
-import AboutUs from './AboutUs'
-import PaymentsPage from './PaymentsPage'; 
-import ThankYouPage from './ThankYouPage';
+import AboutUs from './AboutUs';
+import DeliveryInformation from './DeliveryInformation';
+import PrivacyPolicy from './PrivacyPolicy';
+import PaymentPage from './PaymentPage';
+import OrderSuccess from './OrderSuccess'; // Import Order Success Page
 
- 
 function App() {
   const userId = 1; // Temporary user ID. It can be dynamically changed later when the login feature is added
  
@@ -32,9 +33,11 @@ function App() {
         <Route path="/t&c" element={<TermsAndConditions />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/about-us" element={<AboutUs />} /> {/* Added About Us Route */}
-        <Route path="/payment" element={<PaymentsPage />} />
-        <Route path="/thank-you" element={<ThankYouPage />} /> 
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/delivery-information" element={<DeliveryInformation />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/payment-page" element={<PaymentPage />} /> {/* Payment Page */}
+        <Route path="/order-success" element={<OrderSuccess />} /> {/* Order Success Page */}
       </Routes>
       <Footer />
     </Router>
