@@ -49,29 +49,6 @@ const TermsAndConditions = () => {
         <li>6.2: Items must be in their original condition and packaging.</li>
         <li>6.3: Refunds will be processed within 7-10 business days after the returned item is received.</li>
       </ul>
-
-      <h2>7. Intellectual Property</h2>
-      <ul>
-        <li>7.1: All content on this website, including text, images, logos, and designs, is owned by or licensed to us.</li>
-        <li>7.2: Unauthorized use, reproduction, or distribution of our content is strictly prohibited.</li>
-      </ul>
-
-      <h2>8. Privacy and Data Protection</h2>
-      <ul>
-        <li>8.1: We collect and process personal data in accordance with our Privacy Policy.</li>
-        <li>8.2: Your personal information will not be shared with third parties without your consent.</li>
-        <li>8.3: We implement security measures to protect your data from unauthorized access.</li>
-      </ul>
-
-      <h2>9. Modifications to Terms</h2>
-      <p>
-        We reserve the right to update these terms at any time. Continued use of the website constitutes acceptance of the revised terms.
-      </p>
-
-      <h2>10. Contact Us</h2>
-      <p>
-        If you have any questions about these Terms and Conditions, please contact us via the support section on our website.
-      </p>
     </div>
   );
 };
