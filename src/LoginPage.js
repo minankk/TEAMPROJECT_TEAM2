@@ -5,7 +5,7 @@ import './LoginPage.css';
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ const LoginPage = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
-      credentials: 'include', 
+      credentials: 'include',
     })
       .then((response) => response.json())
       .then((data) => {
