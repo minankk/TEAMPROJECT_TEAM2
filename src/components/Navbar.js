@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
-import logo from "../assets/logo-red2.png"; // Ensure the path is correct
+import logo from "../assets/logo-red2.png"; 
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
