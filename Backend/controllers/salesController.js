@@ -1,29 +1,33 @@
 // controllers/salesController.js
-const db = require('../db'); 
+const db = require('../db');
+const formatCurrency = require('../helpers/currencyFormatter');
 
 exports.getSalesProducts = async (req, res) => {
-  try {
-    // The query joins products, artists, and albums and filters on the album titles for the sales category.
-    const query = `
-      SELECT p.*, a.name AS artist_name, al.title AS album_title
-      FROM products p
-      JOIN artists a ON p.artist_id = a.artist_id
-      JOIN albums al ON p.album_id = al.album_id
-      WHERE al.title IN (
-        'Nevermind',
-        'The Masterplan',
-        'OK Computer',
-        'Short n’ Sweet',
-        'Abbey Road',
-        'Ready to Die'
-      )
-    `;
-    const [rows] = await db.execute(query);
-    
-    res.json({ products: rows });
-    
-  } catch (err) {
-    console.error("Error fetching sales products:", err);
-    res.status(500).json({ message: "Internal server error" });
-  }
+  db.execute(`
+    SELECT p.product_id, p.name, p.artist_id, p.album_id, p.genre_id, p.price, p.cover_image_url, 
+           a.name AS artist_name, al.title AS album_title
+    FROM products p
+    JOIN artists a ON p.artist_id = a.artist_id
+    JOIN albums al ON p.album_id = al.album_id
+    WHERE al.title IN (
+      'Nevermind',
+      'The Masterplan',
+      'OK Computer',
+      'Short n’ Sweet',
+      'Abbey Road',
+      'Ready to Die'
+    )
+  `)
+  .then(([results]) => {
+    // Format each product
+    results.forEach(product => {
+      product.price = formatCurrency(product.price);
+    });
+    res.status(200).json(results);
+  })
+  .catch((err) => {
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: "Failed to fetch products" });
+  });
 };
+
