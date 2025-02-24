@@ -4,7 +4,7 @@ import "./SignUp.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    user_name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -20,20 +20,36 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(null);
-
-    if (formData.password !== formData.confirmPassword) {
+  
+    // Trim values to remove leading/trailing spaces
+    const trimmedData = {
+      username: formData.username.trim(),
+      email: formData.email.trim(),
+      password: formData.password.trim(),
+      password_confirmation: formData.confirmPassword.trim(), // Match backend field name
+    };
+  
+    // Check for empty fields
+    if (!trimmedData.username || !trimmedData.email || !trimmedData.password || !trimmedData.password_confirmation) {
+      setError("All fields must be filled!");
+      return;
+    }
+  
+    if (trimmedData.password !== trimmedData.password_confirmation) {
       setError("Passwords do not match!");
       return;
     }
-
+  
+    console.log("Form Data:", trimmedData);
+  
     try {
       const response = await fetch("http://localhost:5001/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(trimmedData),
         credentials: "include",
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         alert("Signup successful!");
