@@ -80,7 +80,7 @@ app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",sessionRoutes)
-app.use("/sales",salesRoutes)
+app.use("/sale-products",salesRoutes)
 
 
 
