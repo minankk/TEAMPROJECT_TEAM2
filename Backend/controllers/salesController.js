@@ -20,9 +20,7 @@ exports.getSalesProducts = async (req, res) => {
     `;
     const [rows] = await db.execute(query);
     
-    //res.render('sales', { products: rows });
     res.json({ products: rows });
-    // res.json({ products: rows });
     
   } catch (err) {
     console.error("Error fetching sales products:", err);
