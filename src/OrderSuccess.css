@@ -26,12 +26,12 @@
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #294f5a;
+  background-color: #7c1816;
   color: white;
   text-decoration: none;
   border-radius: 5px;
 }
 
 .home-button:hover {
-  background-color: #14272c;
+  background-color: black;
 }
