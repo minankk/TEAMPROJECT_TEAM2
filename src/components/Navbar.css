@@ -19,11 +19,11 @@
 /* Logo */
 .navbar-logo img {
   height: 100px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.8s ease-in-out;
 }
 
 .navbar-logo img:hover {
-  transform: scale(1.05);
+  transform: rotate(360deg);
 }
 
 /* Navigation Menu */
@@ -51,9 +51,27 @@
   transition: color 0.3s ease;
 }
 
-.navbar ul li a:hover {
-  color: #7c1816 !important;
+.navbar ul li a {
+  position: relative;
+  padding-bottom: 5px;
 }
+
+.navbar ul li a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #7c1816;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%);
+}
+
+.navbar ul li a:hover::after {
+  width: 100%;
+}
+
 
 /* Dropdown Menu */
 .navbar ul li.dropdown {
@@ -181,8 +199,8 @@
   cursor: pointer !important;
   transition: color 0.3s ease !important;
   box-shadow: none !important;
-  line-height: 1 !important; 
-  vertical-align: middle !important; 
+  line-height: 1 !important;
+  vertical-align: middle !important;
 }
 
 
