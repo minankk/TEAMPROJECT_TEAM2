@@ -240,7 +240,7 @@
 .user-dropdown-menu {
   display: none;
   position: absolute;
-  top: 50%; /* Adjust this to bring the menu closer to the icon */
+  top: 60%; /* Adjust this to bring the menu closer to the icon */
   right: 0;
   background: #151515;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
