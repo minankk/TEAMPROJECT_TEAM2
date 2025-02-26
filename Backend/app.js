@@ -23,6 +23,8 @@ const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
+const salesRoutes = require('./routes/sales');
+
 
 
 
@@ -70,10 +72,12 @@ app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",sessionRoutes)
+app.use("/sale-products",salesRoutes)
+
 
 
 //start the Express server on a specific port 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.listen(port,()=>{
     console.log(`Server started on port ${port}`);
 })

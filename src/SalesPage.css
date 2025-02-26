@@ -1,27 +1,27 @@
 /* Overall page layout */
-.products-page {
+.sales-page {
   font-family: 'Titan One', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f6f6f4;
   color: #000;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
 }
 
 /* Banner section */
-.products-page .products-banner {
+.sales-page .sales-banner {
   position: relative;
   width: 100%;
-  max-height: 400px; 
+  max-height: 400px;
   height: auto;
   overflow: hidden;
   margin: 0;
   padding: 0;
 }
 
-.products-page .products-banner-image {
+.sales-page .sales-banner-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -29,7 +29,7 @@
   padding: 0;
 }
 
-.products-page .products-banner-text {
+.sales-page .sales-banner-text {
   position: absolute;
   top: 50%;
   left: 5%;
@@ -37,39 +37,40 @@
   text-align: left;
   color: white;
   font-size: 2rem;
-  max-width: 28%; 
+  max-width: 28%;
 }
 
-.products-page .products-banner-text h1 {
+.sales-page .sales-banner-text h1 {
   font-size: 2.5rem;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
 
-/* Product Grid */
-.products-page .products {
+/* Sales Products Grid */
+.sales-page .sales-products {
   width: 95%;
-  margin-top: 40px; 
+  margin-top: 40px;
   margin-bottom: 40px;
   margin-left: 20px;
   margin-right: 20px;
   text-align: center;
 }
 
-.products-page .products h2 {
+.sales-page .sales-products h2 {
   font-size: 2rem;
   margin-bottom: 20px;
   color: #7c1816;
 }
 
-.products-page .product-grid {
+.sales-page .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 30px; /* Increased gap between cards */
   justify-items: center;
 }
 
-.products-page .product-card {
+/* Sales Product Card */
+.sales-page .sales-product-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,17 +84,15 @@
   min-height: 420px;
   border: 1px solid #ddd;
   transition: transform 0.3s ease-in-out;
+  overflow: hidden;
 }
 
-.products .product-info h3 {
-  color: black;
-}
-
-.products-page .product-card:hover {
+.sales-page .sales-product-card:hover {
   transform: scale(1.05);
 }
 
-.products-page .product-image {
+/* Sales Product Image */
+.sales-page .sales-product-image {
   width: 100%;
   height: auto;
   max-height: 200px;
@@ -101,25 +100,27 @@
   border-radius: 10px;
 }
 
-/* Product Info */
-.products-page .product-info {
+/* Sales Product Info */
+.sales-page .sales-product-info {
   margin-top: 10px;
+  flex-grow: 1; /* Allow the info section to grow and fill space */
 }
 
-.products-page .product-info h3 {
+.sales-page .sales-product-info h3 {
   font-size: 1.2rem;
   margin: 10px 0;
   color: black;
+
 }
 
-.products-page .product-info p {
+.sales-page .sales-product-info p {
   font-size: 1rem;
   font-weight: bold;
   color: #7c1816;
 }
 
-/* Buy Button */
-.products-page .buy-button {
+/* Add to Cart Button */
+.sales-page .add-to-cart-button {
   background-color: black;
   color: white;
   padding: 10px 16px;
@@ -130,23 +131,23 @@
   border-radius: 20px;
 }
 
-.products-page .buy-button:hover {
+.sales-page .add-to-cart-button:hover {
   background-color: #7c1816;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .products-page .product-grid {
+  .sales-page .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .products-page .product-grid {
+  .sales-page .product-grid {
     grid-template-columns: 1fr;
   }
 
-  .products-page .products h2 {
+  .sales-page .sales-products h2 {
     font-size: 1.8rem;
   }
 }

@@ -1,0 +1,37 @@
+.order-success-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #212121;
+}
+
+.success-message {
+  text-align: center;
+  padding: 30px;
+  background: rgba(246, 245, 245, 0.852);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.success-message h1 {
+  color: #28a745;
+}
+
+.success-message p {
+  color: #000000;
+}
+
+.home-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #7c1816;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.home-button:hover {
+  background-color: black;
+}
