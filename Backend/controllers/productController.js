@@ -1,6 +1,7 @@
 const db = require('../db');
 const formatDate = require('../helpers/dateFormatter');
 const formatCurrency = require('../helpers/currencyFormatter')
+const stringSimilarity = require('string-similarity');
  
 exports.getAllProducts = (req, res) => {
   db.execute(`
@@ -171,3 +172,7 @@ exports.filterByArtist = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };*/
+
+
+
+
