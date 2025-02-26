@@ -61,7 +61,7 @@ const SalesPage = () => {
                   <img
                     src={`http://localhost:5001${product.cover_image_url}`}
                     alt={product.product_name}
-                    className="product-image"
+                    className="sales-product-image"
                   />
                   <div className="sales-product-info">
                     <h3>{product.product_name}</h3>
