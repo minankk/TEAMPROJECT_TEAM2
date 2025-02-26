@@ -16,7 +16,7 @@ import DeliveryInformation from './DeliveryInformation';
 import PrivacyPolicy from './PrivacyPolicy';
 import PaymentPage from './PaymentPage';
 import OrderSuccess from './OrderSuccess'; // Import Order Success Page
-
+ 
 function App() {
   const userId = 1; // Temporary user ID. It can be dynamically changed later when the login feature is added
  
@@ -45,3 +45,4 @@ function App() {
 }
  
 export default App;
+ 

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 import Logo from "../assets/logo-red2.png"; // Adjust path to your logo file
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"></link>
 
 const Footer = () => {
   return (
