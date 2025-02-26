@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import "./Navbar.css";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import logo from "../assets/logo-red2.png";
+
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [genresOpen, setGenresOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,42 +23,47 @@ const Navbar = () => {
       .catch((error) => console.error("Error fetching login status:", error));
   }, []);
 
-  useEffect(() => {
-    // Fetch cart count from backend or local storage
-    fetch('http://localhost:5001/cart-count', { credentials: 'include' })
-      .then((response) => response.json())
-      .then((data) => {
-        setCartCount(data.count || 0);
-      })
-      .catch((error) => console.error("Error fetching cart count:", error));
-  }, []);
-
+  // Handle user icon click
   const handleUserClick = () => {
-    isLoggedIn ? navigate("/dashboard") : navigate("/login");
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
   };
 
+  // Handle logout
   const handleLogout = () => {
+    // Perform logout logic here
     setIsLoggedIn(false);
     navigate("/login");
   };
 
   return (
     <header className="navbar-container">
-      {/* Logo */}
+      {/* Left: Logo */}
       <Link to="/" className="navbar-logo">
         <img src={logo} alt="Vinyl Vault Logo" />
       </Link>
 
-      {/* Navigation */}
+      {/* Center: Navigation Links */}
       <nav className="navbar">
         <ul>
-          <li className="dropdown" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
+          <li
+            className="dropdown"
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+          >
             <Link to="/products">BROWSE PRODUCTS</Link>
             {dropdownOpen && (
               <ul className="dropdown-menu">
                 <li><Link to="/artists">Artists</Link></li>
                 <li><Link to="/release-decade">Release Decade</Link></li>
-                <li className="dropdown-submenu" onMouseEnter={() => setGenresOpen(true)} onMouseLeave={() => setGenresOpen(false)}>
+                <li
+                  className="dropdown-submenu"
+                  onMouseEnter={() => setGenresOpen(true)}
+                  onMouseLeave={() => setGenresOpen(false)}
+                >
                   <Link to="/genres">Genres</Link>
                   {genresOpen && (
                     <ul className="submenu">
@@ -79,14 +85,20 @@ const Navbar = () => {
         </ul>
       </nav>
 
-      {/* Search & Icons */}
+      {/* Right: Search & Icons */}
       <div className="search-cart">
         <div className="search-box">
-          <input type="text" placeholder="Search records, artists, genres..." className="search-input" />
+          <input
+            type="text"
+            placeholder="Search records, artists, genres..."
+            className="search-input"
+          />
         </div>
-
-        {/* User Dropdown */}
-        <div className="user-dropdown" onMouseEnter={() => isLoggedIn && setUserDropdownOpen(true)} onMouseLeave={() => setUserDropdownOpen(false)}>
+        <div
+          className="user-dropdown"
+          onMouseEnter={() => isLoggedIn && setUserDropdownOpen(true)}
+          onMouseLeave={() => setUserDropdownOpen(false)}
+        >
           <button className="user-btn" onClick={handleUserClick}>
             <FaUser />
           </button>
@@ -98,11 +110,8 @@ const Navbar = () => {
             </ul>
           )}
         </div>
-
-        {/* Cart Button with Badge */}
         <Link to="/cart" className="cart-btn">
           <FaShoppingCart />
-          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
         </Link>
       </div>
     </header>

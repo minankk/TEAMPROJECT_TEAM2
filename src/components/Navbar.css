@@ -1,6 +1,188 @@
-/* Cart Button */
-.cart-btn {
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600&family=Oswald:wght@400;700&display=swap');
+
+/* Navbar Container */
+.navbar-container {
+  display: flex;
+  align-items: center;
+  background: #151515;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 15px 40px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  justify-content: space-between;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Logo */
+.navbar-logo img {
+  height: 100px;
+  transition: transform 0.8s ease-in-out;
+}
+
+.navbar-logo img:hover {
+  transform: rotate(360deg);
+}
+
+/* Navigation Menu */
+.navbar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #f6f6f4 !important;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a {
   position: relative;
+  padding-bottom: 5px;
+}
+
+.navbar ul li a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #7c1816;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%);
+}
+
+.navbar ul li a:hover::after {
+  width: 100%;
+}
+
+
+/* Dropdown Menu */
+.navbar ul li.dropdown {
+  position: relative;
+}
+
+.navbar ul li .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #151515;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.navbar ul li .dropdown-menu li {
+  padding: 10px 20px;
+}
+
+.navbar ul li .dropdown-menu li a {
+  color: #f6f6f4 !important;
+  font-size: 1.2rem;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li .dropdown-menu li a:hover {
+  color: #7c1816 !important;
+}
+
+.navbar ul li.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Submenu */
+.navbar ul li .dropdown-menu li.dropdown-submenu {
+  position: relative;
+}
+
+.navbar ul li .dropdown-menu li .submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background: #151515;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.navbar ul li .dropdown-menu li .submenu li {
+  padding: 10px 20px;
+}
+
+.navbar ul li .dropdown-menu li .submenu li a {
+  color: #f6f6f4 !important;
+  font-size: 1.2rem;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li .dropdown-menu li .submenu li a:hover {
+  color: #7c1816 !important;
+}
+
+.navbar ul li .dropdown-menu li.dropdown-submenu:hover .submenu {
+  display: block;
+}
+
+/* Search & Icons Container */
+.search-cart {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  overflow: hidden;
+  background: #2c2c2c;
+  padding: 5px 10px;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important; /* Force remove shadow */
+}
+
+.search-input {
+  width: 350px;
+  padding: 10px;
+  border: none !important;
+  background: transparent;
+  color: #7c1816;
+  font-size: 14px;
+  font-family: 'Lato', sans-serif;
+  outline: none !important;
+  box-shadow: none !important; /* Force remove any box-shadow */
+}
+
+
+.search-input::placeholder {
+  color: #f6f6f4;
+}
+
+/* Icons */
+.cart-btn {
   background: transparent;
   border: none;
   color: #f6f6f4;
@@ -9,22 +191,122 @@
   transition: color 0.3s;
 }
 
-/* Cart Badge */
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background: #7c1816;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 50%;
-  padding: 5px 8px;
-  min-width: 20px;
-  text-align: center;
+.user-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #f6f6f4 !important;
+  font-size: 22px !important;
+  cursor: pointer !important;
+  transition: color 0.3s ease !important;
+  box-shadow: none !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
 }
 
-/* Hover Effects */
+
+.user-btn:hover,
 .cart-btn:hover {
   color: #7c1816;
+}
+
+.user-btn:hover {
+  color: #7c1816 !important;
+}
+
+.user-btn:focus,
+.user-btn:active {
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Remove weird grey hover effect */
+.user-btn:focus,
+.user-btn:hover,
+.cart-btn:focus,
+.cart-btn:hover {
+  outline: none;
+  background: transparent;
+}
+
+
+/* User Dropdown Menu */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50%; /* Adjust this to bring the menu closer to the icon */
+  right: 0;
+  background: #151515;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.user-dropdown-menu li {
+  padding: 10px 20px;
+}
+
+.user-dropdown-menu li a,
+.user-dropdown-menu li button {
+  color: #f6f6f4 !important;
+  font-size: 1.2rem;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.user-dropdown-menu li a:hover,
+.user-dropdown-menu li button:hover {
+  color: #7c1816 !important;
+}
+
+.user-dropdown:hover .user-dropdown-menu,
+.user-dropdown-menu.open {
+  display: block;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .search-input {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #151515;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .navbar.active {
+    display: flex;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .search-input {
+    width: 200px;
+  }
 }
