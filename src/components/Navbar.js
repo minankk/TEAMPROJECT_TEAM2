@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import "./Navbar.css";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
-import logo from "../assets/logo-red2.png"; // Ensure the path is correct
+import logo from "../assets/logo-red2.png";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [genresOpen, setGenresOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +24,18 @@ const Navbar = () => {
 
   // Handle user icon click
   const handleUserClick = () => {
-    navigate(isLoggedIn ? "/dashboard" : "/login");
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    // Perform logout logic here
+    setIsLoggedIn(false);
+    navigate("/login");
   };
 
   return (
@@ -34,7 +49,37 @@ const Navbar = () => {
       <nav className="navbar">
         <ul>
           <li><Link to="/about-us">ABOUT US</Link></li>
-          <li><Link to="/products">BROWSE PRODUCTS</Link></li>
+          <li
+            className="dropdown"
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+          >
+            <Link to="/products">BROWSE PRODUCTS</Link>
+            {dropdownOpen && (
+              <ul className="dropdown-menu">
+                <li><Link to="/artists">Artists</Link></li>
+                <li><Link to="/release-decade">Release Decade</Link></li>
+                <li
+                  className="dropdown-submenu"
+                  onMouseEnter={() => setGenresOpen(true)}
+                  onMouseLeave={() => setGenresOpen(false)}
+                >
+                  <Link to="/genres">Genres</Link>
+                  {genresOpen && (
+                    <ul className="submenu">
+                      <li><Link to="/genres/alternative-rock">Alternative Rock</Link></li>
+                      <li><Link to="/genres/hip-hop">Hip Hop</Link></li>
+                      <li><Link to="/genres/soundtrack">Soundtrack</Link></li>
+                      <li><Link to="/genres/pop">Pop</Link></li>
+                      <li><Link to="/genres/rock">Rock</Link></li>
+                    </ul>
+                  )}
+                </li>
+                <li><Link to="/newest-additions">Newest Additions</Link></li>
+                <li><Link to="/best-sellers">Best Sellers</Link></li>
+              </ul>
+            )}
+          </li>
           <li><Link to="/sale">SALE</Link></li>
         </ul>
       </nav>
@@ -48,9 +93,22 @@ const Navbar = () => {
             className="search-input"
           />
         </div>
-        <button className="user-btn" onClick={handleUserClick}>
-          <FaUser />
-        </button>
+        <div
+          className="user-dropdown"
+          onMouseEnter={() => isLoggedIn && setUserDropdownOpen(true)}
+          onMouseLeave={() => setUserDropdownOpen(false)}
+        >
+          <button className="user-btn" onClick={handleUserClick}>
+            <FaUser />
+          </button>
+          {isLoggedIn && (
+            <ul className={`user-dropdown-menu ${userDropdownOpen ? 'open' : ''}`}>
+              <li><Link to="/profile">Profile</Link></li>
+              <li><Link to="/orders">Orders</Link></li>
+              <li><button onClick={handleLogout}>Logout</button></li>
+            </ul>
+          )}
+        </div>
         <Link to="/cart" className="cart-btn">
           <FaShoppingCart />
         </Link>

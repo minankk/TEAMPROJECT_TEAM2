@@ -23,6 +23,8 @@ const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
+const salesRoutes = require('./routes/sales');
+
 
 console.log('pageRoutes:', typeof pageRoutes);
 console.log('authRoutes:', typeof authRoutes);
@@ -74,10 +76,12 @@ app.use("/", pageRoutes);   // entry point
 app.use("/login", authRoutes);  
 app.use("/dashboard", dashboardRoutes);
 app.use("/signup", signUpRoutes);
-app.use('/add', myCartRoutes);
+app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",sessionRoutes)
+app.use("/sale-products",salesRoutes)
+
 
 
 //start the Express server on a specific port 
