@@ -25,16 +25,6 @@ const SalesPage = () => {
       });
   }, []);
 
-  // Group products by album
-  const groupedProducts = products.reduce((acc, product) => {
-    const album = product.album_title; 
-    if (!acc[album]) {
-      acc[album] = [];
-    }
-    acc[album].push(product);
-    return acc;
-  }, {});
-
   // Handle add to cart
   const handleAddToCart = (productId) => {
     console.log('Adding product to cart:', productId);
@@ -51,35 +41,31 @@ const SalesPage = () => {
       </section>
 
       <section className="sales-products">
-        {/* Render products dynamically */}
-        {Object.entries(groupedProducts).map(([album, albumProducts], index) => (
-          <div key={index} className="album-section">
-            <h2>{album}</h2>
-            <div className="product-grid">
-              {albumProducts.map((product) => (
-                <div key={product.product_id} className="sales-product-card">
-                  <img
-                    src={`http://localhost:5001${product.cover_image_url}`}
-                    alt={product.product_name}
-                    className="sales-product-image"
-                  />
-                  <div className="sales-product-info">
-                    <h3>{product.product_name}</h3>
-                    <p>{product.artist_name}</p>
-                    <p>{product.release_date}</p>
-                    <p>{product.price}</p>
-                  </div>
-                  <button
-                    className="add-to-cart-button"
-                    onClick={() => handleAddToCart(product.product_id)}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              ))}
+        <h2>All Sale Products</h2>
+        <div className="product-grid">
+          {products.map((product) => (
+            <div key={product.product_id} className="sales-product-card">
+              <img
+                src={`http://localhost:5001${product.cover_image_url}`}
+                alt={product.product_name}
+                className="sales-product-image"
+              />
+              <div className="sales-product-info">
+                <h3>{product.album_title}</h3>
+                <p>{product.product_name}</p>
+                <p>{product.artist_name}</p>
+                <p>{product.release_date}</p>
+                <p>{product.price}</p>
+              </div>
+              <button
+                className="add-to-cart-button"
+                onClick={() => handleAddToCart(product.product_id)}
+              >
+                Add to Cart
+              </button>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
     </main>
   );
