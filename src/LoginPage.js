@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
-import vinylIcon from './assets/vinyl-icon.webp';
-
+// import vinylIcon from './assets/vinyl-icon.webp';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -53,8 +52,7 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <main>
-      {/* <img src={vinylIcon} alt="Vinyl Icon" className="vinyl-icon" GONNA ADD DIFF ICON LATER DONT REMOVE THIS LINE/> */}
+      <main className="auth-container">
         <div className="login-container">
           <h1>Login to your account</h1>
           <form onSubmit={handleLogin}>

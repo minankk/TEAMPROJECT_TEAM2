@@ -11,7 +11,12 @@ import TermsAndConditions from './termsandconditions';
 import CartPage from './CartPage';
 import DashboardPage from './DashboardPage';
 import Signup from './signup';
-import AboutUs from './AboutUs'
+import AboutUs from './AboutUs';
+import DeliveryInformation from './DeliveryInformation';
+import PrivacyPolicy from './PrivacyPolicy';
+import PaymentPage from './PaymentPage';
+import OrderSuccess from './OrderSuccess'; // Import Order Success Page
+import SalesPage from './SalesPage';
 
 function App() {
   const userId = 1; // Temporary user ID. It can be dynamically changed later when the login feature is added
@@ -29,7 +34,12 @@ function App() {
         <Route path="/t&c" element={<TermsAndConditions />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/about-us" element={<AboutUs />} /> {/* Added About Us Route */}
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/delivery-information" element={<DeliveryInformation />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/payment-page" element={<PaymentPage />} /> 
+        <Route path="/order-success" element={<OrderSuccess />} /> 
+        <Route path="/sale" element={<SalesPage />} />
       </Routes>
       <Footer />
     </Router>
