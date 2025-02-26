@@ -54,9 +54,19 @@
   margin-left: 20px;
   margin-right: 20px;
   text-align: center;
+}
+
+.sales-page .sales-products h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #7c1816;
+}
+
+.sales-page .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px; /* Increased gap between cards */
+  justify-items: center;
 }
 
 /* Sales Product Card */
@@ -64,7 +74,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background: white;
   padding: 15px;
   border-radius: 10px;
@@ -100,6 +110,7 @@
   font-size: 1.2rem;
   margin: 10px 0;
   color: black;
+
 }
 
 .sales-page .sales-product-info p {
@@ -126,13 +137,17 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .sales-page .sales-products {
-      grid-template-columns: repeat(2, 1fr);
+  .sales-page .product-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .sales-page .sales-products {
-      grid-template-columns: 1fr;
+  .sales-page .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sales-page .sales-products h2 {
+    font-size: 1.8rem;
   }
 }
