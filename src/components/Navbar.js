@@ -5,6 +5,7 @@ import "./Navbar.css";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import logo from "../assets/logo-red2.png";
 
+
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -48,7 +49,6 @@ const Navbar = () => {
       {/* Center: Navigation Links */}
       <nav className="navbar">
         <ul>
-          <li><Link to="/about-us">ABOUT US</Link></li>
           <li
             className="dropdown"
             onMouseEnter={() => setDropdownOpen(true)}
@@ -81,6 +81,7 @@ const Navbar = () => {
             )}
           </li>
           <li><Link to="/sale">SALE</Link></li>
+          <li><Link to="/about-us">ABOUT US</Link></li>
         </ul>
       </nav>
 
