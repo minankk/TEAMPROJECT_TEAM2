@@ -19,20 +19,20 @@ const Footer = () => {
 
         {/* Middle Sections: Links */}
         <div className="footer-column">
-          <h4>Company</h4>
-          <ul>
-            <li><Link to="/about-us">About Us</Link></li>
-            <li><Link to="/t&c">Terms & Conditions</Link></li>
-            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-          </ul>
-        </div>
-
-        <div className="footer-column">
           <h4>Customer Service</h4>
           <ul>
             <li><Link to="/contact-us">Contact Us</Link></li>
             <li><Link to="/FAQs">FAQs</Link></li>
             <li><Link to="/delivery-information">Delivery Information</Link></li>
+          </ul>
+        </div>
+
+        <div className="footer-column">
+          <h4>Company Info</h4>
+          <ul>
+            <li><Link to="/about-us">About Us</Link></li>
+            <li><Link to="/t&c">Terms & Conditions</Link></li>
+            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
           </ul>
         </div>
 
