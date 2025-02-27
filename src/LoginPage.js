@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
+// import vinylIcon from './assets/vinyl-icon.webp';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -51,7 +52,7 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <main>
+      <main className="auth-container">
         <div className="login-container">
           <h1>Login to your account</h1>
           <form onSubmit={handleLogin}>

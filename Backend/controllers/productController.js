@@ -1,23 +1,27 @@
-
-const db = require('../db'); 
+const db = require('../db');
 const formatDate = require('../helpers/dateFormatter');
 const formatCurrency = require('../helpers/currencyFormatter')
-
-
+const stringSimilarity = require('string-similarity');
+ 
 exports.getAllProducts = (req, res) => {
-  db.execute("SELECT * FROM products")
-      .then(([results]) => {
-          results.forEach(product => {
-              product.release_date = formatDate(product.release_date); 
-              product.price = formatCurrency(product.price);
-              
-          });
-          res.status(200).json(results);
-      })
-      .catch((err) => {
-          console.error("Error fetching products:", err);
-          res.status(500).json({ error: "Failed to fetch products" });
+  db.execute(`
+      SELECT p.product_id, p.name AS album_name, a.name AS artist_name, g.name AS genre_name,
+             p.price, p.cover_image_url, p.release_date
+      FROM products p
+      JOIN artists a ON p.artist_id = a.artist_id
+      JOIN genres g ON p.genre_id = g.genre_id
+  `)
+  .then(([results]) => {
+     
+      results.forEach(product => {
+          product.release_date = formatDate(product.release_date);  
+          product.price = formatCurrency(product.price);  
       });
+      res.status(200).json(results);  
+  }).catch((err) => {
+    console.error("Error fetching products:", err);  
+    res.status(500).json({ error: "Failed to fetch products" });
+});
 };
 
 
@@ -168,3 +172,7 @@ exports.filterByArtist = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };*/
+
+
+
+

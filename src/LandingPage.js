@@ -6,6 +6,7 @@ import Eminem from "./assets/Eminem.webp";
 import HotelCalifornia from "./assets/HotelCalifornia.png";
 import Sweetener from "./assets/Sweetener.webp";
 
+
 function LandingPage() {
   return (
     <div className="landing-container">
@@ -16,7 +17,7 @@ function LandingPage() {
           <p>
             We are your local record store - online. A record store created and stocked by vinyl lovers for vinyl lovers.
           </p>
-          <button className="shop-all-button">
+          <button className="shop-all-button" onClick={() => window.location.href = '/products'}>
             Shop All <span className="arrow">→</span>
           </button>
         </div>
@@ -41,7 +42,7 @@ function LandingPage() {
           <div className="step-number">3</div>
           <h3>Get the Best Deals</h3>
           <p>Find the best offers and discounts on high-quality vinyl records.</p>
-          <button>Shop Now</button>
+          <button onClick={() => window.location.href ='/products'}>Shop Now</button>
         </div>
       </section>
 
@@ -49,7 +50,7 @@ function LandingPage() {
       <section className="staff-picks">
         <div className="staff-picks-header">
           <h2>STAFF PICKS</h2>
-          <button className="shop-all-button">
+          <button className="shop-all-button" onClick={() => window.location.href ='/products'}>
             Shop All <span className="arrow">→</span>
           </button>
         </div>
@@ -67,12 +68,12 @@ function LandingPage() {
           <div className="item-landing">
             <img src={HotelCalifornia} alt="Hotel California Vinyl" />
             <h3>Hotel California</h3>
-            <p>$20.00</p>
+            <p>£20.00</p>
           </div>
           <div className="item-landing">
             <img src={Sweetener} alt="Sweetener Vinyl" />
             <h3>Sweetener</h3>
-            <p>$22.00</p>
+            <p>£22.00</p>
           </div>
         </div>
       </section>
