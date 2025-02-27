@@ -23,6 +23,16 @@ const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
+const salesRoutes = require('./routes/sales');
+
+console.log('pageRoutes:', typeof pageRoutes);
+console.log('authRoutes:', typeof authRoutes);
+console.log('dashboardRoutes:', typeof dashboardRoutes);
+console.log('signUpRoutes:', typeof signUpRoutes);
+console.log('contactUsRoutes:', typeof contactUsRoutes);
+console.log('sessionRoutes:', typeof sessionRoutes);
+console.log('productsRoutes:', typeof productsRoutes);
+console.log('myCartRoutes:', typeof myCartRoutes);
 
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
@@ -69,10 +79,11 @@ app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",sessionRoutes)
+app.use("/sale-products",salesRoutes)
 
 
 //start the Express server on a specific port 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.listen(port,()=>{
     console.log(`Server started on port ${port}`);
 })
