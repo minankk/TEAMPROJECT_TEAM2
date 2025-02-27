@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
-import Logo from "../assets/logo-red2.png"; // Adjust path to your logo file
+import Logo from "../assets/logo-red2.png";
+import { FaXTwitter, FaInstagram, FaEnvelope, FaSpotify } from "react-icons/fa6"; // FontAwesome Icons
 
 const Footer = () => {
   return (
@@ -32,16 +33,25 @@ const Footer = () => {
             <li><Link to="/contact-us">Contact Us</Link></li>
             <li><Link to="/FAQs">FAQs</Link></li>
             <li><Link to="/delivery-information">Delivery Information</Link></li>
-
           </ul>
         </div>
 
+        {/* Social Media Icons */}
         <div className="footer-column">
-          <h4>Follow Us</h4>
+          <h4>Follow Us On:</h4>
           <div className="social-icons">
-            <button aria-label="Twitter">🐦</button>
-            <button aria-label="Instagram">📸</button>
-            <button aria-label="Email">📧</button>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <FaXTwitter />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <FaInstagram />
+            </a>
+            <a href="mailto:info@vinylvault.com" aria-label="Email">
+              <FaEnvelope />
+            </a>
+            <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+              <FaSpotify />
+            </a>
           </div>
         </div>
       </div>
