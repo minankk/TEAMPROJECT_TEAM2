@@ -25,7 +25,6 @@ const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
 
-
 console.log('pageRoutes:', typeof pageRoutes);
 console.log('authRoutes:', typeof authRoutes);
 console.log('dashboardRoutes:', typeof dashboardRoutes);
@@ -81,7 +80,6 @@ app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",sessionRoutes)
 app.use("/sale-products",salesRoutes)
-
 
 
 //start the Express server on a specific port 
