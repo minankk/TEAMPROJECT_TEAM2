@@ -1,0 +1,49 @@
+.vinyl-genres {
+  padding: 50px 0;
+  background: #222;
+}
+
+.genre-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.genre-card {
+  width: 200px;
+  height: 250px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.genre-front, .genre-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+  transition: transform 0.6s;
+}
+
+.genre-front {
+  font-size: 1.5rem;
+}
+
+.genre-back {
+  font-size: 1rem;
+  transform: rotateY(180deg);
+  padding: 10px;
+}
+
+.genre-card:hover .genre-front {
+  transform: rotateY(180deg);
+}
+
+.genre-card:hover .genre-back {
+  transform: rotateY(0deg);
+}
