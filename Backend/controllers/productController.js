@@ -147,9 +147,6 @@ exports.filterOnSale = async (req, res) => {
 };
 
 
-
-
-
 // Controller function to filter products by genre
 /*exports.filterByGenre = async (req, res) => {
   const { genre } = req.params;
@@ -181,64 +178,8 @@ exports.filterOnSale = async (req, res) => {
 };*/
 
 
-// Controller function to filter best sellers
-/*(exports.filterBestSellers = async (req, res) => {
-  try {
-    const [rows] = await db.execute(`
-      SELECT 
-        p.product_id, 
-        p.product_name, 
-        a.name AS artist_name, 
-        g.genre_name AS genre,
-        p.release_date, 
-        p.price, 
-        p.cover_image_url, 
-        p.type, 
-        p.best_sellers, 
-        p.sale
-      FROM products p
-      JOIN artists a ON p.artist_id = a.artist_id
-      JOIN genres g ON p.genre_id = g.genre_id
-      WHERE p.best_sellers = TRUE
-    `);
-
-    res.status(200).json({ products: rows });
-  } catch (error) {
-    console.error('Error filtering best sellers:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// Controller function to filter products on sale
-exports.filterOnSale = async (req, res) => {
-  try {
-    const [rows] = await db.execute(`
-      SELECT 
-        p.product_id, 
-        p.product_name, 
-        a.name AS artist_name, 
-        g.genre_name AS genre,
-        p.release_date, 
-        p.price, 
-        p.cover_image_url, 
-        p.type, 
-        p.best_sellers, 
-        p.sale
-      FROM products p
-      JOIN artists a ON p.artist_id = a.artist_id
-      JOIN genres g ON p.genre_id = g.genre_id
-      WHERE p.sale = TRUE
-    `);
-
-    res.status(200).json({ products: rows });
-  } catch (error) {
-    console.error('Error filtering products on sale:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
 // Controller function to filter products by artist
-exports.filterByArtist = async (req, res) => {
+/*exports.filterByArtist = async (req, res) => {
   const { artist } = req.params;
 
   try {

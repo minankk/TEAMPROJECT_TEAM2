@@ -10,7 +10,7 @@ router.get('/', productsController.getAllProducts);
 //GET - Filters by decade
 router.get('/decade/:decade', productsController.filterByDecade);
 
-//GET - Filters by price
+//get - Filters by price
 router.get('/price/:price', productsController.filterByPrice);
 
 //get - Filters by best-sellers
@@ -19,17 +19,12 @@ router.get('/bestsellers', productsController.filterBestSellers);
 //get - Filters for onsale
 router.get('/onsale', productsController.filterOnSale);
 
+//router.get('/genre/:genre', productsController.filterByGenre);
+
+
 
 // GET /api/products/filter/genre/:genre - Filter products by genre
 //router.get('/filter/genre/:genre', productsController.filterByGenre);
-
-//router.get('/filter/decade/:decade', productsController.filterByDecade);
-
-// GET /api/products/filter/best-sellers - Filter best sellers
-//router.get('/filter/best-sellers', productsController.filterBestSellers);
-
-// GET /api/products/filter/sale - Filter products on sale
-//router.get('/filter/sale', productsController.filterOnSale);
 
 // GET /api/products/filter/artist/:artist - Filter products by artist
 //router.get('/filter/artist/:artist', productsController.filterByArtist);
