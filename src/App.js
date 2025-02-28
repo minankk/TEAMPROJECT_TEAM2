@@ -17,10 +17,11 @@ import PrivacyPolicy from './PrivacyPolicy';
 import PaymentPage from './PaymentPage';
 import OrderSuccess from './OrderSuccess'; // Import Order Success Page
 import SalesPage from './SalesPage';
+import LogoutPage from './LogoutPage';
 
 function App() {
   const userId = 1; // Temporary user ID. It can be dynamically changed later when the login feature is added
-
+ 
   return (
     <Router>
       <Navbar />
@@ -40,10 +41,12 @@ function App() {
         <Route path="/payment-page" element={<PaymentPage />} /> 
         <Route path="/order-success" element={<OrderSuccess />} /> 
         <Route path="/sale" element={<SalesPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
       </Routes>
       <Footer />
     </Router>
   );
 }
-
+ 
 export default App;
+ 

@@ -14,8 +14,12 @@ const Sidebar = () => (
       <li><a href="#">Personal Info</a></li>
       <li><a href="#">Messages</a></li>
       <li><a href="#">Logout</a></li>
+      <li className="logout-button">     {/*Log-out Button*/}
+        <Link to="/LogoutPage">Logout</Link>
+      </li>
     </ul>
   </div>
+
 );
 
 const Overview = () => {
