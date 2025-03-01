@@ -148,26 +148,23 @@ exports.filterOnSale = async (req, res) => {
 
 
 // Controller function to filter products by genre
-/*exports.filterByGenre = async (req, res) => {
+exports.filterByGenre = async (req, res) => {
   const { genre } = req.params;
 
   try {
     const [rows] = await db.execute(`
       SELECT 
         p.product_id, 
-        p.product_name, 
+        p.name, 
         a.name AS artist_name, 
-        g.genre_name AS genre,
+        g.name AS genre,
         p.release_date, 
         p.price, 
-        p.cover_image_url, 
-        p.type, 
-        p.best_sellers, 
-        p.sale
+        p.cover_image_url 
       FROM products p
       JOIN artists a ON p.artist_id = a.artist_id
       JOIN genres g ON p.genre_id = g.genre_id
-      WHERE g.genre_name = ?
+      WHERE g.name = ?
     `, [genre]);
 
     res.status(200).json({ products: rows });
@@ -175,26 +172,23 @@ exports.filterOnSale = async (req, res) => {
     console.error('Error filtering products by genre:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-};*/
+};
 
 
 // Controller function to filter products by artist
-/*exports.filterByArtist = async (req, res) => {
+exports.filterByArtist = async (req, res) => {
   const { artist } = req.params;
 
   try {
     const [rows] = await db.execute(`
       SELECT 
         p.product_id, 
-        p.product_name, 
+        p.name, 
         a.name AS artist_name, 
-        g.genre_name AS genre,
+        g.name AS genre,
         p.release_date, 
         p.price, 
-        p.cover_image_url, 
-        p.type, 
-        p.best_sellers, 
-        p.sale
+        p.cover_image_url
       FROM products p
       JOIN artists a ON p.artist_id = a.artist_id
       JOIN genres g ON p.genre_id = g.genre_id
@@ -206,7 +200,8 @@ exports.filterOnSale = async (req, res) => {
     console.error('Error filtering products by artist:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-};*/
+};
+
 
 
 
