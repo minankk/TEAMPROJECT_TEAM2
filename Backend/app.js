@@ -26,14 +26,13 @@ const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
 
+const app = express(); 
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
   path : "./.env",
 })
 
-// Create an Express application instance
-const app = express(); 
 
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
@@ -62,7 +61,7 @@ app.use("/signup", signUpRoutes);
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
-app.use("/checksession",sessionRoutes)
+app.use("/checksession",authenticateJWT , sessionRoutes)
 app.use("/sale-products",salesRoutes)
 
 
