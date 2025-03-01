@@ -1,11 +1,12 @@
 const db = require('../db')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
         console.log('Received login request');
-        // Validation for fields present
+        // Validation for the username and password
         if (!username || !password) {
             return res.status(400).json({ message: 'username and password are required' });
         }
@@ -17,41 +18,39 @@ exports.login = async (req, res) => {
         }
         const user = results[0];
 
-        // Compare hashed password 
+        // Comparing the hashed password in db to check if it matches with the user  
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Password do not match' });
         }
       
-        // Set session variables for
-        req.session.loggedIn = true;
-        req.session.username = user.user_name;
-        req.session.user_id = user.user_id;
-        req.session.role = user.role;
-        
-        // Log the session data for debugging
-        console.log(req.session);
-        
-        return res.status(200).json({ 
-            message: 'Login successful', 
+        //Generate JWT Token with user details
+        const payload = { 
+            user_id: user.user_id, 
+            username: user.user_name, 
+            role: user.role 
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
+        return res.status(200).json({
+            message: 'Login successful',
+            token: token,
             user: { username: user.user_name }
         });
 
     } catch (error) {
         console.error('Login error:', error.stack);
-        return res.status(500).json({ message: 'Internal server error'});
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
 //logout
     exports.logout = (req, res) => {
-    // Destroy the session
     req.session.loggedIn = false;
     req.session.destroy(error => {
         if (error) {
             return res.status(500).json({ message: 'Could not log out' });
         }  
-    // Return success response
     res.status(200).json({ message: 'Logout successful' });
     });
 }
@@ -72,7 +71,7 @@ exports.login = async (req, res) => {
     // Validate email format
     /**
      * ^ -> start of the string
-     * [a-zA-Z0-9._-]+ -> before @ symbol consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
+     * [a-zA-Z0-9._-]+ -> before @ consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
      * @ -> domain in email address
      * [a-zA-Z0-9.-]+
      * \. -> '.' should be there
@@ -93,32 +92,33 @@ exports.login = async (req, res) => {
                message: 'Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character'
            });
     }
-
     try {
         //Check if email already exists
         const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
         if (rows.length > 0) {
-            return res.status(400).json({ error: 'Email already registered' });
+            return res.status(400).json({ error: 'Email already registered. Please login' });
         }
         //Hashed password
         const hashedPassword = await bcrypt.hash(password , 8);
 
-        //Insert Into database
+        //Inserting Into database
         await db.query(
             'INSERT INTO users (user_name, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
             [username, email, hashedPassword, 'user']
         );
 
-         // Create a session for the user after signup
-         req.session.loggedIn = true;
-         req.session.username = username;
-         req.session.role = 'user'; // Default role
-        
-        res.status(200).json({ message: 'User registered successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+        // Generate JWT token
+        const payload = { username, email, role: 'user' };
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' }); // Token expires in 1 hour
 
-};
+        // Send the JWT token to the client
+        res.status(200).json({
+        message: 'User registered successfully',
+        token,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
 

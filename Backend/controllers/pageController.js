@@ -1,4 +1,7 @@
-
+const db = require('../db');
+const formatDate = require('../helpers/dateFormatter');
+const formatCurrency = require('../helpers/currencyFormatter')
+const stringSimilarity = require('string-similarity');
 
 exports.landingPage = async (req, res) => {
   if (req.session.loggedIn) {

@@ -1,0 +1,32 @@
+.logout-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  .logout-container h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+    background-color: #2c2c2ce4;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  .logout-message {
+    font-size: 1.2rem;
+    padding: 15px;
+    background-color: #3a2929c2;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .logout-container .logout-icon {
+    font-size: 2rem;
+    margin-top: 10px;
+    color: white;
+  }
+  

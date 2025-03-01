@@ -10,7 +10,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh; /* Ensures the full viewport height */
-  background: url('./assets/vinyl-texture.webp') no-repeat center center;
+  /* background: url('./assets/vinyl-texture.webp') no-repeat center center; */
   background-size: cover; /* Ensures the image covers the entire screen */
 }
 
@@ -92,6 +92,6 @@ main {
 
   html {
     height: 100%;
-    background: url('./assets/vinyl-texture.webp') no-repeat center center;
+    /* background: url('./assets/vinyl-texture.webp') no-repeat center center; */
     background-size: cover;
   }
