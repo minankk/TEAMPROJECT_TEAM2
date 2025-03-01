@@ -1,5 +1,6 @@
 const db = require('../db')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
     try {
@@ -23,22 +24,23 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Password do not match' });
         }
       
-        // Set session variables for the logged in user
-        req.session.loggedIn = true;
-        req.session.username = user.user_name;
-        req.session.user_id = user.user_id;
-        req.session.role = user.role;
-        
-        console.log(req.session);
-        
-        return res.status(200).json({ 
-            message: 'Login successful', 
+        //Generate JWT Token with user details
+        const payload = { 
+            user_id: user.user_id, 
+            username: user.user_name, 
+            role: user.role 
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
+        return res.status(200).json({
+            message: 'Login successful',
+            token: token,
             user: { username: user.user_name }
         });
 
     } catch (error) {
         console.error('Login error:', error.stack);
-        return res.status(500).json({ message: 'Internal server error'});
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -90,7 +92,6 @@ exports.login = async (req, res) => {
                message: 'Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character'
            });
     }
-
     try {
         //Check if email already exists
         const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
@@ -106,16 +107,18 @@ exports.login = async (req, res) => {
             [username, email, hashedPassword, 'user']
         );
 
-         // Create a session for the user after signup
-         req.session.loggedIn = true;
-         req.session.username = username;
-         req.session.role = 'user'; // Default role is assigned as user
-        
-        res.status(200).json({ message: 'User registered successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+        // Generate JWT token
+        const payload = { username, email, role: 'user' };
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' }); // Token expires in 1 hour
 
-};
+        // Send the JWT token to the client
+        res.status(200).json({
+        message: 'User registered successfully',
+        token,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
 

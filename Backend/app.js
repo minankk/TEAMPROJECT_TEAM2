@@ -24,15 +24,7 @@ const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
-
-console.log('pageRoutes:', typeof pageRoutes);
-console.log('authRoutes:', typeof authRoutes);
-console.log('dashboardRoutes:', typeof dashboardRoutes);
-console.log('signUpRoutes:', typeof signUpRoutes);
-console.log('contactUsRoutes:', typeof contactUsRoutes);
-console.log('sessionRoutes:', typeof sessionRoutes);
-console.log('productsRoutes:', typeof productsRoutes);
-console.log('myCartRoutes:', typeof myCartRoutes);
+const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
 
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
@@ -58,14 +50,6 @@ app.use(cors({
   origin: 'http://localhost:3000',  
   credentials: true, 
 }));
-
-// To manage user login state
-app.use(session({
-    secret: 'hardcodedSecretKey123', 
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }  // Set to true in production with HTTPS
- }));
 
 /***
  * To use Routes
