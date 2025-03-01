@@ -17,6 +17,8 @@ exports.getAllProducts = (req, res) => {
         });
 };
 
+
+
 // Controller function to filter products by genre
 exports.filterByGenre = async (req, res) => {
     const { genre } = req.params;
