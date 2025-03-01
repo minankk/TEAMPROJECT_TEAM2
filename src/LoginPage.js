@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 // import vinylIcon from './assets/vinyl-icon.webp';
-
+ 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+ 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log('Logging in with:', { username, password });
-
+ 
     fetch('http://localhost:5001/login', {
       method: 'POST',
       headers: {
@@ -23,10 +23,10 @@ const LoginPage = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log('Login response:', data);
-
+ 
         if (data.message === 'Login successful') {
           alert(data.message);
-
+ 
           // After successful login, check session status and redirect
           fetch('http://localhost:5001/checksession', { credentials: 'include' })
             .then((res) => res.json())
@@ -49,7 +49,7 @@ const LoginPage = () => {
         alert(error.message); // Show error message
       });
   };
-
+ 
   return (
     <div className="login-page">
       <main className="auth-container">

@@ -9,14 +9,8 @@ exports.getSalesProducts = async (req, res) => {
     FROM products p
     JOIN artists a ON p.artist_id = a.artist_id
     JOIN albums al ON p.album_id = al.album_id
-    WHERE al.title IN (
-      'Nevermind',
-      'The Masterplan',
-      'OK Computer',
-      'Short n’ Sweet',
-      'Abbey Road',
-      'Ready to Die'
-    )
+    JOIN genres g ON p.genre_id = g.genre_id
+    WHERE p.on_sale = 1
   `)
   .then(([results]) => {
     // Format each product

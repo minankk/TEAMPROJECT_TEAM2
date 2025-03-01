@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { landingPage, dashboard} = require('../controllers/pageController');
+const pagesController = require('../controllers/pageController');
 
-router.get('/', landingPage); 
-router.get('/dashboard', dashboard); 
+
+router.get('/', pagesController.landingPage); 
+router.get('/dashboard', pagesController.dashboard); 
+
+
 
 module.exports = router;
 

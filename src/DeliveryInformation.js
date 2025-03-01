@@ -3,7 +3,7 @@ import "./DeliveryInformation.css";
 
 const DeliveryInformation = () => {
   return (
-    <div className="info-container">
+    <div className="delivery-info-container">
       <h1>Delivery Information</h1>
       <p>
         We aim to provide a seamless and efficient delivery service for our customers. Please read our delivery policy below.
