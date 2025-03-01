@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { landingPage, dashboard} = require('../controllers/pageController');
+const pagesController = require('../controllers/pageController');
 
-router.get('/', landingPage); // Landing page API
-router.get('/dashboard', dashboard); // Dashboard page API
+
+router.get('/', pagesController.landingPage); 
+router.get('/dashboard', pagesController.dashboard); 
+
+
 
 module.exports = router;
 
+    

@@ -23,24 +23,16 @@ const contactUsRoutes = require('./routes/contactus');
 const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
+const salesRoutes = require('./routes/sales');
+const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
 
-console.log('pageRoutes:', typeof pageRoutes);
-console.log('authRoutes:', typeof authRoutes);
-console.log('dashboardRoutes:', typeof dashboardRoutes);
-console.log('signUpRoutes:', typeof signUpRoutes);
-console.log('contactUsRoutes:', typeof contactUsRoutes);
-console.log('sessionRoutes:', typeof sessionRoutes);
-console.log('productsRoutes:', typeof productsRoutes);
-console.log('myCartRoutes:', typeof myCartRoutes);
-
+const app = express(); 
 
 //.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
   path : "./.env",
 })
 
-// Create an Express application instance
-const app = express(); 
 
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
@@ -58,14 +50,6 @@ app.use(cors({
   credentials: true, 
 }));
 
-// To manage user login state
-app.use(session({
-    secret: 'hardcodedSecretKey123', 
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }  // Set to true in production with HTTPS
- }));
-
 /***
  * To use Routes
  */
@@ -77,11 +61,12 @@ app.use("/signup", signUpRoutes);
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
-app.use("/checksession",sessionRoutes)
+app.use("/checksession",authenticateJWT , sessionRoutes)
+app.use("/sale-products",salesRoutes)
 
 
 //start the Express server on a specific port 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.listen(port,()=>{
     console.log(`Server started on port ${port}`);
 })

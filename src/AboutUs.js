@@ -17,7 +17,7 @@ function AboutUs() {
         <div className="about-text">
           <h2>Our Passion for Music & Tech</h2>
           <p>
-            Music has always been more than just sound—it's an experience, a memory, and a connection. In the digital era,
+            Music has always been more than just sound; it's an experience, a memory, and a connection. In the digital era,
             where streaming dominates, we wanted to preserve the authentic charm of vinyl records.
           </p>
           <p>
@@ -28,7 +28,7 @@ function AboutUs() {
           <p>
             Whether you're a seasoned collector or a newcomer discovering the warmth of vinyl, our platform is designed to make
             your journey smooth and enjoyable. With a user-friendly interface, personalised recommendations, and a growing
-            community, we are more than just a store—we are a home for vinyl enthusiasts.
+            community, we are more than just a store, we are a home for vinyl enthusiasts.
           </p>
           <p>
             Thank you for being a part of our journey. Explore, listen, and experience music the way it was meant to be!
