@@ -19,19 +19,14 @@ router.get('/bestsellers', productsController.filterBestSellers);
 //get - Filters for onsale
 router.get('/onsale', productsController.filterOnSale);
 
-//router.get('/genre/:genre', productsController.filterByGenre);
+//get - Filters for onsale
+router.get('/artist/:artist', productsController.filterByArtist);
 
-
-
-// GET /api/products/filter/genre/:genre - Filter products by genre
-//router.get('/filter/genre/:genre', productsController.filterByGenre);
-
-// GET /api/products/filter/artist/:artist - Filter products by artist
-//router.get('/filter/artist/:artist', productsController.filterByArtist);
+// get - Filter products by genre
+router.get('/genre/:genre', productsController.filterByGenre);
 
 // to get the search products
 router.get('/search', searchController.searchProducts);
-
 
 
 module.exports = router;
