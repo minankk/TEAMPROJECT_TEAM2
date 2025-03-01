@@ -9,7 +9,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: url('./assets/vinyl-texture.webp') no-repeat center center;
+  /* background: url('./assets/vinyl-texture.webp') no-repeat center center; */
   background-size: cover;
 }
 
@@ -37,10 +37,10 @@ body {
 
 .payment-form {
   background: rgba(0, 0, 0, 0.5);
-  padding: 30px;
+  padding: 50px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: 50%;
   max-width: 600px;
   transition: transform 0.3s ease;
 }

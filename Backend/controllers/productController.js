@@ -85,7 +85,38 @@ exports.filterByDecade = async (req, res) => {
     }
 };
 
-// Controller function to filter best sellers
+//Controller function to filter products by price
+exports.filterByPrice = async (req, res) => {
+  const { price } = req.params; 
+  const priceValue = parseInt(price, 10);
+  try {
+    const [rows] = await db.execute(`
+      SELECT 
+        p.product_id, 
+        p.name AS album_name, 
+        a.name AS artist_name, 
+        g.name AS genre,
+        p.release_date, 
+        p.price, 
+        p.cover_image_url
+      FROM products p
+      JOIN artists a ON p.artist_id = a.artist_id
+      JOIN genres g ON p.genre_id = g.genre_id
+      WHERE p.price = ?
+    `, [priceValue]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: `No products found at price £${priceValue}.` });
+    }
+
+    res.status(200).json({ products: rows });
+  } catch (error) {
+    console.error('Error filtering products by price:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+//Controller function to filter products by best sellers
 exports.filterBestSellers = async (req, res) => {
     try {
         const [rows] = await db.execute(
@@ -115,7 +146,8 @@ exports.filterBestSellers = async (req, res) => {
     }
 };
 
-// Controller function to filter products on sale
+
+//Controller function to filter products by on-sale
 exports.filterOnSale = async (req, res) => {
     try {
         const [rows] = await db.execute(
@@ -144,6 +176,7 @@ exports.filterOnSale = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
 
 // Controller function to filter products by artist
 exports.filterByArtist = async (req, res) => {
