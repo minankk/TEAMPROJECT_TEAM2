@@ -265,3 +265,33 @@ VALUES
 INSERT INTO inventory (product_id, stock_quantity, created_at, updated_at)
 SELECT product_id, 100, NOW(), NOW()
 FROM products;
+
+
+-- To alter the table products and add best-sellers column
+ALTER TABLE products ADD COLUMN best_sellers BOOLEAN DEFAULT 0;
+
+--To update the best sellers product
+UPDATE products 
+SET best_sellers = 1
+WHERE name IN (
+  'Nevermind',
+  'Guardians of the Galaxy - Awesome Mix 1',
+  'Short n’ Sweet',
+  'Rumors',
+  'The Dark Side of the Moon'
+);
+
+-- To alter the table products and add on-sale column
+ALTER TABLE products ADD COLUMN on_sale BOOLEAN DEFAULT 0;
+
+--To update the on-sale product
+UPDATE products 
+SET on_sale = 1
+WHERE name IN (
+  'Nevermind',
+  'The Masterplan',
+  'OK Computer',
+  'Short n’ Sweet',
+  'Abbey Road',
+  'Ready to Die'
+);
