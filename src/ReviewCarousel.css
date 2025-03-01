@@ -1,0 +1,40 @@
+.reviews {
+  padding: 50px 0;
+  background: #111;
+}
+
+.review-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding: 20px;
+}
+
+.review-card {
+  flex: 0 0 300px;
+  background: #222;
+  padding: 15px;
+  border-radius: 8px;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease-in-out;
+}
+
+.review-card:hover {
+  transform: scale(1.05);
+}
+
+.review-text {
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.review-name {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.stars {
+  color: gold;
+  font-size: 1.2rem;
+}
