@@ -3,38 +3,88 @@
   background: #111;
 }
 
+.review-section{
+  padding: 60px 20px;
+}
+
 .review-container {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 20px;
+  gap: 30px;
   padding: 20px;
+  justify-content: center;
 }
 
 .review-card {
+  position: relative;
   flex: 0 0 300px;
+  padding: 30px;
   background: #222;
-  padding: 15px;
-  border-radius: 8px;
-  scroll-snap-align: start;
-  transition: transform 0.3s ease-in-out;
-}
-
-.review-card:hover {
-  transform: scale(1.05);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
 }
 
 .review-text {
-  font-size: 1rem;
+  color: rgb(255, 235, 217);
+  font-size: 1.45rem;
   font-style: italic;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .review-name {
-  font-weight: bold;
+  font-weight: 775;
   margin-top: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .stars {
   color: gold;
   font-size: 1.2rem;
+}
+
+.review-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffe0cb;
+  margin-bottom: 10px;
+  margin-top: auto;
+}
+
+.review-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0.8;
+}
+
+.verified-badge {
+  font-size: 0.9rem;
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.stars {
+  color: gold;
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.verified-badge {
+  font-size: 0.9rem;
+  color: #28a745; /* Green for trust */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 20px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.tick-icon {
+  color: #28a745;
+  font-size: 1rem;
 }
