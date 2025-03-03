@@ -11,8 +11,8 @@ const reviews = [
 function ReviewCarousel() {
   return (
     <section className="review-section">
-      <h2 className="review-title">What Our Customers Say</h2>
-      <p className="review-subtitle">Real reviews from real vinyl lovers:</p>
+      <h2 className="review-title">--- Review Roundup ---</h2>
+      <p className="review-subtitle">Customer Feedback from Vinyl Aficionados:</p>
       <div className="review-container">
         {reviews.map((review, index) => (
           <div key={index} className="review-card">
