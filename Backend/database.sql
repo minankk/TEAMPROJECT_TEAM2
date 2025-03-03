@@ -295,3 +295,8 @@ WHERE name IN (
   'Abbey Road',
   'Ready to Die'
 );
+
+
+--To alter the table users to temp store the reset token and token expiry
+ALTER TABLE users ADD COLUMN reset_token VARCHAR(255) NULL;
+ALTER TABLE users ADD COLUMN reset_token_expiry DATETIME NULL;
