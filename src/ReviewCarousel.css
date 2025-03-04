@@ -70,6 +70,7 @@
   background: #00000087;
   border-radius: 10px;
   width: auto; /* Shortens scrollbar length */
+  margin: 0 50px;
 }
 
 .review-container::-webkit-scrollbar-thumb:hover {
