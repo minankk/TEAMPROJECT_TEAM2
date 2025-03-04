@@ -14,7 +14,6 @@
   margin-top: 35px;
 }
 
-
 .shop-all-button {
   display: inline-flex;
   align-items: center;
@@ -53,16 +52,19 @@
   transform: translateX(7px); /* Moves right on hover */
 }
 
-
 /* Hero Section */
 .hero {
   position: relative;
-  height: 80vh;
+  height: 82vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  transition: background-position 0.2s ease-out;
 }
 
 .hero::before {
@@ -119,7 +121,7 @@
 /* Staff Picks - Carousel */
 .staff-picks {
   padding: 50px 0;
-  background: linear-gradient(180deg,#e4d1c9, #ffffff);
+  background: linear-gradient(180deg,#fce0d6, #ffffff);
   text-align: center;
   border-bottom: 3px solid #ad2321;
   padding-top: 40px;
@@ -129,7 +131,7 @@
 .section-divider {
   border: none;
   height: 2px;
-  background: #4a0f0e; /* Dark red for a vinyl-themed touch */
+  background: #300a09; /* Dark red for a vinyl-themed touch */
   width: 80%; /* Reduce width for a centered effect */
   opacity: 0.7;
 }
@@ -141,21 +143,33 @@
 }
 
 .staff-picks-title {
-  font-size: 2.8rem;
+  font-size: 2.8rem; /* Make it larger */
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #ad2321;
+  letter-spacing: 2px; /* Add spacing for emphasis */
+  color: #ad2321; /* Dark red to stand out */
   margin-bottom: 10px;
+  margin-top: 25px;
+}
+
+.staff-pick-description {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 90%;
 }
 
 .staff-subtitle {
   font-size: 1.2rem;
   font-weight: 500;
-  opacity: 0.8;
+  opacity: 0.9;
   color: #2f2f2f;
   max-width: 600px;
   margin: 0 auto;
+  margin-bottom: 60px;
 }
 
 .staff-carousel {
@@ -174,7 +188,8 @@
   flex-wrap: nowrap;
   gap: 40px;
   width: 100%;
-  padding: 20px 0;
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 
 .infinite-scroll {
@@ -186,8 +201,8 @@
   animation-play-state: running; /* Default: running */
 }
 
-.item-landing {
-  background: #fbf8f6;
+/* .item-landing {
+  background: #fcf6f1;
   padding: 20px;
   border-radius: 12px;
   min-width: 200px;
@@ -195,7 +210,76 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   text-align: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 220px; /* Adjust based on design */
+  /* max-width: 100%;
+  overflow: hidden; /* Ensures text doesn't spill */
+/* }  */
+
+/* Vinyl Item - Centered Layout */
+.vinyl-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  margin: 0 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
 }
+
+/* Vinyl Image with Shadow */
+.vinyl-image {
+  width: 220px;
+  height: 220px;
+  /* border-radius: 8px; */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Text Styles with Shadow */
+.vinyl-title, .vinyl-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+  margin-top: 15px;
+  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.20); /* Subtle shadow */
+}
+
+.vinyl-title{
+  margin-top: 55px;
+}
+
+.vinyl-price {
+  font-size: 1rem;
+  color: #ad2321;
+  margin-top: 5px;
+
+}
+
+/* Hover Effect */
+.vinyl-item:hover {
+  transform: scale(1.05);
+}
+
+.vinyl-item:hover .vinyl-image {
+  transform: scale(1.1);
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.vinyl-item:hover .vinyl-title,
+.vinyl-item:hover .vinyl-price {
+  transform: scale(1.1);
+  color: #7a1917;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25); /* More defined shadow */
+}
+
+
 
 @keyframes scrollLoop {
   from {
@@ -254,7 +338,6 @@
   right: 10px; /* Adjust if needed */
 }
 
-
 /* STEPS SECTION - LIGHTER VERSION */
 .steps-section {
   display: flex;
@@ -262,11 +345,11 @@
   gap: 20px;
   padding: 50px;
   padding-top: 60px;
-  background: linear-gradient(180deg, #ffffff, #e4d1c9);
+  background: linear-gradient(180deg, #ffffff, #fce0d6);
 }
 
 .step {
-  background: #fbf8f6;
+  background: #fcf6f1;
   padding: 25px;
   border-radius: 200px;
   max-width: 300px;
