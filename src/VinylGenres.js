@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom"; // Import Link
 import "./VinylGenres.css";
 import rock from "./assets/rock_genre_cover.png";
-import pop from "./assets/pop_genre_cover.png";
+import pop from "./assets/pop_sleeve.jpeg";
 import hiphop from "./assets/hiphop_sleeve.png";
 import redrecord from "./assets/record_genre.png";
 import soundtrack from "./assets/soundtrack_sleeve.png";
