@@ -166,3 +166,32 @@ exports.login = async (req, res) => {
             res.status(500).json({ message: 'Something went wrong' });
         }
     };
+
+// Reset Password
+    exports.resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+
+        const [user] = await db.execute(
+            'SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()', 
+            [token]
+        );
+
+        if (user.length === 0) {
+            return res.status(400).json({ message: 'Invalid or expired token' });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        await db.execute(
+            'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE reset_token = ?', 
+            [hashedPassword, token]
+        );
+
+        res.json({ message: 'Password has been reset successfully' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
