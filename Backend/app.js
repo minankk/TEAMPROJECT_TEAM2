@@ -27,6 +27,7 @@ const salesRoutes = require('./routes/sales');
 const forgotPasswordRoute = require('./routes/forgotPassword');
 const resetPasswordRoute = require('./routes/resetPassword');
 const artistRoutes = require('./routes/artistRoutes');
+const bestSellersRoutes = require('./routes/bestSellers');
 
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
 
@@ -70,6 +71,7 @@ app.use("/sale-products",salesRoutes)
 app.use("/forgot-password",forgotPasswordRoute)
 app.use("/reset-password",resetPasswordRoute)
 app.use('/artists', artistRoutes);
+app.use('/best-sellers', bestSellersRoutes);
 
 //start the Express server on a specific port 
 const port = process.env.PORT || 5001;
