@@ -9,14 +9,14 @@ import Musicplayer from "./assets/music-player.jpg";
 import Vinylhand from "./assets/vinyl-hand.jpg";
 
 // Import Staff Picks Images
-import Barbie from "./assets/Barbie.webp";
-import Eminem from "./assets/Eminem.webp";
-import HotelCalifornia from "./assets/HotelCalifornia.png";
-import Sweetener from "./assets/Sweetener.webp";
-import Nirvana from "./assets/nirvana_nvm_record.jpg";
-import Oasis from "./assets/OasisWhastthestory.webp";
-import PinkFloyd from "./assets/pinkfloyd_darkside.webp";
-import TheBeatles from "./assets/abbey_road.webp";
+import Barbie from "./assets/barbie_sleeve.jpg";
+import Eminem from "./assets/EminemTheMarshallMathersLP.jpg";
+import HotelCalifornia from "./assets/hotelcalifornia_sleeve.jpg";
+import Sweetener from "./assets/ArianaGrandeSweetener.webp";
+import Nirvana from "./assets/NirvanaNevermind.webp";
+import Oasis from "./assets/oasis_sleeve.jpg";
+import PinkFloyd from "./assets/pinkfloyd_sleeve.png";
+import TheBeatles from "./assets/TheBeatleAbbyRoad.webp";
 
 const images = [Recordstore, Musicplayer, Vinylhand];
 
@@ -45,6 +45,19 @@ function LandingPage() {
       setCurrentImage((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const hero = document.querySelector(".hero");
+      if (hero) {
+        let scrollPos = window.scrollY;
+        hero.style.backgroundPositionY = `${scrollPos * 0.5}px`; // Parallax effect
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Function to handle infinite scrolling effect
@@ -122,23 +135,24 @@ function LandingPage() {
         <hr className="section-divider" /> {/* Top Divider */}
 
         <div className="staff-picks-header">
-        <h2 className="staff-picks-title">STAFF PICKS</h2>
-        <p className="staff-subtitle">Our team handpicks the hottest tracks, refreshed weekly.</p>
+        <h2 className="staff-picks-title">Vault Weekly</h2>
+        <p className="staff-subtitle">Handpicked by the team, updated each week with fresh tracks you’ll love!</p>
         </div>
 
         <div className="staff-carousel">
           <div className="staff-picks-container">
             <div className="infinite-scroll">
               {infinitePicks.map((item, index) => (
-                <div className="item-landing" key={index}>
-                  <img src={item.img} alt={item.title} />
-                  <h3>{item.title}</h3>
-                  <p className="price">{item.price}</p>
+                <div key={index} className="vinyl-item">
+                  <img src={item.img} alt={item.title} className="vinyl-image" />
+                  <h3 className="vinyl-title">{item.title}</h3>
+                  <p className="vinyl-price">{item.price}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
+
         <div>
         <button className="shop-all-button" onClick={() => window.location.href = "/products"}>
           Shop All <span className="arrow">→</span>
