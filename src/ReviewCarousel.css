@@ -16,15 +16,15 @@
   padding: 20px 20px 30px 40px;
   scroll-snap-type: x mandatory;
   gap: 30px;
-  padding: 50px 20px 50px 40px; /* Added left padding to prevent clipping */
+  padding: 50px 20px 50px 40px;
   justify-content: flex-start;
-  scroll-padding-left: 40px; /* Ensures first review is fully visible */
+  scroll-padding-left: 40px;
 }
 
 .review-card {
   position: relative;
-  flex: 0 0 300px; /* Ensures each card has the same width */
-  min-width: 300px; /* Explicitly define min-width */
+  flex: 0 0 300px;
+  min-width: 300px;
   padding: 35px;
   background: #151515;
   border-radius: 10px;
@@ -32,7 +32,7 @@
   display: flex;
   flex-direction: column;
   min-height: 190px;
-  scroll-snap-align: start; /* Ensures proper alignment */
+  scroll-snap-align: start;
 }
 
 .review-text {
@@ -50,12 +50,12 @@
 }
 
 .review-section {
-  overflow: hidden; /* Prevents unexpected clipping */
+  overflow: hidden;
 }
 
 /* Scrollbar Styling */
 .review-container::-webkit-scrollbar {
-  height: 6px; /* Reduce thickness slightly */
+  height: 6px;
   /* width: 80%; */
 }
 
@@ -63,13 +63,13 @@
   background: #222;
   border-radius: 10px;
   /* width: 80%; Shortens track */
-  margin: 0 50px; /* Centers the scrollbar */
+  margin: 0 50px;
 }
 
 .review-container::-webkit-scrollbar-thumb {
   background: #00000087;
   border-radius: 10px;
-  width: auto; /* Shortens scrollbar length */
+  width: auto;
   margin: 0 50px;
 }
 
@@ -106,7 +106,7 @@
 
 .verified-badge {
   font-size: 0.9rem;
-  color: #28a746b5; /* Green for trust */
+  color: #28a746b5;
   display: flex;
   align-items: center;
   gap: 5px;
