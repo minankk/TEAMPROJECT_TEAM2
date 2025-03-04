@@ -2,18 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom"; // Import Link
 import "./VinylGenres.css";
 import rock from "./assets/rock_genre_cover.png";
-import pop from "./assets/pop_genre_cover.png";
+import pop from "./assets/pop_sleeve.jpeg";
 import hiphop from "./assets/hiphop_sleeve.png";
 import redrecord from "./assets/record_genre.png";
 import soundtrack from "./assets/soundtrack_sleeve.png";
 import altrock from "./assets/altrock_sleeve.png";
 
 const genres = [
-  { name: "ROCK", picks: ["Pink Floyd", "The Beatles"], image: rock, path: "/genres/rock" },
   { name: "ALTERNATIVE ROCK", picks: ["Green Day", "Radiohead"], image: altrock, path: "/genres/alternative-rock" },
   { name: "HIP-HOP", picks: ["Kendrick Lamar", "50 Cent"], image: hiphop, path: "/genres/hip-hop" },
   { name: "SOUNDTRACK", picks: ["Movie Soundtracks"], image: soundtrack, path: "/genres/soundtrack" },
   { name: "POP", picks: ["Ariana Grande", "Charlie XCX"], image: pop, path: "/genres/pop" },
+  { name: "ROCK", picks: ["Pink Floyd", "The Beatles"], image: rock, path: "/genres/rock" },
 ];
 
 function VinylGenres() {
