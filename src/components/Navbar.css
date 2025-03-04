@@ -169,8 +169,9 @@
   padding: 12px 15px;
   border: none !important;
   background: transparent;
-  color: #7c1816;
+  color: #fffaf5;
   font-size: 1rem;
+  font-weight: 700;
   font-family: 'Lato', sans-serif;
   outline: none !important;
   box-shadow: none !important; /* Force remove any box-shadow */
@@ -179,7 +180,7 @@
 
 
 .search-input::placeholder {
-  color: #f6f6f4;
+  color: #fffaf5;
 }
 
 /* Icons */
