@@ -198,9 +198,9 @@
   animation: scrollLoop 35s linear infinite;
   min-width: 200%;
   padding: 0 10px;
-  animation-play-state: running; /* Default: running */
+  animation-play-state: running;
 }
-
+/* please keep this in*/
 /* .item-landing {
   background: #fcf6f1;
   padding: 20px;
