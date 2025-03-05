@@ -1,7 +1,7 @@
 .vinyl-genres {
   padding: 25px 0;
   padding-bottom: 50px;
-  background: radial-gradient(#ffdede, #faf8e8);
+  background: radial-gradient(#b0f8ff, #faf8e8);
   text-align: center;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .vinyl-genres h3{
-  padding-bottom: 165px;
+  padding-bottom: 150px;
   padding-top: 10px;
   font-size: 1.2rem;
   font-weight: 500;
@@ -88,10 +88,11 @@
 .record-text {
   position: relative;
   color: #f6e5d3;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 400;
   transition: opacity 0.3s ease-in-out;
   z-index: 1;
+  transform: uppercase;
   font-family: 'Segoe UI', Tahoma,;
 }
 
@@ -107,7 +108,7 @@
 }
 
 .genre-sleeve:hover .record {
-  top: -37px;
+  top: -20px;
   opacity: 1;
 }
 .genre-sleeve {
