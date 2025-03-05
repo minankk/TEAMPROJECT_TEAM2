@@ -525,3 +525,8 @@ WHERE name IN (
 --To alter the table users to temp store the reset token and token expiry
 ALTER TABLE users ADD COLUMN reset_token VARCHAR(255) NULL;
 ALTER TABLE users ADD COLUMN reset_token_expiry DATETIME NULL;
+
+--To replace ' ' with '-' in genres to get aligned
+SELECT DISTINCT name FROM genres;
+UPDATE genres 
+SET name = REPLACE(name, ' ', '-');

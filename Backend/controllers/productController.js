@@ -6,7 +6,7 @@ const stringSimilarity = require('string-similarity');
 exports.getAllProducts = (req, res) => {
   db.execute(`
       SELECT p.product_id, p.name AS album_name, a.name AS artist_name, g.name AS genre_name,
-             p.price, p.cover_image_url, p.release_date
+             p.price, p.cover_image_url
       FROM products p
       JOIN artists a ON p.artist_id = a.artist_id
       JOIN genres g ON p.genre_id = g.genre_id
@@ -14,7 +14,6 @@ exports.getAllProducts = (req, res) => {
   .then(([results]) => {
      
       results.forEach(product => {
-          product.release_date = formatDate(product.release_date);  
           product.price = formatCurrency(product.price);  
       });
       res.status(200).json(results);  
@@ -37,7 +36,6 @@ exports.filterByDecade = async (req, res) => {
         p.name, 
         a.name AS artist_name, 
         g.name AS genre,
-        p.release_date, 
         p.price, 
         p.cover_image_url
       FROM products p
@@ -67,7 +65,6 @@ exports.filterByPrice = async (req, res) => {
         p.name AS album_name, 
         a.name AS artist_name, 
         g.name AS genre,
-        p.release_date, 
         p.price, 
         p.cover_image_url
       FROM products p
@@ -96,7 +93,6 @@ exports.filterBestSellers = async (req, res) => {
         p.name AS album_name, 
         a.name AS artist_name, 
         g.name AS genre,
-        p.release_date, 
         p.price, 
         p.cover_image_url
       FROM products p
@@ -126,7 +122,6 @@ exports.filterOnSale = async (req, res) => {
         p.name AS album_name, 
         a.name AS artist_name, 
         g.name AS genre,
-        p.release_date, 
         p.price, 
         p.cover_image_url
       FROM products p
@@ -158,7 +153,6 @@ exports.filterByGenre = async (req, res) => {
         p.name, 
         a.name AS artist_name, 
         g.name AS genre,
-        p.release_date, 
         p.price, 
         p.cover_image_url 
       FROM products p
@@ -167,6 +161,9 @@ exports.filterByGenre = async (req, res) => {
       WHERE g.name = ?
     `, [genre]);
 
+    if (rows.length === 0) {
+      return res.status(404).json({ message: `No products found for genre: ${genre}` });
+    }
     res.status(200).json({ products: rows });
   } catch (error) {
     console.error('Error filtering products by genre:', error);
@@ -186,7 +183,6 @@ exports.filterByArtist = async (req, res) => {
         p.name, 
         a.name AS artist_name, 
         g.name AS genre,
-        p.release_date, 
         p.price, 
         p.cover_image_url
       FROM products p
