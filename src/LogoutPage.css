@@ -1,32 +1,65 @@
+/* Logout Page Styling */
 .logout-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  
-  .logout-container h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    color: #ffffff;
-    background-color: #2c2c2ce4;
-    padding: 15px;
-    border-radius: 5px;
-  }
-  
-  .logout-message {
-    font-size: 1.2rem;
-    padding: 15px;
-    background-color: #3a2929c2;
-    color: white;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .logout-container .logout-icon {
-    font-size: 2rem;
-    margin-top: 10px;
-    color: white;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f3f4f6; 
+}
+
+.logout-box {
+  background-color: #ffffff; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem; 
+  max-width: 400px; 
+  width: 100%; 
+  min-height: 450px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  text-align: center; 
+}
+
+
+.logout-box h1 {
+  font-size: 1.5rem; 
+  font-weight: 600; 
+  margin-bottom: 1.5rem; 
+  color: #111827; 
+}
+
+.logout-message {
+  font-size: 1rem; 
+  color: #4b5563; 
+  margin-bottom: 1rem; 
+}
+
+.logout-submessage {
+  font-size: 0.875rem; 
+  color: #6b7280; 
+  margin-bottom: 1.5rem; /* Spacing below the submessage */
+}
+
+.logout-button {
+  background-color: #7c1816; /* Matching button color */
+  color: #ffffff; /* White text */
+  padding: 0.75rem 1.5rem; /* Button padding */
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1rem; /* Font size */
+  font-weight: 600; /* Semi-bold */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: transform 0.2s ease; /* Smooth transition */
+}
+
+.logout-button:hover {
+  background-color: #a0211e; 
+  transform: translateY(-3px); 
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.logout-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); 
+}
