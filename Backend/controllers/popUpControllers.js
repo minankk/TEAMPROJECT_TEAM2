@@ -2,7 +2,7 @@ const db = require('../db');
 
 exports.getPopUpInfo = (req, res) => {
   // Get productId from the URL parameter, set a default value if not present
-  const productId = req.params.id || 1;  // 例: productIdがない場合はデフォルトで1を設定
+  const productId = req.params.id || 1;  
 
   // Helper function to format the date
   const formatDate = (date) => {
