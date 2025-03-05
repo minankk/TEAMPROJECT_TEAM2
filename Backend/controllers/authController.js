@@ -104,8 +104,11 @@ exports.login = async (req, res) => {
          
         // Default role is 'user', but if the admin secret key is provided and valid, assign the role 'admin'
         let role = 'user';
+        let approvalStatus = 'pending'
+      
         if (adminSecretKey && adminSecretKey === process.env.ADMIN_SECRET_KEY) {
-             role = 'admin';
+            role = 'user';  
+            approvalStatus = 'pending'; 
         }
         
         //Hashed password
