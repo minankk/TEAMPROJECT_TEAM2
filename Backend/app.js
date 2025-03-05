@@ -12,7 +12,6 @@ const hbs = require("hbs")
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const session = require('express-session');
-
 const path = require('path');
 
 const pageRoutes = require('./routes/landingPage');  
@@ -25,19 +24,14 @@ const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
 const forgotPasswordRoute = require('./routes/forgotPassword');
-
 const popUpRoutes = require('./routes/popUpRoutes'); 
-
 const resetPasswordRoute = require('./routes/resetPassword');
 const artistRoutes = require('./routes/artistRoutes');
 const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
-
-
-
-
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
+
 
 const app = express(); 
 
@@ -77,9 +71,7 @@ app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",authenticateJWT , sessionRoutes)
 app.use("/sale-products",salesRoutes)
 app.use("/forgot-password",forgotPasswordRoute)
-
 app.use("/albums/:id/pop-up", popUpRoutes); 
-
 app.use("/reset-password",resetPasswordRoute)
 app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
