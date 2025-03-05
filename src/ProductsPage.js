@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProductsPage.css';
-import Carousel1 from './assets/Carousel1.jpg';
+import VinylRetro from './assets/VinylRetro.webp';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const ProductsPage = () => {
 
   const Banner = () => (
     <section className="products-banner">
-      <img src={Carousel1} alt="Vinyl Collection" className="products-banner-image" />
+      <img src={VinylRetro} alt="Vinyl Collection" className="products-banner-image" />
       <div className="products-banner-text">
         <h1>Browse the Products and Get the Best Offer</h1>
       </div>
@@ -25,7 +25,11 @@ const ProductsPage = () => {
   );
 
   useEffect(() => {
-    fetch('http://localhost:5001/products')
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = (url = 'http://localhost:5001/products') => {
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -37,26 +41,32 @@ const ProductsPage = () => {
       .catch(() => {
         setProducts([]);
       });
-  }, []);
-
-  const handleFilterChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFilters({
-      ...filters,
-      [name]: type === 'checkbox' ? checked : value,
-    });
   };
 
-  const filteredProducts = products.filter(product => {
-    const matchesArtist = filters.artist ? product.artist_name.toLowerCase().includes(filters.artist.toLowerCase()) : true;
-    const matchesGenre = filters.genre ? product.genre_name.toLowerCase().includes(filters.genre.toLowerCase()) : true;
-    const matchesDecade = filters.releaseDecade ? product.release_date.startsWith(filters.releaseDecade) : true;
-    const matchesPrice = filters.priceRange ? product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1] : true;
-    const matchesBestSeller = filters.bestSeller ? product.best_seller : true;
-    const matchesOnSale = filters.onSale ? product.on_sale : true;
-  
-    return matchesArtist && matchesGenre && matchesDecade && matchesPrice && matchesBestSeller && matchesOnSale;
-  });
+   const handleFilterChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const newFilters = { ...filters, [name]: type === 'checkbox' ? checked : value };
+    setFilters(newFilters);
+
+    let url = 'http://localhost:5001/products';
+
+    if (newFilters.releaseDecade) {
+      url = `http://localhost:5001/products/decade/${newFilters.releaseDecade}`;
+    } else if (newFilters.priceRange) {
+      url = `http://localhost:5001/products/price/${newFilters.priceRange}`;
+    } else if (newFilters.bestSeller) {
+      url = 'http://localhost:5001/products/bestsellers';
+    } else if (newFilters.onSale) {
+      url = 'http://localhost:5001/products/onsale';
+    } else if (newFilters.artist) {
+      url = `http://localhost:5001/products/artist/${newFilters.artist}`;
+    } else if (newFilters.genre) {
+      url = `http://localhost:5001/products/genre/${newFilters.genre}`;
+    }
+
+    fetchProducts(url);
+  };
+
   const generateTitle = () => {
     if (filters.artist) {
       return `All products with ${filters.artist}`;
@@ -80,7 +90,28 @@ const ProductsPage = () => {
   };
 
   const handleAddToCart = (productId) => {
-    navigate('/cart');
+    const userId = 1; // Replace with actual user ID
+    const quantity = 1; // Default quantity
+
+    fetch('http://localhost:5001/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: userId, product_id: productId, quantity }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          console.log(data.message);
+          navigate('/cart');
+        } else {
+          console.error('Failed to add item to cart');
+        }
+      })
+      .catch(error => {
+        console.error('Error adding item to cart:', error);
+      });
   };
 
   return (
@@ -132,7 +163,7 @@ const ProductsPage = () => {
       <section className="products">
         <h2>{generateTitle()}</h2>
         <div className="product-grid">
-          {filteredProducts.map((product) => (
+          {products.map((product) => (
             <div key={product.product_id} className="product-card">
               <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.name} className="product-image" />
               <div className="product-info">
