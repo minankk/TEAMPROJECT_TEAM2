@@ -161,6 +161,9 @@ exports.filterByGenre = async (req, res) => {
       WHERE g.name = ?
     `, [genre]);
 
+    if (rows.length === 0) {
+      return res.status(404).json({ message: `No products found for genre: ${genre}` });
+    }
     res.status(200).json({ products: rows });
   } catch (error) {
     console.error('Error filtering products by genre:', error);
