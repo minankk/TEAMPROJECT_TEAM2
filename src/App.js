@@ -15,13 +15,13 @@ import AboutUs from './AboutUs';
 import DeliveryInformation from './DeliveryInformation';
 import PrivacyPolicy from './PrivacyPolicy';
 import PaymentPage from './PaymentPage';
-import OrderSuccess from './OrderSuccess'; // Import Order Success Page
+import OrderSuccess from './OrderSuccess';
 import SalesPage from './SalesPage';
 import LogoutPage from './LogoutPage';
 
 function App() {
-  const userId = 1; // Temporary user ID. It can be dynamically changed later when the login feature is added
- 
+  const userId = 1;
+
   return (
     <Router>
       <Navbar />
@@ -38,8 +38,8 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/delivery-information" element={<DeliveryInformation />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/payment-page" element={<PaymentPage />} /> 
-        <Route path="/order-success" element={<OrderSuccess />} /> 
+        <Route path="/payment-page" element={<PaymentPage />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/sale" element={<SalesPage />} />
         <Route path="/logout" element={<LogoutPage />} />
       </Routes>
@@ -47,6 +47,5 @@ function App() {
     </Router>
   );
 }
- 
+
 export default App;
- 
