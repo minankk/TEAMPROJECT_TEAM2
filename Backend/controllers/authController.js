@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
 
 //sign up as user
     exports.signup = async (req , res) => {
-    const { username, email, password ,password_confirmation} = req.body;
+        const { username, email, password, password_confirmation, adminSecretKey } = req.body;
 
     //Check if all fields are entered
     if (!username || !email || !password || !password_confirmation) {
@@ -101,29 +101,46 @@ exports.login = async (req, res) => {
         if (rows.length > 0) {
             return res.status(400).json({ error: 'Email already registered. Please login' });
         }
+         
+        // Default role is 'user', but if the admin secret key is provided and valid, assign the role 'admin'
+        let role = 'user';
+        if (adminSecretKey && adminSecretKey === process.env.ADMIN_SECRET_KEY) {
+             role = 'admin';
+        }
+        
         //Hashed password
         const hashedPassword = await bcrypt.hash(password , 8);
 
         //Inserting Into database
         await db.query(
             'INSERT INTO users (user_name, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
-            [username, email, hashedPassword, 'user']
-        );
+            [username, email, hashedPassword, role]
+          );
 
         // Generate JWT token
-        const payload = { username, email, role: 'user' };
-        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' }); // Token expires in 1 hour
+        const payload = { username, email, role };
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
 
-        // Send the JWT token to the client
-        res.status(200).json({
-        message: 'User registered successfully',
-        token,
-      });
-    } catch (error) {
+        // Send confirmation message to the user
+        if (role === 'admin') {
+        return res.status(200).json({
+          message: 'Admin registered successfully',
+          token,
+          role
+        });
+        } else {
+        return res.status(200).json({
+          message: 'User registered successfully',
+          token,
+          role
+         });
+       }
+  
+       } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  };
+      res.status(500).json({ message: 'Internal server error' });
+      }
+   };
 
 //forgot password
     exports.forgotPassword = async(req , res) => {

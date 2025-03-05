@@ -32,6 +32,8 @@ const resetPasswordRoute = require('./routes/resetPassword');
 const artistRoutes = require('./routes/artistRoutes');
 const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
+const genreRoutes = require('./routes/genres');
+
 
 
 
@@ -82,6 +84,7 @@ app.use("/reset-password",resetPasswordRoute)
 app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
+app.use('/genres', genreRoutes);
 
 
 //start the Express server on a specific port 
