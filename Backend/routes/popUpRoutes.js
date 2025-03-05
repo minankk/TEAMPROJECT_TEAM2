@@ -7,4 +7,4 @@ const popUpController = require('../controllers/popUpControllers'); // Correct p
 // API endpoint to get pop-up information
 router.get('/', popUpController.getPopUpInfo);
 
-module.exports = router;
+module.exports = router;    
