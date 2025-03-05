@@ -161,7 +161,7 @@
   padding: 5px 10px;
   border: none !important;
   outline: none !important;
-  box-shadow: none !important; /* Force remove shadow */
+  box-shadow: none !important;
 }
 
 .search-input {
@@ -169,17 +169,18 @@
   padding: 12px 15px;
   border: none !important;
   background: transparent;
-  color: #7c1816;
+  color: #fffaf5;
   font-size: 1rem;
+  font-weight: 700;
   font-family: 'Lato', sans-serif;
   outline: none !important;
-  box-shadow: none !important; /* Force remove any box-shadow */
+  box-shadow: none !important;
   border-radius: 5px;
 }
 
 
 .search-input::placeholder {
-  color: #f6f6f4;
+  color: #fffaf5;
 }
 
 /* Icons */
@@ -241,7 +242,7 @@
 .user-dropdown-menu {
   display: none;
   position: absolute;
-  top: 60%; /* Adjust this to bring the menu closer to the icon */
+  top: 60%;
   right: 0;
   background: #151515;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
