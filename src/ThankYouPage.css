@@ -5,54 +5,54 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f3f4f6; /* Light gray background */
+    background-color: #f3f4f6;
   }
-  
+
   .thank-you-box {
-    background-color: #ffffff; /* White background */
-    border-radius: 12px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    padding: 2rem; /* Spacing inside the box */
-    max-width: 400px; /* Limit the width */
-    width: 100%; /* Full width within the max-width constraint */
-    text-align: center; /* Center the text */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
   }
-  
+
   .thank-you-heading {
-    font-size: 1.5rem; /* Larger font size */
-    font-weight: 600; /* Semi-bold */
-    margin-bottom: 1.5rem; /* Spacing below the heading */
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
   }
-  
+
   .thank-you-message {
-    font-size: 1rem; /* Normal font size */
-    color: #4b5563; /* Gray text color */
-    margin-bottom: 1rem; /* Spacing below the message */
+    font-size: 1rem;
+    color: #4b5563;
+    margin-bottom: 1rem;
   }
-  
+
   .thank-you-submessage {
-    font-size: 0.875rem; /* Smaller font size */
-    color: #6b7280; /* Lighter gray text color */
-    margin-bottom: 1.5rem; /* Spacing below the submessage */
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
   }
-  
+
   .thank-you-button {
     background-color: #7c1816;
-    color: #ffffff; /* White text */
-    padding: 0.75rem 1.5rem; /* Button padding */
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 8px; /* Rounded corners */
-    font-size: 1rem; /* Font size */
-    font-weight: 600; /* Semi-bold */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.2s ease; /* Smooth transition */
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
-  
+
   .thank-you-button:hover {
     transform: translateY(-5px);
   }
-  
+
   .thank-you-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Subtle focus effect */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
   }
