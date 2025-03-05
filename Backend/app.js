@@ -25,10 +25,14 @@ const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
 const forgotPasswordRoute = require('./routes/forgotPassword');
+
+const popUpRoutes = require('./routes/popUpRoutes'); 
+
 const resetPasswordRoute = require('./routes/resetPassword');
 const artistRoutes = require('./routes/artistRoutes');
 const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
+
 
 
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
@@ -71,10 +75,14 @@ app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",authenticateJWT , sessionRoutes)
 app.use("/sale-products",salesRoutes)
 app.use("/forgot-password",forgotPasswordRoute)
+
+app.use("/albums/:id/pop-up", popUpRoutes); 
+
 app.use("/reset-password",resetPasswordRoute)
 app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
+
 
 //start the Express server on a specific port 
 const port = process.env.PORT || 5001;
