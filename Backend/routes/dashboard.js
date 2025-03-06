@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-//const { dashboard } = require('../controllers/pageController');
-
-const { viewDashboard} = require('../controllers/userController');
+const dashboardController = require('../controllers/userController');
 
 
-router.get('/', viewDashboard);
+router.get('/', dashboardController.viewDashboard);
 
 //router.post('/change-password', changePassword);
 
