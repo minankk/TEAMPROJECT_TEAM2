@@ -1,0 +1,31 @@
+/* Messages Page Styles */
+.messages-container {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 800px;
+  text-align: center;
+  margin: 20px auto;
+  color: #000 !important; /* Ensure text color is black */
+}
+
+.messages-container h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333 !important;
+}
+
+.messages-container p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #555 !important;
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+  .messages-container {
+    width: 90%;
+  }
+}
