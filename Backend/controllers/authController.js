@@ -205,3 +205,31 @@ try {
     res.status(500).json({ message: 'Internal server error' });
 }
 };
+
+function sendAdminApprovalNotification(username, email) {
+    const adminEmail = process.env.EMAIL_USER;
+
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: adminEmail,
+        subject: 'New Admin Signup Request',
+        html: `<p>New admin signup request from:</p><p>Username: ${username}</p><p>Email: ${email}</p>
+               <p><a href="${process.env.FRONTEND_URL}/admin/approve?email=${email}">Click here to approve or reject</a></p>`
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.error('Error sending admin approval notification:', err);
+        } else {
+            console.log('Admin approval email sent:', info.response);
+        }
+    });
+}
