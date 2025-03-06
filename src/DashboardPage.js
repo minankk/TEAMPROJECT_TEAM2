@@ -13,10 +13,9 @@ const Sidebar = () => (
       <li><a href="#">Favorites</a></li>
       <li><a href="#">Personal Info</a></li>
       <li><a href="#">Messages</a></li>
-      <li><a href="#">Logout</a></li>
-      <li className="logout-button">     {/*Log-out Button*/}
-        <Link to="/LogoutPage">Logout</Link>
-      </li>
+      <li><Link to="/logout">Logout</Link></li>
+     {/* <li className="logout-button">     /*Log-out Button*/}
+      {/*</li>*/}
     </ul>
   </div>
 
