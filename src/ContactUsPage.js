@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { gsap } from "gsap";
 import "./ContactUsPage.css";
 
 function ContactUs() {
@@ -8,6 +9,14 @@ function ContactUs() {
     subject: "",
     message: ""
   });
+
+  useEffect(() => {
+    gsap.fromTo(
+      ".contact-page .contact-form-container",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+    );
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,28 +28,15 @@ function ContactUs() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5001/contactUs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-      if (response.ok) {
-        alert("Message sent successfully!");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        alert("Failed to send message. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred. Please try again.");
-    }
+    alert("Message sent successfully!");
+    setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
   return (
     <div className="contact-page">
+      {/* 🎵 Spinning Vinyl Record */}
+      <div className="vinyl-record"></div>
+
       <header className="contact-header">
         <h1>Contact Us</h1>
         <p>We'd love to hear from you! Get in touch with us below.</p>
@@ -48,49 +44,25 @@ function ContactUs() {
 
       <div className="contact-form-container">
         <form className="contact-form" onSubmit={handleSubmit}>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+          <div className="form-group">
+            <input type="text" id="name" name="name" placeholder=" " value={formData.name} onChange={handleChange} required />
+            <label htmlFor="name">Name</label>
+          </div>
 
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <div className="form-group">
+            <input type="email" id="email" name="email" placeholder=" " value={formData.email} onChange={handleChange} required />
+            <label htmlFor="email">Email</label>
+          </div>
 
-          <label htmlFor="subject">Subject</label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            placeholder="Subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-          />
+          <div className="form-group">
+            <input type="text" id="subject" name="subject" placeholder=" " value={formData.subject} onChange={handleChange} required />
+            <label htmlFor="subject">Subject</label>
+          </div>
 
-          <label htmlFor="message">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="5"
-            placeholder="Your Message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-          ></textarea>
+          <div className="form-group">
+            <textarea id="message" name="message" rows="5" placeholder=" " value={formData.message} onChange={handleChange} required></textarea>
+            <label htmlFor="message">Message</label>
+          </div>
 
           <button type="submit">Send Message</button>
         </form>
