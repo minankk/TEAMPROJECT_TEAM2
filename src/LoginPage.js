@@ -25,10 +25,8 @@ const LoginPage = () => {
         if (data.token) {
           alert('Login successful');
           localStorage.setItem('token', data.token); // Store the token in localStorage
+          console.log('Token stored:', localStorage.getItem('token')); // Verify token storage
           navigate('/dashboard'); // Redirect to dashboard
-          window.location.reload();
-        } else {
-          throw new Error(data.message);
         }
       })
       .catch((error) => {
