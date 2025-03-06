@@ -5,6 +5,7 @@
   align-items: center;
   min-height: 100vh;
   background-color: #f3f4f6; 
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .logout-box {
@@ -14,7 +15,7 @@
   padding: 2rem; 
   max-width: 400px; 
   width: 100%; 
-  min-height: 450px; 
+  min-height: 455px; 
   display: flex;
   flex-direction: column;
   justify-content: center; 
@@ -23,34 +24,35 @@
 
 
 .logout-box h1 {
-  font-size: 1.5rem; 
+  font-size: 2.5rem; 
+  font-family: "Oswald", sans-serif; 
   font-weight: 600; 
   margin-bottom: 1.5rem; 
   color: #111827; 
 }
 
 .logout-message {
-  font-size: 1rem; 
+  font-size: 1.5rem; 
   color: #4b5563; 
   margin-bottom: 1rem; 
 }
 
 .logout-submessage {
-  font-size: 0.875rem; 
+  font-size: 1.125rem; 
   color: #6b7280; 
-  margin-bottom: 1.5rem; /* Spacing below the submessage */
+  margin-bottom: 1.5rem; 
 }
 
 .logout-button {
-  background-color: #7c1816; /* Matching button color */
-  color: #ffffff; /* White text */
-  padding: 0.75rem 1.5rem; /* Button padding */
+  background-color: #7c1816; 
+  color: #ffffff; 
+  padding: 0.75rem 1.5rem; 
   border: none;
-  border-radius: 8px; /* Rounded corners */
-  font-size: 1rem; /* Font size */
-  font-weight: 600; /* Semi-bold */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: transform 0.2s ease; /* Smooth transition */
+  border-radius: 8px; 
+  font-size: 1.25rem; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: transform 0.2s ease; 
 }
 
 .logout-button:hover {
@@ -62,4 +64,4 @@
 .logout-button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); 
-}
+};
