@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import './CartPage.css';
 import OriginalSoundtrackBarbietheAlbum from './assets/OriginalSoundtrackBarbietheAlbum.webp';
@@ -17,7 +17,8 @@ export default function ShoppingCart() {
   const [cart, setCart] = useState(initialCart);
 
   useEffect(() => {
-    fetch('http://localhost:5001/myCart') 
+    const userId = 1; // Replace with actual user ID
+    fetch(`http://localhost:5001/cart/${userId}`)
       .then(response => response.json())
       .then(data => {
         if (data.cartItems) {
@@ -28,7 +29,9 @@ export default function ShoppingCart() {
             quantity: item.quantity,
             image: `http://localhost:5001${item.cover_image_url}`
           }));
-          setCart(prevCart => [...prevCart, ...fetchedCartItems]);
+          setCart(fetchedCartItems);
+        } else {
+          setCart([]); // Clear cart if no items are returned
         }
       })
       .catch(error => {
@@ -55,12 +58,24 @@ export default function ShoppingCart() {
   };
 
   const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    fetch(`http://localhost:5001/cart/remove/${id}`, {
+      method: 'DELETE',
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+        } else {
+          console.error('Failed to remove item from cart');
+        }
+      })
+      .catch(error => {
+        console.error('Error removing item from cart:', error);
+      });
   };
 
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const navigate = useNavigate();
-
 
   return (
     <div className="cart-container">

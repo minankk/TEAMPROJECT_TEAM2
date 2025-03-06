@@ -1,6 +1,9 @@
 const db = require('../db')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const nodemailer = require("nodemailer");
+
 
 exports.login = async (req, res) => {
     try {
@@ -57,7 +60,7 @@ exports.login = async (req, res) => {
 
 //sign up as user
     exports.signup = async (req , res) => {
-    const { username, email, password ,password_confirmation} = req.body;
+        const { username, email, password, password_confirmation, adminSecretKey } = req.body;
 
     //Check if all fields are entered
     if (!username || !email || !password || !password_confirmation) {
@@ -98,27 +101,117 @@ exports.login = async (req, res) => {
         if (rows.length > 0) {
             return res.status(400).json({ error: 'Email already registered. Please login' });
         }
+         
+        // Default role is 'user', but if the admin secret key is provided and valid, assign the role 'admin'
+        let role = 'user';
+        let approvalStatus = 'pending'
+      
+        if (adminSecretKey && adminSecretKey === process.env.ADMIN_SECRET_KEY) {
+            role = 'user';  
+            approvalStatus = 'pending'; 
+        }
+        
         //Hashed password
         const hashedPassword = await bcrypt.hash(password , 8);
 
         //Inserting Into database
         await db.query(
             'INSERT INTO users (user_name, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
-            [username, email, hashedPassword, 'user']
-        );
+            [username, email, hashedPassword, role]
+          );
 
         // Generate JWT token
-        const payload = { username, email, role: 'user' };
-        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' }); // Token expires in 1 hour
+        const payload = { username, email, role };
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
 
-        // Send the JWT token to the client
-        res.status(200).json({
-        message: 'User registered successfully',
-        token,
-      });
-    } catch (error) {
+        // Send confirmation message to the user
+        if (role === 'admin') {
+        return res.status(200).json({
+          message: 'Admin registered successfully',
+          token,
+          role
+        });
+        } else {
+        return res.status(200).json({
+          message: 'User registered successfully',
+          token,
+          role
+         });
+       }
+  
+       } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  };
+      res.status(500).json({ message: 'Internal server error' });
+      }
+   };
 
+//forgot password
+    exports.forgotPassword = async(req , res) => {
+
+        const { email } = req.body;
+        try {
+            const [user] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+            if (user.length === 0) {
+                return res.status(404).json({ message: 'Email do not exist' });
+            }
+
+            const resetToken = crypto.randomBytes(32).toString('hex');
+            const tokenExpiry = new Date(Date.now() + 3600000); 
+
+            await db.execute('UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?', [resetToken, tokenExpiry, email]);
+
+            const transporter = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS
+                }
+            });
+
+            const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+    
+            const mailOptions = {
+                from: process.env.EMAIL_USER,
+                to: email,
+                subject: 'Password Reset Request',
+                html: `<p>You requested a password reset</p>
+                       <p>Click <a href="${resetLink}">here</a> to reset your password</p>`
+            };
+
+            await transporter.sendMail(mailOptions);
+            res.json({ message: 'Password reset link sent to your email' });
+    
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Something went wrong' });
+        }
+    };
+
+// Reset Password
+    exports.resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+
+        const [user] = await db.execute(
+            'SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()', 
+            [token]
+        );
+
+        if (user.length === 0) {
+            return res.status(400).json({ message: 'Invalid or expired token' });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        await db.execute(
+            'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE reset_token = ?', 
+            [hashedPassword, token]
+        );
+
+        res.json({ message: 'Password has been reset successfully' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
