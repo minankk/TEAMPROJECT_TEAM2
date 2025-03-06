@@ -15,6 +15,19 @@ exports.addToCart = async (req, res) => {
     }
 
     try {
+        // Check product quantity
+        const [productRows] = await db.execute('SELECT quantity FROM products WHERE product_id = ?', [product_id]);
+
+        if (productRows.length === 0) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        const availableQuantity = productRows[0].quantity;
+
+        if (quantity > availableQuantity) {
+            return res.status(400).json({ error: 'Insufficient stock' });
+        }
+
         // Check if the product already exists in the user's cart
         const [existingCartItem] = await db.execute(
             `SELECT * FROM cart WHERE user_id = ? AND product_id = ?`,
@@ -24,6 +37,10 @@ exports.addToCart = async (req, res) => {
         if (existingCartItem.length > 0) {
             // If the item exists, update the quantity
             const updatedQuantity = existingCartItem[0].quantity + quantity;
+            if (updatedQuantity > availableQuantity){
+              return res.status(400).json({error: 'Insufficient stock'});
+            }
+
             await db.execute(
                 `UPDATE cart SET quantity = ? WHERE cart_id = ?`,
                 [updatedQuantity, existingCartItem[0].cart_id]
@@ -83,4 +100,52 @@ exports.removeFromCart = async (req, res) => {
         console.error('Error removing item from cart:', error);
         res.status(500).json({ error: 'Failed to remove item from cart' });
     }
+};
+
+// Function to handle order placement
+exports.placeOrder = async (req, res) => {
+  try {
+    const { user_id } = req.body;
+
+    // Fetch the user's cart items
+    const [cartItems] = await db.execute(
+      `SELECT product_id, quantity FROM cart WHERE user_id = ?`,
+      [user_id]
+    );
+
+    // Check if the cart is empty
+    if (cartItems.length === 0) {
+      return res.status(400).json({ error: 'Cart is empty' });
+    }
+
+    // Check if there is enough stock for all items
+    for (const item of cartItems) {
+      const [productRows] = await db.execute(
+        'SELECT quantity FROM products WHERE product_id = ?',
+        [item.product_id]
+      );
+
+      if (productRows[0].quantity < item.quantity) {
+        return res.status(400).json({
+          error: `Insufficient stock for product ${item.product_id}`,
+        });
+      }
+    }
+
+    // Deduct quantity from products
+    for (const item of cartItems) {
+      await db.execute(
+        'UPDATE products SET quantity = quantity - ? WHERE product_id = ?',
+        [item.quantity, item.product_id]
+      );
+    }
+
+    // Clear the cart
+    await db.execute('DELETE FROM cart WHERE user_id = ?', [user_id]);
+
+    res.status(200).json({ message: 'Order placed successfully' });
+  } catch (error) {
+    console.error('Error placing order:', error);
+    res.status(500).json({ error: 'Failed to place order' });
+  }
 };
