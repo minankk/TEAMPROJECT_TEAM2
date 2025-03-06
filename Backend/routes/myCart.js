@@ -5,9 +5,11 @@ const cartController = require('../controllers/cartController');
 router.post('/add', cartController.addToCart);
 router.get('/:user_id', cartController.getCartItems);
 router.delete('/remove/:cart_id', cartController.removeFromCart);
+router.post('/place-order', cartController.placeOrder); // New route
 
 // Add a cart count endpoint for SQL database
 router.get("/cart-count/:user_id", async (req, res) => {
+    const db = require('../db'); // Include db here as well
     const { user_id } = req.params;
     try {
         const [cartItems] = await db.execute(`SELECT SUM(quantity) as count FROM cart WHERE user_id = ?`, [user_id]);
