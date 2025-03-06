@@ -12,10 +12,9 @@ const hbs = require("hbs")
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const session = require('express-session');
-
 const path = require('path');
 
-const pageRoutes = require('./routes/landingPage');  
+//const pageRoutes = require('./routes/landingPage');  
 const authRoutes = require('./routes/login');  
 const dashboardRoutes = require('./routes/dashboard');
 const signUpRoutes = require('./routes/signup'); 
@@ -25,20 +24,15 @@ const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
 const forgotPasswordRoute = require('./routes/forgotPassword');
-const wishlistRouter = require('./routes/wishlist');
-
 const popUpRoutes = require('./routes/popUpRoutes'); 
-
 const resetPasswordRoute = require('./routes/resetPassword');
 const artistRoutes = require('./routes/artistRoutes');
 const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
-
-
-
-
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
+const wishlistRouter = require('./routes/wishlist');
+
 
 const app = express(); 
 
@@ -46,6 +40,12 @@ const app = express();
 dotenv.config({
   path : "./.env",
 })
+
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  }));
 
 
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
@@ -68,10 +68,9 @@ app.use(cors({
  * To use Routes
  */
 app.use(express.json());
-app.use("/", wishlistRouter); 
-app.use("/", pageRoutes);   // entry point
+app.use("/", wishlistRouter);
 app.use("/login", authRoutes);  
-app.use("/dashboard", dashboardRoutes);
+app.use("/dashboard",authenticateJWT, dashboardRoutes);
 app.use("/signup", signUpRoutes);
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
@@ -79,9 +78,7 @@ app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",authenticateJWT , sessionRoutes)
 app.use("/sale-products",salesRoutes)
 app.use("/forgot-password",forgotPasswordRoute)
-
 app.use("/albums/:id/pop-up", popUpRoutes); 
-
 app.use("/reset-password",resetPasswordRoute)
 app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);

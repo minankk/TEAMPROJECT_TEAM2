@@ -530,3 +530,12 @@ ALTER TABLE users ADD COLUMN reset_token_expiry DATETIME NULL;
 SELECT DISTINCT name FROM genres;
 UPDATE genres 
 SET name = REPLACE(name, ' ', '-');
+
+
+ALTER TABLE products
+ADD COLUMN quantity INT DEFAULT 20;
+
+
+UPDATE products
+SET quantity = 20
+WHERE quantity IS NULL;
