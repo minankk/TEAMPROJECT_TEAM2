@@ -531,6 +531,11 @@ SELECT DISTINCT name FROM genres;
 UPDATE genres 
 SET name = REPLACE(name, ' ', '-');
 
--To alter the table users and add a field approval_status (for the admin)
-ALTER TABLE users
-ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
+
+ALTER TABLE products
+ADD COLUMN quantity INT DEFAULT 20;
+
+
+UPDATE products
+SET quantity = 20
+WHERE quantity IS NULL;

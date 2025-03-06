@@ -31,6 +31,7 @@ const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
+const wishlistRouter = require('./routes/wishlist');
 
 
 const app = express(); 
@@ -39,6 +40,12 @@ const app = express();
 dotenv.config({
   path : "./.env",
 })
+
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  }));
 
 
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
@@ -61,6 +68,7 @@ app.use(cors({
  * To use Routes
  */
 app.use(express.json());
+app.use("/", wishlistRouter);
 app.use("/login", authRoutes);  
 app.use("/dashboard",authenticateJWT, dashboardRoutes);
 app.use("/signup", signUpRoutes);

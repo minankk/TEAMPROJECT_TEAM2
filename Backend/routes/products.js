@@ -19,7 +19,7 @@ router.get('/bestsellers', productsController.filterBestSellers);
 //get - Filters for onsale
 router.get('/onsale', productsController.filterOnSale);
 
-//get - Filters for onsale
+//get - Filters for onsale 
 router.get('/artist/:artist', productsController.filterByArtist);
 
 // get - Filter products by genre
@@ -28,5 +28,7 @@ router.get('/genre/:genre', productsController.filterByGenre);
 // to get the search products
 router.get('/search', searchController.searchProducts);
 
+//to get the products by their ID(Whishlist)
+router.get('/products/:productId', productsController.getProductById); 
 
 module.exports = router;

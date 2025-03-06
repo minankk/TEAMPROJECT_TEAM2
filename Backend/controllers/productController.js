@@ -1,8 +1,7 @@
 const db = require('../db');
 const formatDate = require('../helpers/dateFormatter');
-const formatCurrency = require('../helpers/currencyFormatter')
-const stringSimilarity = require('string-similarity');
- 
+const formatCurrency = require('../helpers/currencyFormatter');
+
 exports.getAllProducts = (req, res) => {
   db.execute(`
       SELECT p.product_id, p.name AS album_name, a.name AS artist_name, g.name AS genre_name,
@@ -23,11 +22,74 @@ exports.getAllProducts = (req, res) => {
 });
 };
 
-//Controller function to filter products by decade
+// Function to get a single product by ID
+exports.getProductById = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const [rows] = await db.execute(`
+      SELECT 
+        p.product_id, 
+        p.name AS album_name, 
+        a.name AS artist_name, 
+        g.name AS genre,
+        p.price, 
+        p.cover_image_url
+      FROM products p
+      JOIN artists a ON p.artist_id = a.artist_id
+      JOIN genres g ON p.genre_id = g.genre_id
+      WHERE p.product_id = ?
+    `, [productId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: `Product with ID ${productId} not found.` });
+    }
+
+    res.status(200).json(rows[0]);
+  } catch (error) {
+    console.error('Error fetching product by ID:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+// Controller function to filter products by genre
+exports.filterByGenre = async (req, res) => {
+    const { genre } = req.params;
+
+    try {
+        const [rows] = await db.execute(
+            `
+            SELECT 
+                p.product_id, 
+                p.name AS product_name, 
+                a.name AS artist_name, 
+                g.name AS genre,
+                p.release_date, 
+                p.price, 
+                p.cover_image_url, 
+                p.type, 
+                p.best_sellers, 
+                p.sale
+            FROM products p
+            JOIN artists a ON p.artist_id = a.artist_id
+            JOIN genres g ON p.genre_id = g.genre_id
+            WHERE g.name = ?
+        `,
+            [genre]
+        );
+
+        res.status(200).json({ products: rows });
+    } catch (error) {
+        console.error('Error filtering products by genre:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+// Controller function to filter products by decade
 exports.filterByDecade = async (req, res) => {
-  const { decade } = req.params;
-  const startYear = parseInt(decade);
-  const endYear = startYear + 9;
+    const { decade } = req.params;
+    const startYear = parseInt(decade);
+    const endYear = startYear + 9;
 
   try {
     const [rows] = await db.execute(`
@@ -47,11 +109,11 @@ exports.filterByDecade = async (req, res) => {
       return res.status(404).json({ message: `No products found for the ${startYear}s.` });
     }
 
-    res.status(200).json({ products: rows });
-  } catch (error) {
-    console.error('Error filtering products by decade:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+        res.status(200).json({ products: rows });
+    } catch (error) {
+        console.error('Error filtering products by decade:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 //Controller function to filter products by price
@@ -105,11 +167,11 @@ exports.filterBestSellers = async (req, res) => {
       return res.status(404).json({ message: "No best-selling products found." });
     }
 
-    res.status(200).json({ products: rows });
-  } catch (error) {
-    console.error('Error filtering best-selling products:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+        res.status(200).json({ products: rows });
+    } catch (error) {
+        console.error('Error filtering best sellers:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 
@@ -174,7 +236,7 @@ exports.filterByGenre = async (req, res) => {
 
 // Controller function to filter products by artist
 exports.filterByArtist = async (req, res) => {
-  const { artist } = req.params;
+    const { artist } = req.params;
 
   try {
     const [rows] = await db.execute(`
@@ -191,14 +253,9 @@ exports.filterByArtist = async (req, res) => {
       WHERE a.name = ?
     `, [artist]);
 
-    res.status(200).json({ products: rows });
-  } catch (error) {
-    console.error('Error filtering products by artist:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+        res.status(200).json({ products: rows });
+    } catch (error) {
+        console.error('Error filtering products by artist:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
-
-
-
-
-
