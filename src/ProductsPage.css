@@ -1,12 +1,12 @@
 /* Overall page layout */
 .products-page {
-  font-family: 'Titan One', sans-serif;
+  font-family: "Oswald", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f6f6f4;
-  color: #000;
+  background: radial-gradient(#efd9d4, #fff);
+  color: #fff;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
 }
 
@@ -14,7 +14,7 @@
 .products-page .products-banner {
   position: relative;
   width: 100%;
-  max-height: 400px; 
+  max-height: 600px; 
   height: auto;
   overflow: hidden;
   margin: 0;
@@ -27,39 +27,52 @@
   object-fit: cover;
   margin: 0;
   padding: 0;
+  filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6); 
 }
 
 .products-page .products-banner-text {
   position: absolute;
   top: 50%;
-  left: 5%;
+  left: 32%;
   transform: translateY(-50%);
   text-align: left;
   color: white;
-  font-size: 2rem;
+  font-size: 3.5rem;
   max-width: 28%; 
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
+  font-weight: bold;
+  z-index: 1;
 }
 
 .products-page .products-banner-text h1 {
   font-size: 2.5rem;
   text-transform: uppercase;
   margin-bottom: 10px;
+  font-weight: bold;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
 }
 
 /* Filters section */
 .filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin: 20px 0;
+  position: absolute;
+  top: 735px; /* Adjust this value to match the height of the banner */
+  left: 0;
+  width: 250px;
+  height: 800px;
   padding: 15px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  align-items: center;
-  justify-content: center;
-  width: 95%; 
-  max-width: 1500px; 
+  background: transparent; /* Remove background color */
+  border-right: 1px solid #ddd;
+  /*box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);*/
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  font-family: "Courier New", Courier, monospace;
+  z-index: 2; /* Ensure the sidebar is above other content */
+}
+
+.filters.fixed {
+  position: fixed;
+  top: 130px; /* Adjust this value to create space between the filter box and the navbar */
 }
 
 .filters label {
@@ -71,45 +84,54 @@
 .filters input, .filters select {
   font-size: 1rem;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: #fff;
+  border: none; /* Remove border */
+  background: transparent; /* Remove background */
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  text-decoration: underline; /* Underline text */
+  color: #333; /* Text color */
+  position: relative;
+}
+
+.filters select::after {
+  content: '▼'; /* Add dropdown arrow */
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
 }
 
 .filters input:hover, .filters select:hover {
-  border-color: #7c1816;
+  color: #7a1917; /* Change text color on hover */
 }
 
 .filters button {
-  background-color: black;
+  background-color: #7a1917;
   color: white;
   padding: 10px 16px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .filters button:hover {
-  background-color: #7c1816;
+  background-color: #52110e;
 }
 
 /* Product Grid */
 .products-page .products {
-  width: 95%;
+  margin-left: 270px; /* Adjust this value to create space for the filter box */
+  width: calc(100% - 350px); /* Adjust this value to create space for the filter box */
   margin-top: 40px; 
   margin-bottom: 40px;
-  margin-left: 20px;
-  margin-right: 20px;
   text-align: center;
 }
 
 .products-page .products h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #7c1816;
+  color: #ad2321;
 }
 
 .products-page .product-grid {
@@ -123,15 +145,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  background: transparent; /* Make background transparent */
+  padding: 0; /* Remove padding */
+  border: none; /* Remove border */
+  box-shadow: none; /* Remove box-shadow */
   width: 100%;
   max-width: 280px;
   min-height: 420px;
-  border: 1px solid #ddd;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -150,6 +171,7 @@
 /* Product Info */
 .products-page .product-info {
   margin-top: 10px;
+  text-align: center; /* Center align text */
 }
 
 .products-page .product-info h3 {
@@ -161,22 +183,23 @@
 .products-page .product-info p {
   font-size: 1rem;
   font-weight: bold;
-  color: #7c1816;
+  color: #ad2321;
 }
 
 /* Buy Button */
 .products-page .buy-button {
-  background-color: black;
+  background-color: #7a1917;
   color: white;
   padding: 10px 16px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .products-page .buy-button:hover {
-  background-color: #7c1816;
+  background-color: #52110e;
 }
 
 /* Responsive Design */

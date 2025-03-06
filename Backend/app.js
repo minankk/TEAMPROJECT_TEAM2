@@ -24,6 +24,20 @@ const sessionRoutes = require('./routes/checksession');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
+const forgotPasswordRoute = require('./routes/forgotPassword');
+const wishlistRouter = require('./routes/wishlist');
+
+const popUpRoutes = require('./routes/popUpRoutes'); 
+
+const resetPasswordRoute = require('./routes/resetPassword');
+const artistRoutes = require('./routes/artistRoutes');
+const bestSellersRoutes = require('./routes/bestSellers');
+const newestAdditionRoutes = require('./routes/newestAddition');
+const genreRoutes = require('./routes/genres');
+
+
+
+
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
 
 const app = express(); 
@@ -54,6 +68,7 @@ app.use(cors({
  * To use Routes
  */
 app.use(express.json());
+app.use("/", wishlistRouter); 
 app.use("/", pageRoutes);   // entry point
 app.use("/login", authRoutes);  
 app.use("/dashboard", dashboardRoutes);
@@ -63,6 +78,15 @@ app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/checksession",authenticateJWT , sessionRoutes)
 app.use("/sale-products",salesRoutes)
+app.use("/forgot-password",forgotPasswordRoute)
+
+app.use("/albums/:id/pop-up", popUpRoutes); 
+
+app.use("/reset-password",resetPasswordRoute)
+app.use('/artists', artistRoutes);
+app.use('/best-sellers', bestSellersRoutes);
+app.use('/newest-addition', newestAdditionRoutes);
+app.use('/genres', genreRoutes);
 
 
 //start the Express server on a specific port 
