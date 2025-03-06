@@ -1,45 +1,32 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
-// import vinylIcon from './assets/vinyl-icon.webp';
- 
+
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
- 
+
   const handleLogin = (e) => {
     e.preventDefault();
     console.log('Logging in with:', { username, password });
- 
+
     fetch('http://localhost:5001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
-      credentials: 'include',
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('Login response:', data);
- 
-        if (data.message === 'Login successful') {
-          alert(data.message);
- 
-          // After successful login, check session status and redirect
-          fetch('http://localhost:5001/checksession', { credentials: 'include' })
-            .then((res) => res.json())
-            .then((sessionData) => {
-              if (sessionData.loggedIn) {
-                navigate('/dashboard'); // Redirect to landing page if already logged in
-                window.location.reload();
-              }
-            })
-            .catch((error) => {
-              console.error('Error checking session:', error);
-              alert('Error checking session');
-            });
+
+        if (data.token) {
+          alert('Login successful');
+          localStorage.setItem('token', data.token); // Store the token in localStorage
+          navigate('/dashboard'); // Redirect to dashboard
+          window.location.reload();
         } else {
           throw new Error(data.message);
         }
@@ -49,7 +36,7 @@ const LoginPage = () => {
         alert(error.message); // Show error message
       });
   };
- 
+
   return (
     <div className="login-page">
       <main className="auth-container">
