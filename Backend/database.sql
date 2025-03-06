@@ -48,21 +48,6 @@ CREATE TABLE albums (
 );
 
 
-CREATE TABLE albums_pop_up (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  album_id INT NOT NULL,  -- Relates to the existing albums table
-  release_date DATE,
-  hit_singles TEXT,
-  awards TEXT,
-  records TEXT,
-  genres_popup TEXT,
-  interesting_facts TEXT,
-  related_albums TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Timestamp for when the record is created
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- Timestamp for when the record is updated
-  FOREIGN KEY (album_id) REFERENCES albums(album_id)  -- Foreign key constraint linking to the albums table
-);
-
 -- Genres Table
 CREATE TABLE genres (
     genre_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -252,6 +237,100 @@ VALUES
   ('The Blueprint', 17, '2001-09-11'),            
   ('The Marshall Mathers LP', 18, '2000-05-23'),   
   ('Ready to Die', 19, '1994-09-13');       
+
+
+-- Insert Products
+INSERT INTO products (product_id, name, artist_id, album_id, genre_id, release_date, price, cover_image_url, created_at, updated_at)
+VALUES 
+(1, 'Nevermind', (SELECT artist_id FROM artists WHERE name = 'Nirvana' LIMIT 1), 1, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '1991-09-24', 20.00, '/images/Nirvana – Nevermind (1).webp', NOW(), NOW()),
+(2, 'The Masterplan', (SELECT artist_id FROM artists WHERE name = 'Oasis' LIMIT 1), 2, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '1998-11-17', 12.99, '/images/Oasis – The Masterplan (1).webp', NOW(), NOW()),
+(3, 'OK Computer', (SELECT artist_id FROM artists WHERE name = 'Radiohead' LIMIT 1), 3, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '1997-05-21', 20.00, '/images/Radiohead – OK Computer.webp', NOW(), NOW()),
+(4, 'Saviors', (SELECT artist_id FROM artists WHERE name = 'Green Day' LIMIT 1), 4, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '2024-02-09', 10.00, '/images/Green-Day-Saviors.webp', NOW(), NOW()),
+(5, 'American Idiot', (SELECT artist_id FROM artists WHERE name = 'Green Day' LIMIT 1), 5, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '2004-09-21', 20.00, '/images/Green Day – American Idiot (1).webp', NOW(), NOW()),
+(6, 'Barbie the Album', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 6, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2023-07-21', 30.00, '/images/Original Soundtrack – Barbie the Album.webp', NOW(), NOW()),
+(7, 'Guardians of the Galaxy - Awesome Mix 1', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 7, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2014-07-29', 40.00, '/images/Original Soundtrack – Guardians of the Galaxy - Awesome Mix 1.webp', NOW(), NOW()),
+(8, 'Pulp Fiction', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 8, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '1994-09-27', 40.00, '/images/Original Soundtrack – Pulp Fiction.webp', NOW(), NOW()),
+(9, 'The Greatest Showman', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 9, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2017-12-08', 25.00, '/images/Motion Picture Cast Recording – The Greatest Showman.webp', NOW(), NOW()),
+(10, 'Baby Driver', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 10, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2017-07-23', 35.00, '/images/Original Soundtrack – Baby Driver.webp', NOW(), NOW()),
+(11, 'Sweetener', (SELECT artist_id FROM artists WHERE name = 'Ariana Grande' LIMIT 1), 11, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '2018-08-17', 30.00, '/images/Ariana Grande – Sweetener.webp', NOW(), NOW()),
+(12, 'Rumors', (SELECT artist_id FROM artists WHERE name = 'Fleetwood Mac' LIMIT 1), 12, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '1977-02-04', 50.00, '/images/Fleetwood Mac – Rumors.webp', NOW(), NOW()),
+(13, 'Thriller', (SELECT artist_id FROM artists WHERE name = 'Michael Jackson' LIMIT 1), 13, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '1982-11-30', 50.00, '/images/Michael Jackson – Thriller.webp', NOW(), NOW()),
+(14, 'Short n’ Sweet', (SELECT artist_id FROM artists WHERE name = 'Sabrina Carpenter' LIMIT 1), 14, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '2023-09-22', 10.00, '/images/Sabrina Carpenter – Short n’ Sweet.webp', NOW(), NOW()),
+(15, 'Brat', (SELECT artist_id FROM artists WHERE name = 'Charlie XCX' LIMIT 1), 15, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '2023-10-26', 10.00, '/images/Charlie XCX – Brat.webp', NOW(), NOW()),
+(16, 'The Dark Side of the Moon', (SELECT artist_id FROM artists WHERE name = 'Pink Floyd' LIMIT 1), 16, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1973-03-01', 50.00, '/images/Pink Floyd – The Dark Side of the Moon.webp', NOW(), NOW()),
+(17, 'Led Zeppelin IV', (SELECT artist_id FROM artists WHERE name = 'Led Zeppelin' LIMIT 1), 17, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1971-11-08', 50.00, '/images/Led Zepplin – Led zeppelin IV.webp', NOW(), NOW()),
+(18, 'Abbey Road', (SELECT artist_id FROM artists WHERE name = 'The Beatles' LIMIT 1), 18, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1969-09-26', 50.00, '/images/The Beatle – Abby Road.webp', NOW(), NOW()),
+(19, 'Hotel California', (SELECT artist_id FROM artists WHERE name = 'Eagles' LIMIT 1), 19, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1976-12-08', 30.00, '/images/Eagles – Hotel California.webp', NOW(), NOW()),
+(20, 'The Wall', (SELECT artist_id FROM artists WHERE name = 'Pink Floyd' LIMIT 1), 20, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1979-11-30', 50.00, '/images/Pink Floyd – The Wall.webp', NOW(), NOW()),
+(21, 'Get Rich or Die Tryin’', (SELECT artist_id FROM artists WHERE name = '50 Cent' LIMIT 1), 21, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2003-02-06', 30.00, '/images/50 Cent – Get Rich or Die Tryin’.webp', NOW(), NOW()),
+(22, 'To Pimp a Butterfly', (SELECT artist_id FROM artists WHERE name = 'Kendrick Lamar' LIMIT 1), 22, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2015-03-15', 40.00, '/images/Kendrick Lamar – To Pimp a Butterfly.jpg', NOW(), NOW()),
+(23, 'The Blueprint', (SELECT artist_id FROM artists WHERE name = 'Jay-Z' LIMIT 1), 23, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2001-09-11', 40.00, '/images/Jay-Z – The Blueprint.webp', NOW(), NOW()),
+(24, 'The Marshall Mathers LP', (SELECT artist_id FROM artists WHERE name = 'Eminem' LIMIT 1), 24, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2000-05-23', 40.00, '/images/Eminem – The Marshall Mathers LP.jpg', NOW(), NOW()),
+(25, 'Ready to Die', (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.' LIMIT 1), 25, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '1994-09-13', 40.00, '/images/The Notorious B.I.G. – Ready to Die.webp', NOW(), NOW());
+
+
+-- Insert Inventor
+INSERT INTO inventory (product_id, stock_quantity, created_at, updated_at)
+SELECT product_id, 100, NOW(), NOW()
+FROM products;
+
+
+-- To alter the table products and add best-sellers column
+ALTER TABLE products ADD COLUMN best_sellers BOOLEAN DEFAULT 0;
+
+--To update the best sellers product
+UPDATE products 
+SET best_sellers = 1
+WHERE name IN (
+  'Nevermind',
+  'Guardians of the Galaxy - Awesome Mix 1',
+  'Short n’ Sweet',
+  'Rumors',
+  'The Dark Side of the Moon'
+);
+
+-- To alter the table products and add on-sale column
+ALTER TABLE products ADD COLUMN on_sale BOOLEAN DEFAULT 0;
+
+--To update the on-sale product
+UPDATE products 
+SET on_sale = 1
+WHERE name IN (
+  'Nevermind',
+  'The Masterplan',
+  'OK Computer',
+  'Short n’ Sweet',
+  'Abbey Road',
+  'Ready to Die'
+);
+
+--To alter the table users to temp store the reset token and token expiry
+ALTER TABLE users ADD COLUMN reset_token VARCHAR(255) NULL;
+ALTER TABLE users ADD COLUMN reset_token_expiry DATETIME NULL;
+
+--To replace ' ' with '-' in genres to get aligned
+SELECT DISTINCT name FROM genres;
+UPDATE genres 
+SET name = REPLACE(name, ' ', '-');
+
+CREATE TABLE albums_pop_up (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  album_id INT NOT NULL,  -- Relates to the existing albums table
+  release_date DATE,
+  hit_singles TEXT,
+  awards TEXT,
+  records TEXT,
+  genres_popup TEXT,
+  interesting_facts TEXT,
+  related_albums TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Timestamp for when the record is created
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- Timestamp for when the record is updated
+  FOREIGN KEY (album_id) REFERENCES albums(album_id)  -- Foreign key constraint linking to the albums table
+);
+
+INSERT INTO artists (name) 
+SELECT 'Various Artists'
+WHERE NOT EXISTS (SELECT 1 FROM artists WHERE name = 'Various Artists');
 
 
 INSERT INTO albums_pop_up (album_id, release_date, records, hit_singles, awards, genres_popup, interesting_facts, related_albums) 
@@ -456,77 +535,26 @@ VALUES
  'If you loved Ready to Die, you might also like: Get Rich or Die Tryin\', To Pimp a Butterfly');
 
 
--- Insert Products
-INSERT INTO products (product_id, name, artist_id, album_id, genre_id, release_date, price, cover_image_url, created_at, updated_at)
-VALUES 
-(1, 'Nevermind', (SELECT artist_id FROM artists WHERE name = 'Nirvana' LIMIT 1), 1, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '1991-09-24', 20.00, '/images/Nirvana – Nevermind (1).webp', NOW(), NOW()),
-(2, 'The Masterplan', (SELECT artist_id FROM artists WHERE name = 'Oasis' LIMIT 1), 2, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '1998-11-17', 12.99, '/images/Oasis – The Masterplan (1).webp', NOW(), NOW()),
-(3, 'OK Computer', (SELECT artist_id FROM artists WHERE name = 'Radiohead' LIMIT 1), 3, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '1997-05-21', 20.00, '/images/Radiohead – OK Computer.webp', NOW(), NOW()),
-(4, 'Saviors', (SELECT artist_id FROM artists WHERE name = 'Green Day' LIMIT 1), 4, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '2024-02-09', 10.00, '/images/Green-Day-Saviors.webp', NOW(), NOW()),
-(5, 'American Idiot', (SELECT artist_id FROM artists WHERE name = 'Green Day' LIMIT 1), 5, (SELECT genre_id FROM genres WHERE name = 'Alternative Rock' LIMIT 1), '2004-09-21', 20.00, '/images/Green Day – American Idiot (1).webp', NOW(), NOW()),
-(6, 'Barbie the Album', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 6, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2023-07-21', 30.00, '/images/Original Soundtrack – Barbie the Album.webp', NOW(), NOW()),
-(7, 'Guardians of the Galaxy - Awesome Mix 1', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 7, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2014-07-29', 40.00, '/images/Original Soundtrack – Guardians of the Galaxy - Awesome Mix 1.webp', NOW(), NOW()),
-(8, 'Pulp Fiction', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 8, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '1994-09-27', 40.00, '/images/Original Soundtrack – Pulp Fiction.webp', NOW(), NOW()),
-(9, 'The Greatest Showman', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 9, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2017-12-08', 25.00, '/images/Motion Picture Cast Recording – The Greatest Showman.webp', NOW(), NOW()),
-(10, 'Baby Driver', (SELECT artist_id FROM artists WHERE name = 'Various Artists' LIMIT 1), 10, (SELECT genre_id FROM genres WHERE name = 'Soundtrack' LIMIT 1), '2017-07-23', 35.00, '/images/Original Soundtrack – Baby Driver.webp', NOW(), NOW()),
-(11, 'Sweetener', (SELECT artist_id FROM artists WHERE name = 'Ariana Grande' LIMIT 1), 11, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '2018-08-17', 30.00, '/images/Ariana Grande – Sweetener.webp', NOW(), NOW()),
-(12, 'Rumors', (SELECT artist_id FROM artists WHERE name = 'Fleetwood Mac' LIMIT 1), 12, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '1977-02-04', 50.00, '/images/Fleetwood Mac – Rumors.webp', NOW(), NOW()),
-(13, 'Thriller', (SELECT artist_id FROM artists WHERE name = 'Michael Jackson' LIMIT 1), 13, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '1982-11-30', 50.00, '/images/Michael Jackson – Thriller.webp', NOW(), NOW()),
-(14, 'Short n’ Sweet', (SELECT artist_id FROM artists WHERE name = 'Sabrina Carpenter' LIMIT 1), 14, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '2023-09-22', 10.00, '/images/Sabrina Carpenter – Short n’ Sweet.webp', NOW(), NOW()),
-(15, 'Brat', (SELECT artist_id FROM artists WHERE name = 'Charlie XCX' LIMIT 1), 15, (SELECT genre_id FROM genres WHERE name = 'Pop' LIMIT 1), '2023-10-26', 10.00, '/images/Charlie XCX – Brat.webp', NOW(), NOW()),
-(16, 'The Dark Side of the Moon', (SELECT artist_id FROM artists WHERE name = 'Pink Floyd' LIMIT 1), 16, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1973-03-01', 50.00, '/images/Pink Floyd – The Dark Side of the Moon.webp', NOW(), NOW()),
-(17, 'Led Zeppelin IV', (SELECT artist_id FROM artists WHERE name = 'Led Zeppelin' LIMIT 1), 17, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1971-11-08', 50.00, '/images/Led Zepplin – Led zeppelin IV.webp', NOW(), NOW()),
-(18, 'Abbey Road', (SELECT artist_id FROM artists WHERE name = 'The Beatles' LIMIT 1), 18, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1969-09-26', 50.00, '/images/The Beatle – Abby Road.webp', NOW(), NOW()),
-(19, 'Hotel California', (SELECT artist_id FROM artists WHERE name = 'Eagles' LIMIT 1), 19, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1976-12-08', 30.00, '/images/Eagles – Hotel California.webp', NOW(), NOW()),
-(20, 'The Wall', (SELECT artist_id FROM artists WHERE name = 'Pink Floyd' LIMIT 1), 20, (SELECT genre_id FROM genres WHERE name = 'Rock' LIMIT 1), '1979-11-30', 50.00, '/images/Pink Floyd – The Wall.webp', NOW(), NOW()),
-(21, 'Get Rich or Die Tryin’', (SELECT artist_id FROM artists WHERE name = '50 Cent' LIMIT 1), 21, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2003-02-06', 30.00, '/images/50 Cent – Get Rich or Die Tryin’.webp', NOW(), NOW()),
-(22, 'To Pimp a Butterfly', (SELECT artist_id FROM artists WHERE name = 'Kendrick Lamar' LIMIT 1), 22, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2015-03-15', 40.00, '/images/Kendrick Lamar – To Pimp a Butterfly.jpg', NOW(), NOW()),
-(23, 'The Blueprint', (SELECT artist_id FROM artists WHERE name = 'Jay-Z' LIMIT 1), 23, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2001-09-11', 40.00, '/images/Jay-Z – The Blueprint.webp', NOW(), NOW()),
-(24, 'The Marshall Mathers LP', (SELECT artist_id FROM artists WHERE name = 'Eminem' LIMIT 1), 24, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2000-05-23', 40.00, '/images/Eminem – The Marshall Mathers LP.jpg', NOW(), NOW()),
-(25, 'Ready to Die', (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.' LIMIT 1), 25, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '1994-09-13', 40.00, '/images/The Notorious B.I.G. – Ready to Die.webp', NOW(), NOW());
+UPDATE products
+SET cover_image_url = '/images/Fleetwood Mac – Rumors.jpg'
+WHERE name = 'Rumors' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Fleetwood Mac' LIMIT 1);
 
+UPDATE products
+SET cover_image_url = '/images/Sabrina Carpenter – Short n’ Sweet.jpg'
+WHERE name = 'Short n’ Sweet' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Sabrina Carpenter' LIMIT 1);
 
--- Insert Inventor
-INSERT INTO inventory (product_id, stock_quantity, created_at, updated_at)
-SELECT product_id, 100, NOW(), NOW()
-FROM products;
+UPDATE products
+SET cover_image_url = '/images/The Notorious B.I.G. – Ready to Die.jpg'
+WHERE name = 'Ready to Die' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.' LIMIT 1);
 
+UPDATE products
+SET cover_image_url = '/images/Pink Floyd – The Dark Side of the Moon.jpg'
+WHERE name = 'The Dark Side of the Moon' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Pink Floyd' LIMIT 1);
 
--- To alter the table products and add best-sellers column
-ALTER TABLE products ADD COLUMN best_sellers BOOLEAN DEFAULT 0;
+UPDATE products
+SET cover_image_url = '/images/Led Zeppelin – Led Zeppelin IV.jpg'
+WHERE name = 'Led Zeppelin IV' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Led Zeppelin' LIMIT 1);
 
---To update the best sellers product
-UPDATE products 
-SET best_sellers = 1
-WHERE name IN (
-  'Nevermind',
-  'Guardians of the Galaxy - Awesome Mix 1',
-  'Short n’ Sweet',
-  'Rumors',
-  'The Dark Side of the Moon'
-);
-
--- To alter the table products and add on-sale column
-ALTER TABLE products ADD COLUMN on_sale BOOLEAN DEFAULT 0;
-
---To update the on-sale product
-UPDATE products 
-SET on_sale = 1
-WHERE name IN (
-  'Nevermind',
-  'The Masterplan',
-  'OK Computer',
-  'Short n’ Sweet',
-  'Abbey Road',
-  'Ready to Die'
-);
-
-
---To alter the table users to temp store the reset token and token expiry
-ALTER TABLE users ADD COLUMN reset_token VARCHAR(255) NULL;
-ALTER TABLE users ADD COLUMN reset_token_expiry DATETIME NULL;
-
---To replace ' ' with '-' in genres to get aligned
-SELECT DISTINCT name FROM genres;
-UPDATE genres 
-SET name = REPLACE(name, ' ', '-');
+UPDATE products
+SET cover_image_url = '/images/Charlie XCX – Brat.jpg'
+WHERE name = 'Brat' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Charlie XCX' LIMIT 1);
