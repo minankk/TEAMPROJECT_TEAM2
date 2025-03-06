@@ -173,25 +173,22 @@ try {
         return res.status(400).json({ error: 'Email already registered. Please login' });
     }
      
-    let role = 'user';
-    let approvalStatus = 'pending'
-  
-    if (adminSecretKey && adminSecretKey === process.env.ADMIN_SECRET_KEY) {
-        role = 'user';  
-        approvalStatus = 'pending'; 
-    }
-    
-    //Hashed password
-    const hashedPassword = await bcrypt.hash(password , 8);
+    let role = 'user'; 
+    let approvalStatus = null;
 
-    //Inserting Into database with pending status
+    if (adminSecretKey && adminSecretKey === process.env.ADMIN_SECRET_KEY) {
+        role = 'admin'; 
+        approvalStatus = 'pending';
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 8);
+
+    // Insert into the database with or without approval status depending on the role
     await db.query(
         'INSERT INTO users (user_name, email, password, role, approval_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
-        [username, email, hashedPassword, role, approvalStatus]
+        [username, email, hashedPassword, role, approvalStatus] 
     );
-
-    // This section will send notification to admin dashboard
-    sendAdminApprovalNotification(username, email);
 
     // Generate JWT token
     const payload = { username, email, role };
