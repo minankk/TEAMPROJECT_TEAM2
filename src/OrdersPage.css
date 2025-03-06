@@ -1,0 +1,31 @@
+/* Orders Page Styles */
+.orders-container {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    text-align: center;
+    margin: 20px auto;
+    color: #000 !important; /* Ensure text color is black */
+  }
+  
+  .orders-container h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333 !important; /* Ensure heading color is black */
+  }
+  
+  .orders-container p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555 !important; /* Ensure paragraph color is black */
+  }
+  
+  /* Add responsiveness */
+  @media (max-width: 768px) {
+    .orders-container {
+      width: 90%;
+    }
+  }
