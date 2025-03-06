@@ -63,7 +63,7 @@ app.use(cors({
 app.use(express.json());
 app.use("/", pageRoutes);   // entry point
 app.use("/login", authRoutes);  
-app.use("/dashboard", dashboardRoutes);
+app.use("/dashboard",authenticateJWT, dashboardRoutes);
 app.use("/signup", signUpRoutes);
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
