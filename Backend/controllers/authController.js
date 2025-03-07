@@ -48,15 +48,25 @@ exports.login = async (req, res) => {
 };
 
 //logout
-    exports.logout = (req, res) => {
-    req.session.loggedIn = false;
-    req.session.destroy(error => {
-        if (error) {
-            return res.status(500).json({ message: 'Could not log out' });
-        }  
-    res.status(200).json({ message: 'Logout successful' });
-    });
-}
+
+   exports.logout = async (req, res) => {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+
+    if (!token) {
+        return res.status(400).json({ message: 'No token provided' });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        await db.execute(
+            'INSERT INTO blacklisted_tokens (token, expires_at) VALUES (?, FROM_UNIXTIME(?))',
+            [token, decoded.exp]
+        );
+        return res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        return res.status(400).json({ message: 'Invalid token' });
+    }
+};
+
 
 //forgot password
     exports.forgotPassword = async(req , res) => {
