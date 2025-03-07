@@ -48,15 +48,25 @@ exports.login = async (req, res) => {
 };
 
 //logout
-    exports.logout = (req, res) => {
-    req.session.loggedIn = false;
-    req.session.destroy(error => {
-        if (error) {
-            return res.status(500).json({ message: 'Could not log out' });
-        }  
-    res.status(200).json({ message: 'Logout successful' });
-    });
-}
+
+   exports.logout = async (req, res) => {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+
+    if (!token) {
+        return res.status(400).json({ message: 'No token provided' });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        await db.execute(
+            'INSERT INTO blacklisted_tokens (token, expires_at) VALUES (?, FROM_UNIXTIME(?))',
+            [token, decoded.exp]
+        );
+        return res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        return res.status(400).json({ message: 'Invalid token' });
+    }
+};
+
 
 //forgot password
     exports.forgotPassword = async(req , res) => {
@@ -205,3 +215,31 @@ try {
     res.status(500).json({ message: 'Internal server error' });
 }
 };
+
+function sendAdminApprovalNotification(username, email) {
+    const adminEmail = process.env.EMAIL_USER;
+
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: adminEmail,
+        subject: 'New Admin Signup Request',
+        html: `<p>New admin signup request from:</p><p>Username: ${username}</p><p>Email: ${email}</p>
+               <p><a href="${process.env.FRONTEND_URL}/admin/approve?email=${email}">Click here to approve or reject</a></p>`
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.error('Error sending admin approval notification:', err);
+        } else {
+            console.log('Admin approval email sent:', info.response);
+        }
+    });
+}
