@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@shadcn/ui": "^0.0.4",
+    "ajv": "^6.12.6",
+    "ajv-keywords": "^5.1.0",
     "bcrypt": "^5.1.1",
     "concurrently": "^9.1.2",
     "cra-template": "1.2.0",
@@ -48,6 +50,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^3.0.1"
   }
 }
