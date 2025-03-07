@@ -70,6 +70,7 @@ function ContactUs() {
           <button type="submit">Send Message</button>
         </form>
       </div>
+
     </div>
   );
 }

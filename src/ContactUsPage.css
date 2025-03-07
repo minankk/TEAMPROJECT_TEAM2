@@ -1,12 +1,90 @@
+/* General Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: #151515;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the full viewport height */
+  /* background: url('./assets/vinyl-texture.webp') no-repeat center center; */
+  background-size: cover; /* Ensures the image covers the entire screen */
+}
+
+main {
+  padding: 20px;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap");
 
 .contact-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  }
+
+.contact-header {
+  width: 100%;
+  background-color: black; /* Black banner */
+  color: white; /* White text */
+  padding: 40px 0;
   background: linear-gradient(135deg, #1a1a1a 0%, #3a0d0d 100%);
   font-family: "Oswald", sans-serif;
   color: #ddd;
   overflow-x: hidden;
   min-height: 100vh;
   text-align: center;
+  position: relative; /* No absolute positioning */
+  top: 0;
+  left: 0;
+  transform: none; /* Remove unwanted transform */
+  max-width: 100%; /* Full width */
+}
+
+  .contact-form-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .contact-form {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    transition: transform 0.3s ease;
+  }
+
+  .contact-form:hover {
+    transform: translateY(-5px);
+  }
+
+  .contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #ffffff;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
   padding: 50px 20px;
   position: relative;
 }
@@ -67,6 +145,11 @@
   text-align: center;
 }
 
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #7c1816;
+    outline: none;
+  }
 .contact-page .contact-form input:focus,
 .contact-page .contact-form textarea:focus {
   border-color: #ff4c4c;
@@ -110,6 +193,15 @@
   box-shadow: 0 6px 15px rgba(255, 0, 0, 0.3);
 }
 
+  .contact-form button:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+  }
+
+  html {
+    height: 100%;
+    background-size: cover;
+  }
 .contact-page .contact-form button:hover {
   background: #52110e;
   transform: scale(1.05) rotate(2deg);
