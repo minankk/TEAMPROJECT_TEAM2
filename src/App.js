@@ -19,6 +19,8 @@ import PaymentPage from './PaymentPage';
 import OrderSuccess from './OrderSuccess';
 import SalesPage from './SalesPage';
 import LogoutPage from './LogoutPage';
+
+import ForgotPassword from './ForgotPasswordPage';
 import UserMessagesPage from './UserMessagesPage';
 import FavoritesPage from './FavoritesPage';
 import OrdersPage from './OrdersPage';
@@ -52,6 +54,8 @@ function App() {
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/sale" element={<SalesPage />} />
         <Route path="/logout" element={<LogoutPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        </Routes>
         <Route path="/dashboard" element={<DashboardPage />}>
           <Route path="orders" element={<OrdersPage />} />
           <Route path="order-history" element={<OrderHistoryPage />} />
