@@ -103,7 +103,7 @@
 /* Sales Product Info */
 .sales-page .sales-product-info {
   margin-top: 10px;
-  flex-grow: 1; /* Allow the info section to grow and fill space */
+  flex-grow: 1;
 }
 
 .sales-page .sales-product-info h3 {
