@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProductsPage.css';
-import Carousel1 from './assets/Carousel1.jpg';
+import VinylRetro from './assets/VinylRetro.webp';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [originalArtists, setOriginalArtists] = useState([]);
+  const [originalGenres, setOriginalGenres] = useState([]);
   const [filters, setFilters] = useState({
     artist: '',
     genre: '',
     releaseDecade: '',
-    priceRange: '',
+    priceRange: 0,
     bestSeller: false,
     onSale: false,
   });
@@ -17,19 +19,22 @@ const ProductsPage = () => {
 
   const Banner = () => (
     <section className="products-banner">
-      <img src={Carousel1} alt="Vinyl Collection" className="products-banner-image" />
+      <img src={VinylRetro} alt="Vinyl Collection" className="products-banner-image" />
       <div className="products-banner-text">
         <h1>Browse the Products and Get the Best Offer</h1>
       </div>
     </section>
   );
 
+  // Fetch products and original options
   useEffect(() => {
     fetch('http://localhost:5001/products')
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
           setProducts(data);
+          setOriginalArtists(Array.from(new Set(data.map(p => p.artist_name))));
+          setOriginalGenres(Array.from(new Set(data.map(p => p.genre_name))));
         } else {
           setProducts([]);
         }
@@ -39,6 +44,40 @@ const ProductsPage = () => {
       });
   }, []);
 
+  // Fetch products based on filters
+  useEffect(() => {
+    let url = 'http://localhost:5001/products';
+
+    if (filters.bestSeller) {
+      url = 'http://localhost:5001/products/bestsellers';
+    } else if (filters.onSale) {
+      url = 'http://localhost:5001/products/onsale';
+    } else if (filters.genre) {
+      url = `http://localhost:5001/products/genre/${filters.genre}`;
+    } else if (filters.artist) {
+      url = `http://localhost:5001/products/artist/${filters.artist}`;
+    } else if (filters.priceRange > 0) {
+      url = `http://localhost:5001/products/price/${filters.priceRange}`;
+    } else if (filters.releaseDecade) {
+      url = `http://localhost:5001/products/decade/${filters.releaseDecade}`;
+    }
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (Array.isArray(data.products)) {
+          setProducts(data.products);
+        } else if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          setProducts([]);
+        }
+      })
+      .catch(() => {
+        setProducts([]);
+      });
+  }, [filters]);
+
   const handleFilterChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFilters({
@@ -47,61 +86,89 @@ const ProductsPage = () => {
     });
   };
 
-  const filteredProducts = products.filter(product => {
-    const matchesArtist = filters.artist ? product.artist_name.toLowerCase().includes(filters.artist.toLowerCase()) : true;
-    const matchesGenre = filters.genre ? product.genre_name.toLowerCase().includes(filters.genre.toLowerCase()) : true;
-    const matchesDecade = filters.releaseDecade ? product.release_date.startsWith(filters.releaseDecade) : true;
-    const matchesPrice = filters.priceRange ? product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1] : true;
-    const matchesBestSeller = filters.bestSeller ? product.best_seller : true;
-    const matchesOnSale = filters.onSale ? product.on_sale : true;
-  
-    return matchesArtist && matchesGenre && matchesDecade && matchesPrice && matchesBestSeller && matchesOnSale;
-  });
+  const resetFilters = () => {
+    setFilters({
+      artist: '',
+      genre: '',
+      releaseDecade: '',
+      priceRange: 0,
+      bestSeller: false,
+      onSale: false,
+    });
+  };
+
   const generateTitle = () => {
-    if (filters.artist) {
-      return `All products with ${filters.artist}`;
-    }
-    if (filters.genre) {
-      return `All ${filters.genre} products`;
-    }
-    if (filters.releaseDecade) {
-      return `All products from the ${filters.releaseDecade}s`;
-    }
-    if (filters.priceRange) {
-      return `All products within price range ${filters.priceRange}`;
-    }
-    if (filters.bestSeller) {
-      return `All best-selling products`;
-    }
-    if (filters.onSale) {
-      return `All products on sale`;
-    }
+    if (filters.bestSeller) return `All Best-Selling Products`;
+    if (filters.onSale) return `All Products on Sale`;
+    if (filters.artist) return `All products by ${filters.artist}`;
+    if (filters.genre) return `All ${filters.genre} products`;
+    if (filters.priceRange > 0) return `All products priced at £${filters.priceRange}`;
+    if (filters.releaseDecade) return `All products from the ${filters.releaseDecade}s`;
     return 'All Products';
   };
 
   const handleAddToCart = (productId) => {
-    navigate('/cart');
+    const userId = 1; // Replace with actual user ID
+    const quantity = 1; // Default quantity
+
+    fetch('http://localhost:5001/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: userId, product_id: productId, quantity }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          console.log(data.message);
+          navigate('/cart');
+        } else {
+          console.error('Failed to add item to cart');
+        }
+      })
+      .catch(error => {
+        console.error('Error adding item to cart:', error);
+      });
   };
+
+  // Handle scroll event to fix the sidebar
+  useEffect(() => {
+    const handleScroll = () => {
+      const sidebar = document.querySelector('.filters');
+      const bannerHeight = document.querySelector('.products-banner').offsetHeight;
+      if (window.scrollY >= bannerHeight) {
+        sidebar.classList.add('fixed');
+      } else {
+        sidebar.classList.remove('fixed');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <main className="products-page">
       <Banner />
       <section className="filters">
-        <select name="artist" onChange={handleFilterChange}>
+        <select name="artist" value={filters.artist} onChange={handleFilterChange}>
           <option value="">All Artists</option>
-          {Array.from(new Set(products.map(p => p.artist_name))).map(artist => (
+          {originalArtists.map(artist => (
             <option key={artist} value={artist}>{artist}</option>
           ))}
         </select>
 
-        <select name="genre" onChange={handleFilterChange}>
+        <select name="genre" value={filters.genre} onChange={handleFilterChange}>
           <option value="">All Genres</option>
-          {Array.from(new Set(products.map(p => p.genre_name))).map(genre => (
+          {originalGenres.map(genre => (
             <option key={genre} value={genre}>{genre}</option>
           ))}
         </select>
 
-        <select name="releaseDecade" onChange={handleFilterChange}>
+        <select name="releaseDecade" value={filters.releaseDecade} onChange={handleFilterChange}>
           <option value="">All Decades</option>
           <option value="1970">1970s</option>
           <option value="1980">1980s</option>
@@ -111,20 +178,20 @@ const ProductsPage = () => {
           <option value="2020">2020s</option>
         </select>
 
-        <label>Price Range:</label>
-        <input type="range" name="priceRange" min="0" max="500" step="10" value={filters.priceRange} onChange={handleFilterChange} />
+        <label>Price Range: £{filters.priceRange}</label>
+        <input type="range" name="priceRange" min="0" max="50" step="1" value={filters.priceRange} onChange={handleFilterChange} />
 
         <label>
-          <input type="checkbox" name="bestSeller" onChange={handleFilterChange} />
+          <input type="checkbox" name="bestSeller" checked={filters.bestSeller} onChange={handleFilterChange} />
           Best Seller
         </label>
 
         <label>
-          <input type="checkbox" name="onSale" onChange={handleFilterChange} />
+          <input type="checkbox" name="onSale" checked={filters.onSale} onChange={handleFilterChange} />
           On Sale
         </label>
 
-        <button onClick={() => setFilters({ artist: '', genre: '', releaseDecade: '', priceRange: '', bestSeller: false, onSale: false })}>
+        <button onClick={resetFilters}>
           Reset Filters
         </button>
       </section>
@@ -132,7 +199,7 @@ const ProductsPage = () => {
       <section className="products">
         <h2>{generateTitle()}</h2>
         <div className="product-grid">
-          {filteredProducts.map((product) => (
+          {products.map((product) => (
             <div key={product.product_id} className="product-card">
               <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.name} className="product-image" />
               <div className="product-info">

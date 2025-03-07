@@ -9,11 +9,11 @@ import soundtrack from "./assets/soundtrack_sleeve.png";
 import altrock from "./assets/altrock_sleeve.png";
 
 const genres = [
-  { name: "ALTERNATIVE ROCK", picks: ["Green Day", "Radiohead"], image: altrock, path: "/genres/alternative-rock" },
-  { name: "HIP-HOP", picks: ["Kendrick Lamar", "50 Cent"], image: hiphop, path: "/genres/hip-hop" },
-  { name: "SOUNDTRACK", picks: ["Movie Soundtracks"], image: soundtrack, path: "/genres/soundtrack" },
-  { name: "POP", picks: ["Ariana Grande", "Charlie XCX"], image: pop, path: "/genres/pop" },
-  { name: "ROCK", picks: ["Pink Floyd", "The Beatles"], image: rock, path: "/genres/rock" },
+  { name: "ALTERNATIVE ROCK", picks: ["Innovative Rock"], image: altrock, path: "/genres/alternative-rock" },
+  { name: "HIP-HOP", picks: ["Urban Beats"], image: hiphop, path: "/genres/hip-hop" },
+  { name: "SOUNDTRACK", picks: ["Cinematic Scores"], image: soundtrack, path: "/genres/soundtrack" },
+  { name: "POP", picks: ["Mainstream Hits"], image: pop, path: "/genres/pop" },
+  { name: "ROCK", picks: ["Classic Jams"], image: rock, path: "/genres/rock" },
 ];
 
 function VinylGenres() {
