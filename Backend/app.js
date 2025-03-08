@@ -13,8 +13,8 @@ const bodyParser = require("body-parser");
 const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
-//auth Routes
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
 const authRoutes = require('./routes/login'); 
 const signUpRoutes = require('./routes/signup'); 
@@ -33,6 +33,9 @@ const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
+//admin
+const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
+
 
 
 const app = express(); 
@@ -87,7 +90,9 @@ app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
 app.use('/genres', genreRoutes);
 app.use("/", wishlistRouter);
-
+//admin
+app.use("/admin-approval", adminApprovalRoutes);
+app.use("/admin-signup", signUpRoutes);
 
 
 //start the Express server on a specific port 
