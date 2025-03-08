@@ -2,7 +2,7 @@ const db = require('../db')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 
 exports.login = async (req, res) => {
@@ -204,6 +204,11 @@ try {
     const payload = { username, email, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
 
+    if (role === 'admin' && approvalStatus === 'pending') {
+        console.log('Sending admin approval email...'); 
+        sendAdminApprovalNotification(username, email);
+    }
+
     return res.status(200).json({
         message: approvalStatus === 'pending' ? 'Admin registration request sent for approval' : 'User registered successfully',
         token,
@@ -243,3 +248,35 @@ function sendAdminApprovalNotification(username, email) {
         }
     });
 }
+
+//to approve or reject admin sign up
+exports.approveAdmin = async (req, res) => {
+    const { email } = req.query;
+    const { action } = req.body;
+
+    if (!email || !action) {
+        return res.status(400).json({ message: 'Invalid request' });
+    }
+    try {
+        
+        const [userRows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+        if (userRows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const user = userRows[0];
+        if (action === 'approve') {
+            await db.execute('UPDATE users SET approval_status = ? WHERE email = ?', ['approved', email]);
+            return res.status(200).json({ message: 'Admin approved successfully' });
+        } else if (action === 'reject') {
+            await db.execute('UPDATE users SET approval_status = ? WHERE email = ?', ['rejected', email]);
+            return res.status(200).json({ message: 'Admin rejected successfully' });
+        } else {
+            return res.status(400).json({ message: 'Invalid action' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
