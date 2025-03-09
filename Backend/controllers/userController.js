@@ -1,16 +1,19 @@
 const db = require('../db');
 const nodemailer = require("nodemailer");
+const jwt = require('jsonwebtoken');
 
 exports.viewDashboard = async (req, res) => {
     try {
-       
-        const userId = req.user.user_id;
+        const token = req.headers.authorization?.split(' ')[1];
 
-        if (!userId) {
+        if (!token) {
             return res.status(401).json({ message: 'Unauthorized. Please log in.' });
         }
 
-        const [userDetails] = await db.execute('SELECT user_name, email, created_at FROM users WHERE user_id = ?', [userId]);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        console.log('Decoded Token:', decoded);
+
+        const [userDetails] = await db.execute('SELECT user_name, email FROM users WHERE user_id = ?', [decoded.user_id]);
 
         if (userDetails.length === 0) {
             return res.status(404).json({ message: 'User not found' });
@@ -18,18 +21,17 @@ exports.viewDashboard = async (req, res) => {
 
         const user = userDetails[0];
 
-        return res.status(200).json({ 
-            message: 'User profile fetched successfully',
+        res.status(200).json({
+            message: `Welcome to your dashboard, ${user.user_name}!`,
             profile: {
                 user_name: user.user_name,
                 email: user.email,
-                created_at: user.created_at,
-            }
+            },
         });
 
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Internal server error' });
+        console.error("Error in viewDashboard:", error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
