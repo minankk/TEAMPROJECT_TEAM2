@@ -27,6 +27,9 @@ const wishlistRouter = require('./routes/wishlist');
 const decadesRoutes = require('./routes/decadesRoutes');
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
+//admin
+const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
+
 
  
 
@@ -65,7 +68,6 @@ app.use("/forgot-password",forgotPasswordRoute)
 app.use("/reset-password",resetPasswordRoute)
 app.use('/logout',authenticateJWT,logoutRoute)
 app.use("/dashboard",authenticateJWT, dashboardRoutes);
-app.use("/profile",authenticateJWT , dashboardRoutes)
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use('/decades', decadesRoutes);
