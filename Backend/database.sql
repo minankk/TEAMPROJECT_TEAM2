@@ -560,17 +560,11 @@ UPDATE products
 SET cover_image_url = '/images/Charlie XCX – Brat.jpg'
 WHERE name = 'Brat' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Charlie XCX' LIMIT 1);
 
---To replace ' ' with '-' in genres to get aligned
-SELECT DISTINCT name FROM genres;
-UPDATE genres 
-SET name = REPLACE(name, ' ', '-');
+-- table to create a blacklist tokens for logout
+CREATE TABLE blacklisted_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    token TEXT NOT NULL,
+    expires_at TIMESTAMP NOT NULL
+);
 
-
-ALTER TABLE products
-ADD COLUMN quantity INT DEFAULT 20;
-
-
-UPDATE products
-SET quantity = 20
-WHERE quantity IS NULL;
 
