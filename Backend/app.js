@@ -65,6 +65,7 @@ app.use("/forgot-password",forgotPasswordRoute)
 app.use("/reset-password",resetPasswordRoute)
 app.use('/logout',authenticateJWT,logoutRoute)
 app.use("/dashboard",authenticateJWT, dashboardRoutes);
+app.use("/profile",authenticateJWT , dashboardRoutes)
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
 app.use('/decades', decadesRoutes);
