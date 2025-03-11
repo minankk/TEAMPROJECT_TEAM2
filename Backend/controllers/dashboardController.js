@@ -1,5 +1,7 @@
 const db = require('../db');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 
 exports.viewDashboard = async (req, res) => {
     try {
@@ -63,7 +65,7 @@ exports.updateProfile = async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized. Please log in.' });
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-                const { user_name, email } = req.body;
+        const { user_name, email } = req.body;
 
         if (!user_name && !email) {
             return res.status(400).json({ message: 'At least one of Username or Email is required' });
@@ -95,55 +97,46 @@ exports.updateProfile = async (req, res) => {
 };
 
 
+exports.changePassword = async (req, res) => {
+    try {
+        const userID = req.user.user_id;
+        const { oldPassword, newPassword } = req.body;
 
-
-
-
-//change password in dashboard
-exports.changePassword = (req , res) => {
-    const { oldPassword, newPassword } = req.body;
-    const userID = req.session.user_id;
-
-    if(!userID){
-        return res.status(400).json({message: 'Unauthorized. Please log in.'});
-    }
-
-    if(!oldPassword || !newPassword){
-        return res.status(400).json({message :'Old password and new password are required' });
-    }
-
-    if (newPassword.length < 8) {
-        return res.status(400).json({ message: 'New password must be at least 8 characters long' });
-    }
-
-    const query = 'SELECT password FROM users where user_id = ? ';
-
-    db.query(query ,[userID], (err , results) => {
-        
-        if(err){
-            console.error('Database query error:', err);
-            return res.status(500).json({ message: 'Error verifying old password' });
+        if (!oldPassword || !newPassword) {
+            return res.status(400).json({ message: 'Old password and new password are required' });
         }
 
-        if(results===0){
+        // Password strength validation
+        const passwordStrengthRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+        if (!passwordStrengthRegex.test(newPassword)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character',
+            });
+        }
+
+        // Fetch user's current password
+        const [rows] = await db.execute('SELECT password FROM users WHERE user_id = ?', [userID]);
+        if (rows.length === 0) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const storedPassword = results[0].password;
+        const storedPassword = rows[0].password;
 
-        if (storedPassword !== oldPassword) {
+        // Compare old password with hashed password
+        const isMatch = await bcrypt.compare(oldPassword, storedPassword);
+        if (!isMatch) {
             return res.status(400).json({ message: 'Incorrect old password' });
         }
-       // Update the password if the old password matches
-       const updatePasswordQuery = 'UPDATE users SET password = ? WHERE user_id = ?';
 
-       db.query(updatePasswordQuery, [newPassword, userID], (err, results) => {
-       if (err) {
-         console.error('Database query error:', err);
-         return res.status(500).json({ message: 'Error updating password' });
-        }
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await db.execute('UPDATE users SET password = ? WHERE user_id = ?', [hashedPassword, userID]);
 
         return res.status(200).json({ message: 'Password updated successfully' });
-        });
-    })
-}
+
+    } catch (error) {
+        console.error('Error changing password:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
