@@ -1,24 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const cartController = require('../controllers/cartController');
+const verifyToken = require('../controllers/cartController').verifyToken; // Import verifyToken
 
-router.post('/add', cartController.addToCart);
-router.get('/:user_id', cartController.getCartItems);
-router.delete('/remove/:cart_id', cartController.removeFromCart);
-router.post('/place-order', cartController.placeOrder); // New route
-
-// Add a cart count endpoint for SQL database
-router.get("/cart-count/:user_id", async (req, res) => {
-    const db = require('../db'); // Include db here as well
-    const { user_id } = req.params;
-    try {
-        const [cartItems] = await db.execute(`SELECT SUM(quantity) as count FROM cart WHERE user_id = ?`, [user_id]);
-        const count = cartItems[0].count || 0;
-        res.json({ count });
-    } catch (error) {
-        console.error("Error fetching cart count:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-});
+router.post('/add', cartController.addToCart); // Now uses verifyToken internally
+router.get('/:user_id', cartController.getCartItems); // Now uses verifyToken internally
+router.delete('/remove/:cart_id', cartController.removeFromCart); // Does not need verifyToken
+router.post('/place-order', cartController.placeOrder); // Now uses verifyToken internally
+router.get("/cart-count/:user_id", cartController.cartCount); // Now uses verifyToken internally
 
 module.exports = router;
