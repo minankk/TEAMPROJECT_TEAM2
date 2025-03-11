@@ -2,7 +2,7 @@ const db = require('../db')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 
 exports.login = async (req, res) => {
@@ -48,82 +48,25 @@ exports.login = async (req, res) => {
 };
 
 //logout
-    exports.logout = (req, res) => {
-    req.session.loggedIn = false;
-    req.session.destroy(error => {
-        if (error) {
-            return res.status(500).json({ message: 'Could not log out' });
-        }  
-    res.status(200).json({ message: 'Logout successful' });
-    });
-}
 
-//sign up as user
-    exports.signup = async (req , res) => {
-    const { username, email, password ,password_confirmation} = req.body;
+   exports.logout = async (req, res) => {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
 
-    //Check if all fields are entered
-    if (!username || !email || !password || !password_confirmation) {
-        return res.status(400).json({ message: 'All fields are required' });
-      }
-    //Check if password and password confirmation is same
-    if(password !== password_confirmation){
-        return res.status(400).json({message : `Password do not match`});
-    }
-
-    // Validate email format
-    /**
-     * ^ -> start of the string
-     * [a-zA-Z0-9._-]+ -> before @ consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
-     * @ -> domain in email address
-     * [a-zA-Z0-9.-]+
-     * \. -> '.' should be there
-     * [a-zA-Z]{2,6} -> match the domain
-     * $ -> end of the string
-     */
-
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if(!emailRegex.test(email)){
-         return res.status(400).json({message : 'Invalid email format'});
-    }
-
-    // Password strength validation (min 8 characters, at least one number, one uppercase letter, and one special character)
-    const passwordStrengthRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
-    if (!passwordStrengthRegex.test(password)) {
-           return res.status(400).json({
-               success: false,
-               message: 'Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character'
-           });
+    if (!token) {
+        return res.status(400).json({ message: 'No token provided' });
     }
     try {
-        //Check if email already exists
-        const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
-        if (rows.length > 0) {
-            return res.status(400).json({ error: 'Email already registered. Please login' });
-        }
-        //Hashed password
-        const hashedPassword = await bcrypt.hash(password , 8);
-
-        //Inserting Into database
-        await db.query(
-            'INSERT INTO users (user_name, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())',
-            [username, email, hashedPassword, 'user']
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        await db.execute(
+            'INSERT INTO blacklisted_tokens (token, expires_at) VALUES (?, FROM_UNIXTIME(?))',
+            [token, decoded.exp]
         );
-
-        // Generate JWT token
-        const payload = { username, email, role: 'user' };
-        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' }); // Token expires in 1 hour
-
-        // Send the JWT token to the client
-        res.status(200).json({
-        message: 'User registered successfully',
-        token,
-      });
+        return res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+        return res.status(400).json({ message: 'Invalid token' });
     }
-  };
+};
+
 
 //forgot password
     exports.forgotPassword = async(req , res) => {
@@ -195,3 +138,145 @@ exports.login = async (req, res) => {
         res.status(500).json({ message: 'Something went wrong' });
     }
 };
+
+//sign up as user
+exports.signup = async (req , res) => {
+    const { username, email, password, password_confirmation, adminSecretKey } = req.body;
+
+//Check if all fields are entered
+if (!username || !email || !password || !password_confirmation) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+//Check if password and password confirmation is same
+if(password !== password_confirmation){
+    return res.status(400).json({message : `Password do not match`});
+}
+
+// Validate email format
+/**
+ * ^ -> start of the string
+ * [a-zA-Z0-9._-]+ -> before @ consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
+ * @ -> domain in email address
+ * [a-zA-Z0-9.-]+
+ * \. -> '.' should be there
+ * [a-zA-Z]{2,6} -> match the domain
+ * $ -> end of the string
+ */
+
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+if(!emailRegex.test(email)){
+     return res.status(400).json({message : 'Invalid email format'});
+}
+
+// Password strength validation (min 8 characters, at least one number, one uppercase letter, and one special character)
+const passwordStrengthRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+if (!passwordStrengthRegex.test(password)) {
+       return res.status(400).json({
+           success: false,
+           message: 'Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character'
+       });
+}
+try {
+    //Check if email already exists
+    const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
+    if (rows.length > 0) {
+        return res.status(400).json({ error: 'Email already registered. Please login' });
+    }
+     
+    let role = 'user'; 
+    let approvalStatus = null;
+
+    if (adminSecretKey && adminSecretKey === process.env.ADMIN_SECRET_KEY) {
+        role = 'admin'; 
+        approvalStatus = 'pending';
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 8);
+
+    // Insert into the database with or without approval status depending on the role
+    await db.query(
+        'INSERT INTO users (user_name, email, password, role, approval_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
+        [username, email, hashedPassword, role, approvalStatus] 
+    );
+
+    // Generate JWT token
+    const payload = { username, email, role };
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
+
+    if (role === 'admin' && approvalStatus === 'pending') {
+        console.log('Sending admin approval email...'); 
+        sendAdminApprovalNotification(username, email);
+    }
+
+    return res.status(200).json({
+        message: approvalStatus === 'pending' ? 'Admin registration request sent for approval' : 'User registered successfully',
+        token,
+        role
+    });
+
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+}
+};
+
+function sendAdminApprovalNotification(username, email) {
+    const adminEmail = process.env.EMAIL_USER;
+
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: adminEmail,
+        subject: 'New Admin Signup Request',
+        html: `<p>New admin signup request from:</p><p>Username: ${username}</p><p>Email: ${email}</p>
+               <p><a href="${process.env.FRONTEND_URL}/admin/approve?email=${email}">Click here to approve or reject</a></p>`
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.error('Error sending admin approval notification:', err);
+        } else {
+            console.log('Admin approval email sent:', info.response);
+        }
+    });
+}
+
+//to approve or reject admin sign up
+exports.approveAdmin = async (req, res) => {
+    const { email } = req.query;
+    const { action } = req.body;
+
+    if (!email || !action) {
+        return res.status(400).json({ message: 'Invalid request' });
+    }
+    try {
+        
+        const [userRows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+        if (userRows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const user = userRows[0];
+        if (action === 'approve') {
+            await db.execute('UPDATE users SET approval_status = ? WHERE email = ?', ['approved', email]);
+            return res.status(200).json({ message: 'Admin approved successfully' });
+        } else if (action === 'reject') {
+            await db.execute('UPDATE users SET approval_status = ? WHERE email = ?', ['rejected', email]);
+            return res.status(200).json({ message: 'Admin rejected successfully' });
+        } else {
+            return res.status(400).json({ message: 'Invalid action' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+

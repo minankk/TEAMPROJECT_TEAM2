@@ -7,7 +7,7 @@ html, body {
 }
 
 .login-container, .signup-container {
-  background: rgba(0, 0, 0, 0.5); /* Increased transparency */
+  background: rgba(0, 0, 0, 0.5);
   /* backdrop-filter: blur(15px); */
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);

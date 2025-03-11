@@ -1,38 +1,40 @@
 const db = require('../db');
 const nodemailer = require("nodemailer");
+const jwt = require('jsonwebtoken');
 
 exports.viewDashboard = async (req, res) => {
     try {
-        // Check if user is logged in
-        const userId = req.session.user_id;
-        if (!userId) {
-            return res.status(401).json({ message: 'Unauthorized. Please log in.'});
-        }
-        // Query the database to fetch user details
-        const [userDetails] = await db.execute('SELECT user_name, email, created_at FROM users WHERE user_id = ?', [userId]);
+        const token = req.headers.authorization?.split(' ')[1];
 
-        // If user not found
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized. Please log in.' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        console.log('Decoded Token:', decoded);
+
+        const [userDetails] = await db.execute('SELECT user_name, email FROM users WHERE user_id = ?', [decoded.user_id]);
+
         if (userDetails.length === 0) {
-            return res.status(404).json({ message: 'User not found'});
+            return res.status(404).json({ message: 'User not found' });
         }
 
         const user = userDetails[0];
 
-        // Send the user data as response
-        return res.status(200).json({ 
-            message: 'User profile fetched successfully',
+        res.status(200).json({
+            message: `Welcome to your dashboard, ${user.user_name}!`,
             profile: {
-                user_name: user.user_name ,
-                email: user.email ,
-                created_at: user.created_at ,
-            }
+                user_name: user.user_name,
+                email: user.email,
+            },
         });
 
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Internal server error' });
+        console.error("Error in viewDashboard:", error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 
 //change password in dashboard
