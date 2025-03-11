@@ -4,22 +4,31 @@ const hbs = require("hbs");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
-const authRoutes = require('./routes/login');
+const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
+const authRoutes = require('./routes/login'); 
+const signUpRoutes = require('./routes/signup'); 
+const sessionRoutes = require('./routes/checksession');
+const forgotPasswordRoute = require('./routes/forgotPassword');
+const resetPasswordRoute = require('./routes/resetPassword');
+const logoutRoute = require('./routes/logout');
 const dashboardRoutes = require('./routes/dashboard');
-const signUpRoutes = require('./routes/signup');
 const contactUsRoutes = require('./routes/contactus');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
-const forgotPasswordRoute = require('./routes/forgotPassword');
-const popUpRoutes = require('./routes/popUpRoutes');
-const resetPasswordRoute = require('./routes/resetPassword');
+const popUpRoutes = require('./routes/popUpRoutes'); 
 const artistRoutes = require('./routes/artistRoutes');
 const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
+const decadesRoutes = require('./routes/decadesRoutes');
+//admin
+const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
+
+ 
 
 const app = express();
 
@@ -48,21 +57,28 @@ app.use(cors({
  * To use Routes
  */
 app.use(express.json());
-app.use("/", wishlistRouter);
-app.use("/login", authRoutes);
-app.use("/dashboard", dashboardRoutes);
+
+app.use("/login", authRoutes); 
 app.use("/signup", signUpRoutes);
+app.use("/checksession",authenticateJWT , sessionRoutes)
+app.use("/forgot-password",forgotPasswordRoute)
+app.use("/reset-password",resetPasswordRoute)
+app.use('/logout',authenticateJWT,logoutRoute)
+app.use("/dashboard",authenticateJWT, dashboardRoutes);
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
-app.use("/contactUs", contactUsRoutes);
-app.use("/sale-products", salesRoutes);
-app.use("/forgot-password", forgotPasswordRoute);
-app.use("/albums/:id/pop-up", popUpRoutes);
-app.use("/reset-password", resetPasswordRoute);
+app.use('/decades', decadesRoutes);
+app.use("/contactUs",contactUsRoutes)
+app.use("/sale-products",salesRoutes)
+app.use("/albums/:id/pop-up", popUpRoutes); 
 app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
 app.use('/genres', genreRoutes);
+app.use("/", wishlistRouter);
+//admin
+app.use("/admin-approval", adminApprovalRoutes);
+app.use("/admin-signup", signUpRoutes);
 
 // start the Express server on a specific port
 const port = process.env.PORT || 5001;

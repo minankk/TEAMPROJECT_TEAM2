@@ -6,6 +6,8 @@
 # Log files
 *.log
 
+package.json
+package-lock.json
 # npm debug log
 npm-debug.log
 
