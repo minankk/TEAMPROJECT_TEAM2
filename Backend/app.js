@@ -1,17 +1,8 @@
-/**
- * Importing required modules: 
- * express (framework), 
- * dotenv (environment variables), 
- * hbs (templating engine), 
- * body-parser (request body parsing), 
- * Cors (cross-origin resource sharing).
- */
 const express = require("express");
-const dotenv = require("dotenv")
-const hbs = require("hbs")
+const dotenv = require("dotenv");
+const hbs = require("hbs");
 const bodyParser = require("body-parser");
 const cors = require('cors');
-const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
@@ -33,39 +24,33 @@ const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
+const decadesRoutes = require('./routes/decadesRoutes');
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
 
+ 
 
+const app = express();
 
-const app = express(); 
-
-//.env file is created to store all sensitive data and the path is given under dotenv.config
+// .env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
-  path : "./.env",
-})
-
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: true,
-  }));
-
+    path: "./.env",
+});
 
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  console.log(`Received request: ${req.method} ${req.url}`);
-  next();  
+    console.log(`Received request: ${req.method} ${req.url}`);
+    next();
 });
 
 // Serve images from the 'public/images' folder
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 
 app.use(cors({
-  origin: 'http://localhost:3000',  
-  credentials: true, 
+    origin: 'http://localhost:3000',
+    credentials: true,
 }));
 
 /***
@@ -83,6 +68,7 @@ app.use("/dashboard",authenticateJWT, dashboardRoutes);
 app.use("/profile",authenticateJWT , dashboardRoutes)
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
+app.use('/decades', decadesRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/sale-products",salesRoutes)
 app.use("/albums/:id/pop-up", popUpRoutes); 
@@ -95,10 +81,8 @@ app.use("/", wishlistRouter);
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
 
-
-//start the Express server on a specific port 
+// start the Express server on a specific port
 const port = process.env.PORT || 5001;
-app.listen(port,()=>{
+app.listen(port, () => {
     console.log(`Server started on port ${port}`);
-})
-
+});
