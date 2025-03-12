@@ -11,8 +11,7 @@ router.get('/profile', dashboardController.getProfile);
 //update the profile info
 router.put('/update', dashboardController.updateProfile);
 
-
-
-//router.post('/change-password', changePassword);
+//to change password
+router.post('/change-password', dashboardController.changePassword);
 
 module.exports = router;
