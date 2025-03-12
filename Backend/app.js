@@ -22,8 +22,11 @@ const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
-const decadesRoute = require('./routes/decadesRoute'); // Corrected route import
+const decadesRoutes = require('./routes/decadesRoute');
+//admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
+const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
+const { verify } = require("jsonwebtoken");
 
 const app = express();
 
@@ -53,28 +56,30 @@ app.use(cors({
 // Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
 
-// Define routes
-app.use("/login", authRoutes); // Login route
-app.use("/signup", signUpRoutes); // Signup route
-app.use("/checksession", authenticateJWT, sessionRoutes); // Check session route with JWT auth
-app.use("/forgot-password", forgotPasswordRoute); // Forgot password route
-app.use("/reset-password", resetPasswordRoute); // Reset password route
-app.use('/logout', authenticateJWT, logoutRoute); // Logout route with JWT auth
-app.use("/dashboard", authenticateJWT, dashboardRoutes); // Dashboard route with JWT auth
-app.use("/profile", authenticateJWT, dashboardRoutes); // profile route with JWT auth
-app.use('/cart', myCartRoutes); // Cart routes
-app.use('/products', productsRoutes); // Products routes
-app.use('/decades', decadesRoute); // Decades routes
-app.use("/contactUs", contactUsRoutes); // Contact us route
-app.use("/sale-products", salesRoutes); // Sale products routes
-app.use("/albums/:id/pop-up", popUpRoutes); // Album pop-up routes
-app.use('/artists', artistRoutes); // Artists routes
-app.use('/best-sellers', bestSellersRoutes); // Best sellers routes
-app.use('/newest-addition', newestAdditionRoutes); // Newest addition routes
-app.use('/genres', genreRoutes); // Genres routes
-app.use("/", wishlistRouter); // Wishlist routes
-app.use("/admin-approval", adminApprovalRoutes); // Admin approval routes
-app.use("/admin-signup", signUpRoutes); // Admin signup routes
+app.use("/login", authRoutes); 
+app.use("/signup", signUpRoutes);
+app.use("/checksession",authenticateJWT.authenticateJWT , sessionRoutes)
+app.use("/forgot-password",forgotPasswordRoute)
+app.use("/reset-password",resetPasswordRoute)
+app.use('/logout',authenticateJWT.authenticateJWT,logoutRoute)
+app.use("/dashboard",authenticateJWT.authenticateJWT, dashboardRoutes);
+app.use("/profile",authenticateJWT.authenticateJWT , dashboardRoutes)
+app.use('/cart', myCartRoutes);
+app.use('/products', productsRoutes);
+//app.use('/decades', decadesRoutes);
+app.use("/contactUs",contactUsRoutes)
+app.use("/sale-products",salesRoutes)
+app.use("/albums/:id/pop-up", popUpRoutes); 
+app.use('/artists', artistRoutes);
+app.use('/best-sellers', bestSellersRoutes);
+app.use('/newest-addition', newestAdditionRoutes);
+app.use('/genres', genreRoutes);
+app.use("/", wishlistRouter);
+//admin
+app.use("/admin-approval", adminApprovalRoutes);
+app.use("/admin-signup", signUpRoutes);
+app.use("/admin-dashboard",authenticateJWT.authenticateJWT ,authenticateJWT.verifyAdmin ,adminUserProfileRoutes);
+
 
 // Start the Express server on a specific port
 const port = process.env.PORT || 5001;

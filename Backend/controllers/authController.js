@@ -195,13 +195,14 @@ try {
     const hashedPassword = await bcrypt.hash(password, 8);
 
     // Insert into the database with or without approval status depending on the role
-    await db.query(
+    const [result] = await db.query(
         'INSERT INTO users (user_name, email, password, role, approval_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
-        [username, email, hashedPassword, role, approvalStatus] 
+        [username, email, hashedPassword, role, approvalStatus]
     );
 
+    const userId = result.insertId;
     // Generate JWT token
-    const payload = { username, email, role };
+    const payload = { user_id: userId, username, email, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
 
     if (role === 'admin' && approvalStatus === 'pending') {
