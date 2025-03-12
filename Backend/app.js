@@ -66,7 +66,7 @@ app.use("/dashboard",authenticateJWT.authenticateJWT, dashboardRoutes);
 app.use("/profile",authenticateJWT.authenticateJWT , dashboardRoutes)
 app.use('/cart', myCartRoutes);
 app.use('/products', productsRoutes);
-//app.use('/decades', decadesRoutes);
+app.use('/decades', decadesRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/sale-products",salesRoutes)
 app.use("/albums/:id/pop-up", popUpRoutes); 
