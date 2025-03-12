@@ -15,6 +15,9 @@ const authenticateJWT = async (req, res, next) => {
             return res.status(401).json({ message: 'Access Denied: Token Blacklisted' });
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        if (!decoded.user_id) {
+            return res.status(401).json({ message: 'Invalid token: user_id is missing' });
+        }
         req.user = decoded;
         next();
 
@@ -24,7 +27,23 @@ const authenticateJWT = async (req, res, next) => {
     }
 };
 
-module.exports = authenticateJWT;
+const verifyAdmin = async (req, res, next) => {
+    try {
+        if (!req.user || !req.user.user_id) {
+            return res.status(403).json({ message: 'Forbidden: No user found or invalid token' });
+        }
 
+        const [user] = await db.execute('SELECT role FROM users WHERE user_id = ?', [req.user.user_id]);
 
+        if (!user || user.length === 0 || user[0].role !== 'admin') {
+            return res.status(403).json({ message: 'Forbidden: Admin access required' });
+        }
 
+        next();
+    } catch (error) {
+        console.error('Admin Verification Error:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+module.exports = { authenticateJWT, verifyAdmin };
