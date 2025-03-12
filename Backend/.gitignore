@@ -16,3 +16,5 @@ Thumbs.db
 # Build and dist directories (if applicable)
 dist/
 build/
+
+**/node_modules/
