@@ -1,38 +1,26 @@
+// wishlistController.js
 const db = require('../db');
-const jwt = require('jsonwebtoken');
 
 // Function to add a product to the wishlist
 exports.addToWishlist = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1]; // Get token from Authorization header
+        const userId = req.user.userId; // Get user ID from req.user
+        const productId = req.params.productId;
 
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized. No token provided.' });
+        const [existingWishlistItem] = await db.execute(
+            'SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?',
+            [userId, productId]
+        );
+
+        if (existingWishlistItem.length > 0) {
+            return res.status(400).json({ message: 'Product is already in the wishlist' });
         }
 
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                return res.status(401).json({ message: 'Unauthorized. Invalid token.' });
-            }
-
-            const userId = decoded.userId;
-            const productId = req.params.productId;
-
-            const [existingWishlistItem] = await db.execute(
-                'SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?',
-                [userId, productId]
-            );
-
-            if (existingWishlistItem.length > 0) {
-                return res.status(400).json({ message: 'Product is already in the wishlist' });
-            }
-
-            await db.execute(
-                'INSERT INTO wishlist (user_id, product_id) VALUES (?, ?)',
-                [userId, productId]
-            );
-            res.status(200).json({ message: 'Product added to wishlist' });
-        });
+        await db.execute(
+            'INSERT INTO wishlist (user_id, product_id) VALUES (?, ?)',
+            [userId, productId]
+        );
+        res.status(200).json({ message: 'Product added to wishlist' });
     } catch (error) {
         console.error('Error adding to wishlist:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
@@ -42,26 +30,14 @@ exports.addToWishlist = async (req, res) => {
 // Function to remove a product from the wishlist
 exports.removeFromWishlist = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
+        const userId = req.user.userId; // Get user ID from req.user
+        const productId = req.params.productId;
 
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized. No token provided.' });
-        }
-
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                return res.status(401).json({ message: 'Unauthorized. Invalid token.' });
-            }
-
-            const userId = decoded.userId;
-            const productId = req.params.productId;
-
-            await db.execute(
-                'DELETE FROM wishlist WHERE user_id = ? AND product_id = ?',
-                [userId, productId]
-            );
-            res.status(200).json({ message: 'Product removed from wishlist' });
-        });
+        await db.execute(
+            'DELETE FROM wishlist WHERE user_id = ? AND product_id = ?',
+            [userId, productId]
+        );
+        res.status(200).json({ message: 'Product removed from wishlist' });
     } catch (error) {
         console.error('Error removing from wishlist:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
@@ -71,25 +47,13 @@ exports.removeFromWishlist = async (req, res) => {
 // Function to get the user's wishlist
 exports.getWishlist = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
+        const userId = req.user.userId; // Get user ID from req.user
 
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized. No token provided.' });
-        }
-
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                return res.status(401).json({ message: 'Unauthorized. Invalid token.' });
-            }
-
-            const userId = decoded.userId;
-
-            const [wishlistItems] = await db.execute(
-                `SELECT p.* FROM wishlist w JOIN products p ON w.product_id = p.product_id WHERE w.user_id = ?`,
-                [userId]
-            );
-            res.status(200).json(wishlistItems);
-        });
+        const [wishlistItems] = await db.execute(
+            `SELECT p.* FROM wishlist w JOIN products p ON w.product_id = p.product_id WHERE w.user_id = ?`,
+            [userId]
+        );
+        res.status(200).json(wishlistItems);
     } catch (error) {
         console.error('Error getting wishlist:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
