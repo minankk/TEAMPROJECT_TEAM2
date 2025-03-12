@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const cartController = require('../controllers/cartController');
-const verifyToken = require('../controllers/cartController').verifyToken; // Import verifyToken
+const authenticateJWT = require('../middlewares/jwtAuthMiddleware');
 
-router.post('/add', cartController.addToCart); // Now uses verifyToken internally
-router.get('/:user_id', cartController.getCartItems); // Now uses verifyToken internally
-router.delete('/remove/:cart_id', cartController.removeFromCart); // Does not need verifyToken
-router.post('/place-order', cartController.placeOrder); // Now uses verifyToken internally
-router.get("/cart-count/:user_id", cartController.cartCount); // Now uses verifyToken internally
+router.post('/add', authenticateJWT, cartController.addToCart);
+router.get('/:user_id', authenticateJWT, cartController.getCartItems);
+router.delete('/remove/:cart_id', cartController.removeFromCart);
+router.post('/place-order', authenticateJWT, cartController.placeOrder);
+router.get("/cart-count/:user_id", authenticateJWT, cartController.cartCount);
 
 module.exports = router;

@@ -1,14 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const hbs = require("hbs");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const path = require('path');
-const nodemailer = require('nodemailer');
 
 const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
-const authRoutes = require('./routes/login'); 
-const signUpRoutes = require('./routes/signup'); 
+const authRoutes = require('./routes/login');
+const signUpRoutes = require('./routes/signup');
 const sessionRoutes = require('./routes/checksession');
 const forgotPasswordRoute = require('./routes/forgotPassword');
 const resetPasswordRoute = require('./routes/resetPassword');
@@ -18,70 +16,67 @@ const contactUsRoutes = require('./routes/contactus');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const salesRoutes = require('./routes/sales');
-const popUpRoutes = require('./routes/popUpRoutes'); 
+const popUpRoutes = require('./routes/popUpRoutes');
 const artistRoutes = require('./routes/artistRoutes');
 const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
-const decadesRoutes = require('./routes/decadesRoutes');
-//admin
+const decadesRoute = require('./routes/decadesRoute'); // Corrected route import
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
-
- 
 
 const app = express();
 
-// .env file is created to store all sensitive data and the path is given under dotenv.config
+// Load environment variables from .env file
 dotenv.config({
     path: "./.env",
 });
 
-// Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
+// Middleware to parse incoming request bodies as JSON
 app.use(bodyParser.json());
 
+// Middleware to log incoming requests
 app.use((req, res, next) => {
     console.log(`Received request: ${req.method} ${req.url}`);
     next();
 });
 
-// Serve images from the 'public/images' folder
+// Serve static files from the 'public/images' folder
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 
+// Middleware to enable CORS with dynamic origin from .env
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL, // Use FRONTEND_URL from .env
     credentials: true,
 }));
 
-/***
- * To use Routes
- */
+// Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
 
-app.use("/login", authRoutes); 
-app.use("/signup", signUpRoutes);
-app.use("/checksession",authenticateJWT , sessionRoutes)
-app.use("/forgot-password",forgotPasswordRoute)
-app.use("/reset-password",resetPasswordRoute)
-app.use('/logout',authenticateJWT,logoutRoute)
-app.use("/dashboard",authenticateJWT, dashboardRoutes);
-app.use("/profile",authenticateJWT , dashboardRoutes)
-app.use('/cart', myCartRoutes);
-app.use('/products', productsRoutes);
-app.use('/decades', decadesRoutes);
-app.use("/contactUs",contactUsRoutes)
-app.use("/sale-products",salesRoutes)
-app.use("/albums/:id/pop-up", popUpRoutes); 
-app.use('/artists', artistRoutes);
-app.use('/best-sellers', bestSellersRoutes);
-app.use('/newest-addition', newestAdditionRoutes);
-app.use('/genres', genreRoutes);
-app.use("/", wishlistRouter);
-//admin
-app.use("/admin-approval", adminApprovalRoutes);
-app.use("/admin-signup", signUpRoutes);
+// Define routes
+app.use("/login", authRoutes); // Login route
+app.use("/signup", signUpRoutes); // Signup route
+app.use("/checksession", authenticateJWT, sessionRoutes); // Check session route with JWT auth
+app.use("/forgot-password", forgotPasswordRoute); // Forgot password route
+app.use("/reset-password", resetPasswordRoute); // Reset password route
+app.use('/logout', authenticateJWT, logoutRoute); // Logout route with JWT auth
+app.use("/dashboard", authenticateJWT, dashboardRoutes); // Dashboard route with JWT auth
+app.use("/profile", authenticateJWT, dashboardRoutes); // profile route with JWT auth
+app.use('/cart', myCartRoutes); // Cart routes
+app.use('/products', productsRoutes); // Products routes
+app.use('/decades', decadesRoute); // Decades routes
+app.use("/contactUs", contactUsRoutes); // Contact us route
+app.use("/sale-products", salesRoutes); // Sale products routes
+app.use("/albums/:id/pop-up", popUpRoutes); // Album pop-up routes
+app.use('/artists', artistRoutes); // Artists routes
+app.use('/best-sellers', bestSellersRoutes); // Best sellers routes
+app.use('/newest-addition', newestAdditionRoutes); // Newest addition routes
+app.use('/genres', genreRoutes); // Genres routes
+app.use("/", wishlistRouter); // Wishlist routes
+app.use("/admin-approval", adminApprovalRoutes); // Admin approval routes
+app.use("/admin-signup", signUpRoutes); // Admin signup routes
 
-// start the Express server on a specific port
+// Start the Express server on a specific port
 const port = process.env.PORT || 5001;
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);

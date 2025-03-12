@@ -1,26 +1,8 @@
 const db = require('../db');
-const jwt = require('jsonwebtoken');
-
-// Middleware to verify JWT
-const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ message: 'Unauthorized. No token provided.' });
-    }
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: 'Unauthorized. Invalid token.' });
-        }
-        req.userId = decoded.userId; // Add userId to request
-        next();
-    });
-};
 
 // POST /cart/add (Add item to the cart)
-exports.addToCart = [verifyToken, async (req, res) => {
-    const user_id = req.userId;
+exports.addToCart = async (req, res) => {
+    const user_id = req.user.userId;
     const { product_id, quantity } = req.body;
 
     if (!user_id || !product_id || !quantity) {
@@ -77,11 +59,11 @@ exports.addToCart = [verifyToken, async (req, res) => {
         console.error('Error adding item to cart:', error);
         return res.status(500).json({ error: 'Failed to add item to cart' });
     }
-}];
+};
 
 // GET /cart/:user_id (Fetch items in the user's cart)
-exports.getCartItems = [verifyToken, async (req, res) => {
-    const user_id = req.userId;
+exports.getCartItems = async (req, res) => {
+    const user_id = req.user.userId;
 
     try {
         const [cartItems] = await db.execute(
@@ -93,7 +75,7 @@ exports.getCartItems = [verifyToken, async (req, res) => {
         console.error('Error fetching cart items:', error);
         res.status(500).json({ error: 'Failed to fetch cart items' });
     }
-}];
+};
 
 // DELETE /cart/remove/:cart_id (Remove item from the cart)
 exports.removeFromCart = async (req, res) => {
@@ -109,8 +91,8 @@ exports.removeFromCart = async (req, res) => {
 };
 
 // Function to handle order placement
-exports.placeOrder = [verifyToken, async (req, res) => {
-    const user_id = req.userId;
+exports.placeOrder = async (req, res) => {
+    const user_id = req.user.userId;
     try {
         // Get cart items
         const [cartItems] = await db.execute(`SELECT product_id, quantity FROM cart WHERE user_id = ?`, [user_id]);
@@ -147,11 +129,11 @@ exports.placeOrder = [verifyToken, async (req, res) => {
         console.error('Error placing order:', error);
         res.status(500).json({ error: 'Failed to place order' });
     }
-}];
+};
 
 //Add a cart count endpoint for SQL database
-exports.cartCount = [verifyToken, async (req, res) => {
-    const user_id = req.userId;
+exports.cartCount = async (req, res) => {
+    const user_id = req.user.userId;
     try {
         const [cartItems] = await db.execute(`SELECT SUM(quantity) as count FROM cart WHERE user_id = ?`, [user_id]);
         const count = cartItems[0].count || 0;
@@ -160,4 +142,4 @@ exports.cartCount = [verifyToken, async (req, res) => {
         console.error("Error fetching cart count:", error);
         res.status(500).json({ error: "Internal server error" });
     }
-}];
+};
