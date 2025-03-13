@@ -19,54 +19,53 @@ import PaymentPage from './PaymentPage';
 import OrderSuccess from './OrderSuccess';
 import SalesPage from './SalesPage';
 import LogoutPage from './LogoutPage';
-
+ 
 import ForgotPassword from './ForgotPasswordPage';
 import UserMessagesPage from './UserMessagesPage';
 import FavoritesPage from './FavoritesPage';
 import OrdersPage from './OrdersPage';
 import OrderHistoryPage from './OrderHistoryPage';
 import UserProfilePage from './UserProfilePage';
-
+ 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
-
-  return (
-    <Router>
-      <Navbar isLoggedIn={isLoggedIn} />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
-        <Route path="/FAQs" element={<FAQ />} />
-        <Route path="/t&c" element={<TermsAndConditions />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/delivery-information" element={<DeliveryInformation />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/payment-page" element={<PaymentPage />} />
-        <Route path="/order-success" element={<OrderSuccess />} />
-        <Route path="/sale" element={<SalesPage />} />
-        <Route path="/logout" element={<LogoutPage />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        </Routes>
-        <Route path="/dashboard" element={<DashboardPage />}>
-          <Route path="orders" element={<OrdersPage />} />
-          <Route path="order-history" element={<OrderHistoryPage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
-          <Route path="profile" element={<UserProfilePage />} />
-          <Route path="messages" element={<UserMessagesPage />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </Router>
-  );
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+ 
+useEffect(() => {
+const token = localStorage.getItem('token');
+setIsLoggedIn(!!token);
+}, []);
+ 
+return (
+<Router>
+<Navbar isLoggedIn={isLoggedIn} />
+<Routes>
+<Route path="/" element={<LandingPage />} />
+<Route path="/products" element={<ProductsPage />} />
+<Route path="/login" element={<LoginPage />} />
+<Route path="/cart" element={<CartPage />} />
+<Route path="/contact-us" element={<ContactUsPage />} />
+<Route path="/FAQs" element={<FAQ />} />
+<Route path="/t&c" element={<TermsAndConditions />} />
+<Route path="/signup" element={<Signup />} />
+<Route path="/about-us" element={<AboutUs />} />
+<Route path="/delivery-information" element={<DeliveryInformation />} />
+<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+<Route path="/payment-page" element={<PaymentPage />} />
+<Route path="/order-success" element={<OrderSuccess />} />
+<Route path="/sale" element={<SalesPage />} />
+<Route path="/logout" element={<LogoutPage />} />
+<Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/dashboard" element={<DashboardPage />}>
+<Route path="orders" element={<OrdersPage />} />
+<Route path="order-history" element={<OrderHistoryPage />} />
+<Route path="favorites" element={<FavoritesPage />} />
+<Route path="profile" element={<UserProfilePage />} />
+<Route path="messages" element={<UserMessagesPage />} />
+</Route>
+</Routes>
+<Footer />
+</Router>
+);
 }
-
+ 
 export default App;
