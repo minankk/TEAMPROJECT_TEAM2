@@ -56,30 +56,37 @@ app.use(cors({
 // Middleware to parse incoming requests with JSON payloads
 app.use(express.json());
 
+// User Routes
 app.use("/login", authRoutes); 
 app.use("/signup", signUpRoutes);
-app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
-app.use("/forgot-password",forgotPasswordRoute)
-app.use("/reset-password",resetPasswordRoute)
-app.use('/logout',authJWT.authenticateJWT,logoutRoute)
+app.use("/checksession",authJWT.authenticateJWT , sessionRoutes);
+app.use("/forgot-password",forgotPasswordRoute);
+app.use("/reset-password",resetPasswordRoute);
+app.use('/logout',authJWT.authenticateJWT,logoutRoute);
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
-app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
+app.use("/profile",authJWT.authenticateJWT, dashboardRoutes);
 app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
 app.use('/products', productsRoutes);
-app.use('/decades', decadesRoutes);
-app.use("/contactUs",contactUsRoutes)
-app.use("/sale-products",salesRoutes)
+app.use("/contactUs",contactUsRoutes);
+app.use("/sale-products",salesRoutes);
 app.use("/albums/:id/pop-up", popUpRoutes); 
 app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
 app.use('/genres', genreRoutes);
 app.use("/", authJWT.authenticateJWT,wishlistRouter);
-//admin
+
+// Admin Routes
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
 app.use("/admin-dashboard",authJWT.authenticateJWT ,authJWT.verifyAdmin ,adminUserProfileRoutes);
 
+// Filtering Routes for Products
+app.use('/products/genre/:genre', productsRoutes.filterByGenre); // If genre is a dynamic parameter
+app.use('/products/decade/:decade', productsRoutes.filterByDecade);
+app.use('/products/price/:price', productsRoutes.filterByPrice);
+app.use('/products/bestsellers', productsRoutes.filterBestSellers);
+app.use('/products/onsale', productsRoutes.filterOnSale);
 
 // Start the Express server on a specific port
 const port = process.env.PORT || 5001;
