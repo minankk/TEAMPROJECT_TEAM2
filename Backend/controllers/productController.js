@@ -22,7 +22,7 @@ exports.getAllProducts = (req, res) => {
 });
 };
 
-// Function to get a single product by ID
+// Function to get a single product by ID　
 exports.getProductById = async (req, res) => {
   const { productId } = req.params;
 
@@ -82,6 +82,7 @@ exports.filterByGenre = async (req, res) => {
     if (artist) {
       if (genre === 'all') {
         // If genre is 'all', filter only by artist
+        
         query += ` WHERE a.name = ?`;
       } else {
         // If genre is specified, add artist filter with AND

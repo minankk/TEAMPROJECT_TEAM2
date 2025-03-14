@@ -30,4 +30,5 @@ router.get('/search', searchController.searchProducts);
 // GET - to get the products by their ID (Whishlist)
 router.get('/products/:productId', productsController.getProductById);
 
+
 module.exports = router;
