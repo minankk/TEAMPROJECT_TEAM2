@@ -15,6 +15,7 @@ const dashboardRoutes = require('./routes/dashboard');
 const contactUsRoutes = require('./routes/contactus');
 const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
+const orderRoutes = require('./routes/order');
 const salesRoutes = require('./routes/sales');
 const popUpRoutes = require('./routes/popUpRoutes');
 const artistRoutes = require('./routes/artistRoutes');
@@ -65,6 +66,7 @@ app.use('/logout',authJWT.authenticateJWT,logoutRoute)
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
 app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
 app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
+app.use('/orders', orderRoutes);
 app.use('/products', productsRoutes);
 app.use('/decades', decadesRoutes);
 app.use("/contactUs",contactUsRoutes)
