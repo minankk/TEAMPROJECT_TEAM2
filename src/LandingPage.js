@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./LandingPage.css";
 import ReviewCarousel from "./ReviewCarousel";
 import VinylGenres from "./VinylGenres";
+import VinylHistory from "./VinylHistory";
+
 
 // Import Hero Section Images
 import Recordstore from "./assets/recordstore.jpg";
@@ -108,27 +110,11 @@ function LandingPage() {
         <img src={images[currentImage]} alt="Vinyl Collection" className="hero-image fade-image" />
       </section>
 
-      {/* Steps Section */}
-      <section className="steps-section">
-        <div className="step">
-          <div className="step-number">1</div>
-          <h3>Sign Up</h3>
-          <p>Join us to gain access to exclusive vinyl collections.</p>
-          <button onClick={() => window.location.href = "/signup"}>Sign Up</button>
-        </div>
-        <div className="step">
-          <div className="step-number">2</div>
-          <h3>Search</h3>
-          <p>Browse our vast collection, by genre, artist, or year.</p>
-          <button>Search</button>
-        </div>
-        <div className="step">
-          <div className="step-number">3</div>
-          <h3>Get the Best Deals</h3>
-          <p>Find the best offers and discounts on high-quality vinyl records.</p>
-          <button onClick={() => window.location.href = "/products"}>Shop Now</button>
-        </div>
-      </section>
+          {/* vinyl history section */}
+          <VinylHistory />
+
+          {/* Customer Reviews Section */}
+          <ReviewCarousel />
 
       {/* Staff Picks - Infinite Scrolling Carousel */}
       <section className="staff-picks">
@@ -159,9 +145,6 @@ function LandingPage() {
         </button>
         </div>
       </section>
-
-      {/* Customer Reviews Section */}
-      <ReviewCarousel />
 
       {/* Vinyl Genre Showcase */}
       <VinylGenres />

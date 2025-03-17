@@ -338,7 +338,7 @@
   right: 10px; /* Adjust if needed */
 }
 
-/* STEPS SECTION - LIGHTER VERSION */
+/* STEPS SECTION */
 .steps-section {
   display: flex;
   justify-content: space-around;
@@ -365,7 +365,6 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Step Number */
 .step-number {
   font-size: 2.75rem;
   font-weight: 900;
@@ -381,14 +380,12 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-/* Step Titles */
 .step h3 {
   margin-top: 15px;
   font-size: 1.5rem;
   color: #222;
 }
 
-/* Step Descriptions */
 .step p {
   font-size: 1rem;
   opacity: 0.85;
@@ -396,7 +393,6 @@
   font-weight: 550;
 }
 
-/* Step Buttons */
 .step button {
   margin-top: 15px;
   background: #ad2321;
@@ -415,6 +411,8 @@
   background: #8d1d1a;
   transform: scale(1.07);
 }
+
+
 
 /* Animations */
 @keyframes fadeIn {
