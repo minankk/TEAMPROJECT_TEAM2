@@ -5,10 +5,8 @@ exports.addToCart = async (req, res) => {
     const user_id = req.user.userId;
     const { product_id, quantity } = req.body;
 
-    if (!user_id || !product_id || !quantity) {
-        return res
-            .status(400)
-            .json({ error: 'Missing required fields: user_id, product_id, or quantity' });
+    if (!product_id || !quantity) {
+        return res.status(400).json({ error: 'Missing required fields: product_id, or quantity' });
     }
 
     if (quantity <= 0) {
