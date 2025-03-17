@@ -11,20 +11,26 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// user to subscribe
+//to subscribe as registered and guest user
 exports.subscribe = async (req, res) => {
     const { user_id, email, preferences } = req.body;
-    if (!email || !preferences.length) {
+    if (!email || !preferences || !preferences.length) {
         return res.status(400).json({ message: "Email and Preferences are required" });
     }
+
     try {
         const token = crypto.randomBytes(32).toString("hex");
+
         if (user_id) {
             for (const preference of preferences) {
-                await db.execute("INSERT INTO subscriptions (user_id, subscription_type) VALUES (?, ?)", 
+                await db.execute(
+                    "INSERT INTO subscriptions (user_id, subscription_type) VALUES (?, ?)", 
                     [user_id, preference]
                 );
             }
+
+            return res.status(200).json({ message: "Subscription preferences saved!" });
+
         } else {
             for (const preference of preferences) {
                 await db.execute(
@@ -32,15 +38,15 @@ exports.subscribe = async (req, res) => {
                     [email, preference, token]
                 );
             }
-        }
-        const confirmUrl = `${process.env.FRONTEND_URL}/subscription/confirm/${token}`;
-        await transporter.sendMail({
-            to: email,
-            subject: "Confirm Your Subscription",
-            html: `<p>Click <a href="${confirmUrl}">here</a> to confirm your subscription.</p>`,
-        });
+            const confirmUrl = `${process.env.FRONTEND_URL}/subscription/confirm/${token}`;
+            await transporter.sendMail({
+                to: email,
+                subject: "Confirm Your Subscription",
+                html: `<p>Click <a href="${confirmUrl}">here</a> to confirm your subscription.</p>`,
+            });
 
-        res.status(200).json({ message: "Confirmation email sent!" });
+            return res.status(200).json({ message: "Confirmation email sent!" });
+        }
 
     } catch (err) {
         console.error("Error processing subscription:", err);
@@ -48,34 +54,34 @@ exports.subscribe = async (req, res) => {
     }
 };
 
-//to confirm subscription
+
+//to confirm subscription as guest user
 exports.confirmSubscription = async (req, res) => {
     const { token } = req.params;
 
     try {
-        let [rows] = await db.execute("SELECT user_id FROM users WHERE subscription_token = ?", [token]);
+        const [rows] = await db.execute(
+            "SELECT guest_id FROM guest_subscriptions WHERE subscription_token = ?", 
+            [token]
+        );
 
-        if (rows.length > 0) {
-            const user_id = rows[0].user_id;
-            await db.execute("UPDATE users SET subscription_token = NULL WHERE user_id = ?", [user_id]);
-
-            res.status(200).send("Subscription confirmed! You will receive updates based on your preferences.");
-        } else {
-            [rows] = await db.execute("SELECT guest_id FROM guest_subscriptions WHERE subscription_token = ?", [token]);
-
-            if (rows.length === 0) {
-                return res.status(400).json({ message: "Invalid or expired token" });
-            }
-            await db.execute("UPDATE guest_subscriptions SET subscription_token = NULL, is_confirmed = TRUE WHERE guest_id = ?", [rows[0].guest_id]);
-
-            res.status(200).send("Subscription confirmed! You will receive updates based on your preferences.");
+        if (rows.length === 0) {
+            return res.status(400).json({ message: "Invalid or expired token" });
         }
+        await db.execute(
+            "UPDATE guest_subscriptions SET subscription_token = NULL, is_confirmed = TRUE WHERE guest_id = ?", 
+            [rows[0].guest_id]
+        );
+
+        res.status(200).json({ message: "Subscription confirmed! You will receive updates based on your preferences." });
+
     } catch (err) {
         console.error("Error confirming subscription:", err);
         res.status(500).json({ message: "Error confirming subscription." });
     }
 };
 
+//unsubscribe the registered and guest user
 exports.unsubscribe = async (req, res) => {
     const { user_id, preference } = req.body; // preference = "blogs" or "newsletter"
 
