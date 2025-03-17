@@ -1,10 +1,21 @@
+/**
+ * Importing required modules:
+ * express (framework),
+ * dotenv (environment variables),
+ * hbs (templating engine),
+ * body-parser (request body parsing),
+ * Cors (cross-origin resource sharing).
+ */
 const express = require("express");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv")
+const hbs = require("hbs")
 const bodyParser = require("body-parser");
 const cors = require('cors');
+const session = require('express-session');
 const path = require('path');
-
-const authJWT = require('./middlewares/jwtAuthMiddleware');
+const nodemailer = require('nodemailer');
+ 
+const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
 const authRoutes = require('./routes/login');
 const signUpRoutes = require('./routes/signup');
 const sessionRoutes = require('./routes/checksession');
@@ -23,68 +34,75 @@ const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
-const decadesRoutes = require('./routes/decadesRoute');
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
-const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
-const { verify } = require("jsonwebtoken");
-
+ 
+ 
+ 
 const app = express();
-
-// Load environment variables from .env file
+ 
+//.env file is created to store all sensitive data and the path is given under dotenv.config
 dotenv.config({
-    path: "./.env",
-});
-
-// Middleware to parse incoming request bodies as JSON
+  path : "./.env",
+})
+ 
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  }));
+ 
+ 
+// Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
-
-// Middleware to log incoming requests
+ 
 app.use((req, res, next) => {
-    console.log(`Received request: ${req.method} ${req.url}`);
-    next();
+  console.log(`Received request: ${req.method} ${req.url}`);
+  next();  
 });
-
-// Serve static files from the 'public/images' folder
+ 
+// Serve images from the 'public/images' folder
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
-
-// Middleware to enable CORS with dynamic origin from .env
+ 
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // Use FRONTEND_URL from .env
-    credentials: true,
+  origin: 'http://localhost:3000',  
+  credentials: true,
 }));
-
-// Middleware to parse incoming requests with JSON payloads
+ 
+/***
+ * To use Routes
+ */
 app.use(express.json());
-
-app.use("/login", authRoutes); 
+ 
+app.use("/login", authRoutes);
 app.use("/signup", signUpRoutes);
-app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
+app.use("/checksession",authenticateJWT , sessionRoutes)
 app.use("/forgot-password",forgotPasswordRoute)
 app.use("/reset-password",resetPasswordRoute)
+
 app.use('/logout',authJWT.authenticateJWT,logoutRoute)
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
 app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
 app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
 app.use('/orders', orderRoutes);
 app.use('/products', productsRoutes);
-app.use('/decades', decadesRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/sale-products",salesRoutes)
-app.use("/albums/:id/pop-up", popUpRoutes); 
+app.use("/pop-up", popUpRoutes);
 app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
 app.use('/genres', genreRoutes);
-app.use("/", authJWT.authenticateJWT,wishlistRouter);
+app.use("/", wishlistRouter);
 //admin
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
-app.use("/admin-dashboard",authJWT.authenticateJWT ,authJWT.verifyAdmin ,adminUserProfileRoutes);
-
-
-// Start the Express server on a specific port
+ 
+ 
+//start the Express server on a specific port
 const port = process.env.PORT || 5001;
-app.listen(port, () => {
+app.listen(port,()=>{
     console.log(`Server started on port ${port}`);
-});
+})
+ 
+ 
