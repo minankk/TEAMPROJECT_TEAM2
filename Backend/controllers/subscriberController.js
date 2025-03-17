@@ -13,20 +13,27 @@ const transporter = nodemailer.createTransport({
 
 // user to subscribe
 exports.subscribe = async (req, res) => {
-    const { user_id, email, preferences } = req.body; 
-
-    if (!user_id || !email || !preferences.length) {
-        return res.status(400).json({ message: "User ID, Email, and Preferences are required" });
+    const { user_id, email, preferences } = req.body;
+    if (!email || !preferences.length) {
+        return res.status(400).json({ message: "Email and Preferences are required" });
     }
-
     try {
         const token = crypto.randomBytes(32).toString("hex");
-
-        await db.execute("UPDATE users SET subscription_token = ?, subscription_preferences = ? WHERE user_id = ?", 
-            [token, JSON.stringify(preferences), user_id]);
-
+        if (user_id) {
+            for (const preference of preferences) {
+                await db.execute("INSERT INTO subscriptions (user_id, subscription_type) VALUES (?, ?)", 
+                    [user_id, preference]
+                );
+            }
+        } else {
+            for (const preference of preferences) {
+                await db.execute(
+                    "INSERT INTO guest_subscriptions (email, subscription_type, subscription_token) VALUES (?, ?, ?)",
+                    [email, preference, token]
+                );
+            }
+        }
         const confirmUrl = `${process.env.FRONTEND_URL}/subscription/confirm/${token}`;
-
         await transporter.sendMail({
             to: email,
             subject: "Confirm Your Subscription",
@@ -34,31 +41,37 @@ exports.subscribe = async (req, res) => {
         });
 
         res.status(200).json({ message: "Confirmation email sent!" });
+
     } catch (err) {
-        console.error("Error processing request:", err);
+        console.error("Error processing subscription:", err);
         res.status(500).json({ message: "Error processing request", error: err.message });
     }
 };
 
-
-
+//to confirm subscription
 exports.confirmSubscription = async (req, res) => {
     const { token } = req.params;
 
     try {
-        const [rows] = await db.query("SELECT user_id FROM users WHERE subscription_token = ?", [token]);
+        let [rows] = await db.execute("SELECT user_id FROM users WHERE subscription_token = ?", [token]);
 
-        if (rows.length === 0) {
-            return res.status(400).json({ message: "Invalid or expired token" });
+        if (rows.length > 0) {
+            const user_id = rows[0].user_id;
+            await db.execute("UPDATE users SET subscription_token = NULL WHERE user_id = ?", [user_id]);
+
+            res.status(200).send("Subscription confirmed! You will receive updates based on your preferences.");
+        } else {
+            [rows] = await db.execute("SELECT guest_id FROM guest_subscriptions WHERE subscription_token = ?", [token]);
+
+            if (rows.length === 0) {
+                return res.status(400).json({ message: "Invalid or expired token" });
+            }
+            await db.execute("UPDATE guest_subscriptions SET subscription_token = NULL, is_confirmed = TRUE WHERE guest_id = ?", [rows[0].guest_id]);
+
+            res.status(200).send("Subscription confirmed! You will receive updates based on your preferences.");
         }
-
-        const user_id = rows[0].user_id;
-
-        // Update subscription status & remove the token
-        await db.query("UPDATE users SET subscription_token = NULL WHERE user_id = ?", [user_id]);
-
-        res.status(200).send("Subscription confirmed! You will receive updates based on your preferences.");
     } catch (err) {
+        console.error("Error confirming subscription:", err);
         res.status(500).json({ message: "Error confirming subscription." });
     }
 };
