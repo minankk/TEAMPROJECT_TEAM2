@@ -14,8 +14,13 @@ const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer');
+
+//.env file is created to store all sensitive data and the path is given under dotenv.config
+dotenv.config({
+  path : "./.env",
+})
  
-const authenticateJWT = require('./middlewares/jwtAuthMiddleware');
+const authJWT = require('./middlewares/jwtAuthMiddleware');
 const authRoutes = require('./routes/login');
 const signUpRoutes = require('./routes/signup');
 const sessionRoutes = require('./routes/checksession');
@@ -34,24 +39,14 @@ const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
 const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
+const decadesRoutes = require('./routes/decadesRoute');
+const subscribeRoutes = require('./routes/subscribe');
+
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
- 
- 
- 
+const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
+
 const app = express();
- 
-//.env file is created to store all sensitive data and the path is given under dotenv.config
-dotenv.config({
-  path : "./.env",
-})
- 
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: true,
-  }));
- 
  
 // Middleware to parse incoming request bodies as JSON and for CORS => frontend if running on different host
 app.use(bodyParser.json());
@@ -76,10 +71,9 @@ app.use(express.json());
  
 app.use("/login", authRoutes);
 app.use("/signup", signUpRoutes);
-app.use("/checksession",authenticateJWT , sessionRoutes)
+app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
 app.use("/forgot-password",forgotPasswordRoute)
 app.use("/reset-password",resetPasswordRoute)
-
 app.use('/logout',authJWT.authenticateJWT,logoutRoute)
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
 app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
@@ -93,10 +87,14 @@ app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
 app.use('/genres', genreRoutes);
-app.use("/", wishlistRouter);
+app.use("/wishlist", authJWT.authenticateJWT,wishlistRouter);
+app.use("/subscribe", subscribeRoutes)
+app.use("/decades",decadesRoutes)
+
 //admin
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
+app.use("/admin-dashboard",authJWT.authenticateJWT ,authJWT.verifyAdmin ,adminUserProfileRoutes);
  
  
 //start the Express server on a specific port
