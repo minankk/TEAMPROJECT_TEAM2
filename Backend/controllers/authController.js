@@ -2,7 +2,7 @@ const db = require('../db')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 
 exports.login = async (req, res) => {
@@ -48,15 +48,25 @@ exports.login = async (req, res) => {
 };
 
 //logout
-    exports.logout = (req, res) => {
-    req.session.loggedIn = false;
-    req.session.destroy(error => {
-        if (error) {
-            return res.status(500).json({ message: 'Could not log out' });
-        }  
-    res.status(200).json({ message: 'Logout successful' });
-    });
-}
+
+   exports.logout = async (req, res) => {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+
+    if (!token) {
+        return res.status(400).json({ message: 'No token provided' });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        await db.execute(
+            'INSERT INTO blacklisted_tokens (token, expires_at) VALUES (?, FROM_UNIXTIME(?))',
+            [token, decoded.exp]
+        );
+        return res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        return res.status(400).json({ message: 'Invalid token' });
+    }
+};
+
 
 //forgot password
     exports.forgotPassword = async(req , res) => {
@@ -185,14 +195,20 @@ try {
     const hashedPassword = await bcrypt.hash(password, 8);
 
     // Insert into the database with or without approval status depending on the role
-    await db.query(
+    const [result] = await db.query(
         'INSERT INTO users (user_name, email, password, role, approval_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
-        [username, email, hashedPassword, role, approvalStatus] 
+        [username, email, hashedPassword, role, approvalStatus]
     );
 
+    const userId = result.insertId;
     // Generate JWT token
-    const payload = { username, email, role };
+    const payload = { user_id: userId, username, email, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
+
+    if (role === 'admin' && approvalStatus === 'pending') {
+        console.log('Sending admin approval email...'); 
+        sendAdminApprovalNotification(username, email);
+    }
 
     return res.status(200).json({
         message: approvalStatus === 'pending' ? 'Admin registration request sent for approval' : 'User registered successfully',
@@ -205,3 +221,63 @@ try {
     res.status(500).json({ message: 'Internal server error' });
 }
 };
+
+function sendAdminApprovalNotification(username, email) {
+    const adminEmail = process.env.EMAIL_USER;
+
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: adminEmail,
+        subject: 'New Admin Signup Request',
+        html: `<p>New admin signup request from:</p><p>Username: ${username}</p><p>Email: ${email}</p>
+               <p><a href="${process.env.FRONTEND_URL}/admin/approve?email=${email}">Click here to approve or reject</a></p>`
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.error('Error sending admin approval notification:', err);
+        } else {
+            console.log('Admin approval email sent:', info.response);
+        }
+    });
+}
+
+//to approve or reject admin sign up
+exports.approveAdmin = async (req, res) => {
+    const { email } = req.query;
+    const { action } = req.body;
+
+    if (!email || !action) {
+        return res.status(400).json({ message: 'Invalid request' });
+    }
+    try {
+        
+        const [userRows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+        if (userRows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const user = userRows[0];
+        if (action === 'approve') {
+            await db.execute('UPDATE users SET approval_status = ? WHERE email = ?', ['approved', email]);
+            return res.status(200).json({ message: 'Admin approved successfully' });
+        } else if (action === 'reject') {
+            await db.execute('UPDATE users SET approval_status = ? WHERE email = ?', ['rejected', email]);
+            return res.status(200).json({ message: 'Admin rejected successfully' });
+        } else {
+            return res.status(400).json({ message: 'Invalid action' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+

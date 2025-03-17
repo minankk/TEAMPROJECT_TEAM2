@@ -1,3 +1,4 @@
+//This line import the MySQL module into your Node.js project
 const mysql = require("mysql2/promise")
 
 const db = mysql.createPool({
