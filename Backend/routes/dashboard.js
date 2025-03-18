@@ -14,4 +14,7 @@ router.put('/update', dashboardController.updateProfile);
 //to change password
 router.post('/change-password', dashboardController.changePassword);
 
+// Display order tracking information
+router.get('/order/:orderId/tracking', dashboardController.viewOrderTracking);
+
 module.exports = router;
