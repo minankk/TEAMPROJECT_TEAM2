@@ -29,14 +29,31 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null); // Start with null token
-  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
-          setToken(storedToken); // Set token from localStorage if it exists
-          setIsLoggedIn(true); // Set logged in state
+          // Verify the token with the backend
+          fetch('http://localhost:5001/verify-token', {
+              headers: {
+                  'Authorization': `Bearer ${storedToken}`
+              }
+          })
+          .then(response => {
+              if (response.ok) {
+                  setToken(storedToken); // Set token from localStorage if it is valid
+                  setIsLoggedIn(true); // Set logged in state
+              } else {
+                  localStorage.removeItem('token'); // Remove invalid token
+                  setIsLoggedIn(false); // Set logged out state
+              }
+          })
+          .catch(() => {
+              localStorage.removeItem('token'); // Remove invalid token
+              setIsLoggedIn(false); // Set logged out state
+          });
       }
   }, []);
 

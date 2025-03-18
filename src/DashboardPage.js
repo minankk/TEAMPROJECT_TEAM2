@@ -26,44 +26,48 @@ const Sidebar = () => {
 };
 
 const Overview = () => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = localStorage.getItem('token'); // Get the token from localStorage
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("http://localhost:5001/dashboard");
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data");
-                }
-                const result = await response.json();
-                setData(result);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const response = await fetch("http://localhost:5001/dashboard", {
+                  headers: {
+                      'Authorization': `Bearer ${token}` // Include the token in the headers
+                  }
+              });
+              if (!response.ok) {
+                  throw new Error("Failed to fetch data");
+              }
+              const result = await response.json();
+              setData(result);
+          } catch (err) {
+              setError(err.message);
+          } finally {
+              setLoading(false);
+          }
+      };
 
-        fetchData();
-    }, []);
+      fetchData();
+  }, [token]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p className="error">Error: {error}</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="error">Error: {error}</p>;
 
-    return (
-        <div className="overview">
-            <h2>Overview</h2>
-            <p><strong>Username:</strong> {data.username || 'N/A'}</p>
-            <p><strong>Message:</strong> {data.message || 'No new messages'}</p>
-            <p><strong>Orders:</strong> {data.orders ? data.orders.length : 0}</p>
-            <p><strong>Wishlist Items:</strong> {data.wishlist ? data.wishlist.length : 0}</p>
-            <p><strong>Wallet Balance:</strong> ${data.walletBalance || '0.00'}</p>
-        </div>
-    );
+  return (
+      <div className="overview">
+          <h2>Overview</h2>
+          <p><strong>Username:</strong> {data.username || 'N/A'}</p>
+          <p><strong>Message:</strong> {data.message || 'No new messages'}</p>
+          <p><strong>Orders:</strong> {data.orders ? data.orders.length : 0}</p>
+          <p><strong>Wishlist Items:</strong> {data.wishlist ? data.wishlist.length : 0}</p>
+          <p><strong>Wallet Balance:</strong> ${data.walletBalance || '0.00'}</p>
+      </div>
+  );
 };
-
 const DashboardPage = () => {
     const location = useLocation();
     const showSidebar = !location.pathname.startsWith('/cart');
