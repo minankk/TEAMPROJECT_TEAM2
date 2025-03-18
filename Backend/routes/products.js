@@ -24,6 +24,8 @@ router.get('/artist/:artist', productsController.filterByArtist);
 // GET - Filter products by genre (with optional artist filter)
 router.get('/genre/:genre', productsController.filterByGenre); // This is the route where both genre and artist can be filtered
 
+router.get('/genre/:genre', productsController.filterByGenres); // This is the route where both genre and artist can be filtered
+
 // GET - to get the search products
 router.get('/search', searchController.searchProducts);
 

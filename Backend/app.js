@@ -75,7 +75,6 @@ app.use("/login", authRoutes);
 app.use("/signup", signUpRoutes);
 app.use("/forgot-password",forgotPasswordRoute)
 app.use("/reset-password",resetPasswordRoute)
-app.use('/orders', orderRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
 app.use("/sale-products",salesRoutes)
@@ -95,6 +94,8 @@ app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
 app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
 app.use("/wishlist", authJWT.authenticateJWT,wishlistRouter);
 app.use("/membership", authJWT.authenticateJWT ,membershipRoutes)
+app.use('/orders', authJWT.authenticateJWT ,orderRoutes);
+
 
 //admin
 app.use("/admin-approval", adminApprovalRoutes);
