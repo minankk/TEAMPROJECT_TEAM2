@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './App'; // Correct import path
 import './LoginPage.css';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth(); // Use login function from AuthContext
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -24,14 +26,14 @@ const LoginPage = () => {
 
         if (data.token) {
           alert('Login successful');
-          localStorage.setItem('token', data.token); // Store the token in localStorage
-          console.log('Token stored:', localStorage.getItem('token')); // Verify token storage
-          navigate('/dashboard'); // Redirect to dashboard
+          login(data.token); // Use login function to set token and navigate
+        } else {
+          alert('Login failed');
         }
       })
       .catch((error) => {
         console.error('Error logging in:', error.message);
-        alert(error.message); // Show error message
+        alert('Error logging in: ' + error.message); // Show error message
       });
   };
 

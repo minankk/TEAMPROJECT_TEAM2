@@ -52,7 +52,7 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-exports.filterByGenre = async (req, res) => {
+exports.filterByGenres = async (req, res) => {
   const { genre } = req.params;
   const { artist } = req.query;
 
@@ -191,7 +191,7 @@ exports.filterBestSellers = async (req, res) => {
       JOIN genres g ON p.genre_id = g.genre_id
       WHERE p.best_sellers = 1
     `);
-
+    
     if (rows.length === 0) {
       return res.status(404).json({ message: "No best-selling products found." });
     }

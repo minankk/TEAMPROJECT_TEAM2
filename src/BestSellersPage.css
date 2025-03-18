@@ -1,0 +1,92 @@
+/* BestSellers.css */
+
+.best-sellers-container {
+    width: 50vw; /* Match popup width */
+    height: 100%; /* Match popup height*/
+    background: white; /* Match popup background */
+    border-radius: 12px;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
+    border: 5px solid #7a1917; /* Match popup border */
+    padding: 30px; /* Match popup padding */
+    overflow-y: auto; /* Match popup overflow */
+    position: relative;
+    color: black;
+    font-family: 'Arial', sans-serif; /* Match popup font */
+  }
+  
+  h1 {
+    font-weight: 900; /* Match popup h2 font-weight */
+    text-align: center;
+    color: #a51310; /* Match popup h2 color */
+    margin-bottom: 20px;
+  }
+  
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust grid size */
+    gap: 20px;
+  }
+  
+  .product-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .product-name {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  
+  .product-price {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .product-description {
+    margin-bottom: 15px;
+  }
+  
+  .add-to-cart {
+    background-color: #a73230; /* Match close button background */
+    color: rgb(14, 1, 1); /* Match close button color */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease; /* Match close button transition */
+  }
+  
+  .add-to-cart:hover {
+    background-color: #8d0805; /* Match close button hover background */
+    color: white; /* Match close button hover color */
+  }
+  
+  /* Close Button (if needed within best sellers) */
+  .best-sellers-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #a73230;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: rgb(14, 1, 1);
+    transition: 0.3s ease;
+  }
+  
+  .best-sellers-close:hover {
+    background-color: #8d0805;
+    color: white;
+  }
+  
+  .product-description{
+      font-weight: lighter; /*match popup p*/
+  }

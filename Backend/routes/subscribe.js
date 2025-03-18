@@ -8,4 +8,7 @@ router.post('/', subscribeController.subscribe);
 // Route for confirming subscription
 router.get("/confirm/:token", subscribeController.confirmSubscription);
 
+// Unsubscribe the users
+router.delete("/unsubscribe", subscribeController.unsubscribe);
+
 module.exports = router;

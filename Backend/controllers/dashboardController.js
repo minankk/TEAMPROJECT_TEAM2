@@ -140,3 +140,43 @@ exports.changePassword = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+
+exports.viewOrderTracking = async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(' ')[1];
+
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized. Please log in.' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const orderId = req.params.orderId;
+
+        if (!orderId) {
+            return res.status(400).json({ message: 'Order ID is required' });
+        }
+        const [orderDetails] = await db.execute(
+            'SELECT o.order_id, o.status AS order_status, o.shipping_address, t.status AS tracking_status, t.estimated_delivery_date ' +
+            'FROM orders o LEFT JOIN order_tracking t ON o.order_id = t.order_id ' +
+            'WHERE o.user_id = ? AND o.order_id = ?',
+            [decoded.user_id, orderId]
+        );
+
+        if (orderDetails.length === 0) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.status(200).json({
+            order_id: orderDetails[0].order_id,
+            order_status: orderDetails[0].order_status,
+            shipping_address: orderDetails[0].shipping_address,
+            tracking_status: orderDetails[0].tracking_status,
+            estimated_delivery_date: orderDetails[0].estimated_delivery_date
+        });
+        
+    } catch (error) {
+        console.error('Error fetching order tracking:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};

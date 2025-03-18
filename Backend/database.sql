@@ -700,3 +700,7 @@ CREATE TABLE guest_subscriptions (
     is_confirmed BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE guest_subscriptions MODIFY subscription_token VARCHAR(255) NULL;
+
+ALTER TABLE users ADD COLUMN membership_status ENUM('regular', 'vip') DEFAULT 'regular';
