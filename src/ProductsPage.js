@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProductsPage.css';
 import VinylRetro from './assets/VinylRetro.webp';
+import { jwtDecode } from "jwt-decode";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,13 @@ const ProductsPage = () => {
 
   // Fetch products and original options
   useEffect(() => {
-    fetch('http://localhost:5001/products')
+    const token = localStorage.getItem('token'); // Get the token from localStorage
+
+    fetch('http://localhost:5001/products', {
+      headers: {
+        'Authorization': `Bearer ${token}`, // Include the token in the headers
+      },
+    })
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -46,6 +53,7 @@ const ProductsPage = () => {
 
   // Fetch products based on filters
   useEffect(() => {
+    const token = localStorage.getItem('token'); // Get the token from localStorage
     let url = 'http://localhost:5001/products';
 
     if (filters.bestSeller) {
@@ -62,7 +70,11 @@ const ProductsPage = () => {
       url = `http://localhost:5001/products/decade/${filters.releaseDecade}`;
     }
 
-    fetch(url)
+    fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${token}`, // Include the token in the headers
+      },
+    })
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data.products)) {
@@ -108,18 +120,35 @@ const ProductsPage = () => {
   };
 
   const handleAddToCart = (productId) => {
-    const userId = 1; // Replace with actual user ID
-    const quantity = 1; // Default quantity
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
 
-    fetch('http://localhost:5001/cart/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user_id: userId, product_id: productId, quantity }),
-    })
-      .then(response => response.json())
+    try {
+        const decoded = jwtDecode(token);
+        const user_id = decoded.user_id; // Declaration of user_id
+        const quantity = 1;
+
+        console.log('User ID:', user_id); // Console log after declaration.
+
+        fetch('http://localhost:5001/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: user_id, product_id: productId, quantity }),
+        })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
+        console.log('Response data:', data); // Log the response data
         if (data.message) {
           console.log(data.message);
           navigate('/cart');
@@ -130,6 +159,9 @@ const ProductsPage = () => {
       .catch(error => {
         console.error('Error adding item to cart:', error);
       });
+    } catch (error) {
+      console.error("Error decoding token:", error);
+  } 
   };
 
   // Handle scroll event to fix the sidebar
