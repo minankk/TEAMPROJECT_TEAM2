@@ -60,13 +60,13 @@ return (
 <Route path="/logout" element={<LogoutPage />} />
 <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/best-sellers" element={<BestSellers />} />
+<Route path="/genres/alternative-rock" element={<AlternativeRockPage />} />
 <Route path="/dashboard" element={<DashboardPage />}>
 <Route path="orders" element={<OrdersPage />} />
 <Route path="order-history" element={<OrderHistoryPage />} />
 <Route path="favorites" element={<FavoritesPage />} />
 <Route path="profile" element={<UserProfilePage />} />
 <Route path="messages" element={<UserMessagesPage />} />
-{/* <Route path="/alternative-rock" element={<AlternativeRockPage />} /> */}
 </Route>
 </Routes>
 <Footer />
