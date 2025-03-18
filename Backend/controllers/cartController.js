@@ -60,19 +60,33 @@ exports.addToCart = async (req, res) => {
 
 // GET /cart/:user_id (Fetch items in the user's cart)
 exports.getCartItems = async (req, res) => {
-    const user_id = req.user.userId;
+    const user_id = req.params.user_id;
+
+    if (!user_id) {
+        return res.status(401).json({ error: 'Unauthorized: user ID is missing' });
+    }
 
     try {
         const [cartItems] = await db.execute(
-            `SELECT c.cart_id, p.name AS product_name, a.name AS artist_name, p.price, c.quantity, p.cover_image_url FROM cart c JOIN products p ON c.product_id = p.product_id JOIN artists a ON p.artist_id = a.artist_id WHERE c.user_id = ?`,
+            `SELECT c.cart_id, p.name AS product_name, a.name AS artist_name, p.price, c.quantity, p.cover_image_url
+            FROM cart c
+            JOIN products p ON c.product_id = p.product_id
+            JOIN artists a ON p.artist_id = a.artist_id
+            WHERE c.user_id = ?`,
             [user_id]
         );
+        if (cartItems.length === 0) {
+            return res.status(404).json({ message: 'No items found in the cart' });
+        }
         res.status(200).json({ cartItems });
     } catch (error) {
         console.error('Error fetching cart items:', error);
-        res.status(500).json({ error: 'Failed to fetch cart items' });
+        res.status(500).json({ error: 'Failed to fetch cart items', details: error.message });
     }
 };
+
+
+
 
 // DELETE /cart/remove/:cart_id (Remove item from the cart)
 exports.removeFromCart = async (req, res) => {
