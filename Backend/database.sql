@@ -700,3 +700,5 @@ CREATE TABLE guest_subscriptions (
     is_confirmed BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE guest_subscriptions MODIFY subscription_token VARCHAR(255) NULL;

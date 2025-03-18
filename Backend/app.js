@@ -91,6 +91,7 @@ app.use("/wishlist", authJWT.authenticateJWT,wishlistRouter);
 app.use("/subscribe", subscribeRoutes)
 app.use("/decades",decadesRoutes)
 
+
 //admin
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
