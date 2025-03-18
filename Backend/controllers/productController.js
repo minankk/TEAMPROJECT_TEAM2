@@ -191,7 +191,7 @@ exports.filterBestSellers = async (req, res) => {
       JOIN genres g ON p.genre_id = g.genre_id
       WHERE p.best_sellers = 1
     `);
-
+    
     if (rows.length === 0) {
       return res.status(404).json({ message: "No best-selling products found." });
     }

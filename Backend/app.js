@@ -33,7 +33,6 @@ const productsRoutes = require('./routes/products');
 const myCartRoutes = require('./routes/myCart');
 const orderRoutes = require('./routes/order');
 const salesRoutes = require('./routes/sales');
-const popUpRoutes = require('./routes/popUpRoutes');
 const artistRoutes = require('./routes/artistRoutes');
 const bestSellersRoutes = require('./routes/bestSellers');
 const newestAdditionRoutes = require('./routes/newestAddition');
@@ -41,6 +40,9 @@ const genreRoutes = require('./routes/genres');
 const wishlistRouter = require('./routes/wishlist');
 const decadesRoutes = require('./routes/decadesRoute');
 const subscribeRoutes = require('./routes/subscribe');
+const popUpRoutes = require('./routes/popUpRoutes');
+const membershipRoutes = require('./routes/membership');
+
 
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
@@ -71,13 +73,8 @@ app.use(express.json());
  
 app.use("/login", authRoutes);
 app.use("/signup", signUpRoutes);
-app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
 app.use("/forgot-password",forgotPasswordRoute)
 app.use("/reset-password",resetPasswordRoute)
-app.use('/logout',authJWT.authenticateJWT,logoutRoute)
-app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
-app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
-app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
 app.use('/orders', orderRoutes);
 app.use('/products', productsRoutes);
 app.use("/contactUs",contactUsRoutes)
@@ -87,10 +84,17 @@ app.use('/artists', artistRoutes);
 app.use('/best-sellers', bestSellersRoutes);
 app.use('/newest-addition', newestAdditionRoutes);
 app.use('/genres', genreRoutes);
-app.use("/wishlist", authJWT.authenticateJWT,wishlistRouter);
 app.use("/subscribe", subscribeRoutes)
 app.use("/decades",decadesRoutes)
 
+//protected Routes for users 
+app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
+app.use('/logout',authJWT.authenticateJWT,logoutRoute)
+app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
+app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
+app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
+app.use("/wishlist", authJWT.authenticateJWT,wishlistRouter);
+app.use("/membership", authJWT.authenticateJWT ,membershipRoutes)
 
 //admin
 app.use("/admin-approval", adminApprovalRoutes);
