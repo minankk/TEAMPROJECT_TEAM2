@@ -156,8 +156,6 @@ exports.viewOrderTracking = async (req, res) => {
         if (!orderId) {
             return res.status(400).json({ message: 'Order ID is required' });
         }
-
-        // to get the order information
         const [orderDetails] = await db.execute(
             'SELECT o.order_id, o.status AS order_status, o.shipping_address, t.status AS tracking_status, t.estimated_delivery_date ' +
             'FROM orders o LEFT JOIN order_tracking t ON o.order_id = t.order_id ' +
