@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PopUp from "./PopUp";
 import './ProductsPage.css';
 import VinylRetro from './assets/VinylRetro.webp';
 
@@ -7,6 +8,7 @@ const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [originalArtists, setOriginalArtists] = useState([]);
   const [originalGenres, setOriginalGenres] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [filters, setFilters] = useState({
     artist: '',
     genre: '',
@@ -15,6 +17,28 @@ const ProductsPage = () => {
     bestSeller: false,
     onSale: false,
   });
+
+  // const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const openPopup = (productId) => {
+    console.log("Fetching pop-up data for productId:", productId);  // Debugging line
+    fetch(`http://localhost:5001/pop-up/${productId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched pop-up data:", data);  // Debugging line
+        if (data) {
+          setSelectedProduct(data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching product details:', error);
+      });
+  };
+  // Handle closing the popup
+  const closePopup = () => {
+    setSelectedProduct(null);
+  };
+
   const navigate = useNavigate();
 
   const Banner = () => (
@@ -107,7 +131,8 @@ const ProductsPage = () => {
     return 'All Products';
   };
 
-  const handleAddToCart = (productId) => {
+  const handleAddToCart = (productId, event) => {
+    event.stopPropagation();
     const userId = 1; // Replace with actual user ID
     const quantity = 1; // Default quantity
 
@@ -199,20 +224,21 @@ const ProductsPage = () => {
       <section className="products">
         <h2>{generateTitle()}</h2>
         <div className="product-grid">
-          {products.map((product) => (
-            <div key={product.product_id} className="product-card">
-              <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.name} className="product-image" />
+        {products.map((product) => (
+          <div key={product.product_id} className="product-card" onClick={() => openPopup(product.product_id)}>
+          <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
               <div className="product-info">
                 <h3>{product.album_name}</h3>
                 <p>{product.artist_name}</p>
-                <p>{product.release_date}</p>
                 <p>{product.price}</p>
+                <button className="buy-button" onClick={() => handleAddToCart(product.product_id)}>Add to Cart</button>
               </div>
-              <button className="buy-button" onClick={() => handleAddToCart(product.product_id)}>Add to Cart</button>
             </div>
           ))}
         </div>
       </section>
+      {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
+
     </main>
   );
 };

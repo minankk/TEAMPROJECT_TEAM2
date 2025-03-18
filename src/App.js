@@ -27,6 +27,7 @@ import OrdersPage from './OrdersPage';
 import OrderHistoryPage from './OrderHistoryPage';
 import UserProfilePage from './UserProfilePage';
 import BestSellers from './BestSellersPage';
+import AlternativeRockPage from './AlternativeRockPage';
  
 function App() {
 const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,6 +66,7 @@ return (
 <Route path="favorites" element={<FavoritesPage />} />
 <Route path="profile" element={<UserProfilePage />} />
 <Route path="messages" element={<UserMessagesPage />} />
+{/* <Route path="/alternative-rock" element={<AlternativeRockPage />} /> */}
 </Route>
 </Routes>
 <Footer />
