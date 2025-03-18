@@ -60,10 +60,15 @@ exports.addToCart = async (req, res) => {
 
 // GET /cart/:user_id (Fetch items in the user's cart)
 exports.getCartItems = async (req, res) => {
-    const user_id = req.params.user_id;
+    const urlUserId = req.params.user_id;
+    const tokenUserId = req.user?.user_id; // Get user ID from the token
 
-    if (!user_id) {
-        return res.status(401).json({ error: 'Unauthorized: user ID is missing' });
+    if (!tokenUserId) {
+        return res.status(401).json({ error: 'Unauthorized: No user token provided' });
+    }
+
+    if (urlUserId !== tokenUserId) {
+        return res.status(403).json({ error: 'Forbidden: User IDs do not match' });
     }
 
     try {
@@ -73,11 +78,13 @@ exports.getCartItems = async (req, res) => {
             JOIN products p ON c.product_id = p.product_id
             JOIN artists a ON p.artist_id = a.artist_id
             WHERE c.user_id = ?`,
-            [user_id]
+            [urlUserId]
         );
+
         if (cartItems.length === 0) {
             return res.status(404).json({ message: 'No items found in the cart' });
         }
+
         res.status(200).json({ cartItems });
     } catch (error) {
         console.error('Error fetching cart items:', error);
@@ -91,8 +98,24 @@ exports.getCartItems = async (req, res) => {
 // DELETE /cart/remove/:cart_id (Remove item from the cart)
 exports.removeFromCart = async (req, res) => {
     const { cart_id } = req.params;
+    const tokenUserId = req.user?.user_id;
+
+    if (!tokenUserId) {
+        return res.status(401).json({ error: 'Unauthorized: No user token provided' });
+    }
 
     try {
+        // Verify user ownership
+        const [cartItem] = await db.execute(`SELECT user_id FROM cart WHERE cart_id = ?`, [cart_id]);
+
+        if (cartItem.length === 0) {
+            return res.status(404).json({ error: 'Cart item not found' });
+        }
+
+        if (cartItem[0].user_id !== tokenUserId) {
+            return res.status(403).json({ error: 'Forbidden: You do not own this cart item' });
+        }
+
         await db.execute(`DELETE FROM cart WHERE cart_id = ?`, [cart_id]);
         res.status(200).json({ message: 'Item removed from cart' });
     } catch (error) {

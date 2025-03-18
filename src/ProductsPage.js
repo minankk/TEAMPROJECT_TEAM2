@@ -27,13 +27,13 @@ const ProductsPage = () => {
     </section>
   );
 
-  // Fetch products and original options
+  
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Get the token from localStorage
+    const token = localStorage.getItem('token'); 
 
     fetch('http://localhost:5001/products', {
       headers: {
-        'Authorization': `Bearer ${token}`, // Include the token in the headers
+        'Authorization': `Bearer ${token}`, 
       },
     })
       .then(response => response.json())
@@ -51,9 +51,9 @@ const ProductsPage = () => {
       });
   }, []);
 
-  // Fetch products based on filters
+  
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Get the token from localStorage
+    const token = localStorage.getItem('token'); 
     let url = 'http://localhost:5001/products';
 
     if (filters.bestSeller) {
@@ -72,7 +72,7 @@ const ProductsPage = () => {
 
     fetch(url, {
       headers: {
-        'Authorization': `Bearer ${token}`, // Include the token in the headers
+        'Authorization': `Bearer ${token}`, 
       },
     })
       .then(response => response.json())
@@ -128,10 +128,10 @@ const ProductsPage = () => {
 
     try {
         const decoded = jwtDecode(token);
-        const user_id = decoded.user_id; // Declaration of user_id
+        const user_id = decoded.user_id; 
         const quantity = 1;
 
-        console.log('User ID:', user_id); // Console log after declaration.
+        console.log('User ID:', user_id); 
 
         fetch('http://localhost:5001/cart/add', {
             method: 'POST',
@@ -141,30 +141,32 @@ const ProductsPage = () => {
             },
             body: JSON.stringify({ user_id: user_id, product_id: productId, quantity }),
         })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Response data:', data); // Log the response data
-        if (data.message) {
-          console.log(data.message);
-          navigate('/cart');
-        } else {
-          console.error('Failed to add item to cart');
-        }
-      })
-      .catch(error => {
-        console.error('Error adding item to cart:', error);
-      });
+        .then(response => {
+            if (response.status === 401) {
+                throw new Error("Unauthorized: Invalid token");
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data); 
+            if (data.message) {
+                console.log(data.message);
+                navigate('/cart');
+            } else {
+                console.error('Failed to add item to cart');
+            }
+        })
+        .catch(error => {
+            console.error('Error adding item to cart:', error);
+        });
     } catch (error) {
-      console.error("Error decoding token:", error);
-  } 
-  };
+        console.error("Error decoding token:", error);
+    } 
+};
 
-  // Handle scroll event to fix the sidebar
   useEffect(() => {
     const handleScroll = () => {
       const sidebar = document.querySelector('.filters');
