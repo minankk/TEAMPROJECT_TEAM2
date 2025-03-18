@@ -2,19 +2,20 @@ const db = require('../db');
 
 // POST /cart/add (Add item to the cart)
 exports.addToCart = async (req, res) => {
-    const user_id = req.user.userId;
-    const { product_id, quantity } = req.body;
-
-    if (!product_id || !quantity) {
-        return res.status(400).json({ error: 'Missing required fields: product_id, or quantity' });
-    }
-
-    if (quantity <= 0) {
-        return res.status(400).json({ error: 'Quantity must be greater than 0' });
-    }
-
     try {
-        // Check product inventory
+        const user_id = req.user?.user_id;
+        const { product_id, quantity } = req.body;
+
+        if (!user_id) {
+            return res.status(401).json({ error: 'Unauthorized: user_id missing' });
+        }
+        if (!product_id || !quantity) {
+            return res.status(400).json({ error: 'Missing required fields: product_id, or quantity' });
+        }
+
+        if (quantity <= 0) {
+            return res.status(400).json({ error: 'Quantity must be greater than 0' });
+        }
         const [inventoryRows] = await db.execute('SELECT stock_quantity FROM inventory WHERE product_id = ?', [product_id]);
 
         if (inventoryRows.length === 0) {
@@ -26,38 +27,36 @@ exports.addToCart = async (req, res) => {
         if (quantity > availableQuantity) {
             return res.status(400).json({ error: 'Insufficient stock' });
         }
-
-        // Check if the product already exists in the user's cart
         const [existingCartItem] = await db.execute(
             `SELECT * FROM cart WHERE user_id = ? AND product_id = ?`,
             [user_id, product_id]
         );
 
         if (existingCartItem.length > 0) {
-            // If the item exists, update the quantity
             const updatedQuantity = existingCartItem[0].quantity + quantity;
             if (updatedQuantity > availableQuantity) {
-                return res.status(400).json({ error: 'Insufficient stock' });
+                return res.status(400).json({ error: 'Insufficient stock for updated quantity' });
             }
-
             await db.execute(
                 `UPDATE cart SET quantity = ? WHERE cart_id = ?`,
                 [updatedQuantity, existingCartItem[0].cart_id]
             );
-            return res.status(200).json({ message: 'Cart item quantity updated' });
+
+            return res.status(200).json({ message: 'Cart item quantity updated successfully' });
         } else {
-            // If the item doesn't exist, insert a new record
             await db.execute(
                 `INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)`,
                 [user_id, product_id, quantity]
             );
-            return res.status(201).json({ message: 'Item added to cart' });
+
+            return res.status(201).json({ message: 'Item added to cart successfully' });
         }
     } catch (error) {
         console.error('Error adding item to cart:', error);
-        return res.status(500).json({ error: 'Failed to add item to cart' });
+        return res.status(500).json({ error: 'Failed to add item to cart', details: error.sqlMessage });
     }
 };
+
 
 // GET /cart/:user_id (Fetch items in the user's cart)
 exports.getCartItems = async (req, res) => {

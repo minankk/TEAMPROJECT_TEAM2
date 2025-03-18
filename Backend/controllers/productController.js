@@ -52,7 +52,7 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-exports.filterByGenre = async (req, res) => {
+exports.filterByGenres = async (req, res) => {
   const { genre } = req.params;
   const { artist } = req.query;
 
