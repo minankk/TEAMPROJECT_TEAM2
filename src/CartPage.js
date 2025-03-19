@@ -25,16 +25,21 @@ export default function ShoppingCart() {
                 },
             })
             .then(response => {
-                if (response.status === 401) {
-                    localStorage.removeItem('token');
-                    navigate('/login');
-                    throw new Error("Unauthorized");
-                }
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
+
+                    if (response.status === 401) {
+                        localStorage.removeItem('token');
+                        navigate('/login');
+                        throw new Error("Unauthorized");
+                    }
+                    if (response.status === 403) {
+                        throw new Error("Forbidden: User IDs do not match");
+                    }
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+
             .then(data => {
                 if (data.cartItems) {
                     const fetchedCartItems = data.cartItems.map(item => ({
