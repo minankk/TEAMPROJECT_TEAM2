@@ -18,12 +18,18 @@ import PaymentPage from './PaymentPage';
 import OrderSuccess from './OrderSuccess';
 import SalesPage from './SalesPage';
 import LogoutPage from './LogoutPage';
+
 import ForgotPassword from './ForgotPasswordPage';
 import UserMessagesPage from './UserMessagesPage';
 import FavoritesPage from './FavoritesPage';
 import OrdersPage from './OrdersPage';
 import OrderHistoryPage from './OrderHistoryPage';
 import UserProfilePage from './UserProfilePage';
+import BestSellers from './BestSellersPage';
+import AlternativeRockPage from './AlternativeRockPage';
+import HipHopPage from './HipHopPage';
+ 
+
 
 const AuthContext = createContext();
 
