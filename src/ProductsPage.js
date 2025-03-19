@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PopUp from "./PopUp";
 import './ProductsPage.css';
 import VinylRetro from './assets/VinylRetro.webp';
+import { jwtDecode } from "jwt-decode";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -50,9 +51,15 @@ const ProductsPage = () => {
     </section>
   );
 
-  // Fetch products and original options
+  
   useEffect(() => {
-    fetch('http://localhost:5001/products')
+    const token = localStorage.getItem('token'); 
+
+    fetch('http://localhost:5001/products', {
+      headers: {
+        'Authorization': `Bearer ${token}`, 
+      },
+    })
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -68,8 +75,9 @@ const ProductsPage = () => {
       });
   }, []);
 
-  // Fetch products based on filters
+  
   useEffect(() => {
+    const token = localStorage.getItem('token'); 
     let url = 'http://localhost:5001/products';
 
     if (filters.bestSeller) {
@@ -86,7 +94,11 @@ const ProductsPage = () => {
       url = `http://localhost:5001/products/decade/${filters.releaseDecade}`;
     }
 
-    fetch(url)
+    fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${token}`, 
+      },
+    })
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data.products)) {
@@ -131,33 +143,55 @@ const ProductsPage = () => {
     return 'All Products';
   };
 
-  const handleAddToCart = (productId, event) => {
-    event.stopPropagation();
-    const userId = 1; // Replace with actual user ID
-    const quantity = 1; // Default quantity
 
-    fetch('http://localhost:5001/cart/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user_id: userId, product_id: productId, quantity }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.message) {
-          console.log(data.message);
-          navigate('/cart');
-        } else {
-          console.error('Failed to add item to cart');
-        }
-      })
-      .catch(error => {
-        console.error('Error adding item to cart:', error);
-      });
-  };
+  const handleAddToCart = (productId) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error("No token found");
+        return;
+    }
 
-  // Handle scroll event to fix the sidebar
+    try {
+        const decoded = jwtDecode(token);
+        const user_id = decoded.user_id; 
+        const quantity = 1;
+
+        console.log('User ID:', user_id); 
+
+        fetch('http://localhost:5001/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ user_id: user_id, product_id: productId, quantity }),
+        })
+        .then(response => {
+            if (response.status === 401) {
+                throw new Error("Unauthorized: Invalid token");
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data); 
+            if (data.message) {
+                console.log(data.message);
+                navigate('/cart');
+            } else {
+                console.error('Failed to add item to cart');
+            }
+        })
+        .catch(error => {
+            console.error('Error adding item to cart:', error);
+        });
+    } catch (error) {
+        console.error("Error decoding token:", error);
+    } 
+};
+
   useEffect(() => {
     const handleScroll = () => {
       const sidebar = document.querySelector('.filters');

@@ -1,10 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const dashboardController = require('../controllers/userController');
+const dashboardController = require('../controllers/dashboardController');
 
-
+//dashboard message
 router.get('/', dashboardController.viewDashboard);
 
-//router.post('/change-password', changePassword);
+//get profile info
+router.get('/profile', dashboardController.getProfile);
+
+//update the profile info
+router.put('/update', dashboardController.updateProfile);
+
+//to change password
+router.post('/change-password', dashboardController.changePassword);
+
+// Display order tracking information
+router.get('/order/:orderId', dashboardController.viewOrderTracking);
 
 module.exports = router;
