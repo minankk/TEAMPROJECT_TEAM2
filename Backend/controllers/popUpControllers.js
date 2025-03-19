@@ -35,6 +35,7 @@ exports.getPopUpInfo = (req, res) => {
       // Return the formatted product information as a response
       res.status(200).json({
         album_name: product.album_name,
+        cover_image_url: product.cover_image_url, // added
         release_date: product.release_date,
         hit_singles: product.hit_singles,
         awards: product.awards,
