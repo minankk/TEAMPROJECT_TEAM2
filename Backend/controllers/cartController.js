@@ -67,9 +67,10 @@ exports.getCartItems = async (req, res) => {
         return res.status(401).json({ error: 'Unauthorized: No user token provided' });
     }
 
-    if (urlUserId !== tokenUserId) {
+    if (parseInt(urlUserId) !== tokenUserId) {
         return res.status(403).json({ error: 'Forbidden: User IDs do not match' });
     }
+    
 
     try {
         const [cartItems] = await db.execute(
