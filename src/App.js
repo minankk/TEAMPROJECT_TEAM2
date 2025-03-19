@@ -28,6 +28,7 @@ import OrderHistoryPage from './OrderHistoryPage';
 import UserProfilePage from './UserProfilePage';
 import BestSellers from './BestSellersPage';
 import AlternativeRockPage from './AlternativeRockPage';
+import HipHopPage from './HipHopPage';
  
 function App() {
 const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,6 +62,7 @@ return (
 <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/best-sellers" element={<BestSellers />} />
 <Route path="/genres/alternative-rock" element={<AlternativeRockPage />} />
+<Route path="/genres/hip-hop" element={<HipHopPage />} />
 <Route path="/dashboard" element={<DashboardPage />}>
 <Route path="orders" element={<OrdersPage />} />
 <Route path="order-history" element={<OrderHistoryPage />} />
