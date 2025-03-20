@@ -27,11 +27,11 @@
     color: black;
     font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
-    transition: height 0.3s ease; 
+    transition: height 0.3s ease;
     border-radius: 40px;
     display: flex; /* Make popup a flex container */
     flex-direction: column; /* Arrange children in a column */
-  }
+}
 
 .popup-close#btn {
     position: absolute;
@@ -52,57 +52,75 @@
 }
 
 .popup h2 {
-    font-weight: 700;    color: #a51310;
-    font-size: 28px; 
-    letter-spacing: 0.5px; 
+    font-weight: 700;
+    color: #a51310;
+    font-size: 28px;
+    letter-spacing: 0.5px;
     margin-bottom: 20px;
     text-align: center;
 }
 
 .popup p {
     font-weight: 400;
-    font-size: 16px; 
-    color: #555; 
-    line-height: 1.7; 
+    font-size: 16px;
+    color: #555;
+    line-height: 1.7;
+    /* Limit to approximately 4 lines */
+    max-height: 6.8em; /* 4 lines x 1.7 line-height = 6.8em */
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 10px;
 }
 
+.popup p.expanded {
+    max-height: none; /* Remove height limit when expanded */
+}
 
+.popup p.read-more::after {
+    content: "...";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to bottom, transparent, white);
+    width: 100%;
+    padding-top: 10px; /* Adjust as needed */
+}
 
 .read-more-button {
-    background-color: #a73230; 
-    color: rgb(14, 1, 1); 
+    background-color: #a73230;
+    color: rgb(14, 1, 1);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: 0.3s ease; 
+    transition: 0.3s ease;
     margin-top: 10px;
     border-radius: 30px;
-    margin-top: auto; 
-    align-self: flex-start; 
-  }
-  
-  .read-more-button:hover {
-    background-color: #8d0805; 
-    color: white; 
-  }
+    margin-top: auto;
+    align-self: flex-start;
+}
 
-  .add-to-cart-popup {
-    background-color: #a73230; 
-    color: rgb(14, 1, 1); 
+.read-more-button:hover {
+    background-color: #8d0805;
+    color: white;
+}
+
+.add-to-cart-popup {
+    background-color: #a73230;
+    color: rgb(14, 1, 1);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: 0.3s ease; 
+    transition: 0.3s ease;
     margin-top: 10px;
     margin-bottom: 20px;
     border-radius: 30px;
-    margin-top: auto; 
-    align-self: flex-end; 
-  }
-  
-  .add-to-cart-popup:hover {
+    margin-top: auto;
+    align-self: flex-end;
+}
+
+.add-to-cart-popup:hover {
     background-color: #8d0805;
     color: white;
-  }
+}
