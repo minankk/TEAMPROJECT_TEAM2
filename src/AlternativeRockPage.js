@@ -33,8 +33,9 @@ const AlternativeRockPage = ({ handleAddToCart }) => {
       <div className="alternative-rock-albums-grid">
         {alternativeRockAlbums.map((album) => (
           <div className="alternative-rock-album-card" key={album.product_id}>
-            <img src={`http://localhost:5001${album.cover_image_url}`} alt={album.product_name} className="alternative-rock-album-image" />
-            <h2 className="alternative-rock-album-name">{album.product_name}</h2>
+            <img src={`http://localhost:5001${album.cover_image_url}`} alt={album.name} className="alternative-rock-album-image" />
+            <h2 className="alternative-rock-album-name">{album.name}</h2>
+            <p className="alternative-rock-album-artist">{album.artist_name}</p>
             <p className="alternative-rock-album-price">${album.price}</p>
             <button className="add-to-cart-alternative-rock" onClick={() => handleAddToCart(album.product_id)}>
               Add to Cart
