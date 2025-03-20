@@ -713,3 +713,6 @@ WHERE id = 25;
 UPDATE products 
 SET image_url = '/images/Led_Zeppelin_IV.jpg' 
 WHERE id = 17;
+
+ALTER TABLE users
+ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
