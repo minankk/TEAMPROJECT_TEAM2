@@ -4,42 +4,33 @@ const db = require('../db');
 // Function to add a product to the wishlist
 exports.addToWishlist = async (req, res) => {
     try {
-        const userId = req.user?.user_id;
-        const productId = req.params?.productId;
-
-        console.log("User ID:", userId);
-        console.log("Product ID:", productId);
-
-        if (!userId || !productId) {
-            return res.status(400).json({ message: "User ID and Product ID are required" });
-        }
-        const [product] = await db.execute(
-            'SELECT * FROM products WHERE product_id = ?',
-            [productId]
-        );
-        if (product.length === 0) {
-            return res.status(404).json({ message: "Product not found" });
-        }
+        const userId = req.user?.user_id; 
+        const productId = req.params.productId;
         const [existingWishlistItem] = await db.execute(
             'SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?',
             [userId, productId]
         );
 
         if (existingWishlistItem.length > 0) {
-            return res.status(400).json({ message: 'Product is already in the wishlist' });
+            await db.execute(
+                'DELETE FROM wishlist WHERE user_id = ? AND product_id = ?',
+                [userId, productId]
+            );
+            return res.status(200).json({ message: "Product removed from wishlist" });
         }
+
         await db.execute(
             'INSERT INTO wishlist (user_id, product_id) VALUES (?, ?)',
             [userId, productId]
         );
 
-        res.status(200).json({ message: 'Product added to wishlist' });
-
+        res.status(200).json({ message: "Product added to wishlist" });
     } catch (error) {
-        console.error('Error adding to wishlist:', error);
-        res.status(500).json({ message: 'Internal server error', error: error.message });
+        console.error("Error adding to wishlist:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
+
 
 
 exports.removeFromWishlist = async (req, res) => {
@@ -70,13 +61,16 @@ exports.removeFromWishlist = async (req, res) => {
 exports.getWishlist = async (req, res) => {
     try {
         const urlUserId = req.params.user_id;
-        const tokenUserId = req.user?.user_id; // Get user ID from the token
+        const tokenUserId = req.user?.user_id;
+
+        console.log("URL User ID:", urlUserId);
+        console.log("Token User ID:", tokenUserId);
 
         if (!tokenUserId) {
             return res.status(401).json({ error: 'Unauthorized: No user token provided' });
         }
     
-        if (parseInt(urlUserId) !== tokenUserId) {
+        if (Number(urlUserId) !== Number(tokenUserId)) {
             return res.status(403).json({ error: 'Forbidden: User IDs do not match' });
         }
 
@@ -90,7 +84,6 @@ exports.getWishlist = async (req, res) => {
             [urlUserId]
         );
 
-        // Check if the user has any wishlist items
         if (wishlistItems.length === 0) {
             return res.status(404).json({ message: "No items in wishlist" });
         }
