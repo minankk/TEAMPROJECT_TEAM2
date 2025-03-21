@@ -1,10 +1,8 @@
-// wishlistController.js
 const db = require('../db');
 
-// Function to add a product to the wishlist
 exports.addToWishlist = async (req, res) => {
     try {
-        const userId = req.user?.user_id; 
+        const userId = req.user?.user_id;
         const productId = req.params.productId;
         const [existingWishlistItem] = await db.execute(
             'SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?',
@@ -16,7 +14,7 @@ exports.addToWishlist = async (req, res) => {
                 'DELETE FROM wishlist WHERE user_id = ? AND product_id = ?',
                 [userId, productId]
             );
-            return res.status(200).json({ message: "Product removed from wishlist" });
+            return res.status(200).json({ message: "Product removed from wishlist", action: "removed" }); // Added action field
         }
 
         await db.execute(
@@ -24,7 +22,7 @@ exports.addToWishlist = async (req, res) => {
             [userId, productId]
         );
 
-        res.status(200).json({ message: "Product added to wishlist" });
+        res.status(200).json({ message: "Product added to wishlist", action: "added" }); // Added action field
     } catch (error) {
         console.error("Error adding to wishlist:", error);
         res.status(500).json({ message: "Internal server error", error: error.message });
@@ -51,7 +49,7 @@ exports.removeFromWishlist = async (req, res) => {
         );
         res.status(200).json({ message: 'Product removed from wishlist' });
     } catch (error) {
-        console.error('Error removing from wishlist:', error);
+        console.error('removeFromWishlist: Error removing from wishlist:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };

@@ -49,3 +49,15 @@
     max-width: 100%;
     height: auto;
 }
+
+.favorites-page .heart-button {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: gray !important; /* Default heart color */
+}
+
+.favorites-page .heart-button.favorited {
+  color: red; /* Favorited heart color */
+}

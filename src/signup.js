@@ -118,10 +118,10 @@ const Signup = () => {
               />
             </div>
             <div className="button-group">
-              <button type="submit">Sign Up</button>
-              <button type="button" className="admin-signup">
-                Admin Sign Up
-              </button>
+              <button type="submit" className="signup-button">Sign Up</button>
+              <Link to="/admin-signup" className="admin-signup-link">
+                Looking to sign up as admin? Click here!
+              </Link>
             </div>
           </form>
         </div>

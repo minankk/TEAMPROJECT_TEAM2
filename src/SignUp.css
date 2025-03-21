@@ -74,14 +74,15 @@ main {
   outline: none;
 }
 
-/* Admin Sign Up Button gap */
-.admin-signup {
-  margin-left: 10px;
-  margin-right: 10px;
+/* Styling of buttons */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Styling of buttons */
-button {
+.signup-button {
   background-color: #7c1816;
   color: white;
   border: none;
@@ -90,11 +91,9 @@ button {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
-button:hover {
+.signup-button:hover {
   background-color: rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
@@ -149,4 +148,15 @@ button:hover {
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.3s ease;
   box-shadow: 0 0 10px rgba(140, 0, 0, 0.8);
+}
+
+.admin-signup-link {
+  color: #7c1816;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.admin-signup-link:hover {
+  color: #5a1210;
 }
