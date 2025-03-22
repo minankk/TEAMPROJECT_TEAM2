@@ -17,7 +17,7 @@
 
 .popup {
     background: white;
-    border-radius: 12px;
+    border-radius: 40px;
     box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
     border: 5px solid #7a1917;
     padding: 30px;
@@ -28,9 +28,9 @@
     font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
     transition: height 0.3s ease;
-    border-radius: 40px;
-    display: flex; /* Make popup a flex container */
-    flex-direction: column; /* Arrange children in a column */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
 }
 
 .popup-close#btn {
@@ -43,7 +43,7 @@
     cursor: pointer;
     color: rgb(14, 1, 1);
     transition: 0.3s ease;
-    font-family: 'Montserrat', sans-serif; /* close button font */
+    font-family: 'Montserrat', sans-serif;
 }
 
 .popup-close#btn:hover {
@@ -65,15 +65,14 @@
     font-size: 16px;
     color: #555;
     line-height: 1.7;
-    /* Limit to approximately 4 lines */
-    max-height: 6.8em; /* 4 lines x 1.7 line-height = 6.8em */
+    max-height: 6.8em;
     overflow: hidden;
     position: relative;
     margin-bottom: 10px;
 }
 
 .popup p.expanded {
-    max-height: none; /* Remove height limit when expanded */
+    max-height: none;
 }
 
 .popup p.read-more::after {
@@ -83,7 +82,7 @@
     left: 0;
     background: linear-gradient(to bottom, transparent, white);
     width: 100%;
-    padding-top: 10px; /* Adjust as needed */
+    padding-top: 10px;
 }
 
 .read-more-button {
@@ -91,11 +90,9 @@
     color: rgb(14, 1, 1);
     border: none;
     padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
     transition: 0.3s ease;
-    margin-top: 10px;
-    border-radius: 30px;
     margin-top: auto;
     align-self: flex-start;
 }
@@ -110,17 +107,23 @@
     color: rgb(14, 1, 1);
     border: none;
     padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
     transition: 0.3s ease;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border-radius: 30px;
     margin-top: auto;
     align-self: flex-end;
+    margin-bottom: 20px;
 }
 
 .add-to-cart-popup:hover {
     background-color: #8d0805;
     color: white;
+}
+
+.popup img {
+    max-width: 80%; /* Adjust as needed */
+    max-height: 300px; /* Adjust as needed */
+    object-fit: contain;
+    margin: 20px auto; /* Center image horizontally */
+    display: block; /* Ensure margin: auto works */
 }
