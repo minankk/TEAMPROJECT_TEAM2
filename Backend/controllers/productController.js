@@ -52,58 +52,6 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-exports.filterByGenres = async (req, res) => {
-  const { genre } = req.params;
-  const { artist } = req.query;
-
-  try {
-    let query = `
-      SELECT 
-        p.product_id, 
-        p.name, 
-        a.name AS artist_name, 
-        g.name AS genre,
-        p.price, 
-        p.cover_image_url 
-      FROM products p
-      JOIN artists a ON p.artist_id = a.artist_id
-      JOIN genres g ON p.genre_id = g.genre_id
-    `;
-    
-    const params = [];
-
-    // If genre is not 'all', filter by genre
-    if (genre !== 'all') {
-      query += ` WHERE g.name = ?`;
-      params.push(genre);
-    }
-
-    // Add artist filter if specified
-    if (artist) {
-      if (genre === 'all') {
-        // If genre is 'all', filter only by artist
-        
-        query += ` WHERE a.name = ?`;
-      } else {
-        // If genre is specified, add artist filter with AND
-        query += ` AND a.name = ?`;
-      }
-      params.push(artist);
-    }
-
-    const [rows] = await db.execute(query, params);
-
-    if (rows.length === 0) {
-      return res.status(404).json({ message: `No products found for the selected filters.` });
-    }
-
-    res.status(200).json({ products: rows });
-  } catch (error) {
-    console.error('Error filtering products by genre and artist:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
 exports.filterByDecade = async (req, res) => {
   const { decade } = req.params;
   const { genre } = req.query;
@@ -195,8 +143,11 @@ exports.filterBestSellers = async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({ message: "No best-selling products found." });
     }
+    rows.forEach(product => {
+      product.price = formatCurrency(product.price); 
+    });
 
-        res.status(200).json({ products: rows });
+    res.status(200).json({ products: rows });
     } catch (error) {
         console.error('Error filtering best sellers:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -224,6 +175,9 @@ exports.filterOnSale = async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({ message: "No products found on sale." });
     }
+    rows.forEach(product => {
+      product.price = formatCurrency(product.price); 
+    });
 
     res.status(200).json({ products: rows });
   } catch (error) {
@@ -255,7 +209,12 @@ exports.filterByGenre = async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({ message: `No products found for genre: ${genre}` });
     }
+    rows.forEach(product => {
+      product.price = formatCurrency(product.price);
+    });
+
     res.status(200).json({ products: rows });
+   
   } catch (error) {
     console.error('Error filtering products by genre:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -287,3 +246,67 @@ exports.filterByArtist = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+//for multiple filters for artist , genre , decades
+exports.multipleFliteredProducts = async (req, res) => {
+  const { genre, artist, decade } = req.query;  
+  const startYear = decade ? parseInt(decade) : null;  
+  const endYear = startYear ? startYear + 9 : null; 
+
+  let query = `
+    SELECT 
+      p.product_id, 
+      p.name, 
+      a.name AS artist_name, 
+      g.name AS genre,
+      p.price, 
+      p.cover_image_url
+    FROM products p
+    JOIN artists a ON p.artist_id = a.artist_id
+    JOIN genres g ON p.genre_id = g.genre_id
+  `;
+
+  let queryParams = [];
+
+  if (genre && genre !== 'all') {
+    query += ` WHERE g.name = ?`; 
+    queryParams.push(genre);
+  }
+
+  if (artist) {
+    if (queryParams.length > 0) {
+      query += ` AND a.name = ?`;  
+    } else {
+      query += ` WHERE a.name = ?`;  
+    }
+    queryParams.push(artist);
+  }
+
+  if (decade) {
+    if (queryParams.length > 0) {
+      query += ` AND YEAR(p.release_date) BETWEEN ? AND ?`;  
+    } else {
+      query += ` WHERE YEAR(p.release_date) BETWEEN ? AND ?`;  
+    }
+    queryParams.push(startYear, endYear);  
+  }
+
+  try {
+    const [rows] = await db.execute(query, queryParams);  
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "No products found with the selected filters." });
+    }
+
+    rows.forEach(product => {
+      product.price = formatCurrency(product.price); 
+    });
+
+    res.status(200).json({ products: rows });  
+  } catch (error) {
+    console.error('Error filtering products:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+

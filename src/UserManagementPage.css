@@ -1,0 +1,87 @@
+.user-management-page {
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+.user-management-page h2 {
+    margin-bottom: 20px;
+}
+
+.user-management-page h3 {
+    margin-top: 20px;
+}
+
+.user-management-page input[type="text"],
+.user-management-page input[type="email"],
+.user-management-page input[type="password"],
+.user-management-page select {
+    width: 250px;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.user-management-page button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.user-management-page button:hover {
+    background-color: #3e8e41;
+}
+
+.user-management-page ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-management-page li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-management-page li:last-child {
+    border-bottom: none;
+}
+
+.user-management-page li button {
+    background-color: #008CBA;
+    margin-left: 5px;
+}
+
+.user-management-page li button:last-child{
+    background-color: #f44336;
+}
+
+.user-management-page li button:last-child:hover{
+    background-color: #da190b;
+}
+
+.user-management-page li button:hover {
+    background-color: #0077a3;
+}
+
+.user-management-page .update-form {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.user-management-page .update-form button {
+    background-color: #008CBA;
+}
+
+.user-management-page .update-form button:hover {
+    background-color: #0077a3;
+}

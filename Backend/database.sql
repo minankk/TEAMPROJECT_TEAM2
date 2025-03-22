@@ -704,3 +704,15 @@ CREATE TABLE guest_subscriptions (
 ALTER TABLE guest_subscriptions MODIFY subscription_token VARCHAR(255) NULL;
 
 ALTER TABLE users ADD COLUMN membership_status ENUM('regular', 'vip') DEFAULT 'regular';
+
+--Updated the database name and your VS Code settings
+UPDATE products 
+SET image_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
+WHERE id = 25;
+
+UPDATE products 
+SET image_url = '/images/Led_Zeppelin_IV.jpg' 
+WHERE id = 17;
+
+ALTER TABLE users
+ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
