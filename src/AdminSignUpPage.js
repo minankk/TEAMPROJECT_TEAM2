@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./SignUp.css";
 
-const Signup = () => {
+const AdminSignup = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    secretKey: "",
   });
 
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -27,10 +28,11 @@ const Signup = () => {
       email: formData.email.trim(),
       password: formData.password.trim(),
       password_confirmation: formData.confirmPassword.trim(), // Match backend field name
+      adminSecretKey: formData.secretKey.trim(),
     };
 
     // Check for empty fields
-    if (!trimmedData.username || !trimmedData.email || !trimmedData.password || !trimmedData.password_confirmation) {
+    if (!trimmedData.username || !trimmedData.email || !trimmedData.password || !trimmedData.password_confirmation || !trimmedData.adminSecretKey) {
       setError("All fields must be filled!");
       return;
     }
@@ -51,9 +53,12 @@ const Signup = () => {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Signup successful!");
-        localStorage.setItem('token', data.token); // Store the token in localStorage
-        navigate("/dashboard");
+        if (data.role === 'admin' && data.message.includes('pending')) {
+          setShowPopup(true);
+        } else {
+          alert("Signup successful!");
+          localStorage.setItem('token', data.token); // Store the token in localStorage
+        }
       } else {
         setError(data.message || "Signup failed");
       }
@@ -66,7 +71,7 @@ const Signup = () => {
     <div className="signup-page">
       <main>
         <div className="signup-container">
-          <h1>Create an Account</h1>
+          <h1>Create an Admin Account</h1>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="input-field">
@@ -117,10 +122,22 @@ const Signup = () => {
                 required
               />
             </div>
+            <div className="input-field">
+              <label htmlFor="secretKey">Secret Key</label>
+              <input
+                type="text"
+                id="secretKey"
+                name="secretKey"
+                placeholder="Secret Key"
+                value={formData.secretKey}
+                onChange={handleChange}
+                required
+              />
+            </div>
             <div className="button-group">
               <button type="submit" className="signup-button">Sign Up</button>
-              <Link to="/admin-signup" className="admin-signup-link">
-                Looking to sign up as admin? Click here!
+              <Link to="/signup" className="user-signup-link">
+                Looking to sign up as a user? Click here!
               </Link>
             </div>
           </form>
@@ -131,8 +148,17 @@ const Signup = () => {
           <Link to="/login" className="login-link">Login</Link>
         </div>
       </main>
+      {showPopup && (
+        <div className="admin-popup">
+          <div className="admin-popup-content">
+            <h2>Signup Request Sent</h2>
+            <p>Your signup request has been sent. You will be notified of your approval status shortly.</p>
+            <button onClick={() => setShowPopup(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Signup;
+export default AdminSignup;

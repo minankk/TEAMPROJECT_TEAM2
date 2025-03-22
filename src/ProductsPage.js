@@ -28,66 +28,80 @@ const ProductsPage = () => {
   };
 
   const toggleFavorite = async (productId, event) => {
-    event.stopPropagation(); // Prevent card click
+    event.stopPropagation();
     const token = localStorage.getItem('token');
-    const decoded = jwtDecode(token);
-    const userId = decoded.user_id;
 
-    const isFavorite = favorites.includes(productId);
-    const method = isFavorite ? 'DELETE' : 'POST';
-    const url = isFavorite
-        ? `http://localhost:5001/wishlist/remove/${productId}`
-        : `http://localhost:5001/wishlist/add/${productId}`;
+    if (!token || typeof token !== 'string') {
+        console.error("Invalid or missing token. User might not be logged in.");
+        return;
+    }
 
     try {
+        const decoded = jwtDecode(token);
+        const userId = decoded.user_id;
+
+        const url = `http://localhost:5001/wishlist/add/${productId}`; // Always POST
+
+        console.log(`Sending POST request to: ${url}`);
         const response = await fetch(url, {
-            method,
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
         });
+        console.log(`Response status: ${response.status}`);
 
         if (response.ok) {
-            if (isFavorite) {
-                setFavorites(favorites.filter(id => id !== productId));
-                showPopup("You have removed this item from your favorites.");
-            } else {
-                setFavorites([...favorites, productId]);
+            const data = await response.json();
+            if (data.action === "added") {
                 showPopup("You have added this item to your favorites.");
+            } else if (data.action === "removed") {
+                showPopup("You have removed this item from your favorites.");
             }
+            fetchFavorites(); // Refetch favorites after successful operation
         } else {
             console.error('Failed to update favorites:', response);
+            if (response.status === 401) {
+                console.error("Unauthorized, please log in");
+            } else {
+                showPopup("Failed to update favorites. Please try again.");
+            }
         }
     } catch (error) {
         console.error('Error updating favorites:', error);
+        showPopup("An unexpected error occurred.");
+    }
+};
+
+const fetchFavorites = async () => {
+    const token = localStorage.getItem('token');
+    if (token && typeof token === 'string') {
+        try {
+            const decoded = jwtDecode(token);
+            const userId = decoded.user_id;
+            fetch(`http://localhost:5001/wishlist/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                const favoriteIds = data.map(item => item.product_id);
+                setFavorites(favoriteIds);
+            })
+            .catch(error => {
+                console.error('Error fetching favorites:', error);
+            });
+        } catch (decodeError) {
+            console.error("Error decoding token:", decodeError);
+        }
+    } else {
+        console.log("Token not found or invalid.");
     }
 };
 
 useEffect(() => {
-  const token = localStorage.getItem('token');
-  if (token && typeof token === 'string') { // Check if token exists and is a string
-      try {
-          const decoded = jwtDecode(token);
-          const userId = decoded.user_id;
-          fetch(`http://localhost:5001/wishlist/`, {
-              headers: {
-                  'Authorization': `Bearer ${token}`,
-              },
-          })
-          .then(response => response.json())
-          .then(data => {
-              const favoriteIds = data.map(item => item.product_id);
-              setFavorites(favoriteIds);
-          })
-          .catch(error => {
-              console.error('Error fetching favorites:', error);
-          });
-      } catch (decodeError) {
-          console.error("Error decoding token:", decodeError);
-      }
-  } else {
-      console.log("Token not found or invalid.");
-  }
+    fetchFavorites();
 }, []);
 
   // const [selectedProduct, setSelectedProduct] = useState(null);
