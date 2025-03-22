@@ -38,7 +38,7 @@ const BestSellers = () => {
             <h2 className="product-name">{product.album_name}</h2>
             <p className="product-artist">{product.artist_name}</p>
             <p className="product-genre">{product.genre}</p>
-            <p className="product-price">${product.price}</p>
+            <p className="product-price">£{product.price}</p>
             <button className="add-to-cart">Add to Cart</button>
           </div>
         ))}
