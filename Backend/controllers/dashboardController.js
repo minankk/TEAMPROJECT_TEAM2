@@ -185,26 +185,26 @@ exports.viewOrderTracking = async (req, res) => {
 
 // Get user's received messages
 exports.getUserMessages = async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1];
-  
-    if (!token) {
-      return res.status(401).json({ error: 'Authentication required.' });
-    }
-  
     try {
-      const decoded = jwt.verify(token, 'your_secret_key');
-      req.user = decoded;
-  
-      const [messages] = await db.query(
-        'SELECT * FROM messages WHERE receiver_id = ? ORDER BY sent_at DESC',
-        [req.user.id]
-      );
-      res.json(messages);
+        console.log('Decoded User:', req.user); // Debugging Log
+
+        const userID = req.user?.user_id; // Ensure correct user ID key
+
+        if (!userID) {
+            return res.status(400).json({ error: 'User ID is missing' });
+        }
+
+        const [messages] = await db.query(
+            'SELECT * FROM messages WHERE receiver_id = ? ORDER BY sent_at DESC',
+            [userID]
+        );
+
+        res.json(messages);
     } catch (error) {
-      console.error(error);
-      return res.status(401).json({ error: 'Authentication failed.' });
+        console.error('Error fetching messages:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
-  };
+};
   
   // Reply to a message
   exports.replyToMessage = async (req, res) => {

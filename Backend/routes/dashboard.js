@@ -18,8 +18,8 @@ router.post('/change-password', dashboardController.changePassword);
 router.get('/order/:orderId/tracking', dashboardController.viewOrderTracking);
 
 // User-only routes (dashboard related)
-router.get('/user/messages', dashboardController.getUserMessages);
-router.post('/user/messages/reply', dashboardController.replyToMessage);
-router.put('/user/messages/read/:messageId', dashboardController.markMessageAsRead);
+router.get('/messages', dashboardController.getUserMessages);
+router.post('messages/reply', dashboardController.replyToMessage);
+router.put('/messages/read/:messageId', dashboardController.markMessageAsRead);
 
 module.exports = router;
