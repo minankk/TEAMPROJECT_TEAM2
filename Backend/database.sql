@@ -716,3 +716,16 @@ WHERE id = 17;
 
 ALTER TABLE users
 ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
+
+CREATE TABLE membership_payments (
+    membership_payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    amount DECIMAL(10, 2),
+    payment_status ENUM('paid', 'pending', 'failed') DEFAULT 'pending',
+    payment_method VARCHAR(50),
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    transaction_id VARCHAR(255) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
