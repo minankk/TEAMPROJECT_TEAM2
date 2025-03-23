@@ -169,6 +169,8 @@ exports.viewOrderTracking = async (req, res) => {
         if (!orderId) {
             return res.status(400).json({ message: 'Order ID is required' });
         }
+
+        // to get the order information
         const [orderDetails] = await db.execute(
             'SELECT o.order_id, o.status AS order_status, o.shipping_address, t.status AS tracking_status, t.estimated_delivery_date ' +
             'FROM orders o LEFT JOIN order_tracking t ON o.order_id = t.order_id ' +
@@ -193,5 +195,80 @@ exports.viewOrderTracking = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+// Get user's received messages
+exports.getUserMessages = async (req, res) => {
+    try {
+        console.log('Decoded User:', req.user); // Debugging Log
+
+        const userID = req.user?.user_id; // Ensure correct user ID key
+
+        if (!userID) {
+            return res.status(400).json({ error: 'User ID is missing' });
+        }
+
+        const [messages] = await db.query(
+            'SELECT * FROM messages WHERE receiver_id = ? ORDER BY sent_at DESC',
+            [userID]
+        );
+
+        res.json(messages);
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
+  
+  // Reply to a message
+  exports.replyToMessage = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+  
+    if (!token) {
+      return res.status(401).json({ error: 'Authentication required.' });
+    }
+  
+    try {
+      const decoded = jwt.verify(token, 'your_secret_key');
+      req.user = decoded;
+  
+      const { parentId, message } = req.body;
+  
+      const [parentMessages] = await db.query('SELECT sender_id FROM messages WHERE id = ?', [parentId]);
+      if (parentMessages.length === 0) {
+        return res.status(404).json({ error: 'Parent message not found.' });
+      }
+      const receiverId = parentMessages[0].sender_id;
+  
+      const result = await db.query(
+        'INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (?, ?, ?, ?)',
+        [req.user.id, receiverId, message, parentId]
+      );
+      res.status(201).json({ message: 'Reply sent.', messageId: result.insertId });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Failed to send reply.' });
+    }
+  };
+  
+  // Mark a message as read
+  exports.markMessageAsRead = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+  
+    if (!token) {
+      return res.status(401).json({ error: 'Authentication required.' });
+    }
+  
+    try {
+      const decoded = jwt.verify(token, 'your_secret_key');
+      req.user = decoded;
+  
+      const { messageId } = req.params;
+      await db.query('UPDATE messages SET is_read = TRUE WHERE id = ?', [messageId]);
+      res.json({ message: 'Message marked as read.' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Failed to mark message as read.' });
+    }
+  };
 
 exports.genBenefitsDiscount = genBenefitsDiscount;
