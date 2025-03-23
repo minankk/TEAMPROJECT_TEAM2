@@ -3,33 +3,34 @@ const router = express.Router();
 const productsController = require('../controllers/productController');
 const searchController = require('../controllers/searchController');
 
-// GET - for all products
+// for all products
 router.get('/', productsController.getAllProducts);
 
-// GET - Filters by decade
+// Filters by decade
 router.get('/decade/:decade', productsController.filterByDecade);
 
-// GET - Filters by price
+// Filters by price
 router.get('/price/:price', productsController.filterByPrice);
 
-// GET - Filters by best-sellers
+// Filters by best-sellers
 router.get('/bestsellers', productsController.filterBestSellers);
 
-// GET - Filters for onsale
+// Filters for onsale
 router.get('/onsale', productsController.filterOnSale);
 
-// GET - Filters by artist
+//Filters by artist
 router.get('/artist/:artist', productsController.filterByArtist);
 
-// GET - Filter products by genre (with optional artist filter)
-router.get('/genre/:genre', productsController.filterByGenre); // This is the route where both genre and artist can be filtered
+//Filter products by genre
+router.get('/genre/:genre', productsController.filterByGenre); 
 
-router.get('/genre/:genre', productsController.filterByGenres); // This is the route where both genre and artist can be filtered
+// Filter by multiple products 
+router.get('/multiplefilter', productsController.multipleFliteredProducts);
 
-// GET - to get the search products
+//to get the search products
 router.get('/search', searchController.searchProducts);
 
-// GET - to get the products by their ID (Whishlist)
+//to get the products by their ID (Whishlist)
 router.get('/products/:productId', productsController.getProductById);
 
 

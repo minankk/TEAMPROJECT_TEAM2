@@ -42,12 +42,12 @@ const decadesRoutes = require('./routes/decadesRoute');
 const subscribeRoutes = require('./routes/subscribe');
 const popUpRoutes = require('./routes/popUpRoutes');
 const membershipRoutes = require('./routes/membership');
-const adminMessageRoutes = require('./routes/adminMessageRoutes');
 
 
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
 const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
+const adminMembershipRoutes = require("./routes/adminRoutes/adminMembership");
 
 const app = express();
  
@@ -102,8 +102,7 @@ app.use('/orders', authJWT.authenticateJWT ,orderRoutes);
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
 app.use("/admin-dashboard",authJWT.authenticateJWT ,authJWT.verifyAdmin ,adminUserProfileRoutes);
-app.use('/admin/messages', authJWT.authenticateJWT, authJWT.verifyAdmin, adminMessageRoutes);
-
+ 
  
 //start the Express server on a specific port
 const port = process.env.PORT || 5001;

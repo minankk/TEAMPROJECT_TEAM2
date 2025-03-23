@@ -39,6 +39,9 @@ exports.getNewestAdditions = async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({ message: "No newest additions found." });
     }
+    rows.forEach(product => {
+      product.price = formatCurrency(product.price);
+    });
 
     res.status(200).json({ products: rows });
   } catch (error) {

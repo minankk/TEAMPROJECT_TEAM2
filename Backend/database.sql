@@ -734,3 +734,6 @@ ALTER TABLE users
 ADD COLUMN refresh_token VARCHAR(255),
 ADD COLUMN refresh_token_expires_at TIMESTAMP;
 
+
+ALTER TABLE users
+ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';

@@ -11,6 +11,7 @@ import TermsAndConditions from './termsandconditions';
 import CartPage from './CartPage';
 import DashboardPage, { Overview } from './DashboardPage';
 import Signup from './signup';
+import AdminSignup from './AdminSignUpPage'; 
 import AboutUs from './AboutUs';
 import DeliveryInformation from './DeliveryInformation';
 import PrivacyPolicy from './PrivacyPolicy';
@@ -18,7 +19,9 @@ import PaymentPage from './PaymentPage';
 import OrderSuccess from './OrderSuccess';
 import SalesPage from './SalesPage';
 import LogoutPage from './LogoutPage';
-
+import PopPage from './PopPage';
+import RockPage from './RockPage';
+import SoundtrackPage from './SoundTrackPage';
 import ForgotPassword from './ForgotPasswordPage';
 import UserMessagesPage from './UserMessagesPage';
 import FavoritesPage from './FavoritesPage';
@@ -28,8 +31,12 @@ import UserProfilePage from './UserProfilePage';
 import BestSellers from './BestSellersPage';
 import AlternativeRockPage from './AlternativeRockPage';
 import HipHopPage from './HipHopPage';
- 
-
+import AdminDashboardPage, { AdminOverview } from './AdminDashboardPage'; 
+import MessagesPage from './MessagesPage'; 
+import ProductsManagementPage from './ProductsManagementPage'; 
+import UserManagementPage from './UserManagementPage'; 
+import OrderManagementPage from './OrderManagementPage'; 
+import AnalyticsPage from './AnalyticsPage'; 
 
 const AuthContext = createContext();
 
@@ -108,6 +115,7 @@ function App() {
                     <Route path="/FAQs" element={<FAQ />} />
                     <Route path="/t&c" element={<TermsAndConditions />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/admin-signup" element={<AdminSignup />} /> {/* Add the admin signup route */}
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/delivery-information" element={<DeliveryInformation />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -119,8 +127,20 @@ function App() {
                     <Route path="/genres/alternative-rock" element={<AlternativeRockPage />} />
                     <Route path="/best-sellers" element={<BestSellers />} />
                     <Route path="/genres/hip-hop" element={<HipHopPage />} />
-                    
+                    <Route path="/genres/soundtrack" element={<SoundtrackPage />} />
+                    <Route path="/genres/pop" element={<PopPage />} />
+                    <Route path="/genres/rock" element={<RockPage />} />
+                    <Route path="/admin" element={<AdminDashboardPage />}>
+                    <Route index element={<AdminOverview />} /> {/* Default route */}
+                    <Route path="overview" element={<AdminOverview />} />
+                    <Route path="messages" element={<MessagesPage />} />
+                    <Route path="products" element={<ProductsManagementPage />} />
+                    <Route path="users" element={<UserManagementPage />} />
+                    <Route path="orders" element={<OrderManagementPage />} />
+                    <Route path="analytics" element={<AnalyticsPage />} />
 
+                    </Route>
+                    
                     {/* Dashboard Routes */}
                     <Route path="/dashboard" element={<ProtectedRoute />}>
                         <Route path="" element={<DashboardPage />}>
