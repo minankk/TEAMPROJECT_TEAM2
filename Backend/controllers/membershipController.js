@@ -1,5 +1,7 @@
 const db = require('../db');
 const jwt = require('jsonwebtoken')
+const dashboardController = require('../controllers/dashboardController');
+
 
 //redirect to payment gateway to upgrade as VIP members
 exports.redirectToPaymentGateway = (req, res) => {
@@ -9,22 +11,26 @@ exports.redirectToPaymentGateway = (req, res) => {
     });
 };
 
-//processing payment
 exports.processPayment = async (req, res) => {
     try {
-        const token = req.header('Authorization');
-        console.log("Received Token:", token);
-        if (!token) {
-            return res.status(401).json({ message: "Access denied. No token provided." });
+        const userId = req.user.user_id;
+
+        const { paymentMethod, amount } = req.body;
+
+        if (!paymentMethod || !amount) {
+            return res.status(400).json({ message: "Payment method and amount are required." });
         }
 
-        const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET_KEY);
-        const userId = decoded.user_id;
-
         const paymentSuccess = Math.random() > 0.2;  // 80% chance of success, 20% chance of failure
+        const transactionId = `txn_${Math.random().toString(36).substring(2, 15)}`;
 
         if (paymentSuccess) {
             await db.execute("UPDATE users SET membership_status = 'vip' WHERE user_id = ?", [userId]);
+            await db.execute(
+                "INSERT INTO membership_payments (user_id, amount, payment_status, payment_method, transaction_id) VALUES (?, ?, 'paid', ?, ?)",
+                [userId, amount, paymentMethod, transactionId]
+            );
+
             res.status(200).json({ message: "Payment successful! You are now a VIP member." });
         } else {
             res.status(400).json({ message: "Payment failed. Please try again." });
@@ -35,18 +41,14 @@ exports.processPayment = async (req, res) => {
     }
 };
 
+
 //VIP member checkout  with tiered discounts
 exports.checkoutAsVIP = async (req, res) => {
     try {
-        const token = req.header('Authorization');
-        if (!token) {
-            return res.status(401).json({ message: "Access denied. No token provided." });
-        }
-        const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET_KEY);
-        const userId = decoded.user_id;
+        const userId = req.user.user_id; 
 
         const [user] = await db.execute(`
-            SELECT u.membership_status, SUM(o.total_amount) AS total_spent
+            SELECT u.membership_status, COALESCE(SUM(o.total_amount), 0) AS total_spent
             FROM users u
             LEFT JOIN orders o ON u.user_id = o.user_id
             WHERE u.user_id = ?
@@ -68,27 +70,24 @@ exports.checkoutAsVIP = async (req, res) => {
         `, [userId]);
 
         const cartTotal = cartItems[0].cart_total || 0;
+        console.log(`Membership Status: ${membershipStatus}, Total Spent: ${totalSpent}`);
 
-        // Apply tiered discounts based on total spent
-        let discount = 0;
+        // Get VIP benefits and discount percentage
+        let discountInfo = { tier: "No VIP", discount: 0 };
         if (membershipStatus === 'vip') {
-            if (totalSpent >= 500) {
-                discount = 0.15;  // 15% off for Gold members
-            } else if (totalSpent >= 100) {
-                discount = 0.10;  // 10% off for Silver members
-            } else {
-                discount = 0.05;  // 5% off for Bronze members
-            }
+            discountInfo = dashboardController.genBenefitsDiscount(totalSpent);
         }
 
-        const discountedTotal = cartTotal * (1 - discount);
+        const discountedTotal = cartTotal * (1 - discountInfo.discount);
 
         res.status(200).json({
             message: "Checkout successful",
+            membershipTier: discountInfo.tier,
             originalTotal: cartTotal,
-            discountApplied: discount * 100,  // Convert to percentage
+            discountApplied: discountInfo.discount * 100, 
             discountedTotal,
         });
+
     } catch (error) {
         console.error("Error during checkout:", error);
         res.status(500).json({ message: "Internal server error." });
