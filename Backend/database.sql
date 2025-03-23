@@ -714,5 +714,67 @@ UPDATE products
 SET image_url = '/images/Led_Zeppelin_IV.jpg' 
 WHERE id = 17;
 
+
+--New table for message in the dash board
+CREATE TABLE messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read BOOLEAN DEFAULT FALSE,
+    parent_id INT,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id),
+    FOREIGN KEY (parent_id) REFERENCES messages(message_id)
+);
+
+--Additional table for message in the dash board
+ALTER TABLE users
+ADD COLUMN refresh_token VARCHAR(255),
+ADD COLUMN refresh_token_expires_at TIMESTAMP;
+
+
 ALTER TABLE users
 ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
+
+--1.Additional info for displaying cover_image between album and release date
+ALTER TABLE albums_pop_up
+ADD COLUMN cover_image_url VARCHAR(255) BEFORE release_date;
+
+--2.Additional info for displaying related_albums_images 
+ALTER TABLE albums_pop_up
+ADD related_albums_images TEXT;
+
+--3.Additional updated info for the related_albums_images
+
+UPDATE albums_pop_up
+SET related_albums_images = CASE
+    WHEN album_id = 1 THEN '[{"product_id": 2, "image_url": "/images/Oasis – The Masterplan (1).webp"}, {"product_id": 3, "image_url": "/images/Radiohead – OK Computer.webp"}]'
+    WHEN album_id = 2 THEN '[{"product_id": 3, "image_url": "/images/Radiohead – OK Computer.webp"}, {"product_id": 4, "image_url": "/images/Green-Day-Saviors.webp"}]'
+    WHEN album_id = 3 THEN '[{"product_id": 4, "image_url": "/images/Green-Day-Saviors.webp"}, {"product_id": 5, "image_url": "/images/Green Day – American Idiot (1).webp"}]'
+    WHEN album_id = 4 THEN '[{"product_id": 5, "image_url": "/images/Green Day – American Idiot (1).webp"}, {"product_id": 1, "image_url": "/images/Nirvana – Nevermind (1).webp"}]'
+    WHEN album_id = 5 THEN '[{"product_id": 1, "image_url": "/images/Nirvana – Nevermind (1).webp"}, {"product_id": 2, "image_url": "/images/Oasis – The Masterplan (1).webp"}]'
+    WHEN album_id = 6 THEN '[{"product_id": 7, "image_url": "/images/Original Soundtrack – Guardians of the Galaxy - Awesome Mix 1.webp"}, {"product_id": 8, "image_url": "/images/Original Soundtrack – Pulp Fiction.webp"}]'
+    WHEN album_id = 7 THEN '[{"product_id": 8, "image_url": "/images/Original Soundtrack – Pulp Fiction.webp"}, {"product_id": 9, "image_url": "/images/Motion Picture Cast Recording – The Greatest Showman.webp"}]'
+    WHEN album_id = 8 THEN '[{"product_id": 9, "image_url": "/images/Motion Picture Cast Recording – The Greatest Showman.webp"}, {"product_id": 10, "image_url": "/images/Original Soundtrack – Baby Driver.webp"}]'
+    WHEN album_id = 9 THEN '[{"product_id": 10, "image_url": "/images/Original Soundtrack – Baby Driver.webp"}, {"product_id": 6, "image_url": "/images/Original Soundtrack – Barbie the Album.webp"}]'
+    WHEN album_id = 10 THEN '[{"product_id": 6, "image_url": "/images/Original Soundtrack – Barbie the Album.webp"}, {"product_id": 7, "image_url": "/images/Original Soundtrack – Guardians of the Galaxy - Awesome Mix 1.webp"}]'
+    WHEN album_id = 11 THEN '[{"product_id": 12, "image_url": "/images/Fleetwood Mac – Rumors.webp"}, {"product_id": 13, "image_url": "/images/Michael Jackson – Thriller.webp"}]'
+    WHEN album_id = 12 THEN '[{"product_id": 13, "image_url": "/images/Michael Jackson – Thriller.webp"}, {"product_id": 14, "image_url": "/images/Sabrina Carpenter – Short n’ Sweet.webp"}]'
+    WHEN album_id = 13 THEN '[{"product_id": 14, "image_url": "/images/Sabrina Carpenter – Short n’ Sweet.webp"}, {"product_id": 15, "image_url": "/images/Charlie XCX – Brat.webp"}]'
+    WHEN album_id = 14 THEN '[{"product_id": 15, "image_url": "/images/Charlie XCX – Brat.webp"}, {"product_id": 11, "image_url": "/images/Ariana Grande – Sweetener.webp"}]'
+    WHEN album_id = 15 THEN '[{"product_id": 11, "image_url": "/images/Ariana Grande – Sweetener.webp"}, {"product_id": 12, "image_url": "/images/Fleetwood Mac – Rumors.webp"}]'
+    WHEN album_id = 16 THEN '[{"product_id": 17, "image_url": "/images/Led Zepplin – Led zeppelin IV.webp"}, {"product_id": 18, "image_url": "/images/The Beatle – Abby Road.webp"}]'
+    WHEN album_id = 17 THEN '[{"product_id": 18, "image_url": "/images/The Beatle – Abby Road.webp"}, {"product_id": 19, "image_url": "/images/Eagles – Hotel California.webp"}]'
+    WHEN album_id = 18 THEN '[{"product_id": 19, "image_url": "/images/Eagles – Hotel California.webp"}, {"product_id": 20, "image_url": "/images/Pink Floyd – The Wall.webp"}]'
+    WHEN album_id = 19 THEN '[{"product_id": 20, "image_url": "/images/Pink Floyd – The Wall.webp"}, {"product_id": 16, "image_url": "/images/Pink Floyd – The Dark Side of the Moon.webp"}]'
+    WHEN album_id = 20 THEN '[{"product_id": 16, "image_url": "/images/Pink Floyd – The Dark Side of the Moon.webp"}, {"product_id": 17, "image_url": "/images/Led Zepplin – Led zeppelin IV.webp"}]'
+    WHEN album_id = 21 THEN '[{"product_id": 22, "image_url": "/images/Kendrick Lamar – To Pimp a Butterfly.jpg"}, {"product_id": 23, "image_url": "/images/Jay-Z – The Blueprint.webp"}]'
+    WHEN album_id = 22 THEN '[{"product_id": 23, "image_url": "/images/Jay-Z – The Blueprint.webp"}, {"product_id": 24, "image_url": "/images/Eminem – The Marshall Mathers LP.jpg"}]'
+    WHEN album_id = 23 THEN '[{"product_id": 24, "image_url": "/images/Eminem – The Marshall Mathers LP.jpg"}, {"product_id": 25, "image_url": "/images/The Notorious B.I.G. – Ready to Die.webp"}]'
+    WHEN album_id = 24 THEN '[{"product_id": 25, "image_url": "/images/The Notorious B.I.G. – Ready to Die.webp"}, {"product_id": 21, "image_url": "/images/50 Cent – Get Rich or Die Tryin’.webp"}]'
+    WHEN album_id = 25 THEN '[{"product_id": 21, "image_url": "/images/50 Cent – Get Rich or Die Tryin’.webp"}, {"product_id": 22, "image_url": "/images/Kendrick Lamar – To Pimp a Butterfly.jpg"}]'
+    ELSE NULL
+END
+WHERE album_id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25);
