@@ -48,6 +48,7 @@ const membershipRoutes = require('./routes/membership');
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
 const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
+const adminMembershipRoutes = require("./routes/adminRoutes/adminMembership");
 
 const app = express();
  

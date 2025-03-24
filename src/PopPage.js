@@ -1,6 +1,6 @@
 // PopPage.js
 import React, { useState, useEffect } from 'react';
-import './PopPage.css'; // Ensure you have this CSS file
+import './PopPage.css';
 import { useNavigate } from 'react-router-dom';
 
 const PopPage = ({ handleAddToCart }) => {
@@ -33,10 +33,18 @@ const PopPage = ({ handleAddToCart }) => {
       <div className="pop-albums-grid">
         {popAlbums.map((album) => (
           <div className="pop-album-card" key={album.product_id}>
-            <img src={`http://localhost:5001${album.cover_image_url}`} alt={album.product_name} className="pop-album-image" />
-            <h2 className="pop-album-name">{album.product_name}</h2>
-            <p className="pop-album-price">${album.price}</p>
-            <button className="add-to-cart-pop" onClick={() => handleAddToCart(album.product_id)}>
+            <img
+              src={`http://localhost:5001${album.cover_image_url}`}
+              alt={album.name}
+              className="pop-album-image"
+            />
+            <h2 className="pop-album-name">{album.name}</h2>
+            <p className="pop-album-artist">{album.artist_name}</p>
+            <p className="pop-album-price">£{album.price}</p>
+            <button
+              className="add-to-cart-pop"
+              onClick={() => handleAddToCart(album.product_id)}
+            >
               Add to Cart
             </button>
           </div>

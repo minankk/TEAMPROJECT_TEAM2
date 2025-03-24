@@ -3,7 +3,6 @@ const db = require('../db');
 const crypto = require('crypto');
 
 exports.createOrder = async (req, res) => {
-    const tnx = await db.beginTransaction();
     try {
         const token = req.headers.authorization?.split(' ')[1];
 
@@ -21,7 +20,6 @@ exports.createOrder = async (req, res) => {
         }
 
         if (!totalAmount || typeof totalAmount !== 'number' || totalAmount <= 0) {
-            await db.rollback(tnx);
             return res.status(400).json({ message: 'Total amount is required and must be a positive number.' });
         }
 
@@ -29,16 +27,44 @@ exports.createOrder = async (req, res) => {
             await db.rollback(tnx);
             return res.status(400).json({ message: 'Shipping address is required and must be a valid string.' });
         }
-        const trackingNumber = `TN-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
+        const [user] = await db.execute(`
+            SELECT u.membership_status, COALESCE(SUM(o.total_amount), 0) AS total_spent
+            FROM users u
+            LEFT JOIN orders o ON u.user_id = o.user_id
+            WHERE u.user_id = ?
+            GROUP BY u.user_id
+        `, [userId]);
 
+        if (user.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const membershipStatus = user[0].membership_status;
+        const totalSpent = user[0].total_spent || 0;
+
+        const [cartItems] = await db.execute(`
+            SELECT SUM(ci.quantity * p.price) AS cart_total
+            FROM cart ci
+            JOIN products p ON ci.product_id = p.product_id
+            WHERE ci.user_id = ?
+        `, [userId]);
+
+        let cartTotal = cartItems[0].cart_total || 0;
+        let discountInfo = { tier: "No VIP", discount: 0 };
+        if (membershipStatus === 'vip') {
+            discountInfo = dashboardController.genBenefitsDiscount(totalSpent);
+        }
+
+        const discountedTotal = cartTotal * (1 - discountInfo.discount);
+        const finalTotalAmount = parseFloat(discountedTotal.toFixed(2));
+
+        const trackingNumber = `TN-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
         const [orderResult] = await db.execute(
-            'INSERT INTO orders (user_id, total_amount, shipping_address, status, tracking_number, order_date) VALUES (?, ?, ?, ?, ?, NOW())',
-            [userId, totalAmount, JSON.stringify(shippingAddress), 'Pending', trackingNumber],
-            tnx
+            'INSERT INTO orders (user_id, total_amount, shipping_address, status, tracking_number) VALUES (?, ?, ?, ?, ?)',
+            [userId, totalAmount, JSON.stringify(shippingAddress), 'Pending', trackingNumber]
         );
 
         const orderId = orderResult.insertId;
-
         for (const item of items) {
             if (!item.product_id || !item.quantity || !item.price) {
                 await db.rollback(tnx);
@@ -71,11 +97,9 @@ exports.createOrder = async (req, res) => {
 
         await db.execute('DELETE FROM cart WHERE user_id = ?', [userId], tnx);
 
-        await db.commit(tnx);
         res.status(201).json({ message: 'Order created successfully', orderId, tracking_number: trackingNumber });
 
     } catch (error) {
-        await db.rollback(tnx);
         console.error('Error creating order:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }

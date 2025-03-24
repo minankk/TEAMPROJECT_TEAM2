@@ -714,24 +714,26 @@ UPDATE products
 SET cover_image_url = '/images/Led_Zeppelin_IV.jpg' 
 WHERE product_id = 17;
 
+
+--New table for message in the dash board
+CREATE TABLE messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read BOOLEAN DEFAULT FALSE,
+    parent_id INT,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id),
+    FOREIGN KEY (parent_id) REFERENCES messages(message_id)
+);
+
+--Additional table for message in the dash board
+ALTER TABLE users
+ADD COLUMN refresh_token VARCHAR(255),
+ADD COLUMN refresh_token_expires_at TIMESTAMP;
+
+
 ALTER TABLE users
 ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
-
--- User Activity Logs Table
-CREATE TABLE user_activity_logs (
-    log_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    activity_type VARCHAR(50) NOT NULL,
-    activity_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    details TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
--- Session Tracking Table
-CREATE TABLE sessions (
-    session_id VARCHAR(255) PRIMARY KEY,
-    user_id INT,
-    start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    end_time TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
