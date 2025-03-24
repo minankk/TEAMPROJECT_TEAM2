@@ -17,19 +17,35 @@ exports.getAllArtists = async (req, res) => {
 exports.getArtistById = async (req, res) => {
     try {
         const artistId = req.params.artistId;
-        const [artist] = await db.execute(`
+
+        // Fetch artist details
+        const [artistDetails] = await db.execute(`
             SELECT a.artist_id, a.name, ab.bio, ab.image_url
             FROM artists a
             LEFT JOIN artists_bio ab ON a.artist_id = ab.artist_id
             WHERE a.artist_id = ?
         `, [artistId]);
 
-        if (artist.length === 0) {
+        if (artistDetails.length === 0) {
             return res.status(404).json({ message: 'Artist not found' });
         }
-        res.status(200).json(artist[0]);
+
+        // Fetch products by the artist
+        const [artistProducts] = await db.execute(`
+            SELECT p.product_id, p.name, p.price, p.cover_image_url
+            FROM products p
+            WHERE p.artist_id = ?
+        `, [artistId]);
+
+        const artist = {
+            ...artistDetails[0],
+            products: artistProducts
+        };
+
+        res.status(200).json(artist);
+
     } catch (error) {
-        console.error('Error fetching artist:', error);
+        console.error('Error fetching artist with products:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };

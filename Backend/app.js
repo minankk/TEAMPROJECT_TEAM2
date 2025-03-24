@@ -23,6 +23,7 @@ dotenv.config({
 const authJWT = require('./middlewares/jwtAuthMiddleware');
 const authRoutes = require('./routes/login');
 const signUpRoutes = require('./routes/signup');
+const adminDashboardRoutes = require('./routes/adminRoutes/adminDashboard');
 const sessionRoutes = require('./routes/checksession');
 const forgotPasswordRoute = require('./routes/forgotPassword');
 const resetPasswordRoute = require('./routes/resetPassword');
@@ -99,9 +100,10 @@ app.use('/orders', authJWT.authenticateJWT ,orderRoutes);
 
 
 //admin
+app.use("/admin/dashboard", authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardRoutes);
+app.use("/admin/users", authJWT.authenticateJWT, authJWT.verifyAdmin, adminUserProfileRoutes); // Changed path to '/admin/users'
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
-app.use("/admin-dashboard",authJWT.authenticateJWT ,authJWT.verifyAdmin ,adminUserProfileRoutes);
  
  
 //start the Express server on a specific port
