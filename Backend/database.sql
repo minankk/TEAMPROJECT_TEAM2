@@ -707,12 +707,31 @@ ALTER TABLE users ADD COLUMN membership_status ENUM('regular', 'vip') DEFAULT 'r
 
 --Updated the database name and your VS Code settings
 UPDATE products 
-SET image_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
-WHERE id = 25;
+SET cover_image_urlimage_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
+WHERE product_id = 25;
 
 UPDATE products 
-SET image_url = '/images/Led_Zeppelin_IV.jpg' 
-WHERE id = 17;
+SET cover_image_url = '/images/Led_Zeppelin_IV.jpg' 
+WHERE product_id = 17;
 
 ALTER TABLE users
 ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
+
+-- User Activity Logs Table
+CREATE TABLE user_activity_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    activity_type VARCHAR(50) NOT NULL,
+    activity_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    details TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Session Tracking Table
+CREATE TABLE sessions (
+    session_id VARCHAR(255) PRIMARY KEY,
+    user_id INT,
+    start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    end_time TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
