@@ -38,6 +38,8 @@ import UserManagementPage from './UserManagementPage';
 import OrderManagementPage from './OrderManagementPage'; 
 import AnalyticsPage from './AnalyticsPage'; 
 import ResetPasswordPage from './ResetPasswordPage';
+import SearchResults from './SearchResults';
+import ArtistsPage from './ArtistsPage';
 
 const AuthContext = createContext();
 
@@ -132,6 +134,8 @@ function App() {
                     <Route path="/genres/soundtrack" element={<SoundtrackPage />} />
                     <Route path="/genres/pop" element={<PopPage />} />
                     <Route path="/genres/rock" element={<RockPage />} />
+                    <Route path="/search-results" element={<SearchResults />} />
+                    <Route path="/artists" element={<ArtistsPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />}>
                     <Route index element={<AdminOverview />} /> {/* Default route */}
                     <Route path="overview" element={<AdminOverview />} />   
