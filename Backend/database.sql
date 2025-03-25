@@ -707,12 +707,33 @@ ALTER TABLE users ADD COLUMN membership_status ENUM('regular', 'vip') DEFAULT 'r
 
 --Updated the database name and your VS Code settings
 UPDATE products 
-SET image_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
-WHERE id = 25;
+SET cover_image_urlimage_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
+WHERE product_id = 25;
 
 UPDATE products 
-SET image_url = '/images/Led_Zeppelin_IV.jpg' 
-WHERE id = 17;
+SET cover_image_url = '/images/Led_Zeppelin_IV.jpg' 
+WHERE product_id = 17;
+
+
+--New table for message in the dash board
+CREATE TABLE messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read BOOLEAN DEFAULT FALSE,
+    parent_id INT,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id),
+    FOREIGN KEY (parent_id) REFERENCES messages(message_id)
+);
+
+--Additional table for message in the dash board
+ALTER TABLE users
+ADD COLUMN refresh_token VARCHAR(255),
+ADD COLUMN refresh_token_expires_at TIMESTAMP;
+
 
 ALTER TABLE users
 ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';

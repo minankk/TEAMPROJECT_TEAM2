@@ -61,7 +61,7 @@ exports.addToCart = async (req, res) => {
 // GET /cart/:user_id (Fetch items in the user's cart)
 exports.getCartItems = async (req, res) => {
     const urlUserId = req.params.user_id;
-    const tokenUserId = req.user?.user_id; // Get user ID from the token
+    const tokenUserId = req.user?.user_id;
 
     if (!tokenUserId) {
         return res.status(401).json({ error: 'Unauthorized: No user token provided' });
@@ -92,9 +92,6 @@ exports.getCartItems = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch cart items', details: error.message });
     }
 };
-
-
-
 
 // DELETE /cart/remove/:cart_id (Remove item from the cart)
 exports.removeFromCart = async (req, res) => {

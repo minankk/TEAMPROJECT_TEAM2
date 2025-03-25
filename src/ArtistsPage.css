@@ -1,0 +1,139 @@
+/* Overall page layout */
+.artistsPage {
+  font-family: "Oswald", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(#efd9d4, #fff);
+  color: #fff;
+  display: flex;
+  flex-direction: row; /* Changed from column to row */
+  align-items: flex-start; /* Align items to the top */
+}
+
+/* Artist List */
+.artistList {
+  width: 30%; /* Adjust width as needed */
+  margin: 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.artistList h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #ad2321;
+}
+
+.artistList ul {
+  list-style: none;
+  padding: 0;
+}
+
+.artistList li {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.artistList li:hover {
+  color: #ad2321;
+}
+
+/* Artist Details */
+.artistDetails {
+  width: 70%; /* Adjust width as needed */
+  margin: 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.artistDetails h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ad2321;
+}
+
+.artistImage {
+  width: 100%;
+  max-width: 400px;
+  height: 400px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the area */
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.artistDetails p {
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* Product List */
+.productList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.productItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  width: 100%;
+  max-width: 280px;
+  min-height: 420px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.productItem:hover {
+  transform: scale(1.05);
+}
+
+.productItem h4 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: black;
+}
+
+.productItem p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ad2321;
+}
+
+.productImage {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .productList {
+      grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .productList {
+      grid-template-columns: 1fr;
+  }
+
+  .artistList h2, .artistDetails h2 {
+      font-size: 1.8rem;
+  }
+}

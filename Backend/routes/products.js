@@ -27,7 +27,7 @@ router.get('/genre/:genre', productsController.filterByGenre);
 // Filter by multiple products 
 router.get('/multiplefilter', productsController.multipleFliteredProducts);
 
-//to get the search products
+// To get the search products
 router.get('/search', searchController.searchProducts);
 
 //to get the products by their ID (Whishlist)
