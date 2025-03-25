@@ -2,16 +2,10 @@ const jwt = require('jsonwebtoken');
 const db = require('../db');
 const crypto = require('crypto');
 
-exports.createOrder = async (req, res) => {
+exports.creacheckoutAndCreateOrderteOrder = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
+        const userId = req.user.user_id;
 
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized. Please log in.' });
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const userId = decoded.user_id;
         const { items, totalAmount, shippingAddress } = req.body;
 
         if (!items || !Array.isArray(items) || items.length === 0) {
@@ -97,7 +91,15 @@ exports.createOrder = async (req, res) => {
 
         await db.execute('DELETE FROM cart WHERE user_id = ?', [userId], tnx);
 
-        res.status(201).json({ message: 'Order created successfully', orderId, tracking_number: trackingNumber });
+        res.status(201).json({
+            message: 'Order created successfully',
+            membershipTier: discountInfo.tier,
+            originalTotal: cartTotal,
+            discountApplied: discountInfo.discount * 100,
+            finalTotalAmount,
+            orderId,
+            tracking_number: trackingNumber
+        });
 
     } catch (error) {
         console.error('Error creating order:', error);

@@ -1,0 +1,245 @@
+/* Overall page layout */
+.search-page {
+    font-family: "Oswald", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(#efd9d4, #fff);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Banner section */
+.search-page .search-banner {
+    position: relative;
+    width: 100%;
+    max-height: 600px;
+    height: auto;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.search-page .search-banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+    filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6);
+}
+
+.search-page .search-banner-text {
+    position: absolute;
+    top: 50%;
+    left: 32%;
+    transform: translateY(-50%);
+    text-align: left;
+    color: white;
+    font-size: 3.5rem;
+    max-width: 28%;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    font-weight: bold;
+    z-index: 1;
+}
+
+.search-page .search-banner-text h1 {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Filters section */
+.filters {
+    position: absolute;
+    top: 735px; /* Adjust this value to match the height of the banner */
+    left: 0;
+    width: 250px;
+    height: 800px;
+    padding: 15px;
+    background: transparent; /* Remove background color */
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    font-family: "Courier New", Courier, monospace;
+    z-index: 2; /* Ensure the sidebar is above other content */
+}
+
+.filters.fixed {
+    position: fixed;
+    top: 130px; /* Adjust this value to create space between the filter box and the navbar */
+}
+
+.filters label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.filters input, .filters select {
+    font-size: 1rem;
+    padding: 10px;
+    border: none; /* Remove border */
+    background: transparent; /* Remove background */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: underline; /* Underline text */
+    color: #333; /* Text color */
+    position: relative;
+}
+
+.filters select::after {
+    content: '▼'; /* Add dropdown arrow */
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+}
+
+.filters input:hover, .filters select:hover {
+    color: #7a1917; /* Change text color on hover */
+}
+
+.filters button {
+    background-color: #7a1917;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.filters button:hover {
+    background-color: #52110e;
+}
+
+/* Search Results */
+.search-page .search-results {
+    margin-left: 270px; /* Adjust this value to create space for the filter box */
+    width: calc(100% - 350px); /* Adjust this value to create space for the filter box */
+    margin-top: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.search-page .search-results h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ad2321;
+}
+
+.search-page .search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.search-page .search-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent; /* Make background transparent */
+    padding: 0; /* Remove padding */
+    border: none; /* Remove border */
+    box-shadow: none; /* Remove box-shadow */
+    width: 100%;
+    max-width: 280px;
+    min-height: 420px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.search-page .search-card:hover {
+    transform: scale(1.05);
+}
+
+.search-page .search-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Search Info */
+.search-page .search-info {
+    margin-top: 10px;
+    text-align: center; /* Center align text */
+}
+
+.search-page .search-info h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: black;
+}
+
+.search-page .search-info p {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ad2321;
+}
+
+/* Buy Button */
+.search-page .buy-button {
+    background-color: #7a1917;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-page .buy-button:hover {
+    background-color: #52110e;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .search-page .search-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-page .search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-page .search-results h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Heart Button */
+.search-page .heart-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: gray !important; /* Default heart color */
+}
+
+.search-page .heart-button.favorited {
+    color: red; /* Favorited heart color */
+}
+
+/* Favorite Popup */
+.search-page .favorite-popup {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
