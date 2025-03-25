@@ -37,6 +37,7 @@ import ProductsManagementPage from './ProductsManagementPage';
 import UserManagementPage from './UserManagementPage'; 
 import OrderManagementPage from './OrderManagementPage'; 
 import AnalyticsPage from './AnalyticsPage'; 
+import ResetPasswordPage from './ResetPasswordPage';
 
 const AuthContext = createContext();
 
@@ -124,6 +125,7 @@ function App() {
                     <Route path="/sale" element={<SalesPage />} />
                     <Route path="/logout" element={<LogoutPage />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="reset-password" element={<ResetPasswordPage />} />
                     <Route path="/genres/alternative-rock" element={<AlternativeRockPage />} />
                     <Route path="/best-sellers" element={<BestSellers />} />
                     <Route path="/genres/hip-hop" element={<HipHopPage />} />
@@ -132,7 +134,7 @@ function App() {
                     <Route path="/genres/rock" element={<RockPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />}>
                     <Route index element={<AdminOverview />} /> {/* Default route */}
-                    <Route path="overview" element={<AdminOverview />} />
+                    <Route path="overview" element={<AdminOverview />} />   
                     <Route path="messages" element={<MessagesPage />} />
                     <Route path="products" element={<ProductsManagementPage />} />
                     <Route path="users" element={<UserManagementPage />} />
