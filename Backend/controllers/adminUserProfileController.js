@@ -97,6 +97,14 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params;
 
     try {
+        await db.execute('DELETE FROM wishlist WHERE user_id = ?', [id]);
+
+        await db.execute('DELETE FROM order_tracking WHERE order_id IN (SELECT order_id FROM orders WHERE user_id = ?)', [id]);
+
+        await db.execute('DELETE FROM order_items WHERE order_id IN (SELECT order_id FROM orders WHERE user_id = ?)', [id]);
+
+        await db.execute('DELETE FROM orders WHERE user_id = ?', [id]);
+
         const [result] = await db.execute('DELETE FROM users WHERE user_id = ?', [id]);
 
         if (result.affectedRows === 0) {
@@ -110,6 +118,9 @@ exports.deleteUser = async (req, res) => {
         res.status(500).json({ message: 'Error deleting user', error: error.message });
     }
 };
+
+
+
 
 
 

@@ -2,27 +2,46 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+const genBenefitsDiscount = (totalSpent) => {
+    if (totalSpent >= 200) {
+        return { tier: "Gold", discount: 0.20 };
+    } else if (totalSpent >= 100) {
+        return { tier: "Silver", discount: 0.15 };
+    } else if (totalSpent >= 50) {
+        return { tier: "Bronze", discount: 0.10 };
+    }
+    return { tier: "No VIP", discount: 0.05 };
+};
 
 exports.viewDashboard = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized. Please log in.' });
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        console.log('Decoded Token:', decoded);
-
-        const [userDetails] = await db.execute('SELECT user_name, email FROM users WHERE user_id = ?', [decoded.user_id]);
+        const userId = req.user.user_id;
+        const [userDetails] = await db.execute(
+            'SELECT user_name, email, membership_status FROM users WHERE user_id = ?',
+            [userId]
+        );
 
         if (userDetails.length === 0) {
             return res.status(404).json({ message: 'User not found' });
         }
 
         const user = userDetails[0];
+        const isVIP = user.membership_status === 'vip';
+        const [spendingData] = await db.execute(`
+            SELECT COALESCE(SUM(total_amount), 0) AS totalSpent
+            FROM orders
+            WHERE user_id = ?
+        `, [userId]);
 
-        res.status(200).json({ message: `Welcome to your dashboard, ${user.user_name}!` });
+        const totalSpent = spendingData[0].totalSpent;
+
+        const benefits = isVIP ? genBenefitsDiscount(totalSpent) : null;
+
+        res.status(200).json({
+            message: `Welcome to your dashboard, ${user.user_name}!`,
+            isVIP: isVIP,
+            benefits: benefits
+        });
 
     } catch (error) {
         console.error("Error in viewDashboard:", error);
@@ -32,17 +51,11 @@ exports.viewDashboard = async (req, res) => {
 
 exports.getProfile = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized. Please log in.' });
-        }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        console.log('Decoded Token:', decoded);
+        const userId = req.user.user_id;
 
         const [userDetails] = await db.execute(
-            'SELECT user_name, email FROM users WHERE user_id = ?', 
-            [decoded.user_id]
+            'SELECT user_name, email FROM users WHERE user_id = ?',
+            [userId]
         );
         if (userDetails.length === 0) {
             return res.status(404).json({ message: 'User not found' });
@@ -73,12 +86,12 @@ exports.updateProfile = async (req, res) => {
 
         let updateQuery = 'UPDATE users SET ';
         const updateValues = [];
-        
+
         if (user_name) {
             updateQuery += 'user_name = ?, ';
             updateValues.push(user_name);
         }
-        
+
         if (email) {
             updateQuery += 'email = ?, ';
             updateValues.push(email);
@@ -176,7 +189,7 @@ exports.viewOrderTracking = async (req, res) => {
             tracking_status: orderDetails[0].tracking_status,
             estimated_delivery_date: orderDetails[0].estimated_delivery_date
         });
-        
+
     } catch (error) {
         console.error('Error fetching order tracking:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -389,3 +402,5 @@ exports.markMessageAsRead = async (req, res) => {
       return res.status(500).json({ error: 'Failed to mark message as read.' });
     }
   };
+
+exports.genBenefitsDiscount = genBenefitsDiscount;
