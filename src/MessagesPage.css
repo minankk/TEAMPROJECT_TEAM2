@@ -1,0 +1,96 @@
+/* MessagesPage.css */
+
+.messages-page {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    color: #333; 
+}
+
+.messages-page h2 {
+    font-size: 2.5em; 
+    color: #007bff; 
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    text-align: left; 
+}
+
+.messages-page p {
+    font-size: 1.1em; 
+    line-height: 1.7;
+    margin-bottom: 25px;
+    color: #555; 
+}
+
+/* Example: Styling a message list */
+.message-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.message-list li {
+    background-color: #f8f8f8; 
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); 
+}
+
+.message-list li strong {
+    color: #007bff; 
+    font-weight: 600;
+}
+
+/* Example: Styling a message input form */
+.message-form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    font-size: 1em;
+}
+
+.message-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease; 
+}
+
+.message-form button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .messages-page {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .messages-page h2 {
+        font-size: 2em;
+    }
+
+    .messages-page p {
+        font-size: 1em;
+    }
+}
