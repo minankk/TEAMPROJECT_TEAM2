@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import logo from "../assets/logo-red2.png";
-import { useAuth } from "../App"; // Import AuthContext
+import { useAuth } from "../App"; 
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -10,10 +10,20 @@ const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
     const [genresOpen, setGenresOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
     const handleUserClick = () => {
         navigate(isLoggedIn ? "/dashboard" : "/login");
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        navigate(`/search-results?query=${encodeURIComponent(searchQuery)}`);
     };
 
     return (
@@ -60,11 +70,15 @@ const Navbar = () => {
             </nav>
             <div className="search-cart">
                 <div className="search-box">
+                <form className="search-box" onSubmit={handleSearchSubmit}>
                     <input
                         type="text"
                         placeholder="Search records, artists, genres..."
                         className="search-input"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
                     />
+                </form>
                 </div>
                 <div
                     className="user-dropdown"
