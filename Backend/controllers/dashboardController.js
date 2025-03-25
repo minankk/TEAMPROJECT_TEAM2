@@ -55,7 +55,7 @@ exports.getProfile = async (req, res) => {
 
         const [userDetails] = await db.execute(
             'SELECT user_name, email FROM users WHERE user_id = ?',
-            [decoded.user_id]
+            [userId]
         );
         if (userDetails.length === 0) {
             return res.status(404).json({ message: 'User not found' });
