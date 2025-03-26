@@ -3,127 +3,129 @@
 /* PopUp.css */
 
 .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: stretch;
-    padding-right: 0;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  padding-right: 0;
+  z-index: 1000;
 }
 
 .popup {
-    background: white;
-    border-radius: 40px;
-    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
-    border: 5px solid #7a1917;
-    padding: 30px;
-    width: 50vw;
-    overflow-y: auto;
-    position: relative;
-    color: black;
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.6;
-    transition: height 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally */
+  background: white;
+  border-radius: 40px;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
+  border: 5px solid #7a1917;
+  padding: 30px;
+  width: 50vw;
+  overflow-y: auto;
+  position: relative;
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  transition: height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
 }
 
-.popup-close#btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: #a73230;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: rgb(14, 1, 1);
-    transition: 0.3s ease;
-    font-family: 'Montserrat', sans-serif;
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #a73230;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: rgb(14, 1, 1);
+  transition: 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
 }
 
-.popup-close#btn:hover {
-    background-color: #8d0805;
-    color: white;
+.popup-close:hover {
+  background-color: #8d0805;
+  color: white;
 }
 
 .popup h2 {
-    font-weight: 700;
-    color: #a51310;
-    font-size: 28px;
-    letter-spacing: 0.5px;
-    margin-bottom: 20px;
-    text-align: center;
+  font-weight: 700;
+  color: #a51310;
+  font-size: 28px;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .popup p {
-    font-weight: 400;
-    font-size: 16px;
-    color: #555;
-    line-height: 1.7;
-    max-height: 6.8em;
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 10px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 10px;
+  position: relative;
 }
 
 .popup p.expanded {
-    max-height: none;
+  max-height: none;
+  overflow: visible; /* Ensure content is fully visible when expanded */
 }
 
-.popup p.read-more::after {
-    content: "...";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(to bottom, transparent, white);
-    width: 100%;
-    padding-top: 10px;
+.read-more-link {
+  color: #a73230;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-left: 5px;
 }
 
-.read-more-button {
-    background-color: #a73230;
-    color: rgb(14, 1, 1);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    margin-top: auto;
-    align-self: flex-start;
-}
-
-.read-more-button:hover {
-    background-color: #8d0805;
-    color: white;
-}
-
-.add-to-cart-popup {
-    background-color: #a73230;
-    color: rgb(14, 1, 1);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    margin-top: auto;
-    align-self: flex-end;
-    margin-bottom: 20px;
-}
-
-.add-to-cart-popup:hover {
-    background-color: #8d0805;
-    color: white;
+.read-more-link:hover {
+  text-decoration: underline;
 }
 
 .popup img {
-    max-width: 80%; /* Adjust as needed */
-    max-height: 300px; /* Adjust as needed */
-    object-fit: contain;
-    margin: 20px auto; /* Center image horizontally */
-    display: block; /* Ensure margin: auto works */
+  max-width: 80%; /* Adjust as needed */
+  max-height: 300px; /* Adjust as needed */
+  object-fit: contain;
+  margin: 20px auto; /* Center image horizontally */
+  display: block; /* Ensure margin: auto works */
+}
+
+.add-to-cart-popup {
+  background-color: #a73230;
+  color: rgb(14, 1, 1);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: auto;
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+
+.add-to-cart-popup:hover {
+  background-color: #8d0805;
+  color: white;
+}
+
+.related-albums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.related-album {
+  text-align: center;
+  width: 100px; /* Adjust as needed */
+}
+
+.related-album-image {
+  width: 100%;
+  height: 100px; /* Adjust as needed */
+  object-fit: cover;
+  margin-bottom: 5px;
 }
