@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../db');
 const crypto = require('crypto');
 
-exports.creacheckoutAndCreateOrderteOrder = async (req, res) => {
+exports.checkoutAndCreateOrder = async (req, res) => {
     try {
         const userId = req.user.user_id;
 

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/orderController');
-const authJWT = require('../middlewares/jwtAuthMiddleware'); // Assuming you need auth for order history
 
 // POST /orders (Create a new order)
 router.post('/', orderController.checkoutAndCreateOrder);
