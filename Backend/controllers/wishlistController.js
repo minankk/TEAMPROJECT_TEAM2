@@ -56,19 +56,20 @@ exports.removeFromWishlist = async (req, res) => {
 
 
 // Function to get the user's wishlist
+
 exports.getWishlist = async (req, res) => {
     try {
-        const urlUserId = req.params.user_id;
+        const { user_id } = req.params;
         const tokenUserId = req.user?.user_id;
 
-        console.log("URL User ID:", urlUserId);
+        console.log("Received request for wishlist. URL User ID:", user_id);
         console.log("Token User ID:", tokenUserId);
 
         if (!tokenUserId) {
             return res.status(401).json({ error: 'Unauthorized: No user token provided' });
         }
-    
-        if (Number(urlUserId) !== Number(tokenUserId)) {
+
+        if (Number(user_id) !== Number(tokenUserId)) {
             return res.status(403).json({ error: 'Forbidden: User IDs do not match' });
         }
 
@@ -79,17 +80,18 @@ exports.getWishlist = async (req, res) => {
              JOIN products p ON w.product_id = p.product_id
              JOIN albums a ON p.album_id = a.album_id
              WHERE w.user_id = ?`,
-            [urlUserId]
+            [user_id]
         );
+
+        console.log("Fetched Wishlist Items:", wishlistItems);
 
         if (wishlistItems.length === 0) {
             return res.status(404).json({ message: "No items in wishlist" });
         }
 
         res.status(200).json(wishlistItems);
-
     } catch (error) {
-        console.error('Error fetching wishlist:', error);
-        res.status(500).json({ message: 'Internal server error', error: error.message });
+        console.error("Error fetching wishlist:", error.stack);
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };

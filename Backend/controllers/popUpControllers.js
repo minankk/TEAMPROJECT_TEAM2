@@ -312,15 +312,28 @@ exports.getPopUpInfo = async (req, res) => {
       return res.status(400).json({ error: "Invalid product ID" });
     }
 
-    const [results] = await db.execute(
-      `SELECT 
-        p.product_id, p.name AS album_name, p.cover_image_url, p.release_date,
-        ap.hit_singles, ap.awards, ap.records, ap.genres_popup, ap.interesting_facts, ap.related_albums, ap.related_albums_images
+    // Query to fetch album details and related albums with their images
+    const [results] = await db.execute(`
+      SELECT 
+        p.product_id, 
+        p.name AS album_name, 
+        p.cover_image_url, 
+        p.release_date,
+        ap.hit_singles, 
+        ap.awards, 
+        ap.records, 
+        ap.genres_popup, 
+        ap.interesting_facts, 
+        ra.related_album_id, 
+        a.title AS related_album_name,  -- Fetch title from the albums table
+        rai.image_url AS related_album_image  -- Related album image URL
       FROM products p
       LEFT JOIN albums_pop_up ap ON p.album_id = ap.album_id
-      WHERE p.product_id = ?`,
-      [productId]
-    );
+      LEFT JOIN related_albums ra ON ap.album_id = ra.album_id
+      LEFT JOIN albums a ON ra.related_album_id = a.album_id  -- Join to albums table for related albums
+      LEFT JOIN related_album_images rai ON ra.related_album_id = rai.related_album_id
+      WHERE p.product_id = ?;
+    `, [productId]);
 
     if (results.length === 0) {
       return res.status(404).json({ error: "Product not found" });
@@ -329,15 +342,17 @@ exports.getPopUpInfo = async (req, res) => {
     const product = results[0];
     const formattedReleaseDate = new Date(product.release_date).toISOString().split('T')[0];
 
-    let relatedAlbums = [];
-    if (product.related_albums_images) {
-      try {
-        relatedAlbums = JSON.parse(product.related_albums_images);
-      } catch (err) {
-        console.error("Error parsing related_albums_images:", err);
-      }
-    }
+    // Collect related albums with their images
+    const relatedAlbums = results.map(item => ({
+      related_album_id: item.related_album_id,
+      related_album_name: item.related_album_name,
+      related_album_image: item.related_album_image,
+    }));
 
+    // Clean up and remove duplicates for related albums
+    const uniqueRelatedAlbums = Array.from(new Map(relatedAlbums.map(item => [item.related_album_id, item])).values());
+
+    // Return the product details along with related albums and images
     res.status(200).json({
       album_name: product.album_name,
       cover_image_url: product.cover_image_url,
@@ -347,10 +362,7 @@ exports.getPopUpInfo = async (req, res) => {
       records: product.records,
       genres_popup: product.genres_popup,
       interesting_facts: product.interesting_facts,
-      related_albums: {
-        text: product.related_albums ? `If you loved ${product.album_name}, you might also like: ${product.related_albums}` : null,
-        images: relatedAlbums,
-      },
+      related_albums: uniqueRelatedAlbums,  // Send only unique related albums
     });
   } catch (err) {
     console.error("Error fetching pop-up information:", err);
