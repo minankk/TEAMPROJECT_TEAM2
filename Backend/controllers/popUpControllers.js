@@ -333,6 +333,11 @@ exports.getPopUpInfo = async (req, res) => {
       LEFT JOIN related_album_images rai ON ra.related_album_id = rai.related_album_id
       WHERE p.product_id = ?;
     `, [productId]);
+      LEFT JOIN related_albums ra ON ap.album_id = ra.album_id
+      LEFT JOIN albums a ON ra.related_album_id = a.album_id  -- Join to albums table for related albums
+      LEFT JOIN related_album_images rai ON ra.related_album_id = rai.related_album_id
+      WHERE p.product_id = ?;
+    `, [productId]);
 
     if (results.length === 0) {
       return res.status(404).json({ error: "Product not found" });

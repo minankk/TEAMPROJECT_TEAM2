@@ -328,6 +328,6 @@ exports.markMessageAsRead = async (req, res) => {
         console.error('Error marking message as read:', error);
         return res.status(500).json({ error: 'Failed to mark message as read.' });
     }
-};
+  };
 
 exports.genBenefitsDiscount = genBenefitsDiscount;
