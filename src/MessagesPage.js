@@ -49,7 +49,7 @@ const MessagesPage = () => {
 
     const handleDeleteMessage = async (messageId) => {
         try {
-            await axios.delete(`http://localhost:5001/admin/messages/${messageId}`, {
+            await axios.delete(`http://localhost:5001/admin/messages/delete/${messageId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             fetchAdminMessages();
