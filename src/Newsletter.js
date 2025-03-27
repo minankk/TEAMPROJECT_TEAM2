@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './NewsletterPage.css'; // Import the CSS file
+import './NewsletterPage.css';
 
 const NewsletterPage = () => {
     const [email, setEmail] = useState('');
-    const [preferences, setPreferences] = useState([]); 
+    const [preferences, setPreferences] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
@@ -51,12 +51,12 @@ const NewsletterPage = () => {
                 payload.user_id = user_id;
             }
 
-            const response = await axios.post('http://localhost:5001/newsletter', payload); // Route is just /newsletter
+            const response = await axios.post('http://localhost:5001/newsletter', payload);
             setMessage(response.data.message);
             setEmail('');
-            setPreferences([]); // Clear preferences
+            setPreferences([]);
         } catch (err) {
-            if (err.response && err.response.data && err.response.data.message) { // Backend uses "message"
+            if (err.response && err.response.data && err.response.data.message) {
                 setError(err.response.data.message);
             } else {
                 setError('Failed to subscribe. Please try again.');
