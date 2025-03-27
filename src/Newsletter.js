@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import './NewsletterPage.css'; // Import the CSS file
+import './NewsletterPage.css';
 
 const NewsletterPage = () => {
     const [email, setEmail] = useState('');
-    const [preferences, setPreferences] = useState([]); 
+    const [preferences, setPreferences] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
@@ -51,16 +50,25 @@ const NewsletterPage = () => {
                 payload.user_id = user_id;
             }
 
-            const response = await axios.post('http://localhost:5001/newsletter', payload); // Route is just /newsletter
-            setMessage(response.data.message);
-            setEmail('');
-            setPreferences([]); // Clear preferences
-        } catch (err) {
-            if (err.response && err.response.data && err.response.data.message) { // Backend uses "message"
-                setError(err.response.data.message);
-            } else {
-                setError('Failed to subscribe. Please try again.');
+            const response = await fetch('http://localhost:5001/newsletter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to subscribe. Please try again.');
             }
+
+            const data = await response.json();
+            setMessage(data.message);
+            setEmail('');
+            setPreferences([]);
+        } catch (err) {
+            setError(err.message || 'Failed to subscribe. Please try again.');
         }
     };
 

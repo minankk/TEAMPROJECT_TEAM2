@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import './UserMessagesPage.css';
 
@@ -21,10 +20,21 @@ const UserMessagesPage = () => {
             return;
         }
         try {
-            const response = await axios.get('http://localhost:5001/dashboard/messages', {
-                headers: { Authorization: `Bearer ${token}` },
+            const response = await fetch('http://localhost:5001/dashboard/messages', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
             });
-            setMessages(response.data);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to fetch messages: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+
+            const data = await response.json();
+            setMessages(data);
             setError('');
         } catch (err) {
             console.error('Error fetching user messages:', err);
@@ -39,11 +49,20 @@ const UserMessagesPage = () => {
         }
 
         try {
-            await axios.post(
-                'http://localhost:5001/dashboard/messages/reply',
-                { parentId: selectedMessageId, message: replyMessage },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await fetch('http://localhost:5001/dashboard/messages/reply', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ parentId: selectedMessageId, message: replyMessage }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to send reply: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+
             setReplyMessage('');
             setSelectedMessageId(null);
             fetchUserMessages();
@@ -56,11 +75,19 @@ const UserMessagesPage = () => {
 
     const handleMarkAsRead = async (messageId) => {
         try {
-            await axios.put(
-                `http://localhost:5001/dashboard/messages/read/${messageId}`,
-                {},
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await fetch(`http://localhost:5001/dashboard/messages/read/${messageId}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to mark message as read: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+
             fetchUserMessages();
             setError('');
         } catch (err) {
