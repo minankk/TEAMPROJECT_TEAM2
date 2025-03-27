@@ -40,7 +40,7 @@ const SoundtrackPage = ({ handleAddToCart }) => {
             />
             <h2 className="soundtrack-album-name">{album.name}</h2>
             <p className="soundtrack-album-artist">{album.artist_name}</p>
-            <p className="soundtrack-album-price">£{album.price}</p>
+            <p className="soundtrack-album-price">{album.price}</p>
             <button
               className="add-to-cart-soundtrack"
               onClick={() => handleAddToCart(album.product_id)}
