@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import './MessagesPage.css';
-
+ 
 const MessagesPage = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -10,33 +9,53 @@ const MessagesPage = () => {
     const [error, setError] = useState('');
     const token = localStorage.getItem('token');
     const isAdmin = token ? jwtDecode(token).role === 'admin' : false;
-
+ 
     useEffect(() => {
         if (isAdmin && token) {
             fetchAdminMessages();
         }
     }, [isAdmin, token]);
-
+ 
     const fetchAdminMessages = async () => {
         try {
-            const response = await axios.get('http://localhost:5001/admin/messages/history', {
-                headers: { Authorization: `Bearer ${token}` },
+            const response = await fetch('http://localhost:5001/admin/messages/history', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json', // Add Content-Type if your backend expects JSON
+                },
             });
-            setMessages(response.data);
+ 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to fetch messages: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+ 
+            const data = await response.json();
+            setMessages(data);
             setError('');
         } catch (err) {
             console.error('Error fetching admin messages:', err);
             setError('Failed to fetch messages.');
         }
     };
-
+ 
     const handleSendMessage = async () => {
         try {
-            await axios.post(
-                'http://localhost:5001/admin/messages/send',
-                { receiverId, message: newMessage },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await fetch('http://localhost:5001/admin/messages/send', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ receiverId, message: newMessage }),
+            });
+ 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to send message: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+ 
             setNewMessage('');
             setReceiverId('');
             fetchAdminMessages();
@@ -46,12 +65,22 @@ const MessagesPage = () => {
             setError('Failed to send message.');
         }
     };
-
+ 
     const handleDeleteMessage = async (messageId) => {
         try {
-            await axios.delete(`http://localhost:5001/admin/messages/delete/${messageId}`, {
-                headers: { Authorization: `Bearer ${token}` },
+            const response = await fetch(`http://localhost:5001/admin/messages/${messageId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json', // You might not need Content-Type for DELETE, but it's good practice to include if your API expects it
+                },
             });
+ 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to delete message: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+ 
             fetchAdminMessages();
             setError('');
         } catch (err) {
@@ -59,16 +88,16 @@ const MessagesPage = () => {
             setError('Failed to delete message.');
         }
     };
-
+ 
     if (!isAdmin) {
         return <div className="messages-page"><h2>Access Denied</h2><p>You do not have permission to view this page.</p></div>;
     }
-
+ 
     return (
         <div className="messages-page">
             <h2>Admin Messages</h2>
             {error && <p className="error">{error}</p>}
-
+ 
             <div className="message-form">
                 <input
                     type="text"
@@ -83,7 +112,7 @@ const MessagesPage = () => {
                 />
                 <button onClick={handleSendMessage}>Send Message</button>
             </div>
-
+ 
             <ul className="message-list">
                 {messages.map((message) => (
                     <li key={message.message_id}>
@@ -97,5 +126,5 @@ const MessagesPage = () => {
         </div>
     );
 };
-
+ 
 export default MessagesPage;
