@@ -19,7 +19,7 @@ router.get('/order/:orderId', dashboardController.viewOrderTracking);
 
 // User-only routes (dashboard related)
 router.get('/messages', dashboardController.getUserMessages);
-router.post('messages/reply', dashboardController.replyToMessage);
+router.post('/messages/reply', dashboardController.replyToMessage);
 router.put('/messages/read/:messageId', dashboardController.markMessageAsRead);
 
 module.exports = router;

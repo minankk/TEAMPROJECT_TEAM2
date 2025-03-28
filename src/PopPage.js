@@ -40,7 +40,7 @@ const PopPage = ({ handleAddToCart }) => {
             />
             <h2 className="pop-album-name">{album.name}</h2>
             <p className="pop-album-artist">{album.artist_name}</p>
-            <p className="pop-album-price">£{album.price}</p>
+            <p className="pop-album-price">{album.price}</p>
             <button
               className="add-to-cart-pop"
               onClick={() => handleAddToCart(album.product_id)}

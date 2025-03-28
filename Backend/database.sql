@@ -707,12 +707,12 @@ ALTER TABLE users ADD COLUMN membership_status ENUM('regular', 'vip') DEFAULT 'r
 
 --Updated the database name and your VS Code settings
 UPDATE products 
-SET cover_image_urlimage_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
-WHERE product_id = 25;
+SET image_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
+WHERE id = 25;
 
 UPDATE products 
-SET cover_image_url = '/images/Led_Zeppelin_IV.jpg' 
-WHERE product_id = 17;
+SET image_url = '/images/Led_Zeppelin_IV.jpg' 
+WHERE id = 17;
 
 
 --New table for message in the dash board
@@ -737,3 +737,202 @@ ADD COLUMN refresh_token_expires_at TIMESTAMP;
 
 ALTER TABLE users
 ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
+
+--1.Additional info for displaying cover_image between album and release date
+ALTER TABLE albums_pop_up
+ADD COLUMN cover_image_url VARCHAR(255) BEFORE release_date;
+
+--2.Additional info for displaying related_albums_images 
+ALTER TABLE albums_pop_up
+ADD related_albums_images TEXT;
+
+--3.Additional updated info for the related_albums_images
+
+UPDATE albums_pop_up
+SET related_albums_images = CASE
+    WHEN album_id = 1 THEN '[{"product_id": 2, "image_url": "/images/Oasis – The Masterplan (1).webp"}, {"product_id": 3, "image_url": "/images/Radiohead – OK Computer.webp"}]'
+    WHEN album_id = 2 THEN '[{"product_id": 3, "image_url": "/images/Radiohead – OK Computer.webp"}, {"product_id": 4, "image_url": "/images/Green-Day-Saviors.webp"}]'
+    WHEN album_id = 3 THEN '[{"product_id": 4, "image_url": "/images/Green-Day-Saviors.webp"}, {"product_id": 5, "image_url": "/images/Green Day – American Idiot (1).webp"}]'
+    WHEN album_id = 4 THEN '[{"product_id": 5, "image_url": "/images/Green Day – American Idiot (1).webp"}, {"product_id": 1, "image_url": "/images/Nirvana – Nevermind (1).webp"}]'
+    WHEN album_id = 5 THEN '[{"product_id": 1, "image_url": "/images/Nirvana – Nevermind (1).webp"}, {"product_id": 2, "image_url": "/images/Oasis – The Masterplan (1).webp"}]'
+    WHEN album_id = 6 THEN '[{"product_id": 7, "image_url": "/images/Original Soundtrack – Guardians of the Galaxy - Awesome Mix 1.webp"}, {"product_id": 8, "image_url": "/images/Original Soundtrack – Pulp Fiction.webp"}]'
+    WHEN album_id = 7 THEN '[{"product_id": 8, "image_url": "/images/Original Soundtrack – Pulp Fiction.webp"}, {"product_id": 9, "image_url": "/images/Motion Picture Cast Recording – The Greatest Showman.webp"}]'
+    WHEN album_id = 8 THEN '[{"product_id": 9, "image_url": "/images/Motion Picture Cast Recording – The Greatest Showman.webp"}, {"product_id": 10, "image_url": "/images/Original Soundtrack – Baby Driver.webp"}]'
+    WHEN album_id = 9 THEN '[{"product_id": 10, "image_url": "/images/Original Soundtrack – Baby Driver.webp"}, {"product_id": 6, "image_url": "/images/Original Soundtrack – Barbie the Album.webp"}]'
+    WHEN album_id = 10 THEN '[{"product_id": 6, "image_url": "/images/Original Soundtrack – Barbie the Album.webp"}, {"product_id": 7, "image_url": "/images/Original Soundtrack – Guardians of the Galaxy - Awesome Mix 1.webp"}]'
+    WHEN album_id = 11 THEN '[{"product_id": 12, "image_url": "/images/Fleetwood Mac – Rumors.webp"}, {"product_id": 13, "image_url": "/images/Michael Jackson – Thriller.webp"}]'
+    WHEN album_id = 12 THEN '[{"product_id": 13, "image_url": "/images/Michael Jackson – Thriller.webp"}, {"product_id": 14, "image_url": "/images/Sabrina Carpenter – Short n’ Sweet.webp"}]'
+    WHEN album_id = 13 THEN '[{"product_id": 14, "image_url": "/images/Sabrina Carpenter – Short n’ Sweet.webp"}, {"product_id": 15, "image_url": "/images/Charlie XCX – Brat.webp"}]'
+    WHEN album_id = 14 THEN '[{"product_id": 15, "image_url": "/images/Charlie XCX – Brat.webp"}, {"product_id": 11, "image_url": "/images/Ariana Grande – Sweetener.webp"}]'
+    WHEN album_id = 15 THEN '[{"product_id": 11, "image_url": "/images/Ariana Grande – Sweetener.webp"}, {"product_id": 12, "image_url": "/images/Fleetwood Mac – Rumors.webp"}]'
+    WHEN album_id = 16 THEN '[{"product_id": 17, "image_url": "/images/Led Zepplin – Led zeppelin IV.webp"}, {"product_id": 18, "image_url": "/images/The Beatle – Abby Road.webp"}]'
+    WHEN album_id = 17 THEN '[{"product_id": 18, "image_url": "/images/The Beatle – Abby Road.webp"}, {"product_id": 19, "image_url": "/images/Eagles – Hotel California.webp"}]'
+    WHEN album_id = 18 THEN '[{"product_id": 19, "image_url": "/images/Eagles – Hotel California.webp"}, {"product_id": 20, "image_url": "/images/Pink Floyd – The Wall.webp"}]'
+    WHEN album_id = 19 THEN '[{"product_id": 20, "image_url": "/images/Pink Floyd – The Wall.webp"}, {"product_id": 16, "image_url": "/images/Pink Floyd – The Dark Side of the Moon.webp"}]'
+    WHEN album_id = 20 THEN '[{"product_id": 16, "image_url": "/images/Pink Floyd – The Dark Side of the Moon.webp"}, {"product_id": 17, "image_url": "/images/Led Zepplin – Led zeppelin IV.webp"}]'
+    WHEN album_id = 21 THEN '[{"product_id": 22, "image_url": "/images/Kendrick Lamar – To Pimp a Butterfly.jpg"}, {"product_id": 23, "image_url": "/images/Jay-Z – The Blueprint.webp"}]'
+    WHEN album_id = 22 THEN '[{"product_id": 23, "image_url": "/images/Jay-Z – The Blueprint.webp"}, {"product_id": 24, "image_url": "/images/Eminem – The Marshall Mathers LP.jpg"}]'
+    WHEN album_id = 23 THEN '[{"product_id": 24, "image_url": "/images/Eminem – The Marshall Mathers LP.jpg"}, {"product_id": 25, "image_url": "/images/The Notorious B.I.G. – Ready to Die.webp"}]'
+    WHEN album_id = 24 THEN '[{"product_id": 25, "image_url": "/images/The Notorious B.I.G. – Ready to Die.webp"}, {"product_id": 21, "image_url": "/images/50 Cent – Get Rich or Die Tryin’.webp"}]'
+    WHEN album_id = 25 THEN '[{"product_id": 21, "image_url": "/images/50 Cent – Get Rich or Die Tryin’.webp"}, {"product_id": 22, "image_url": "/images/Kendrick Lamar – To Pimp a Butterfly.jpg"}]'
+    ELSE NULL
+END
+WHERE album_id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25);
+
+--Addtional info for adminMessage
+CREATE TABLE admins (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- First message (parentId is NULL)
+INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (1, 9, 'This is the first message.', NULL);
+
+-- Reply to the above message
+INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (9, 1, 'This is a reply.', 4); -- Reply to message_id 4
+-- Reply to another message
+INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (2, 9, 'Reply to Test Message 2.', 2); -- Reply to message_id 2
+-- Reply to yet another message
+INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (9, 3, 'Reply to Test Message 3.', 3); -- Reply to message_id 3
+-- Reply to a reply
+INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (3, 9, 'Reply to the reply of Test Message 3.', 6); -- Reply to message_id 6
+
+ALTER TABLE albums_pop_up 
+ADD COLUMN cover_image_url VARCHAR(255) AFTER release_date;
+
+ALTER TABLE albums_pop_up
+ADD related_albums_images TEXT;
+
+
+SHOW CREATE TABLE albums_pop_up;
+
+ALTER TABLE albums_pop_up ADD UNIQUE (album_id);
+
+CREATE TABLE related_albums (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    album_id INT NOT NULL,
+    related_album_id INT NOT NULL,
+    FOREIGN KEY (album_id) REFERENCES albums_pop_up(album_id) ON DELETE CASCADE,
+    FOREIGN KEY (related_album_id) REFERENCES albums_pop_up(album_id) ON DELETE CASCADE
+);
+
+CREATE TABLE related_album_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    related_album_id INT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    FOREIGN KEY (related_album_id) REFERENCES albums_pop_up(album_id) ON DELETE CASCADE
+);
+
+ALTER TABLE albums_pop_up 
+DROP COLUMN related_albums, 
+DROP COLUMN related_albums_images;
+
+INSERT INTO related_albums (album_id, related_album_id) VALUES
+(1, 2), (1, 3), -- Nevermind → The Masterplan, OK Computer
+(2, 3), (2, 4), -- The Masterplan → OK Computer, Saviors
+(3, 4), (3, 5), -- OK Computer → Saviors, American Idiot
+(4, 5), (4, 6), -- Saviors → American Idiot, Barbie the Album
+(5, 6), (5, 7), -- American Idiot → Barbie the Album, Guardians of the Galaxy
+(6, 7), (6, 8), -- Barbie the Album → Guardians of the Galaxy, Pulp Fiction
+(7, 8), (7, 9), -- Guardians of the Galaxy → Pulp Fiction, The Greatest Showman
+(8, 9), (8, 10), -- Pulp Fiction → The Greatest Showman, Baby Driver
+(9, 10), (9, 11), -- The Greatest Showman → Baby Driver, Sweetener
+(10, 11), (10, 12), -- Baby Driver → Sweetener, Rumours
+(11, 12), (11, 13), -- Sweetener → Rumours, Thriller
+(12, 13), (12, 14), -- Rumours → Thriller, Short n’ Sweet
+(13, 14), (13, 15), -- Thriller → Short n’ Sweet, Brat
+(14, 15), (14, 16), -- Short n’ Sweet → Brat, The Dark Side of the Moon
+(15, 16), (15, 17), -- Brat → The Dark Side of the Moon, Led Zeppelin IV
+(16, 17), (16, 18), -- The Dark Side of the Moon → Led Zeppelin IV, Abbey Road
+(17, 18), (17, 19), -- Led Zeppelin IV → Abbey Road, Hotel California
+(18, 19), (18, 20), -- Abbey Road → Hotel California, The Wall
+(19, 20), (19, 21), -- Hotel California → The Wall, Get Rich or Die Tryin'
+(20, 21), (20, 22), -- The Wall → Get Rich or Die Tryin', To Pimp a Butterfly
+(21, 22), (21, 23), -- Get Rich or Die Tryin' → To Pimp a Butterfly, The Blueprint
+(22, 23), (22, 24), -- To Pimp a Butterfly → The Blueprint, The Marshall Mathers LP
+(23, 24), (23, 25), -- The Blueprint → The Marshall Mathers LP, Ready to Die
+(24, 25), (24, 1), -- The Marshall Mathers LP → Ready to Die, Nevermind
+(25, 1), (25, 2); -- Ready to Die → Nevermind, The Masterplan
+
+
+INSERT INTO related_album_images (related_album_id, image_url) VALUES
+(2, '/images/Oasis – The Masterplan.webp'),
+(3, '/images/Radiohead – OK Computer.webp'),
+(4, '/images/Green-Day-Saviors.webp'),
+(5, '/images/Green Day – American Idiot.webp'),
+(6, '/images/Original Soundtrack – Barbie the Album.webp'),
+(7, '/images/Original Soundtrack – Guardians of the Galaxy - Awesome Mix 1.webp'),
+(8, '/images/Original Soundtrack – Pulp Fiction.webp'),
+(9, '/images/Motion Picture Cast Recording – The Greatest Showman.webp'),
+(10, '/images/Original Soundtrack – Baby Driver.webp'),
+(11, '/images/Ariana Grande – Sweetener.webp'),
+(12, '/images/Fleetwood Mac – Rumours.webp'),
+(13, '/images/Michael Jackson – Thriller.webp'),
+(14, '/images/Sabrina Carpenter – Short n’ Sweet.webp'),
+(15, '/images/Charlie XCX – Brat.webp'),
+(16, '/images/Pink Floyd – The Dark Side of the Moon.webp'),
+(17, '/images/Led Zepplin – Led Zeppelin IV.webp'),
+(18, '/images/The Beatles – Abbey Road.webp'),
+(19, '/images/Eagles – Hotel California.webp'),
+(20, '/images/Pink Floyd – The Wall.webp'),
+(21, '/images/50 Cent – Get Rich or Die Tryin’.webp'),
+(22, '/images/Kendrick Lamar – To Pimp a Butterfly.webp'),
+(23, '/images/Jay-Z – The Blueprint.webp'),
+(24, '/images/Eminem – The Marshall Mathers LP.jpg'),
+(25, '/images/The Notorious B.I.G. – Ready to Die.webp');
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, 'imagesReady to Die - The Notorious Big.jpg', '/images/Ready to Die - The Notorious Big.jpg')
+WHERE image_url LIKE '%imagesReady to Die - The Notorious Big.jpg%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Oasis – The Masterplan.webp', '/images/Oasis – The Masterplan (1).webp')
+WHERE image_url LIKE '%/images/Oasis – The Masterplan.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Green Day – American Idiot.webp', '/images/Green Day – American Idiot (1).webp')
+WHERE image_url LIKE '%/images/Green Day – American Idiot.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Fleetwood Mac – Rumours.webp', '/images/Fleetwood Mac – Rumors.jpg')
+WHERE image_url LIKE '%/images/Fleetwood Mac – Rumours.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Sabrina Carpenter – Short n’ Sweet.webp', '/images/Sabrina Carpenter – Short n’ Sweet.jpg')
+WHERE image_url LIKE '%/images/Sabrina Carpenter – Short n’ Sweet.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Charlie XCX – Brat.webp', '/images/Charlie XCX – Brat.jpg')
+WHERE image_url LIKE '%/images/Charlie XCX – Brat.webp%';
+
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Pink Floyd – The Dark Side of the Moon.webp', '/images/Pink Floyd – The Dark Side of the Moon.jpg')
+WHERE image_url LIKE '%/images/Pink Floyd – The Dark Side of the Moon.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Led Zepplin – Led Zeppelin IV.webp', '/images/Led Zeppelin – Led Zeppelin IV.jpg')
+WHERE image_url LIKE '%/images/Led Zepplin – Led Zeppelin IV.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/The Beatles – Abbey Road.webp', '/images/The Beatle – Abby Road.webp')
+WHERE image_url LIKE '%/images/The Beatles – Abbey Road.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Kendrick Lamar – To Pimp a Butterfly.webp', '/images/Kendrick Lamar – To Pimp a Butterfly.jpg')
+WHERE image_url LIKE '%/images/Kendrick Lamar – To Pimp a Butterfly.webp%';
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Nirvana – Nevermind (1).webp', '/images/Ready to die - The Notorious Big.jpg')
+WHERE related_album_id = 25;
+
+UPDATE related_album_images
+SET image_url = REPLACE(image_url, '/images/Nirvana – Nevermind (1).webp', '/images/Radiohead – OK Computer.webp')
+WHERE image_url LIKE '%/images/Radiohead – OK Computer.webp%';
+
+UPDATE related_albums
+SET related_album_id = 3
+WHERE related_album_id = 1;

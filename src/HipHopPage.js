@@ -40,7 +40,7 @@ const HipHopPage = ({ handleAddToCart }) => {
             />
             <h2 className="hiphop-album-name">{album.name}</h2>
             <p className="hiphop-album-artist">{album.artist_name}</p>
-            <p className="hiphop-album-price">£{album.price}</p>
+            <p className="hiphop-album-price">{album.price}</p>
             <button
               className="add-to-cart-hiphop"
               onClick={() => handleAddToCart(album.product_id)}

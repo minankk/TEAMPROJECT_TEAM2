@@ -49,6 +49,8 @@ const membershipRoutes = require('./routes/membership');
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
 const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
 const adminMembershipRoutes = require("./routes/adminRoutes/adminMembership");
+const adminMessageRoutes = require("./routes/adminRoutes/adminMessageRoutes");
+
 
 const app = express();
  
@@ -100,10 +102,14 @@ app.use('/orders', authJWT.authenticateJWT ,orderRoutes);
 
 
 //admin
-app.use("/admin/dashboard", authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardRoutes);
-app.use("/admin/users", authJWT.authenticateJWT, authJWT.verifyAdmin, adminUserProfileRoutes); // Changed path to '/admin/users'
-app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
+app.use("/admin-approval", adminApprovalRoutes);
+app.use("/admin/dashboard", authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardRoutes);
+app.use("/admin/users", authJWT.authenticateJWT, authJWT.verifyAdmin, adminUserProfileRoutes); 
+app.use("/admin/messages", authJWT.authenticateJWT, authJWT.verifyAdmin, adminMessageRoutes); 
+app.use("/admin/membership", authJWT.authenticateJWT, authJWT.verifyAdmin, adminMembershipRoutes); 
+
+
  
  
 //start the Express server on a specific port
