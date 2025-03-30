@@ -5,23 +5,23 @@ html, body {
   color: white;
   font-family: 'Arial', sans-serif;
 }
-
+ 
 .login-container, .signup-container {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(104, 103, 103, 0.5);
   margin: 50px;
   /* backdrop-filter: blur(15px); */
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   padding: 20px;
 }
-
-
+ 
+ 
 /* Spinning Vinyl Icon */
 @keyframes spinVinyl {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
+ 
 .vinyl-icon {
   width: 50px;
   height: 50px;
@@ -31,7 +31,7 @@ html, body {
   animation: spinVinyl 5s linear infinite;
   margin-right: 10px;
 }
-
+ 
 /* Buttons with Neon Glow */
 button {
   background-color: #7c1816;
@@ -44,24 +44,25 @@ button {
   transition: 0.3s ease;
   box-shadow: 0 0 10px rgba(140, 0, 0, 0.8);
 }
-
+ 
 button:hover {
   background-color: #a02020;
   box-shadow: 0 0 15px rgba(255, 50, 50, 1);
 }
-
+ 
 /* Retro-Style Links */
 .forgot-password a {
   text-decoration: none;
-  color: #053865;
+  color: #03223d;
   font-size: 14px;
 }
-
+ 
 .forgot-password a:hover{
-  color: #084a89;
+  color: #1a4567;
 }
-
+ 
 .signup-link:hover {
   background-color: #a02020;
   box-shadow: 0 0 15px rgba(255, 50, 50, 1);
 }
+ 
