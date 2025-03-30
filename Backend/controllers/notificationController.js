@@ -36,7 +36,7 @@ const NotificationController = {
                 console.log(`Push notification sent to user ${userId}: ${content}`);
             }
 
-            // 通知の作成
+            // create notification
             NotificationController.createNotification({ body: { userId, type, content } }, {
                 status: () => ({ send: () => { } })
             });
