@@ -110,7 +110,9 @@ exports.login = async (req, res) => {
             };
 
             await transporter.sendMail(mailOptions);
-            res.json({ message: 'Password reset link sent to your email' });
+            res.json({ message: 'Password reset link sent to your email' ,
+            token: resetToken
+            });
     
         } catch (error) {
             console.error(error);

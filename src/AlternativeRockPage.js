@@ -36,7 +36,7 @@ const AlternativeRockPage = ({ handleAddToCart }) => {
             <img src={`http://localhost:5001${album.cover_image_url}`} alt={album.name} className="alternative-rock-album-image" />
             <h2 className="alternative-rock-album-name">{album.name}</h2>
             <p className="alternative-rock-album-artist">{album.artist_name}</p>
-            <p className="alternative-rock-album-price">£{album.price}</p>
+            <p className="alternative-rock-album-price">{album.price}</p>
             <button className="add-to-cart-alternative-rock" onClick={() => handleAddToCart(album.product_id)}>
               Add to Cart
             </button>

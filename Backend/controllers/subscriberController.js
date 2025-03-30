@@ -45,7 +45,9 @@ exports.subscribe = async (req, res) => {
                 html: `<p>Click <a href="${confirmUrl}">here</a> to confirm your subscription.</p>`,
             });
 
-            return res.status(200).json({ message: "Confirmation email sent!" });
+            return res.status(200).json({ message: "Confirmation email sent!",
+            token: token
+             });
         }
 
     } catch (err) {

@@ -40,7 +40,7 @@ const RockPage = ({ handleAddToCart }) => {
             />
             <h2 className="rock-album-name">{album.name}</h2>
             <p className="rock-album-artist">{album.artist_name}</p>
-            <p className="rock-album-price">£{album.price}</p>
+            <p className="rock-album-price">{album.price}</p>
             <button
               className="add-to-cart-rock"
               onClick={() => handleAddToCart(album.product_id)}

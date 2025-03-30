@@ -43,12 +43,20 @@ const decadesRoutes = require('./routes/decadesRoute');
 const subscribeRoutes = require('./routes/subscribe');
 const popUpRoutes = require('./routes/popUpRoutes');
 const membershipRoutes = require('./routes/membership');
+const preOrderRoutes = require('./routes/preOrderRoutes');
 
 
 //admin
 const adminApprovalRoutes = require('./routes/adminRoutes/adminApproval');
 const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
 const adminMembershipRoutes = require("./routes/adminRoutes/adminMembership");
+const adminMessageRoutes = require("./routes/adminRoutes/adminMessageRoutes");
+
+
+// notification
+const notificationRoutes = require("./routes/notificationRoutes");
+const notificationController = require("./controllers/notificationController");
+const db = require('./db'); // Import database connection
 
 const app = express();
  
@@ -87,6 +95,7 @@ app.use('/newest-addition', newestAdditionRoutes);
 app.use('/genres', genreRoutes);
 app.use("/subscribe", subscribeRoutes)
 app.use("/decades",decadesRoutes)
+app.use('/pre-orders', preOrderRoutes);
 
 //protected Routes for users 
 app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
@@ -100,16 +109,36 @@ app.use('/orders', authJWT.authenticateJWT ,orderRoutes);
 
 
 //admin
-app.use("/admin/dashboard", authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardRoutes);
-app.use("/admin/users", authJWT.authenticateJWT, authJWT.verifyAdmin, adminUserProfileRoutes); // Changed path to '/admin/users'
-app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin-signup", signUpRoutes);
+app.use("/admin-approval", adminApprovalRoutes);
+app.use("/admin/dashboard", authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardRoutes);
+app.use("/admin/users", authJWT.authenticateJWT, authJWT.verifyAdmin, adminUserProfileRoutes); 
+app.use("/admin/messages", authJWT.authenticateJWT, authJWT.verifyAdmin, adminMessageRoutes); 
+app.use("/admin/membership", authJWT.authenticateJWT, authJWT.verifyAdmin, adminMembershipRoutes); 
+
+
  
+// notification
+app.use("/notifications", notificationRoutes);
+
+// Order status update notification
+app.post("/orders/:orderId/status", (req, res) => {
+  const orderId = req.params.orderId;
+  const { status } = req.body;
+
+  // Placeholder for order status update logic
+  const userId = 1; // Temporary user ID
+  const content = `Your order ${orderId} status has been updated to ${status}`;
+
+  notificationController.sendNotification(userId, "order_status", content);
+  res.send("Order status updated");
+});
+
+// Inventory change log API
+app.post("/inventory/:productId/log", notificationController.createInventoryLog);
  
 //start the Express server on a specific port
 const port = process.env.PORT || 5001;
 app.listen(port,()=>{
     console.log(`Server started on port ${port}`);
 })
- 
- 

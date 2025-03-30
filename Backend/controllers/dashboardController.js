@@ -55,7 +55,7 @@ exports.getProfile = async (req, res) => {
 
         const [userDetails] = await db.execute(
             'SELECT user_name, email FROM users WHERE user_id = ?',
-            [decoded.user_id]
+            [userId]
         );
         if (userDetails.length === 0) {
             return res.status(404).json({ message: 'User not found' });
@@ -128,7 +128,6 @@ exports.changePassword = async (req, res) => {
             });
         }
 
-        // Fetch user's current password
         const [rows] = await db.execute('SELECT password FROM users WHERE user_id = ?', [userID]);
         if (rows.length === 0) {
             return res.status(404).json({ message: 'User not found' });
@@ -194,80 +193,140 @@ exports.viewOrderTracking = async (req, res) => {
         console.error('Error fetching order tracking:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-};
+}
 
-// Get user's received messages
+  // Get user's received messages
 exports.getUserMessages = async (req, res) => {
     try {
-        console.log('Decoded User:', req.user); // Debugging Log
-
-        const userID = req.user?.user_id; // Ensure correct user ID key
-
+        console.log('Decoded User:', req.user);
+        const userID = req.user?.user_id;
         if (!userID) {
             return res.status(400).json({ error: 'User ID is missing' });
         }
-
         const [messages] = await db.query(
             'SELECT * FROM messages WHERE receiver_id = ? ORDER BY sent_at DESC',
             [userID]
         );
-
+        if (messages.length === 0) {
+            return res.status(404).json({ message: 'No messages found for this user' });
+        }
         res.json(messages);
     } catch (error) {
         console.error('Error fetching messages:', error);
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
-  
-  // Reply to a message
-  exports.replyToMessage = async (req, res) => {
+
+// Reply to a message
+exports.replyToMessage = async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
-  
+
     if (!token) {
-      return res.status(401).json({ error: 'Authentication required.' });
+        return res.status(401).json({ error: 'Authentication required.' });
     }
-  
+
     try {
-      const decoded = jwt.verify(token, 'your_secret_key');
-      req.user = decoded;
-  
-      const { parentId, message } = req.body;
-  
-      const [parentMessages] = await db.query('SELECT sender_id FROM messages WHERE id = ?', [parentId]);
-      if (parentMessages.length === 0) {
-        return res.status(404).json({ error: 'Parent message not found.' });
-      }
-      const receiverId = parentMessages[0].sender_id;
-  
-      const result = await db.query(
-        'INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (?, ?, ?, ?)',
-        [req.user.id, receiverId, message, parentId]
-      );
-      res.status(201).json({ message: 'Reply sent.', messageId: result.insertId });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        req.user = decoded;
+        if (!req.user.user_id) {
+            return res.status(401).json({ error: 'Invalid user ID in token.' });
+        }
+
+        const { parentId, message } = req.body;
+        if (!parentId || !message) {
+            return res.status(400).json({ error: 'parentId and message are required.' });
+        }
+        const [parentMessages] = await db.query('SELECT sender_id FROM messages WHERE message_id = ?', [parentId]);
+        
+        if (parentMessages.length === 0) {
+            return res.status(404).json({ error: `Parent message with ID ${parentId} not found.` });
+        }
+
+        const receiverId = parentMessages[0].sender_id;
+        const connection = await db.getConnection();
+        await connection.beginTransaction();
+
+        try {
+            const result = await connection.query(
+                'INSERT INTO messages (sender_id, receiver_id, message, parent_id, sent_at) VALUES (?, ?, ?, ?, NOW())',
+                [req.user.user_id, receiverId, message, parentId] 
+            );
+            await connection.commit();
+            res.status(201).json({ message: 'Reply sent.', messageId: result.insertId });
+        } catch (dbError) {
+            await connection.rollback();
+            console.error('Database error during reply:', dbError);
+            return res.status(500).json({ error: 'Failed to send reply due to database error.' });
+        } finally {
+            connection.release();
+        }
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: 'Failed to send reply.' });
+        console.error(error);
+        return res.status(500).json({ error: 'Failed to send reply.' });
     }
-  };
-  
-  // Mark a message as read
-  exports.markMessageAsRead = async (req, res) => {
+};
+
+
+
+// Mark a message as read
+exports.markMessageAsRead = async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
-  
+
     if (!token) {
-      return res.status(401).json({ error: 'Authentication required.' });
+        return res.status(401).json({ error: 'Authentication required.' });
     }
-  
+
     try {
-      const decoded = jwt.verify(token, 'your_secret_key');
-      req.user = decoded;
-  
-      const { messageId } = req.params;
-      await db.query('UPDATE messages SET is_read = TRUE WHERE id = ?', [messageId]);
-      res.json({ message: 'Message marked as read.' });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        req.user = decoded;
+
+        if (!req.user || !req.user.user_id) {
+            return res.status(401).json({ error: 'Invalid user ID in token.' });
+        }
+
+        const { messageId } = req.params;
+        const userId = parseInt(req.user.user_id, 10);
+
+        const connection = await db.getConnection();
+        await connection.beginTransaction(); 
+
+        try {
+            const [messageRows] = await connection.query(
+                'SELECT receiver_id FROM messages WHERE message_id = ?',
+                [messageId]
+            );
+
+            if (messageRows.length === 0) {
+                await connection.rollback();
+                connection.release();
+                return res.status(404).json({ error: `Message with ID ${messageId} not found.` });
+            }
+
+            if (parseInt(messageRows[0].receiver_id, 10) !== userId) {
+                await connection.rollback();
+                connection.release();
+                return res.status(403).json({ error: 'You are not authorized to mark this message as read.' });
+            }
+
+            await connection.query(
+                'UPDATE messages SET is_read = TRUE WHERE message_id = ?',
+                [messageId]
+            );
+
+            await connection.commit();
+            connection.release();
+
+            res.json({ message: 'Message marked as read.' });
+
+        } catch (dbError) {
+            await connection.rollback();
+            connection.release();
+            console.error('Database error marking message as read:', dbError);
+            return res.status(500).json({ error: 'Failed to mark message as read due to database error.' });
+        }
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: 'Failed to mark message as read.' });
+        console.error('Error marking message as read:', error);
+        return res.status(500).json({ error: 'Failed to mark message as read.' });
     }
   };
 
