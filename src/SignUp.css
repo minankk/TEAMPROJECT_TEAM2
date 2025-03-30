@@ -99,8 +99,8 @@ main {
 }
 
 .signup-button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  background-color: #a02020;
+  box-shadow: 0 0 15px rgba(255, 50, 50, 1);
 }
 
 .admin-signup-link {
@@ -157,7 +157,8 @@ main {
 }
 
 .login-link:hover {
-  transform: translateY(-2px);
+  background-color: #a02020;
+  box-shadow: 0 0 15px rgba(255, 50, 50, 1);  
 }
 
 .signup-link {
@@ -220,3 +221,4 @@ main {
   background-color: rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
+

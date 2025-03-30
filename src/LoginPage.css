@@ -8,6 +8,7 @@ html, body {
 
 .login-container, .signup-container {
   background: rgba(0, 0, 0, 0.5);
+  margin: 50px;
   /* backdrop-filter: blur(15px); */
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -52,6 +53,15 @@ button:hover {
 /* Retro-Style Links */
 .forgot-password a {
   text-decoration: none;
-  color: #8bc8fd;
+  color: #053865;
   font-size: 14px;
+}
+
+.forgot-password a:hover{
+  color: #084a89;
+}
+
+.signup-link:hover {
+  background-color: #a02020;
+  box-shadow: 0 0 15px rgba(255, 50, 50, 1);
 }
