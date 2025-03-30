@@ -40,10 +40,10 @@ const PreOrderController = {
   cancelPreOrder: (req, res) => {
     const { pre_order_id } = req.params;
 
-    db.query('UPDATE pre_orders SET status = "キャンセル" WHERE id = ?', pre_order_id, (err, result) => {
+    db.query('UPDATE pre_orders SET status = "cancel" WHERE id = ?', pre_order_id, (err, result) => {
       if (err) return res.status(500).send(err);
       if (result.affectedRows === 0) return res.status(404).send('Pre-order not found');
-      res.send({ id: pre_order_id, status: 'キャンセル' });
+      res.send({ id: pre_order_id, status: 'cancel' });
     });
   },
 
