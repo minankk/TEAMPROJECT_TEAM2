@@ -1,9 +1,8 @@
-const authController = require("../controllers/authController"); 
-const db = require("../db");
-const bcrypt = require("bcryptjs");
+const authController = require("../../../Backend/Controller/AuthController");
+jest.mock("../../../Backend/db");  
 
 // Mock the `db.execute` method to avoid real DB calls
-jest.mock("../db");
+jest.mock("../../../Backend/db");
 
 describe("User Signup", () => {
   beforeEach(() => {
