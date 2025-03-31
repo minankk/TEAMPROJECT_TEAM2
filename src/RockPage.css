@@ -3,118 +3,142 @@
 @import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
 
 :root {
-  --primary-color: #a73230;
-  --primary-hover-color: #8d0805;
-  --text-color-dark: rgb(14, 1, 1);
-  --text-color-light: #555;
-  --heading-color: #a51310;
+    --primary-color: #a73230;
+    --primary-hover-color: #8d0805;
+    --text-color-dark: rgb(14, 1, 1);
+    --text-color-light: #555;
+    --heading-color: #a51310;
 }
 
 .rock-page-container {
-  font-family: 'Titan One', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f6f6f4;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  min-height: 100vh;
-  overflow-y: auto;
+    font-family: 'Titan One', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f6f6f4;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-y: auto;
 }
 
 h1 {
-  font-size: 2rem;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  color: var(--heading-color);
-  text-align: center;
+    font-size: 2rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+    text-align: center;
 }
 
 .rock-albums-grid {
-  width: 95%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  justify-items: center;
-  margin-bottom: 40px;
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    margin-bottom: 40px;
 }
 
 .rock-album-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 280px;
-  min-height: 420px;
-  border: 1px solid #ddd;
-  transition: transform 0.3s ease-in-out;
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 280px;
+    min-height: 420px;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease-in-out;
+    overflow: hidden;
+    position: relative; /* Added for heart button positioning */
 }
 
 .rock-album-card:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .rock-album-image {
-  width: 100%;
-  height: auto;
-  max-height: 200px;
-  object-fit: contain;
-  border-radius: 10px;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
 }
 
 .rock-album-info {
-  margin-top: 10px;
-  flex-grow: 1;
-  text-align: center;
+    margin-top: 10px;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .rock-album-name {
-  font-size: 1.2rem;
-  margin: 10px 0;
-  color: black;
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: black;
 }
 
 .rock-album-price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
 .add-to-cart-rock {
-  background-color: black;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    background-color: black;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .add-to-cart-rock:hover {
-  background-color: var(--primary-hover-color);
+    background-color: var(--primary-hover-color);
+}
+
+/* Heart Button Styles */
+.heart-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #888;
+    z-index: 1;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    opacity: 0; /* Hide by default */
+}
+
+.heart-button.favorited {
+    color: red;
+}
+
+.rock-album-card:hover .heart-button { /* Show on card hover */
+    opacity: 1;
 }
 
 /* Responsive Design (adjust as needed) */
 @media (max-width: 1024px) {
-  .rock-albums-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .rock-albums-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
-  .rock-albums-grid {
-    grid-template-columns: 1fr;
-  }
+    .rock-albums-grid {
+        grid-template-columns: 1fr;
+    }
 
-  h1 {
-    font-size: 1.8rem;
-  }
+    h1 {
+        font-size: 1.8rem;
+    }
 }
