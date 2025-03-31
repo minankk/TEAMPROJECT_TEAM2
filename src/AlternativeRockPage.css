@@ -46,6 +46,7 @@ h1 {
   border: 1px solid #ddd;
   transition: transform 0.3s ease-in-out;
   overflow: hidden;
+  position: relative; /* Added for heart button positioning */
 }
 
 .alternative-rock-album-card:hover {
@@ -98,19 +99,42 @@ h1 {
   background-color: #7c1816;
 }
 
+/* Heart Button Styles */
+.heart-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #888;
+  z-index: 1;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  opacity: 0; /* Hide by default */
+}
+
+.heart-button.favorited {
+  color: red;
+}
+
+.alternative-rock-album-card:hover .heart-button { /* Show on card hover */
+  opacity: 1;
+}
+
 /* Responsive Design (adjust as needed) */
 @media (max-width: 1024px) {
   .alternative-rock-albums-grid {
-    grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .alternative-rock-albums-grid {
-    grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
   }
 
   h1 {
-    font-size: 1.8rem;
+      font-size: 1.8rem;
   }
 }
