@@ -1,23 +1,23 @@
-/* PopPage.css - Styled to match BestSellers.css */
+/* PopPage.css */
 
 .pop-page-container {
   font-family: 'Titan One', sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 20px; 
   background-color: #f6f6f4;
   color: #000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%; 
+  min-height: auto; 
   overflow-y: auto;
 }
 
 h1 {
   font-size: 2rem;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 20px; 
+  margin-bottom: 10px; 
   color: #7c1816;
   text-align: center;
 }
@@ -26,9 +26,9 @@ h1 {
   width: 95%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+  gap: 20px; 
   justify-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px; 
 }
 
 .pop-album-card {
@@ -42,10 +42,11 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 280px;
-  min-height: 420px;
+  min-height: auto; 
   border: 1px solid #ddd;
   transition: transform 0.3s ease-in-out;
   overflow: hidden;
+  position: relative; 
 }
 
 .pop-album-card:hover {
@@ -68,7 +69,7 @@ h1 {
 
 .pop-album-name {
   font-size: 1.2rem;
-  margin: 10px 0;
+  margin: 8px 0; 
   color: black;
 }
 
@@ -76,41 +77,65 @@ h1 {
   font-size: 1rem;
   font-weight: bold;
   color: #7c1816;
+  margin-bottom: 8px; 
 }
 
 .pop-album-description {
   font-size: 1rem;
   font-weight: lighter;
-  margin-bottom: 15px;
+  margin-bottom: 10px; 
 }
 
 .add-to-cart-pop {
   background-color: black;
   color: white;
-  padding: 10px 16px;
+  padding: 8px 12px; 
   border: none;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 0.9rem; 
 }
 
 .add-to-cart-pop:hover {
   background-color: #7c1816;
 }
 
-/* Responsive Design (adjust as needed) */
+/* Heart Button Styles */
+.heart-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #888;
+  z-index: 1;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  opacity: 0; 
+}
+
+.heart-button.favorited {
+  color: red;
+}
+
+.pop-album-card:hover .heart-button {
+  opacity: 1;
+}
+
 @media (max-width: 1024px) {
   .pop-albums-grid {
-    grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .pop-albums-grid {
-    grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
   }
 
   h1 {
-    font-size: 1.8rem;
+      font-size: 1.8rem;
   }
 }
