@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   background: radial-gradient(#efd9d4, #fff);
-  color: #fff;
+  color: #333; /* Changed default text color to dark for better readability */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +14,7 @@
 .products-page .products-banner {
   position: relative;
   width: 100%;
-  max-height: 600px; 
+  max-height: 600px;
   height: auto;
   overflow: hidden;
   margin: 0;
@@ -27,7 +27,7 @@
   object-fit: cover;
   margin: 0;
   padding: 0;
-  filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6); 
+  filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6);
 }
 
 .products-page .products-banner-text {
@@ -38,8 +38,8 @@
   text-align: left;
   color: white;
   font-size: 3.5rem;
-  max-width: 28%; 
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
+  max-width: 28%;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
   font-weight: bold;
   z-index: 1;
 }
@@ -58,14 +58,14 @@
   top: 735px; /* Adjust this value to match the height of the banner */
   left: 0;
   width: 250px;
-  height: 800px;
-  padding: 15px;
-  background: transparent; /* Remove background color */
+  height: fit-content; /* Adjust height to content */
+  padding: 20px; /* Added some padding */
+  background: rgba(255, 255, 255, 0.8); /* Added a semi-transparent white background */
   border-right: 1px solid #ddd;
-  /*box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);*/
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 15px; /* Reduced gap */
   font-family: "Courier New", Courier, monospace;
   z-index: 2; /* Ensure the sidebar is above other content */
 }
@@ -76,9 +76,10 @@
 }
 
 .filters label {
-  font-size: 1rem;
+  font-size: 0.9rem; /* Slightly reduced font size */
   font-weight: bold;
   color: #333;
+  margin-bottom: 5px; /* Added some margin */
 }
 
 .filters input, .filters select {
@@ -123,7 +124,7 @@
 .products-page .products {
   margin-left: 270px; /* Adjust this value to create space for the filter box */
   width: calc(100% - 350px); /* Adjust this value to create space for the filter box */
-  margin-top: 40px; 
+  margin-top: 40px;
   margin-bottom: 40px;
   text-align: center;
 }
@@ -170,8 +171,11 @@
 
 /* Product Info */
 .products-page .product-info {
-  margin-top: 10px;
+  margin-top: 5px; /* Adjusted margin */
   text-align: center; /* Center align text */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
 }
 
 .products-page .product-info h3 {
@@ -184,52 +188,104 @@
   font-size: 1rem;
   font-weight: bold;
   color: #ad2321;
+  margin-bottom: 10px; /* Added some margin below price */
+}
+
+/* Product Actions */
+.products-page .product-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px; /* Add some space above the buttons */
 }
 
 /* Buy Button */
-.products-page .buy-button {
+.products-page .buy-button,
+.products-page .read-more-button,
+.products-page .heart-button {
   background-color: #7a1917;
   color: white;
-  padding: 10px 16px;
+  padding: 8px 12px; /* Slightly smaller padding */
   border: none;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem; /* Slightly smaller font */
+  text-decoration: none; /* Remove underline if any */
 }
 
-.products-page .buy-button:hover {
+.products-page .buy-button:hover,
+.products-page .read-more-button:hover,
+.products-page .heart-button:hover {
   background-color: #52110e;
+}
+
+.products-page .heart-button {
+  background: none;
+  color: lightgray; /* Default heart color: light gray (hollow feel) */
+  font-size: 1.3em; /* Adjust size as needed */
+  box-shadow: none;
+  padding: 0; /* Remove padding to control size better */
+  min-width: auto; /* Adjust min-width */
+}
+
+.products-page .heart-button.favorited {
+  color: red; /* Favorited heart color: red (filled feel) */
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   .products-page .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .products-page .product-grid {
-    grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
   }
 
   .products-page .products h2 {
-    font-size: 1.8rem;
+      font-size: 1.8rem;
   }
+
+  /* Existing filter styles */
+.filters {
+  position: absolute; /* Changed from fixed to absolute initially */
+  top: 800px; /* Adjust this value to be below your banner */
+  left: 0;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.8);
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Courier New", Courier, monospace;
+  z-index: 2;
+  overflow: hidden; /* Important for containing shrinking content */
+  transition: height 0.3s ease-in-out; /* Smooth transition for height changes */
 }
 
-
-.products-page .heart-button {
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  cursor: pointer;
-  color: gray !important; /* Default heart color */
+.filters.fixed {
+  position: fixed;
+  top: 200px; /* Calculate this value based on your navbar height */;
+  bottom: auto; /* Ensure bottom is not fixed when scrolling down */
 }
 
-.products-page .heart-button.favorited {
-  color: red; /* Favorited heart color */
+/* Style when reaching the footer */
+.filters.shrunk {
+  height: 550px; /* Calculated height */;
+}
+
+  .filters > * {
+      margin-bottom: 0; /* Remove bottom margin for filter items */
+  }
+
+  .products-page .products {
+      margin-left: 0;
+      width: 95%;
+  }
 }
 
 .products-page .favorite-popup {
@@ -242,4 +298,27 @@
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .filters {
+      position: static;
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+      gap: 10px;
+      height: auto; /* Reset height for smaller screens */
+      overflow: visible; /* Reset overflow */
+      transition: none; /* Disable transition on smaller screens */
+  }
+
+  .filters > * {
+      margin-bottom: 0;
+  }
 }

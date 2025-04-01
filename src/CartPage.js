@@ -141,6 +141,9 @@ export default function ShoppingCart() {
   };
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const handleCheckout = () => {
+        navigate("/payment-page", { state: { cartItems: cart, totalAmount: totalPrice } });
+    };
 
     return (
         <div className="cart-container">
@@ -190,7 +193,7 @@ export default function ShoppingCart() {
 
             <div className="cart-summary">
                 <div className="total-price">Total: £{totalPrice}</div>
-                <button className="checkout-button" onClick={() => navigate("/payment-page")}>
+                <button className="checkout-button" onClick={handleCheckout}>
                     Checkout
                 </button>
             </div>
