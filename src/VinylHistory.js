@@ -41,42 +41,33 @@ const VinylHistory = () => {
     }, []);
 
     return (
-        <section id="vinyl-history">
-            <div className="vinyl-left">
-            <h3 className="fact-title">Did You Know?</h3>
+<section id="vinyl-history">
+    <h2>THE LEGACY OF VINYL</h2> {/* Move it above everything else */}
 
-                <div className="vinyl-image-container">
-                    <img
-                        src={VinylImage}
-                        alt="Vinyl Record"
-                        className={`vinyl-record ${isSpinning ? "spin" : "pause"}`}
-                    />
-                </div>
-
-                <div className={`vinyl-fact-box ${showFact ? "show" : ""}`}>
-                    {randomFacts.length > 0 && <p key={currentFactIndex}>{randomFacts[currentFactIndex]}</p>}
-                </div>
-            </div>
+    <div className="vinyl-left">
+        <h3 className="fact-title">Did You Know?</h3>
+        <div className="vinyl-image-container">
+            <img
+                src={VinylImage}
+                alt="Vinyl Record"
+                className={`vinyl-record ${isSpinning ? "spin" : "pause"}`}
+            />
+        </div>
+        <div className={`vinyl-fact-box ${showFact ? "show" : ""}`}>
+            {randomFacts.length > 0 && <p key={currentFactIndex}>{randomFacts[currentFactIndex]}</p>}
+        </div>
+    </div>
 
             <div className="vinyl-history-content">
-                <h2>THE HISTORY OF VINYL RECORDS</h2>
-
-                <p>
-                    Vinyl records emerged as the dominant music format in the mid-20th century, offering high-fidelity sound and a tangible connection to music.
-                    Even with the rise of digital formats, vinyl remains beloved for its warm tones and collectible nature.
-                </p>
-
-                <p>
-                    One of the key reasons vinyl continues to captivate listeners is its <strong>rich analog sound</strong>,
-                    which many believe delivers a more <strong>authentic listening experience</strong> than digital formats.
-                    The tactile nature of vinyl records, from <strong>carefully placing the needle</strong> to <strong>flipping the record</strong> creates a unique musical ritual.
-                    Additionally, the <strong>large album covers</strong> provide a visual experience, featuring artwork that becomes part of the overall listening journey.
-                </p>
-
-                <p>
-                    In recent years, vinyl has made a massive comeback. Independent record stores are thriving, and both classic reissues and new albums
-                    are being pressed on vinyl. This resurgence highlights vinyl’s <strong>timeless appeal</strong> and its continued place in modern music culture.
-                </p>
+          <p>
+          Vinyl records became the dominant music format in the mid-20th century, offering high-fidelity sound and a tangible connection to music. Despite digital formats, vinyl remains cherished for its warm tones and collectible nature.
+          </p>
+          <p>
+          Vinyl’s <strong>rich analog sound</strong> is often considered more <strong>authentic</strong> than digital. The ritual of <strong>placing the needle</strong> and <strong>flipping the record</strong>, along with <strong>large album covers</strong>, enhances the listening experience.
+          </p>
+          <p>
+          The vinyl market has seen a major resurgence in recent years, with independent stores thriving and both reissues and new albums being pressed, showcasing its <strong>timeless appeal</strong>.
+          </p>
             </div>
         </section>
     );
