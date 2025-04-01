@@ -2,18 +2,18 @@
 const mysql = require("mysql2/promise")
 
 const db = mysql.createPool({
-  host:     '127.0.0.1'  ,          //'cs2410-web01pvm.aston.ac.uk' ,   
-  user:   'root',               //'cs4team2' ,                                 
-  password:  'teamProject@01',            //'zCiGwGdHiEL4gOP' ,                                   
-  database:   'team_project' ,      //'cs4team2_db',                               
+  host:     '127.0.0.1'  ,          //'cs2410-web01pvm.aston.ac.uk' ,
+  user:   'root',               //'cs4team2' ,
+  password:  'teamProject@01',            //'zCiGwGdHiEL4gOP' ,
+  database:   'team_project' ,      //'cs4team2_db',
   port: 3306,                      // Database port (default MySQL port)
 });
 
 (async () => {
   try {
-    const connection = await db.getConnection(); 
+    const connection = await db.getConnection();
     console.log("Connected to the database.");
-    connection.release(); 
+    connection.release();
   } catch (err) {
     console.error("Database connection failed:", err.message);
   }
