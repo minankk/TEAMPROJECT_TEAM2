@@ -1,5 +1,6 @@
 import "./VinylHistory.css";
 import { useEffect, useState } from "react";
+import VinylImage from "./assets/gold_vinyl.webp";
 
 const facts = [
     "The world’s first LP was *Mendelssohn’s Violin Concerto in E Minor*, released in 1948 by Columbia Records.",
@@ -11,17 +12,14 @@ const facts = [
     "Vinyl records can be cut in custom shapes, including hearts, triangles, and even skulls.",
     "Some modern turntables use laser technology to read vinyl without touching the grooves.",
     "The 'wow and flutter' effect in vinyl playback comes from minor speed variations in the turntable.",
-    "Records pressed in Japan are known for their exceptional quality due to the purity of the vinyl used.",
-    "Glow-in-the-dark and scented vinyl records exist as novelty items.",
-    "Jack White’s album *Lazaretto* includes hidden tracks that play at different speeds.",
-    "Some records have secret messages etched into the runout groove.",
-    "In the 1970s, vinyl was used to create flexi-discs, ultra-thin records printed on paper or plastic.",
-    "The largest vinyl record collection belongs to Zero Freitas, a Brazilian businessman with millions of records."
+    "Records pressed in Japan are known for their exceptional quality due to the purity of the vinyl used."
 ];
 
 const VinylHistory = () => {
     const [currentFactIndex, setCurrentFactIndex] = useState(0);
     const [randomFacts, setRandomFacts] = useState([]);
+    const [isSpinning, setIsSpinning] = useState(false);
+    const [showFact, setShowFact] = useState(false);
 
     useEffect(() => {
         const shuffledFacts = [...facts].sort(() => 0.5 - Math.random()).slice(0, 10);
@@ -29,32 +27,57 @@ const VinylHistory = () => {
         let factIndex = 0;
 
         const interval = setInterval(() => {
-            setCurrentFactIndex(factIndex);
-            factIndex = (factIndex + 1) % shuffledFacts.length;
-        }, 4000); // Change fact every 3 seconds
+            setIsSpinning(true);
+            setShowFact(false);
+            setTimeout(() => {
+                setIsSpinning(false);
+                setCurrentFactIndex(factIndex);
+                factIndex = (factIndex + 1) % shuffledFacts.length;
+                setTimeout(() => setShowFact(true), 200);
+            }, 2000);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, []);
 
     return (
         <section id="vinyl-history">
-            <h2>The History of Vinyl Records</h2>
-            <p>
-            Vinyl records are a sound recording format that was developed in the
-            middle of the 20th century and was used mainly before analogues of
-            digital sound media. Despite technological advances and the advent
-            of CD, MP3, and streaming services, vinyl has its own products and
-            appeals to music lovers with its warm sound and spaciousness.
-            Collectors appreciate vinyl for its tangible nature and unique album art,
-            making it not just a medium for music, but a cultural experience.
-            As a result, vinyl records have seen a resurgence in recent years,
-            becoming a staple in both nostalgia-driven and modern music collections
-            </p>
+            <div className="vinyl-left">
+            <h3 className="fact-title">Did You Know?</h3>
 
-            <h3>10 Vinyl Facts</h3>
-            <ul id="vinyl-facts">
-                {randomFacts.length > 0 && <li key={currentFactIndex}>{randomFacts[currentFactIndex]}</li>}
-            </ul>
+                <div className="vinyl-image-container">
+                    <img
+                        src={VinylImage}
+                        alt="Vinyl Record"
+                        className={`vinyl-record ${isSpinning ? "spin" : "pause"}`}
+                    />
+                </div>
+
+                <div className={`vinyl-fact-box ${showFact ? "show" : ""}`}>
+                    {randomFacts.length > 0 && <p key={currentFactIndex}>{randomFacts[currentFactIndex]}</p>}
+                </div>
+            </div>
+
+            <div className="vinyl-history-content">
+                <h2>THE HISTORY OF VINYL RECORDS</h2>
+
+                <p>
+                    Vinyl records emerged as the dominant music format in the mid-20th century, offering high-fidelity sound and a tangible connection to music.
+                    Even with the rise of digital formats, vinyl remains beloved for its warm tones and collectible nature.
+                </p>
+
+                <p>
+                    One of the key reasons vinyl continues to captivate listeners is its <strong>rich analog sound</strong>,
+                    which many believe delivers a more <strong>authentic listening experience</strong> than digital formats.
+                    The tactile nature of vinyl records, from <strong>carefully placing the needle</strong> to <strong>flipping the record</strong> creates a unique musical ritual.
+                    Additionally, the <strong>large album covers</strong> provide a visual experience, featuring artwork that becomes part of the overall listening journey.
+                </p>
+
+                <p>
+                    In recent years, vinyl has made a massive comeback. Independent record stores are thriving, and both classic reissues and new albums
+                    are being pressed on vinyl. This resurgence highlights vinyl’s <strong>timeless appeal</strong> and its continued place in modern music culture.
+                </p>
+            </div>
         </section>
     );
 };
