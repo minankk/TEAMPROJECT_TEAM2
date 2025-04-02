@@ -12,7 +12,7 @@ function ContactUs() {
 
   useEffect(() => {
     gsap.fromTo(
-      ".contact-page .contact-form-container",
+      ".contact-form-container",
       { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
     );
@@ -34,39 +34,43 @@ function ContactUs() {
 
   return (
     <div className="contact-page">
-      {/* 🎵 Spinning Vinyl Record */}
-      <div className="vinyl-record"></div>
-
+      <div className="record-shelf"></div>
       <header className="contact-header">
         <h1>Contact Us</h1>
         <p>We'd love to hear from you! Get in touch with us below.</p>
       </header>
-
       <div className="contact-form-container">
         <form className="contact-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input type="text" id="name" name="name" placeholder=" " value={formData.name} onChange={handleChange} required />
-            <label htmlFor="name">Name</label>
-          </div>
-
-          <div className="form-group">
-            <input type="email" id="email" name="email" placeholder=" " value={formData.email} onChange={handleChange} required />
-            <label htmlFor="email">Email</label>
-          </div>
-
-          <div className="form-group">
-            <input type="text" id="subject" name="subject" placeholder=" " value={formData.subject} onChange={handleChange} required />
-            <label htmlFor="subject">Subject</label>
-          </div>
-
-          <div className="form-group">
-            <textarea id="message" name="message" rows="5" placeholder=" " value={formData.message} onChange={handleChange} required></textarea>
-            <label htmlFor="message">Message</label>
-          </div>
-
+          {['name', 'email', 'subject', 'message'].map((field, index) => (
+            <div key={field} className="form-group" style={{ '--index': index }}>
+              {field !== 'message' ? (
+                <input
+                  type={field === 'email' ? 'email' : 'text'}
+                  id={field}
+                  name={field}
+                  placeholder=" "
+                  value={formData[field]}
+                  onChange={handleChange}
+                  required
+                />
+              ) : (
+                <textarea
+                  id={field}
+                  name={field}
+                  rows="5"
+                  placeholder=" "
+                  value={formData[field]}
+                  onChange={handleChange}
+                  required
+                />
+              )}
+              <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+            </div>
+          ))}
           <button type="submit">Send Message</button>
         </form>
       </div>
+
     </div>
   );
 }
