@@ -1,0 +1,157 @@
+/* Order Tracking Page Styles */
+.order-tracking-page {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 800px;
+  text-align: center;
+  margin: 20px auto;
+  color: #000 !important; /* Ensure text color is black */
+}
+
+.order-tracking-page h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333 !important; /* Ensure heading color is dark */
+}
+
+.tracking-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.tracking-input label {
+  font-size: 16px;
+  color: #555 !important;
+}
+
+.tracking-input input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 60%;
+  max-width: 300px;
+}
+
+.tracking-input button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Example button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.tracking-input button:hover {
+  background-color: #0056b3;
+}
+
+.tracking-input button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.order-details {
+  margin-top: 20px;
+  text-align: left;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.order-details h3 {
+  font-size: 20px;
+  margin-top: 0;
+  color: #333 !important;
+  margin-bottom: 10px;
+}
+
+.order-details p {
+  font-size: 16px;
+  color: #555 !important;
+  margin-bottom: 8px;
+}
+
+.order-details h4 {
+  font-size: 18px;
+  margin-top: 15px;
+  color: #333 !important;
+  margin-bottom: 10px;
+}
+
+.order-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.order-details ul li {
+  font-size: 16px;
+  color: #555 !important;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-details ul li:last-child {
+  border-bottom: none;
+}
+
+.tracking-updates {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.tracking-updates h4 {
+  font-size: 18px;
+  margin-top: 0;
+  color: #333 !important;
+  margin-bottom: 10px;
+}
+
+.tracking-updates ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tracking-updates ul li {
+  font-size: 16px;
+  color: #555 !important;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.tracking-updates ul li:last-child {
+  border-bottom: none;
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+  .order-tracking-page {
+      width: 90%;
+  }
+
+  .tracking-input {
+      flex-direction: column;
+      align-items: stretch;
+  }
+
+  .tracking-input input[type="text"] {
+      width: 100%;
+  }
+}
