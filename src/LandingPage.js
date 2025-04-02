@@ -3,6 +3,7 @@ import "./LandingPage.css";
 import ReviewCarousel from "./ReviewCarousel";
 import VinylGenres from "./VinylGenres";
 import VinylHistory from "./VinylHistory";
+import VIP_lounge_landing from "./VIP_lounge_landing"
 
 
 // Import Hero Section Images
@@ -118,8 +119,6 @@ function LandingPage() {
 
       {/* Staff Picks - Infinite Scrolling Carousel */}
       <section className="staff-picks">
-        <hr className="section-divider" /> {/* Top Divider */}
-
         <div className="staff-picks-header">
         <h2 className="staff-picks-title">Vault Weekly</h2>
         <p className="staff-subtitle">Handpicked by the team, updated each week with fresh tracks you’ll love!</p>
@@ -148,6 +147,10 @@ function LandingPage() {
 
       {/* Vinyl Genre Showcase */}
       <VinylGenres />
+
+       {/* VIP Section Intro */}
+      <VIP_lounge_landing />
+
     </div>
   );
 }
