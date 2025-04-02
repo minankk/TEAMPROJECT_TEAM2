@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+.vip-lounge-section {
+  position: relative;
+  background: url("./assets/VV_LOUNGE_BACKGROUND.png") no-repeat center center;
+  background-size: cover;
+  color: white;
+  padding: 100px 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: auto;
+  overflow: hidden;
+}
+
+/* .vip-blur-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.6) 10%, rgba(0, 0, 0, 0) 90%);
+  backdrop-filter: blur(0.5px);
+} */
+
+.vip-content {
+  max-width: 40%;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.507); /* Slightly more transparent */
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(5px); /* Subtle glass effect */
+  box-shadow: 0 4px 15px rgba(73, 73, 73, 0.1); /* Soft glow */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.vip-content h2 {
+  font-size: 2.3rem;
+  font-weight: bold;
+  margin: 0%;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  letter-spacing: 2px;
+  background: #fff1e5;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #00aaff;
+}
+
+/* Apply Oswald font to 'Step Into' */
+.step-into {
+  font-size: 3rem;
+}
+
+/* Apply cursive font to 'the' */
+.the {
+  font-family: "Great Vibes", cursive;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00aaff;
+  text-shadow:
+    0 0 2px #00aaff,
+    0 0 5px #0088cc; /* Reduced glow for sharpness */
+    animation: flicker 7s infinite steps(30) ;
+}
+
+.lounge {
+  font-family: "Righteous", sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00aaff;
+  text-shadow:
+    0 0 2px #00aaff,
+    0 0 5px #0088cc; /* Reduced glow for sharpness */
+
+    animation: flicker 7s infinite steps(30);
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  5% { opacity: 0.9; }
+  10% { opacity: 0.7; }
+  15% { opacity: 1; }
+  20% { opacity: 0.8; }
+  25% { opacity: 0.6; }
+  30% { opacity: 1; }
+  35% { opacity: 0.75; }
+  40% { opacity: 0.85; }
+  45% { opacity: 0.65; }
+  50% { opacity: 1; }
+  55% { opacity: 0.75; }
+  60% { opacity: 0.85; }
+  65% { opacity: 0.95; }
+  70% { opacity: 1; }
+  75% { opacity: 0.9; }
+  80% { opacity: 0.7; }
+  85% { opacity: 0.6; }
+  90% { opacity: 0.95; }
+  95% { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+
+.vip-content p {
+  font-size: 1.2rem;
+  margin-top: 25PX;
+  margin-bottom: 50px;
+  color: #fff1e5;
+  font-family: "Trocchi", serif;
+}
+
+
+.join-now-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #7a1917;
+  color: #fff;
+  border: none;
+  /* padding: 20px 30px; */
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.join-now-button:hover {
+  background: #52110e;
+  transform: none;
+}
+
+.join-now-button .arrow {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2rem;
+  transition: transform 0.3s ease-in-out;
+  vertical-align: middle;
+  line-height: 1;
+  position: relative;
+  top: -2px;
+}
+
+.join-now-button:hover .arrow {
+  transform: translateX(7px);
+}
+
+/* Modal Styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: url("./assets/record_genre.png");
+  background-size: cover; /* Ensure the background image covers the entire circle */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Ensures no repetition of the image */
+  padding: 40px;
+  text-align: center;
+  border-radius: 50%; /* Keeps the container circular */
+  width: 320px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 15px rgba(121, 121, 121, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.popup-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Title styling */
+.popup-content h3 {
+  margin-bottom: 15px;
+  color: #ffefe0; /* You can change this to a more neutral color if preferred */
+  font-size: 1.6rem; /* Slightly bigger for better emphasis */
+  font-weight: bold;
+  text-transform: uppercase; /* Optional: Makes it look more dynamic */
+  letter-spacing: 2px; /* Adds space for better readability */
+}
+
+/* Styling the email input */
+.popup-content input {
+  width: 90%; /* Increased width for a more modern, spacious feel */
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd; /* Softer border color for a cleaner look */
+  border-radius: 25px; /* Rounded corners for a more polished look */
+  text-align: center;
+  font-size: 1rem; /* Slightly larger font for readability */
+  transition: border 0.3s ease-in-out; /* Smooth border transition */
+}
+
+/* Hover effect for the email input to make it more interactive */
+.popup-content input:focus {
+  outline: none;
+  border: 2px solid #7e0000; /* Border turns to a soft orange when focused */
+  box-shadow: 0 0 5px rgba(255, 69, 0, 0.5); /* Adds a subtle glow effect */
+}
+
+/* Submit button styling */
+.popup-content button {
+  background: #f0f0f0; /* Soft neutral background */
+  color: #333; /* Darker text for easy readability */
+  border: none;
+  /* padding: 15px; Larger padding for a larger button */
+  font-size: 1rem; /* Larger text for the submit button */
+  cursor: pointer;
+  width: 70%;
+  border-radius: 25px; /* Rounded edges for the submit button */
+  margin-bottom: 15px; /* Space between buttons */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
+}
+
+/* Submit button hover effect */
+.popup-content button:hover {
+  background: #50100e;
+  color: white;
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Close button styling (specific to the close button) */
+.popup-content .close-button {
+  background: #ddd; /* Lighter background for the close button */
+  color: #333; /* Dark text for contrast */
+  margin-top: 10px;
+  border-radius: 25px;
+  padding: 8px 15px; /* Smaller padding for the close button */
+  width: auto; /* Allow width to auto-adjust */
+  font-size: 1rem; /* Adjusted text size for the close button */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
+  display: inline-block; /* Makes sure it fits content properly */
+}
+
+/* Close button hover effect */
+.popup-content .close-button:hover {
+  background: #50100e; /* Slightly darker on hover */
+  transform: translateY(-2px); /* Adds the lift effect on hover */
+}
