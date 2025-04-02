@@ -936,3 +936,72 @@ WHERE image_url LIKE '%/images/Radiohead – OK Computer.webp%';
 UPDATE related_albums
 SET related_album_id = 3
 WHERE related_album_id = 1;
+
+
+-- notifications table
+CREATE TABLE notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- user_settings table
+CREATE TABLE user_settings (
+    user_id INT PRIMARY KEY,
+    site_notifications BOOLEAN DEFAULT TRUE,
+    email_notifications BOOLEAN DEFAULT TRUE,
+    push_notifications BOOLEAN DEFAULT TRUE
+);
+
+-- inventory_logs table
+CREATE TABLE inventory_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    quantity_change INT NOT NULL,
+    change_reason VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Data for the notifications table
+INSERT INTO notifications (user_id, type, content) VALUES
+(1, 'system', 'New features have been added.'),
+(2, 'order', 'Your order has been completed.'),
+(1, 'promotion', 'The sale has started.');
+
+-- Data for the user_settings table
+INSERT INTO user_settings (user_id, site_notifications, email_notifications, push_notifications) VALUES
+(1, TRUE, TRUE, FALSE),
+(2, TRUE, FALSE, TRUE),
+(3, FALSE, TRUE, TRUE);
+
+-- Data for the inventory_logs table
+INSERT INTO inventory_logs (product_id, quantity_change, change_reason) VALUES
+(101, -5, 'Inventory adjustment'),
+(102, 10, 'Received goods'),
+(101, -2, 'Sales');
+
+-- Table for pre_orders
+CREATE TABLE pre_orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  product_id INT NOT NULL,
+  quantity INT NOT NULL,
+  status ENUM('Received', 'Payment Pending', 'Paid', 'Preparing', 'Shipped', 'In Transit', 'Delivered', 'Cancelled', 'Returned', 'On Hold') DEFAULT 'Received',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert Info for pre_orders
+INSERT INTO pre_orders (user_id, product_id, quantity, status) VALUES
+(1, 101, 2, 'Paid'),
+(2, 102, 1, 'Shipped'),
+(1, 103, 3, 'Preparing'),
+(3, 101, 1, 'Cancelled'),
+(4, 104, 1, 'Received'),
+(5, 105, 2, 'Payment Pending'),
+(6, 106, 3, 'In Transit'),
+(7, 107, 1, 'Delivered'),
+(8, 108, 2, 'Returned'),
+(9, 109, 3, 'On Hold');

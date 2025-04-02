@@ -25,7 +25,7 @@ import SoundtrackPage from './SoundTrackPage';
 import ForgotPassword from './ForgotPasswordPage';
 import UserMessagesPage from './UserMessagesPage';
 import FavoritesPage from './FavoritesPage';
-import OrdersPage from './OrdersPage';
+import OrderTrackingPage from './OrderTrackingPage';
 import OrderHistoryPage from './OrderHistoryPage';
 import UserProfilePage from './UserProfilePage';
 import BestSellers from './BestSellersPage';
@@ -40,6 +40,7 @@ import AnalyticsPage from './AnalyticsPage';
 import ResetPasswordPage from './ResetPasswordPage';
 import SearchResults from './SearchResults';
 import ArtistsPage from './ArtistsPage';
+import BlogPage from './BlogPage';
 
 const AuthContext = createContext();
 
@@ -111,6 +112,7 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
+                    <Route path="/blog" element={<BlogPage />} />
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/cart" element={<CartPage />} />
@@ -142,7 +144,7 @@ function App() {
                     <Route path="messages" element={<MessagesPage />} />
                     <Route path="products" element={<ProductsManagementPage />} />
                     <Route path="users" element={<UserManagementPage />} />
-                    <Route path="orders" element={<OrderManagementPage />} />
+                    <Route path="order-management" element={<OrderManagementPage />} />
                     <Route path="analytics" element={<AnalyticsPage />} />
 
                     </Route>
@@ -151,7 +153,7 @@ function App() {
                     <Route path="/dashboard" element={<ProtectedRoute />}>
                         <Route path="" element={<DashboardPage />}>
                             <Route index element={<Overview />} />
-                            <Route path="orders" element={<OrdersPage />} />
+                            <Route path="order-tracking" element={<OrderTrackingPage />} />
                             <Route path="order-history" element={<OrderHistoryPage />} />
                             <Route path="favorites" element={<FavoritesPage />} />
                             <Route path="profile" element={<UserProfilePage />} />
