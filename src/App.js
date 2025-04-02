@@ -40,6 +40,7 @@ import AnalyticsPage from './AnalyticsPage';
 import ResetPasswordPage from './ResetPasswordPage';
 import SearchResults from './SearchResults';
 import ArtistsPage from './ArtistsPage';
+import BlogPage from './BlogPage';
 
 const AuthContext = createContext();
 
@@ -111,6 +112,7 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
+                    <Route path="/blog" element={<BlogPage />} />
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/cart" element={<CartPage />} />
