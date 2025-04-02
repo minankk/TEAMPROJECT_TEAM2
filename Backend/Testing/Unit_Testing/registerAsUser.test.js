@@ -72,6 +72,7 @@ describe("User Signup", () => {
     );
   });
 
+  //email already exist scenario
   test("should return an error if email already exists", async () => {
     db.query.mockResolvedValue([[{ email: "ashminabishaj@gmail.com" }]]); // Email exists
     const req = {
