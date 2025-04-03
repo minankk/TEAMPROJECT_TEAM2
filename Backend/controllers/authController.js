@@ -149,87 +149,99 @@ exports.login = async (req, res) => {
     }
 };
 
-//sign up as user
-exports.signup = async (req , res) => {
+// Sign up as user or admin
+exports.signup = async (req, res) => {
     const { username, email, password, password_confirmation, adminSecretKey } = req.body;
-
-//Check if all fields are entered
-if (!username || !email || !password || !password_confirmation) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
-//Check if password and password confirmation is same
-if(password !== password_confirmation){
-    return res.status(400).json({message : `Password do not match`});
-}
-
-// Validate email format
-/**
- * ^ -> start of the string
- * [a-zA-Z0-9._-]+ -> before @ consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
- * @ -> domain in email address
- * [a-zA-Z0-9.-]+
- * \. -> '.' should be there
- * [a-zA-Z]{2,6} -> match the domain
- * $ -> end of the string
- */
-
-const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-if(!emailRegex.test(email)){
-     return res.status(400).json({message : 'Invalid email format'});
-}
-
-// Password strength validation (min 8 characters, at least one number, one uppercase letter, and one special character)
-const passwordStrengthRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
-if (!passwordStrengthRegex.test(password)) {
-       return res.status(400).json({
-           success: false,
-           message: 'Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character'
-       });
-}
-try {
-    //Check if email already exists
-    const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
-    if (rows.length > 0) {
-        return res.status(400).json({ error: 'Email already registered. Please login' });
-    }
      
-    let role = 'user'; 
-    let approvalStatus = null;
-
-    if (adminSecretKey && adminSecretKey === process.env.ADMIN_SECRET_KEY) {
-        role = 'admin'; 
-        approvalStatus = 'pending';
+    // Check if all fields are entered
+    if (!username || !email || !password || !password_confirmation) {
+        return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 8);
-
-    // Insert into the database with or without approval status depending on the role
-    const [result] = await db.query(
-        'INSERT INTO users (user_name, email, password, role, approval_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
-        [username, email, hashedPassword, role, approvalStatus]
-    );
-
-    const userId = result.insertId;
-    // Generate JWT token
-    const payload = { user_id: userId, username, email, role };
-    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
-
-    if (role === 'admin' && approvalStatus === 'pending') {
-        console.log('Sending admin approval email...'); 
-        sendAdminApprovalNotification(username, email);
+    // Check if password and password confirmation match
+    if (password !== password_confirmation) {
+        return res.status(400).json({ message: 'Password does not match' });
     }
 
-    return res.status(200).json({
-        message: approvalStatus === 'pending' ? 'Admin registration request sent for approval' : 'User registered successfully',
-        token,
-        role
-    });
+    // Validate email format
+   /**
+    * ^ -> start of the string
+    * [a-zA-Z0-9._-]+ -> before @ consist of a-z lowercase , A-Z uppercase , 0-9 numbers , symbols allowed  . - _ , + -> one or more character should appear leaving no empty space
+    * @ -> domain in email address
+    * [a-zA-Z0-9.-]+
+    * \. -> '.' should be there
+    * [a-zA-Z]{2,6} -> match the domain
+    * $ -> end of the string
+    */
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ message: 'Invalid email format' });
+    }
 
-} catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-}
+    // Password strength validation
+    const passwordStrengthRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordStrengthRegex.test(password)) {
+        return res.status(400).json({
+            message: 'Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character',
+            success: false 
+        });
+    }
+
+        let role = 'user';
+        let approvalStatus = null;
+
+        if (adminSecretKey) {
+            if (adminSecretKey !== process.env.ADMIN_SECRET_KEY) {
+                return res.status(403).json({ message: "Invalid admin secret key" });
+            }
+            role = 'admin';
+            approvalStatus = 'pending';
+        } else if (req.body.role === 'admin') {
+            return res.status(400).json({ message: "Admin secret key is required for admin registration" });
+        }
+
+        try {
+            
+            const [rows] = await db.query('SELECT email FROM users WHERE email = ?', [email]);
+            if (rows.length > 0) {
+                return res.status(400).json({ message: 'Email already registered. Please login' });
+            }
+    
+            const [usernameRows] = await db.query('SELECT user_name FROM users WHERE user_name = ?', [username]);
+            if (usernameRows.length > 0) {
+                return res.status(400).json({ message: 'Username already taken. Please choose a different one' });
+            }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const [result] = await db.query(
+            'INSERT INTO users (user_name, email, password, role, approval_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
+            [username, email, hashedPassword, role, approvalStatus]
+        );
+
+        const userId = result.insertId;
+        
+        const payload = { user_id: userId, username, email, role };
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
+
+        if (role === 'admin' && approvalStatus === 'pending') {
+            sendAdminApprovalNotification(username, email);
+            return res.status(200).json({
+                message: 'Admin registration request sent for approval',
+                role,
+                token
+            });
+        }
+            return res.status(200).json({
+            message: 'User registered successfully',
+            role,
+            token
+        });
+        
+    } catch (error) {
+        console.error('Signup Error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 function sendAdminApprovalNotification(username, email) {
