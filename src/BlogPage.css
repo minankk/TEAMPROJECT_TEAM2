@@ -164,15 +164,15 @@
 }
 
 .article-list li {
-  display: inline-block; /* Display list items inline */
-  width: calc(25% - 30px); /* Adjust width to fit 4 items with gaps */
-  vertical-align: top; /* Align items to the top */
-  margin-right: 40px; /* Add right margin for spacing */
-  margin-bottom: 40px; /* Add bottom margin for spacing */
+  display: inline-block; 
+  width: calc(25% - 30px); 
+  vertical-align: top; 
+  margin-right: 40px; 
+  margin-bottom: 40px; 
 }
 
 .article-list li:nth-child(4n) {
-  margin-right: 0; /* Remove right margin for the last item in each row */
+  margin-right: 0; 
 }
 
 @media (max-width: 1200px) {
