@@ -10,6 +10,7 @@ describe("Approve or Reject Admin Signup", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    console.error = jest.fn();
     req = {
       query: { email: "admin@example.com" },
       body: { action: "approve" },

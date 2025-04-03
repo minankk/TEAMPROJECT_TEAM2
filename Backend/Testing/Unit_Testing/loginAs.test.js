@@ -22,6 +22,7 @@ describe("User Login", () => {
   let req, res, mockUser, hashedPassword;
 
   beforeEach(async () => {
+    console.error = jest.fn();
     req = {
       body: {
         username: "testuser",
