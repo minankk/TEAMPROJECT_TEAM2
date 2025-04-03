@@ -14,7 +14,7 @@ const Sidebar = () => {
             <ul>
                 <li><button onClick={() => handleNavigation('/dashboard')}>Overview</button></li>
                 <li><button onClick={() => handleNavigation('/cart')}>Cart</button></li>
-                <li><button onClick={() => handleNavigation('/dashboard/orders')}>Order Tracking</button></li>
+                <li><button onClick={() => handleNavigation('/dashboard/order-tracking')}>Order Tracking</button></li>
                 <li><button onClick={() => handleNavigation('/dashboard/order-history')}>Order History</button></li>
                 <li><button onClick={() => handleNavigation('/dashboard/favorites')}>Favorites</button></li>
                 <li><button onClick={() => handleNavigation('/dashboard/profile')}>Personal Info</button></li>
