@@ -20,14 +20,6 @@ const BlogPage = () => {
       fullContent: 'The 21st century has seen hip-hop evolve in numerous ways, from its sonic experimentation to its lyrical content. The genre has embraced elements of electronic music, pop, and R&B, creating a diverse and ever-changing soundscape. Lyrically, hip-hop has become more introspective, with artists exploring themes of mental health, social issues, and personal struggles. The rise of streaming platforms has also democratized the genre, allowing independent artists to reach a global audience without the need for major label support. Hip-hop\'s influence can be seen in fashion, language, and art, making it a cultural force that transcends music.',
     },
     {
-      id: 4,
-      title: 'The Influence of Jazz on Modern Music',
-      date: 'November 19, 2023',
-      summary: 'An exploration of how jazz music has influenced and continues to influence various genres in today\'s music scene.',
-      link: '/article/jazz-influence',
-      fullContent: 'Jazz, with its rich history and improvisational nature, has left an indelible mark on modern music. Its influence can be heard in the complex harmonies of contemporary R&B, the rhythmic experimentation of hip-hop, and the melodic structures of pop. Jazz\'s emphasis on individual expression and pushing musical boundaries has inspired artists across genres to explore new sonic territories. The genre\'s legacy can also be seen in film scores, where jazz harmonies and instrumentation are used to create mood and atmosphere. As music continues to evolve, the influence of jazz remains a vital part of its DNA.',
-    },
-    {
       id: 5,
       title: 'The Ever-Changing Landscape of Pop Music',
       date: 'November 26, 2023',
@@ -50,6 +42,30 @@ const BlogPage = () => {
       summary: 'Movie soundtracks have the ability to enhance the emotional impact of a film, creating a powerful and immersive experience.',
       link: '/article/movie-soundtracks',
       fullContent: 'Movie soundtracks have the ability to enhance the emotional impact of a film, creating a powerful and immersive experience. From iconic scores that define a movie\'s identity to carefully curated songs that amplify key moments, soundtracks play a vital role in storytelling. The magic of movie soundtracks lies in their ability to transport the audience into the world of the film, evoking a range of emotions and memories.',
+    },
+    {
+      id: 8,
+      title: 'The Evolution of Rock Music',
+      date: 'December 17, 2023',
+      summary: 'Rock music has evolved significantly since its origins in the 1950s, with various subgenres emerging and influencing the music scene.',
+      link: '/article/rock-evolution',
+      fullContent: 'Rock music has evolved significantly since its origins in the 1950s, with various subgenres emerging and influencing the music scene. From classic rock to heavy metal, punk rock, and indie rock, the genre has continuously reinvented itself. The rise of digital platforms has also allowed for greater experimentation and fusion with other genres, leading to a diverse and dynamic rock landscape.',
+    },
+    {
+      id: 9,
+      title: 'The Global Impact of Hip-Hop Culture',
+      date: 'December 24, 2023',
+      summary: 'Hip-hop culture has spread globally, influencing music, fashion, art, and language in diverse and profound ways.',
+      link: '/article/hiphop-global',
+      fullContent: 'Hip-hop culture has spread globally, influencing music, fashion, art, and language in diverse and profound ways. From its roots in the Bronx, hip-hop has become a global phenomenon, with artists from around the world embracing the genre and adding their unique cultural perspectives. The impact of hip-hop can be seen in the rise of international hip-hop scenes, the use of hip-hop in advertising and film, and the adoption of hip-hop fashion and slang in mainstream culture.',
+    },
+    {
+      id: 10,
+      title: 'The Rise of Alternative Rock',
+      date: 'December 31, 2023',
+      summary: 'Alternative rock emerged in the 1980s as a reaction against mainstream rock, offering a more diverse and experimental sound.',
+      link: '/article/alternative-rock',
+      fullContent: 'Alternative rock emerged in the 1980s as a reaction against mainstream rock, offering a more diverse and experimental sound. With bands like R.E.M., Sonic Youth, and Pixies leading the way, alternative rock challenged the conventions of rock music and paved the way for the grunge and indie rock movements of the 1990s. The genre\'s influence can still be heard in contemporary rock music, with many artists drawing inspiration from its diverse and innovative sound.',
     },
   ];
 
@@ -77,27 +93,25 @@ const BlogPage = () => {
         />
       </div>
       <main className="blog-main">
-        {filteredArticles.map((article, index) => (
-          <article
-            key={article.id}
-            className="blog-article"
-            style={index >= 4 ? { gridColumn: '1 / -1' } : {}}
-          >
-            <div className="article-content">
-              <h2>{article.title}</h2>
-              <p className="article-date">{article.date}</p>
-              <p className="article-summary">{article.summary}</p>
-              <button onClick={() => handleReadMoreClick(article.id)} className="read-more">
-                {expandedArticleId === article.id ? 'Read Less' : 'Read More'}
-              </button>
-              {expandedArticleId === article.id && (
-                <div className="full-content">
-                  <p>{article.fullContent}</p>
-                </div>
-              )}
-            </div>
-          </article>
-        ))}
+        <ul className="article-list">
+          {filteredArticles.map((article) => (
+            <li key={article.id} className="blog-article">
+              <div className="article-content">
+                <h2>{article.title}</h2>
+                <p className="article-date">{article.date}</p>
+                <p className="article-summary">{article.summary}</p>
+                <button onClick={() => handleReadMoreClick(article.id)} className="read-more">
+                  {expandedArticleId === article.id ? 'Read Less' : 'Read More'}
+                </button>
+                {expandedArticleId === article.id && (
+                  <div className="full-content">
+                    <p>{article.fullContent}</p>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </main>
     </div>
   );

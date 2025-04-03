@@ -19,7 +19,7 @@
   background: linear-gradient(to right, #7c1816, #c0392b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-align: center; /* Ensure text is centered */
+  text-align: center;
   font-weight: 600;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -29,7 +29,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
   gap: 40px;
-  justify-items: center;
+  justify-items: start;
   margin-bottom: 60px;
 }
 
@@ -63,7 +63,7 @@
 .article-info {
   margin-top: 15px;
   flex-grow: 1;
-  text-align: center;
+  text-align: left;
 }
 
 .article h2 {
@@ -109,9 +109,9 @@
 
 .blog-header {
   display: flex;
-  justify-content: center; /* Center the content horizontally */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items vertically */
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 90%;
   max-width: 1200px;
   margin-top: 20px;
@@ -123,9 +123,13 @@
   border: 1px solid #ccc;
   border-radius: 25px;
   font-size: 1rem;
-  margin-top: 10px; /* Add margin to separate from title */
+  margin-top: 10px;
   width: 300px;
   max-width: 100%;
+}
+
+.articles-container .article:nth-child(4n + 5) {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 1200px) {
@@ -150,5 +154,58 @@
   .blog-page h1 {
     font-size: 2rem;
     margin-top: 40px;
+  }
+}
+
+.article-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.article-list li {
+  display: inline-block; /* Display list items inline */
+  width: calc(25% - 30px); /* Adjust width to fit 4 items with gaps */
+  vertical-align: top; /* Align items to the top */
+  margin-right: 40px; /* Add right margin for spacing */
+  margin-bottom: 40px; /* Add bottom margin for spacing */
+}
+
+.article-list li:nth-child(4n) {
+  margin-right: 0; /* Remove right margin for the last item in each row */
+}
+
+@media (max-width: 1200px) {
+  .article-list li {
+    width: calc(33.33% - 30px);
+  }
+
+  .article-list li:nth-child(4n) {
+    margin-right: 40px;
+  }
+
+  .article-list li:nth-child(3n) {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .article-list li {
+    width: calc(50% - 30px);
+  }
+
+  .article-list li:nth-child(3n) {
+    margin-right: 40px;
+  }
+
+  .article-list li:nth-child(2n) {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .article-list li {
+    width: 100%;
+    margin-right: 0;
   }
 }
