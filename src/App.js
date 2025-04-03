@@ -42,6 +42,7 @@ import ResetPasswordPage from './ResetPasswordPage';
 import SearchResults from './SearchResults';
 import ArtistsPage from './ArtistsPage';
 import BlogPage from './BlogPage';
+import Newsletter from './Newsletter';
 
 const AuthContext = createContext();
 
@@ -113,6 +114,7 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
+                    <Route path="/newsletter" element= {<Newsletter />} />
                     <Route path="/blog" element={<BlogPage />} />
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/login" element={<LoginPage />} />
