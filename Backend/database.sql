@@ -3,13 +3,13 @@ Pre-requisite
 Install mysql work bench
 Create new Connection
 Add a new schema name - vinyl database
-   
+
 */
- 
+
 -- Creating the database
 CREATE DATABASE Team_Project;
 USE Team_Project;
- 
+
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(255) NOT NULL,
@@ -19,13 +19,13 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
- 
+
 //to insert the values into the user table
- 
+
 INSERT INTO users (user_name, email, password, role) VALUES
 ('Ashmin Abisha', 'ashminabishaj@gmail.com', 'Ashmin@123', 'user'),
 ('Admin user', 'admin@example.com', 'adminpass', 'admin');
- 
+
 -- Artists Table
 CREATE TABLE artists (
     artist_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +35,7 @@ CREATE TABLE artists (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
- 
+
 -- Albums Table
 CREATE TABLE albums (
     album_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,14 +46,14 @@ CREATE TABLE albums (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
 );
- 
- 
+
+
 -- Genres Table
 CREATE TABLE genres (
     genre_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
- 
+
 -- Products Table
 CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -70,19 +70,19 @@ CREATE TABLE products (
     FOREIGN KEY (album_id) REFERENCES albums(album_id),
     FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
 );
- 
- 
+
+
 CREATE TABLE cart (
     cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,                  
-    product_id INT NOT NULL,              
-    quantity INT NOT NULL,                
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
- 
+
 -- Exhibits Table (Wishlist)
 CREATE TABLE wishlist (
     wishlist_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -92,7 +92,7 @@ CREATE TABLE wishlist (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
- 
+
 -- Order Items Table
 CREATE TABLE order_items (
     order_item_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -105,7 +105,7 @@ CREATE TABLE order_items (
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
- 
+
 -- Inventory Table
 CREATE TABLE inventory (
     inventory_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -115,7 +115,7 @@ CREATE TABLE inventory (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
- 
+
 -- Shipping Address Table
 CREATE TABLE shipping_address (
     shipping_address_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -131,7 +131,7 @@ CREATE TABLE shipping_address (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
- 
+
 -- Orders Table
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -145,7 +145,7 @@ CREATE TABLE orders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
- 
+
 -- Order Tracking Table
 CREATE TABLE order_tracking (
     tracking_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -155,7 +155,7 @@ CREATE TABLE order_tracking (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
- 
+
 -- Payments Table
 CREATE TABLE payments (
     payment_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -169,7 +169,7 @@ CREATE TABLE payments (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
- 
+
 -- Insert Artists
 INSERT INTO artists (name, bio, profile_image_url)
 VALUES
@@ -193,13 +193,13 @@ VALUES
   ('Eminem', 'An American rapper and songwriter.', 'https://example.com/eminem.jpg'),
   ('The Notorious B.I.G.', 'An American rapper and songwriter.', 'https://example.com/biggie.jpg'),
   ('The Masterplan', 'An English rock band formed in 1998, known for their hits and influence on British rock.', 'https://example.com/themasterplan.jpg');
- 
- 
+
+
 INSERT INTO artists (name)
 SELECT 'Various Artists'
 WHERE NOT EXISTS (SELECT 1 FROM artists WHERE name = 'Various Artists');
- 
- 
+
+
 -- Insert Genres
 INSERT INTO genres (name)
 VALUES
@@ -208,37 +208,37 @@ VALUES
 ('Pop'),
 ('Rock'),
 ('Hip-hop');
- 
+
 -- Insert Albums
 INSERT INTO albums (title, artist_id, release_date)
 VALUES
-  ('Nevermind', 1, '1991-09-24'),                
-  ('Oasis', 20, '1998-11-17'),          
-  ('OK Computer', 3, '1997-05-21'),              
-  ('Saviors', 4, '2024-02-09'),                  
-  ('American Idiot', 4, '2004-09-21'),            
-  ('Barbie the Album', 5, '2023-07-21'),          
-  ('Guardians of the Galaxy - Awesome Mix 1', 5, '2014-07-29'),  
-  ('Pulp Fiction', 5, '1994-09-27'),              
-  ('The Greatest Showman', 5, '2017-12-08'),  
-  ('Baby Driver', 5, '2017-07-23'),              
-  ('Sweetener', 6, '2018-08-17'),                
-  ('Rumors', 7, '1977-02-04'),                    
-  ('Thriller', 8, '1982-11-30'),                  
-  ('Short n’ Sweet', 9, '2023-09-22'),  
-  ('Brat', 10, '2023-10-26'),          
+  ('Nevermind', 1, '1991-09-24'),
+  ('Oasis', 20, '1998-11-17'),
+  ('OK Computer', 3, '1997-05-21'),
+  ('Saviors', 4, '2024-02-09'),
+  ('American Idiot', 4, '2004-09-21'),
+  ('Barbie the Album', 5, '2023-07-21'),
+  ('Guardians of the Galaxy - Awesome Mix 1', 5, '2014-07-29'),
+  ('Pulp Fiction', 5, '1994-09-27'),
+  ('The Greatest Showman', 5, '2017-12-08'),
+  ('Baby Driver', 5, '2017-07-23'),
+  ('Sweetener', 6, '2018-08-17'),
+  ('Rumors', 7, '1977-02-04'),
+  ('Thriller', 8, '1982-11-30'),
+  ('Short n’ Sweet', 9, '2023-09-22'),
+  ('Brat', 10, '2023-10-26'),
   ('The Dark Side of the Moon', 11, '1973-03-01'),
-  ('Led Zeppelin IV', 12, '1971-11-08'),        
-  ('Abbey Road', 13, '1969-09-26'),              
-  ('Hotel California', 14, '1976-12-08'),        
-  ('The Wall', 11, '1979-11-30'),                
-  ('Get Rich or Die Tryin’', 15, '2003-02-06'),    
-  ('To Pimp a Butterfly', 16, '2015-03-15'),      
-  ('The Blueprint', 17, '2001-09-11'),            
-  ('The Marshall Mathers LP', 18, '2000-05-23'),  
-  ('Ready to Die', 19, '1994-09-13');      
- 
- 
+  ('Led Zeppelin IV', 12, '1971-11-08'),
+  ('Abbey Road', 13, '1969-09-26'),
+  ('Hotel California', 14, '1976-12-08'),
+  ('The Wall', 11, '1979-11-30'),
+  ('Get Rich or Die Tryin’', 15, '2003-02-06'),
+  ('To Pimp a Butterfly', 16, '2015-03-15'),
+  ('The Blueprint', 17, '2001-09-11'),
+  ('The Marshall Mathers LP', 18, '2000-05-23'),
+  ('Ready to Die', 19, '1994-09-13');
+
+
 -- Insert Products
 INSERT INTO products (product_id, name, artist_id, album_id, genre_id, release_date, price, cover_image_url, created_at, updated_at)
 VALUES
@@ -267,17 +267,17 @@ VALUES
 (23, 'The Blueprint', (SELECT artist_id FROM artists WHERE name = 'Jay-Z' LIMIT 1), 23, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2001-09-11', 40.00, '/images/Jay-Z – The Blueprint.webp', NOW(), NOW()),
 (24, 'The Marshall Mathers LP', (SELECT artist_id FROM artists WHERE name = 'Eminem' LIMIT 1), 24, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '2000-05-23', 40.00, '/images/Eminem – The Marshall Mathers LP.jpg', NOW(), NOW()),
 (25, 'Ready to Die', (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.' LIMIT 1), 25, (SELECT genre_id FROM genres WHERE name = 'Hip-hop' LIMIT 1), '1994-09-13', 40.00, '/images/The Notorious B.I.G. – Ready to Die.webp', NOW(), NOW());
- 
- 
+
+
 -- Insert Inventor
 INSERT INTO inventory (product_id, stock_quantity, created_at, updated_at)
 SELECT product_id, 100, NOW(), NOW()
 FROM products;
- 
- 
+
+
 -- To alter the table products and add best-sellers column
 ALTER TABLE products ADD COLUMN best_sellers BOOLEAN DEFAULT 0;
- 
+
 --To update the best sellers product
 UPDATE products
 SET best_sellers = 1
@@ -288,10 +288,10 @@ WHERE name IN (
   'Rumors',
   'The Dark Side of the Moon'
 );
- 
+
 -- To alter the table products and add on-sale column
 ALTER TABLE products ADD COLUMN on_sale BOOLEAN DEFAULT 0;
- 
+
 --To update the on-sale product
 UPDATE products
 SET on_sale = 1
@@ -303,16 +303,16 @@ WHERE name IN (
   'Abbey Road',
   'Ready to Die'
 );
- 
+
 --To alter the table users to temp store the reset token and token expiry
 ALTER TABLE users ADD COLUMN reset_token VARCHAR(255) NULL;
 ALTER TABLE users ADD COLUMN reset_token_expiry DATETIME NULL;
- 
+
 --To replace ' ' with '-' in genres to get aligned
 SELECT DISTINCT name FROM genres;
 UPDATE genres
 SET name = REPLACE(name, ' ', '-');
- 
+
 CREATE TABLE albums_pop_up (
   id INT AUTO_INCREMENT PRIMARY KEY,
   album_id INT NOT NULL,  -- Relates to the existing albums table
@@ -327,12 +327,12 @@ CREATE TABLE albums_pop_up (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- Timestamp for when the record is updated
   FOREIGN KEY (album_id) REFERENCES albums(album_id)  -- Foreign key constraint linking to the albums table
 );
- 
+
 INSERT INTO artists (name)
 SELECT 'Various Artists'
 WHERE NOT EXISTS (SELECT 1 FROM artists WHERE name = 'Various Artists');
- 
- 
+
+
 INSERT INTO albums_pop_up (album_id, release_date, records, hit_singles, awards, genres_popup, interesting_facts, related_albums)
 VALUES
 (1, '1991-09-24',
@@ -533,33 +533,33 @@ VALUES
  'Hip Hop, East Coast Rap',
  'The album tells the story of Biggie\'s life growing up in Brooklyn, from his struggles in the streets to his rise to fame. "Juicy" became one of his most iconic songs.',
  'If you loved Ready to Die, you might also like: Get Rich or Die Tryin\', To Pimp a Butterfly');
- 
- 
+
+
 UPDATE products
 SET cover_image_url = '/images/Fleetwood Mac – Rumors.jpg'
 WHERE name = 'Rumors' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Fleetwood Mac' LIMIT 1);
- 
+
 UPDATE products
 SET cover_image_url = '/images/Sabrina Carpenter – Short n’ Sweet.jpg'
 WHERE name = 'Short n’ Sweet' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Sabrina Carpenter' LIMIT 1);
- 
+
 UPDATE products
 SET cover_image_url = '/images/The Notorious B.I.G. – Ready to Die.jpg'
 WHERE name = 'Ready to Die' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.' LIMIT 1);
- 
+
 UPDATE products
 SET cover_image_url = '/images/Pink Floyd – The Dark Side of the Moon.jpg'
 WHERE name = 'The Dark Side of the Moon' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Pink Floyd' LIMIT 1);
- 
+
 UPDATE products
 SET cover_image_url = '/images/Led Zeppelin – Led Zeppelin IV.jpg'
 WHERE name = 'Led Zeppelin IV' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Led Zeppelin' LIMIT 1);
- 
- 
+
+
 UPDATE products
 SET cover_image_url = '/images/Charlie XCX – Brat.jpg'
 WHERE name = 'Brat' AND artist_id = (SELECT artist_id FROM artists WHERE name = 'Charlie XCX' LIMIT 1);
- 
+
 -- table to create a blacklist tokens for logout
 CREATE TABLE blacklisted_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -675,7 +675,7 @@ INSERT INTO artists_bio (artist_id, bio, image_url) VALUES
     (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.'),
     'The Notorious B.I.G., born Christopher Wallace in 1972, became one of hip-hop’s most iconic figures before his tragic death in 1997. With his deep voice, smooth flow, and vivid storytelling, he brought East Coast rap to the forefront. His debut album, Ready to Die (1994), produced hits like Juicy and Big Poppa, while Life After Death (1997) cemented his legendary status. Despite his short career, Biggie’s impact on hip-hop remains profound, with his influence still shaping the genre decades later.',
     '/images/artists_info/the_notorious B.I.G.jpg'
-); 
+);
 
 CREATE TABLE favorites (
     favorite_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -706,12 +706,12 @@ ALTER TABLE guest_subscriptions MODIFY subscription_token VARCHAR(255) NULL;
 ALTER TABLE users ADD COLUMN membership_status ENUM('regular', 'vip') DEFAULT 'regular';
 
 --Updated the database name and your VS Code settings
-UPDATE products 
-SET image_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg' 
+UPDATE products
+SET image_url = '/images/The_Notorious_BIG_Ready_to_Die.jpg'
 WHERE id = 25;
 
-UPDATE products 
-SET image_url = '/images/Led_Zeppelin_IV.jpg' 
+UPDATE products
+SET image_url = '/images/Led_Zeppelin_IV.jpg'
 WHERE id = 17;
 
 
@@ -742,7 +742,7 @@ ADD COLUMN approval_status VARCHAR(20) DEFAULT 'pending';
 ALTER TABLE albums_pop_up
 ADD COLUMN cover_image_url VARCHAR(255) BEFORE release_date;
 
---2.Additional info for displaying related_albums_images 
+--2.Additional info for displaying related_albums_images
 ALTER TABLE albums_pop_up
 ADD related_albums_images TEXT;
 
@@ -800,7 +800,7 @@ INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (9, 3, 
 -- Reply to a reply
 INSERT INTO messages (sender_id, receiver_id, message, parent_id) VALUES (3, 9, 'Reply to the reply of Test Message 3.', 6); -- Reply to message_id 6
 
-ALTER TABLE albums_pop_up 
+ALTER TABLE albums_pop_up
 ADD COLUMN cover_image_url VARCHAR(255) AFTER release_date;
 
 ALTER TABLE albums_pop_up
@@ -826,8 +826,8 @@ CREATE TABLE related_album_images (
     FOREIGN KEY (related_album_id) REFERENCES albums_pop_up(album_id) ON DELETE CASCADE
 );
 
-ALTER TABLE albums_pop_up 
-DROP COLUMN related_albums, 
+ALTER TABLE albums_pop_up
+DROP COLUMN related_albums,
 DROP COLUMN related_albums_images;
 
 INSERT INTO related_albums (album_id, related_album_id) VALUES
@@ -1005,4 +1005,3 @@ INSERT INTO pre_orders (user_id, product_id, quantity, status) VALUES
 (7, 107, 1, 'Delivered'),
 (8, 108, 2, 'Returned'),
 (9, 109, 3, 'On Hold');
-
