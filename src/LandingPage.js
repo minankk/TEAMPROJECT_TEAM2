@@ -5,11 +5,10 @@ import VinylGenres from "./VinylGenres";
 import VinylHistory from "./VinylHistory";
 import VIP_lounge_landing from "./VIP_lounge_landing"
 
-
 // Import Hero Section Images
-import Recordstore from "./assets/recordstore.jpg";
-import Musicplayer from "./assets/music-player.jpg";
-import Vinylhand from "./assets/vinyl-hand.jpg";
+import Recordstore from "./assets/VINYL_STORE_HERO_LANDING.jpeg";
+import Musicplayer from "./assets/VIP_HERO_LANDING.jpeg";
+import Vinylhand from "./assets/VVREOCRD_HERO_LANDING.jpeg";
 
 // Import Staff Picks Images
 import Barbie from "./assets/barbie_sleeve.jpg";
@@ -103,7 +102,7 @@ function LandingPage() {
       <section className="hero">
         <div className="hero-text fade-in">
           <h1>Enjoyment in Every Sound</h1>
-          <p>We are your local record store - online. A record store created and stocked by vinyl lovers for vinyl lovers.</p>
+          <p>We are your local record store - online.  A record store created and stocked by vinyl lovers for vinyl lovers.</p>
           <button className="shop-all-button" onClick={() => window.location.href = "/products"}>
             Shop All <span className="arrow">→</span>
           </button>
@@ -117,33 +116,35 @@ function LandingPage() {
           {/* Customer Reviews Section */}
           <ReviewCarousel />
 
-      {/* Staff Picks - Infinite Scrolling Carousel */}
-      <section className="staff-picks">
-        <div className="staff-picks-header">
-        <h2 className="staff-picks-title">Vault Weekly</h2>
-        <p className="staff-subtitle">Handpicked by the team, updated each week with fresh tracks you’ll love!</p>
-        </div>
+{/* Staff Picks - Infinite Scrolling Carousel */}
+<section className="staff-picks">
+  <div className="staff-picks-header">
+    <h2 className="staff-picks-title">Vault Weekly</h2>
+    <p className="staff-subtitle">Handpicked by the team, updated each week with fresh tracks you’ll love!</p>
+  </div>
 
-        <div className="staff-carousel">
-          <div className="staff-picks-container">
-            <div className="infinite-scroll">
-              {infinitePicks.map((item, index) => (
-                <div key={index} className="vinyl-item">
-                  <img src={item.img} alt={item.title} className="vinyl-image" />
-                  <h3 className="vinyl-title">{item.title}</h3>
-                  <p className="vinyl-price">{item.price}</p>
-                </div>
-              ))}
+  <div className="staff-carousel">
+    <div className="staff-picks-container">
+      <div className="infinite-scroll">
+        {infinitePicks.map((item, index) => (
+          <a href="http://localhost:3000/products" key={index} className="vinyl-item-link">
+            <div className="vinyl-item">
+              <img src={item.img} alt={item.title} className="vinyl-image" />
+              <h3 className="vinyl-title">{item.title}</h3>
+              <p className="vinyl-price">{item.price}</p>
             </div>
-          </div>
-        </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
 
-        <div>
-        <button className="shop-all-button" onClick={() => window.location.href = "/products"}>
-          Shop All <span className="arrow">→</span>
-        </button>
-        </div>
-      </section>
+  <div>
+    <button className="shop-all-button" onClick={() => window.location.href = "http://localhost:3000/products"}>
+      Shop All <span className="arrow">→</span>
+    </button>
+  </div>
+</section>
 
       {/* Vinyl Genre Showcase */}
       <VinylGenres />
