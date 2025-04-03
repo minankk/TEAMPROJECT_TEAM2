@@ -29,6 +29,7 @@ import OrderTrackingPage from './OrderTrackingPage';
 import OrderHistoryPage from './OrderHistoryPage';
 import UserProfilePage from './UserProfilePage';
 import BestSellers from './BestSellersPage';
+import GenrePage from './GenrePage';
 import AlternativeRockPage from './AlternativeRockPage';
 import HipHopPage from './HipHopPage';
 import AdminDashboardPage, { AdminOverview } from './AdminDashboardPage'; 
@@ -130,6 +131,7 @@ function App() {
                     <Route path="/logout" element={<LogoutPage />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="reset-password" element={<ResetPasswordPage />} />
+                    <Route path="genres" element={<GenrePage />} />
                     <Route path="/genres/alternative-rock" element={<AlternativeRockPage />} />
                     <Route path="/best-sellers" element={<BestSellers />} />
                     <Route path="/genres/hip-hop" element={<HipHopPage />} />
