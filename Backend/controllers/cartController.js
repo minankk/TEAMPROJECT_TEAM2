@@ -1,6 +1,5 @@
 const db = require('../db');
 
-// POST /cart/add (Add item to the cart)
 exports.addToCart = async (req, res) => {
     try {
         const user_id = req.user?.user_id;
@@ -9,13 +8,15 @@ exports.addToCart = async (req, res) => {
         if (!user_id) {
             return res.status(401).json({ error: 'Unauthorized: user_id missing' });
         }
-        if (!product_id || !quantity) {
-            return res.status(400).json({ error: 'Missing required fields: product_id, or quantity' });
-        }
 
         if (quantity <= 0) {
             return res.status(400).json({ error: 'Quantity must be greater than 0' });
         }
+
+        if (!product_id || !quantity) {
+            return res.status(400).json({ error: 'Missing required fields: product_id, or quantity' });
+        }
+
         const [inventoryRows] = await db.execute('SELECT stock_quantity FROM inventory WHERE product_id = ?', [product_id]);
 
         if (inventoryRows.length === 0) {
@@ -124,6 +125,9 @@ exports.removeFromCart = async (req, res) => {
 
 // Function to handle order placement
 exports.placeOrder = async (req, res) => {
+    if (!req.user || !req.user.userId) {
+        return res.status(401).json({ error: 'Unauthorized: user_id missing' });
+    }
     const user_id = req.user.userId;
     try {
         // Get cart items
@@ -158,9 +162,9 @@ exports.placeOrder = async (req, res) => {
         res.status(200).json({ message: 'Order placed successfully' });
 
     } catch (error) {
-        console.error('Error placing order:', error);
-        res.status(500).json({ error: 'Failed to place order' });
-    }
+        console.error("Error in placeOrder:", error); 
+        return res.status(500).json({ error: 'Failed to place order' });
+      }
 };
 
 //Add a cart count endpoint for SQL database
