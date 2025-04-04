@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import './NewsletterPage.css';
+import './NewsLetter.css';
 
 const NewsletterPage = () => {
     const [email, setEmail] = useState('');
     const [preferences, setPreferences] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false); // Added loading state
 
     const handlePreferenceChange = (e) => {
         const { value, checked } = e.target;
@@ -20,23 +21,25 @@ const NewsletterPage = () => {
         e.preventDefault();
         setMessage('');
         setError('');
+        setLoading(true); // Start loading
 
         if (preferences.length === 0) {
             setError("Please select at least one preference.");
+            setLoading(false); // Stop loading
             return;
         }
 
         try {
-            // Check if user is logged in to get user_id
             const token = localStorage.getItem('token');
             let user_id = null;
             if (token) {
                 try {
-                    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Basic JWT decode
+                    const decodedToken = JSON.parse(atob(token.split('.')[1]));
                     user_id = decodedToken.user_id;
                 } catch (decodeError) {
                     console.error("Error decoding token:", decodeError);
-                    setError("Error processing request. Please try again.");
+                    setError("Invalid login session. Please log in again.");
+                    setLoading(false); // Stop loading
                     return;
                 }
             }
@@ -69,6 +72,8 @@ const NewsletterPage = () => {
             setPreferences([]);
         } catch (err) {
             setError(err.message || 'Failed to subscribe. Please try again.');
+        } finally {
+            setLoading(false); // Stop loading
         }
     };
 
@@ -108,7 +113,9 @@ const NewsletterPage = () => {
                     {/* Add more preferences as needed */}
                 </div>
 
-                <button type="submit">Subscribe</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Subscribing...' : 'Subscribe'}
+                </button>
             </form>
 
             {message && <p className="success-message">{message}</p>}
