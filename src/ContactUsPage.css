@@ -1,220 +1,183 @@
-/* General Styles */
-html, body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  color: #151515;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensures the full viewport height */
-  /* background: url('./assets/vinyl-texture.webp') no-repeat center center; */
-  background-size: cover; /* Ensures the image covers the entire screen */
-}
-
-main {
-  padding: 20px;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap");
-
+/* Contact Us Page Styling - Matching Admin Forms */
 .contact-page {
+  position: relative;
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  }
+  align-items: center;
+  justify-content: flex-start; /* Align items at the start to accommodate header */
+  margin: 0;
+  overflow-x: hidden;
+  background-image: url('./assets/ContactUs_bg.png'); /* Adjust path if needed */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.contact-page::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  pointer-events: none;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.482); /* Dark overlay */
+}
 
 .contact-header {
   width: 100%;
-  background-color: black; /* Black banner */
-  color: white; /* White text */
-  padding: 40px 0;
-  background: linear-gradient(135deg, #1a1a1a 0%, #3a0d0d 100%);
-  font-family: "Oswald", sans-serif;
-  color: #ddd;
-  overflow-x: hidden;
-  min-height: 100vh;
   text-align: center;
-  position: relative; /* No absolute positioning */
-  top: 0;
-  left: 0;
-  transform: none; /* Remove unwanted transform */
-  max-width: 100%; /* Full width */
+  padding: 60px 20px 40px; /* Adjusted padding */
+  color: white;
+  font-family: "Oswald", sans-serif;
+  z-index: 10; /* Ensure header is above overlay */
 }
 
-  .contact-form-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-
-  .contact-form {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-    transition: transform 0.3s ease;
-  }
-
-  .contact-form:hover {
-    transform: translateY(-5px);
-  }
-
-  .contact-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #ffffff;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-  }
-  /* padding: 50px 20px;
-  position: relative;
-} */
-
-/* 🎵 Record Shelf Background */
-.contact-page .record-shelf {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  height: 500px;
-  background: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
-  opacity: 0.2;
-  z-index: -1;
-  border-radius: 20px;
+.contact-form-container h1 {
+  color: white;
+    font-size: 2rem;
+    margin-top: 2px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-family: 'Oswald';
 }
 
-/* 🎵 Form Container Styled */
-.contact-page .contact-form-container {
-  max-width: 500px;
-  width: 90%;
+.contact-form-container p {
+  color: white;
+    font-size: 1rem;
+    margin-top: 2px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-family: 'Oswald';
+}
+
+.contact-header p {
+  font-size: 1.1rem;
+  color: #ddd;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 35px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
-  animation: fadeInUp 1s ease-in-out;
-  position: relative;
-  z-index: 1;
 }
 
-/* 🎵 Floating Labels & Inputs */
+.contact-form-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 30px 20px 50px; /* Adjusted margins */
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease-in-out;
+  z-index: 10; /* Keep form above overlay */
+}
+
+.contact-form-container:hover {
+  box-shadow: 0 0 10px rgb(100, 0, 0), 0 0 30px rgba(100, 0, 0, 0.623);
+}
+
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column-reverse; /* Reverse the order of elements */
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.contact-form label {
+  font-size: 14px;
+  color: #ffffff;
+  margin-top: 5px; /* Adjust margin to be below input */
+  font-family: 'Oswald';
+}
+
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  outline: #ffffff;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(197, 197, 197, 0.3);
+  font-family: 'Oswald';
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  background: rgba(255, 255, 255, 0.341);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #f4f4f4;
+}
+
+.contact-form button {
+  background-color: #620b0b;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px rgba(119, 12, 12, 0.8);
+  font-weight: bold;
+  width: 100%;
+}
+
+.contact-form button:hover {
+  background-color: rgb(141, 8, 8);
+  box-shadow: 0 0 25px rgb(63, 7, 7);
+  transform: scale(1.05);
+}
+
+/* Remove the record shelf for a cleaner look */
+.contact-page .record-shelf {
+  display: none;
+}
+
+/* Remove the floating label animation for simplicity */
 .contact-page .contact-form .form-group {
   position: relative;
   width: 100%;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease-in-out;
-}
-
-.contact-page .contact-form .form-group:hover {
-  transform: translateX(calc(var(--index) * 5px));
-}
-
-.contact-page .contact-form input,
-.contact-page .contact-form textarea {
-  padding: 12px;
-  font-size: 1rem;
-  background: rgba(0, 0, 0, 0.8);
-  border: 2px solid rgba(255, 0, 0, 0.5);
-  border-radius: 6px;
-  color: #fff;
-  outline: none;
-  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  text-align: center;
-}
-
-  .contact-form input:focus,
-  .contact-form textarea:focus {
-    border-color: #7c1816;
-    outline: none;
-  }
-.contact-page .contact-form input:focus,
-.contact-page .contact-form textarea:focus {
-  border-color: #ff4c4c;
-  box-shadow: 0 0 20px rgba(255, 76, 76, 0.6);
 }
 
 .contact-page .contact-form label {
-  position: absolute;
-  top: 14px;
-  left: 15px;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-  transition: 0.3s ease-in-out;
+  position: static; /* Remove absolute positioning */
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .contact-page .contact-form input:focus + label,
 .contact-page .contact-form input:not(:placeholder-shown) + label,
 .contact-page .contact-form textarea:focus + label,
 .contact-page .contact-form textarea:not(:placeholder-shown) + label {
-  top: -10px;
-  left: 10px;
-  font-size: 1.1rem;
-  color: #ff4c4c;
-  background: #0a0a0a;
-  padding: 2px 5px;
+  /* Revert label styling */
+  top: auto;
+  left: auto;
+  font-size: 14px;
+  color: #ffffff;
+  background: none;
+  padding: 0;
 }
 
-/* 🎵 Submit Button Styled */
-.contact-page .contact-form button {
-  width: 100%;
-  background: #ad2321;
-  color: #fff;
-  border: none;
-  padding: 14px;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-  text-transform: uppercase;
-  transition: 0.3s ease;
-  box-shadow: 0 6px 15px rgba(255, 0, 0, 0.3);
-}
-
-  .contact-form button:hover {
-    background-color: #000000;
-    transform: translateY(-2px);
-  }
-
-  html {
-    height: 100%;
-    background-size: cover;
-  }
-.contact-page .contact-form button:hover {
-  background: #52110e;
-  transform: scale(1.05) rotate(2deg);
-}
-
-/* 🎵 Form Animation */
+/* Remove the fadeInUp animation as it might conflict */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* ... your fadeInUp keyframes ... */
 }
