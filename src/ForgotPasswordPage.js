@@ -19,7 +19,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5001/forgot-password", { // Replace with your backend URL
+      const response = await fetch("http://localhost:5001/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +30,6 @@ const ForgotPassword = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Backend now returns the message you want to display
         setMessage(data.message);
       } else {
         setError(data.message || "An error occurred.");
@@ -50,12 +49,12 @@ const ForgotPassword = () => {
 
         {!message ? (
           <form onSubmit={handleSubmit}>
-            <label>Please enter the email address you used to sign up</label>
+            <label>Enter your email address</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
+              placeholder="Email address"
               required
             />
             <button type="submit" className="forgot-password-button">
