@@ -1,81 +1,126 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './App'; // Correct import path
+import { useAuth } from './App';
 import './LoginPage.css';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth(); // Use login function from AuthContext
+  const { login } = useAuth();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log('Logging in with:', { username, password });
+  const [formData, setFormData] = useState({
+    usernameOrEmail: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
 
-    fetch('http://localhost:5001/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Login response:', data);
+  const [error, setError] = useState(null);
 
-        if (data.token) {
-          alert('Login successful');
-          login(data.token); // Use login function to set token and navigate
-        } else {
-          alert('Login failed');
-        }
-      })
-      .catch((error) => {
-        console.error('Error logging in:', error.message);
-        alert('Error logging in: ' + error.message); // Show error message
-      });
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError(null);
+
+    // ... (rest of your handleSubmit logic) ...
   };
 
   return (
-    <div className="login-page">
+    <div id="login-page">
       <main className="auth-container">
-        <div className="login-container">
-          <h1>Login to your account</h1>
-          <form onSubmit={handleLogin}>
+        <div className={`form-container ${isSignUp ? 'signup-active' : 'login-active'}`}>
+          <h1>{isSignUp ? 'Create an Account' : 'Login to your Account'}</h1>
+          {error && <p className="error-message">{error}</p>}
+          <form onSubmit={handleSubmit}>
+            {isSignUp && (
+              <>
+                <div className="input-field">
+                  <label htmlFor="username">User Name</label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="User name"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="input-field">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </>
+            )}
+            {!isSignUp && (
+              <div className="input-field">
+                <label htmlFor="usernameOrEmail">Username or Email</label>
+                <input
+                  type="text"
+                  id="usernameOrEmail"
+                  name="usernameOrEmail"
+                  placeholder="Username or Email"
+                  value={formData.usernameOrEmail}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
             <div className="input-field">
-              <label htmlFor="username">User name:</label>
-              <input
-                type="text"
-                id="username"
-                placeholder="User name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-field">
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
+                name="password"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
             </div>
+            {isSignUp && (
+              <div className="input-field">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirm password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
+
             <div className="button-group">
-              <button type="submit">Sign in</button>
-              <button type="button" className="admin-signin">Admin Sign in</button>
+              <button type="submit">{isSignUp ? 'Sign Up' : 'Log In'}</button>
+              <button type="button" className="toggle-button" onClick={() => setIsSignUp(!isSignUp)}>
+              {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
+              </button>
             </div>
-            <p className="forgot-password"><Link to="/forgot-password">Forgot Password? Click here</Link></p>
           </form>
-        </div>
-        <div className="signup-container">
-          <h2>New to our site?</h2>
-          <p>If you don't have an account yet, you can sign up here:</p>
-          <Link to="/signup" className="signup-link">Sign Up</Link>
+          {!isSignUp && (
+            <>
+              <p className="forgot-password"><Link to="/forgot-password">Forgot Password?</Link></p>
+              <p className="admin-link"><Link to="/admin-login">Admin Login</Link></p>
+            </>
+          )}
+          {isSignUp && (
+            <p className="admin-link"><Link to="/admin-signup">Admin Sign Up</Link></p>
+          )}
         </div>
       </main>
     </div>
