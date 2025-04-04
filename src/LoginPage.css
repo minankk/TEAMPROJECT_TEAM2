@@ -1,68 +1,295 @@
-/* Background */
-html, body {
-  /* background: url('./assets/vinyl-texture.webp') no-repeat center center fixed; */
+/* Scoped to LoginPage */
+body {
+  margin: 0;
+}
+
+#login-page {
+  position: relative;
+  /* color: white; */
+  font-family: 'Orbitron', sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+}
+
+/* Pseudo-element for background blur */
+#login-page::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background-image: url('./assets/VV_Lounge_form_background.png');
+  background-position: center;
   background-size: cover;
-  color: white;
-  font-family: 'Arial', sans-serif;
+  background-repeat: no-repeat;
+  filter: blur(1.5px); /* Adjust the blur radius as needed */
+  z-index: 0; /* Place it behind other content */
 }
- 
-.login-container, .signup-container {
-  background: rgba(104, 103, 103, 0.5);
+
+#login-page::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  pointer-events: none;
+  z-index: 1; /* Keep vignette above the blurred background */
+  background-color: rgba(0, 0, 0, 0.482); /* Semi-transparent dark overlay */
+}
+
+/* Base styles for the form container */
+#login-page .form-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
   margin: 50px;
-  /* backdrop-filter: blur(15px); */
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  padding: 20px;
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-top: 35px;
+  max-width: 400px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease-in-out;
+  z-index: 10; /* Keep form above the blur and vignette */
+  width: 350px;
+  min-height: 400px;
 }
- 
- 
-/* Spinning Vinyl Icon */
-@keyframes spinVinyl {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+
+#login-page .form-container.login-active {
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-top: 35px;
+  max-width: 400px;
 }
- 
-.vinyl-icon {
-  width: 50px;
-  height: 50px;
+
+#login-page .form-container.signup-active {
+  width: 450px; /* Adjust width for more fields */
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 30px;
+}
+
+#login-page .form-container:hover {
+  box-shadow: 0 0 10px rgb(100, 0, 0), 0 0 30px rgba(100, 0, 0, 0.623);
+}
+
+/* Vinyl Record Animation */
+#login-page .vinyl-icon {
+  width: 70px;
+  height: 70px;
   background: url('./assets/vinyl-icon.webp') no-repeat center;
   background-size: contain;
-  display: inline-block;
-  animation: spinVinyl 5s linear infinite;
-  margin-right: 10px;
+  display: block;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
 }
- 
-/* Buttons with Neon Glow */
-button {
-  background-color: #7c1816;
+
+/* Input Fields */
+#login-page .input-field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 25px; /* Reduced margin-bottom for input fields */
+}
+
+/* Target the last input field before the buttons in the signup form */
+#login-page .signup-active .input-field:nth-last-child(2) {
+  margin-bottom: 25px;
+}
+
+#login-page .input-field label {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 5px;
+  font-family: 'Oswald';
+}
+
+#login-page .input-field input {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  outline: #ffffff;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(197, 197, 197, 0.3);
+  font-family: 'Oswald';
+}
+
+#login-page .input-field input:focus {
+  background: rgba(255, 255, 255, 0.341);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
+/* Placeholder Text */
+#login-page .input-field input::placeholder {
+  color: #f4f4f4;
+}
+
+/* Main Buttons (Sign In/Sign Up) */
+#login-page button {
+  background-color: #620b0b;
   color: white;
   border: none;
   padding: 12px 20px;
-  border-radius: 20px;
+  border-radius: 25px;
   cursor: pointer;
   font-size: 16px;
   transition: 0.3s ease;
-  box-shadow: 0 0 10px rgba(140, 0, 0, 0.8);
+  box-shadow: 0 0 15px rgba(119, 12, 12, 0.8);
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 5px; /* Reduced margin below the main button */
 }
- 
-button:hover {
-  background-color: #a02020;
-  box-shadow: 0 0 15px rgba(255, 50, 50, 1);
+
+#login-page button:hover {
+  background-color: rgb(141, 8, 8);
+  box-shadow: 0 0 25px rgb(63, 7, 7);
+  transform: scale(1.05);
 }
- 
-/* Retro-Style Links */
-.forgot-password a {
+
+/* Links */
+#login-page .forgot-password {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+#login-page .forgot-password a, #login-page .admin-link a {
   text-decoration: none;
-  color: #03223d;
+  color: #9cd6ff;
   font-size: 14px;
+  display: inline-block;
+  transition: 0.3s;
+  text-shadow: 0 0 3px rgba(0, 212, 255, 0.6);
 }
- 
-.forgot-password a:hover{
-  color: #1a4567;
+
+#login-page .forgot-password a:hover, #login-page .admin-link a:hover {
+  color: #9cd6ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
 }
- 
-.signup-link:hover {
-  background-color: #a02020;
-  box-shadow: 0 0 15px rgba(255, 50, 50, 1);
+
+/* Center Admin Links */
+#login-page .admin-link {
+  text-align: center;
+  margin-top: 10px; /* Reduced top margin for admin links */
 }
- 
+
+/* Uncapitalize the "Already have an account?" and "Don't have an account?" text */
+#login-page .forgot-password a, #login-page .admin-link a {
+  text-transform: none;
+}
+
+#login-page .forgot-password a {
+  font-size: 14px;
+  display: inline-block;
+}
+
+#login-page .forgot-password a:hover {
+  color: #9cd6ff;
+  text-shadow: 0 0 15px rgba(0, 212, 255, 1), 0 0 30px rgba(0, 212, 255, 0.9);
+}
+
+#login-page .admin-link a {
+  font-size: 14px;
+  display: inline-block;
+  color: #00d4ff;
+  transition: 0.3s;
+}
+
+#login-page .admin-link a:hover {
+  color: #9cd6ff;
+  text-shadow: 0 0 10px #9cd6ff;
+}
+
+/* h1 styling */
+#login-page .form-container h1 {
+    color: white;
+    font-size: 2rem;
+    margin-top: 2px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-family: 'Oswald';
+}
+
+/* Toggle Button */
+#login-page .toggle-button {
+  font-size: 1rem;
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  box-shadow: none;
+  margin-top: 10px; /* Reduced top margin for the toggle button */
+  margin-bottom: 0; /* Reduced bottom margin for the toggle button */
+}
+
+#login-page .toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+/* Button Group */
+#login-page .button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 100%; /* Adjust as needed */
+  margin: 0 auto;
+}
+
+/* Buttons within the Button Group - Now specific to #login-page */
+#login-page .button-group button {
+  width: 100%;
+  margin: 0;
+}
+
+/* You might also want to make the toggle button style more specific */
+#login-page .toggle-button {
+  font-size: 1rem;
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  box-shadow: none;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+/* And the main action buttons */
+#login-page button { /* This selector was already somewhat specific, but ensure it's intended */
+  background-color: #620b0b;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px rgba(119, 12, 12, 0.8);
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 5px;
+}

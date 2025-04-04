@@ -10,8 +10,8 @@ import FAQ from './faq';
 import TermsAndConditions from './termsandconditions';
 import CartPage from './CartPage';
 import DashboardPage, { Overview } from './DashboardPage';
-import Signup from './signup';
-import AdminSignup from './AdminSignUpPage'; 
+// import Signup from './signup';
+import AdminSignup from './AdminSignUpPage';
 import AboutUs from './AboutUs';
 import DeliveryInformation from './DeliveryInformation';
 import PrivacyPolicy from './PrivacyPolicy';
@@ -32,12 +32,12 @@ import BestSellers from './BestSellersPage';
 import GenrePage from './GenrePage';
 import AlternativeRockPage from './AlternativeRockPage';
 import HipHopPage from './HipHopPage';
-import AdminDashboardPage, { AdminOverview } from './AdminDashboardPage'; 
-import MessagesPage from './MessagesPage'; 
-import ProductsManagementPage from './ProductsManagementPage'; 
-import UserManagementPage from './UserManagementPage'; 
-import OrderManagementPage from './OrderManagementPage'; 
-import AnalyticsPage from './AnalyticsPage'; 
+import AdminDashboardPage, { AdminOverview } from './AdminDashboardPage';
+import MessagesPage from './MessagesPage';
+import ProductsManagementPage from './ProductsManagementPage';
+import UserManagementPage from './UserManagementPage';
+import OrderManagementPage from './OrderManagementPage';
+import AnalyticsPage from './AnalyticsPage';
 import ResetPasswordPage from './ResetPasswordPage';
 import SearchResults from './SearchResults';
 import ArtistsPage from './ArtistsPage';
@@ -122,7 +122,7 @@ function App() {
                     <Route path="/contact-us" element={<ContactUsPage />} />
                     <Route path="/FAQs" element={<FAQ />} />
                     <Route path="/t&c" element={<TermsAndConditions />} />
-                    <Route path="/signup" element={<Signup />} />
+                    {/* <Route path="/signup" element={<Signup />} /> */}
                     <Route path="/admin-signup" element={<AdminSignup />} /> {/* Add the admin signup route */}
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/delivery-information" element={<DeliveryInformation />} />
@@ -144,7 +144,7 @@ function App() {
                     <Route path="/artists" element={<ArtistsPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />}>
                     <Route index element={<AdminOverview />} /> {/* Default route */}
-                    <Route path="overview" element={<AdminOverview />} />   
+                    <Route path="overview" element={<AdminOverview />} />
                     <Route path="messages" element={<MessagesPage />} />
                     <Route path="products" element={<ProductsManagementPage />} />
                     <Route path="users" element={<UserManagementPage />} />
@@ -152,7 +152,7 @@ function App() {
                     <Route path="analytics" element={<AnalyticsPage />} />
 
                     </Route>
-                    
+
                     {/* Dashboard Routes */}
                     <Route path="/dashboard" element={<ProtectedRoute />}>
                         <Route path="" element={<DashboardPage />}>
