@@ -1,0 +1,185 @@
+/* Admin Signup Page Styles */
+
+#admin-signup-page {
+  position: relative;
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh; /* Ensure the page itself is at least viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto; /* Enable scrolling for the page if the content exceeds the viewport */
+  padding-top: 30px; /* Add padding at the top */
+  padding-bottom: 30px; /* Add padding at the bottom */
+  background-image: url('./assets/VV_form_bg_pink_blue.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#admin-signup-page::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  pointer-events: none;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.482);
+}
+
+/* Base styles for the form container */
+#admin-signup-page .form-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 50px; /* Keep existing margin for side spacing */
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-top: 35px;
+  padding-bottom: 35px; /* Add some padding at the bottom of the form */
+  max-width: 450px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+  width: 450px;
+  min-height: 450px;
+}
+
+
+#admin-signup-page .form-container:hover {
+  box-shadow: 0 0 10px rgb(100, 0, 0), 0 0 30px rgba(100, 0, 0, 0.623);
+}
+
+/* Input Fields */
+#admin-signup-page .input-field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+#admin-signup-page .input-field label {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 5px;
+  font-family: 'Oswald';
+}
+
+#admin-signup-page .input-field input {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  outline: #ffffff;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(197, 197, 197, 0.3);
+  font-family: 'Oswald';
+}
+
+#admin-signup-page .input-field input:focus {
+  background: rgba(255, 255, 255, 0.341);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
+/* Placeholder Text */
+#admin-signup-page .input-field input::placeholder {
+  color: #f4f4f4;
+}
+
+/* Main Buttons (Sign Up) */
+#admin-signup-page button {
+  background-color: #620b0b;
+  color: white;
+  border: none;
+  /* padding: 12px 20px; */
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px rgba(119, 12, 12, 0.8);
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+#admin-signup-page button:hover {
+  background-color: rgb(141, 8, 8);
+  box-shadow: 0 0 25px rgb(63, 7, 7);
+  transform: scale(1.05);
+}
+
+/* Links */
+#admin-signup-page .admin-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#admin-signup-page .admin-link a {
+  text-decoration: none;
+  color: #00d4ff;
+  font-size: 14px;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+#admin-signup-page .admin-link a:hover {
+  color: #9cd6ff;
+  text-shadow: 0 0 10px #9cd6ff;
+}
+
+/* h1 styling */
+#admin-signup-page .form-container h1 {
+    color: white;
+    font-size: 2rem;
+    margin-top: 2px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-family: 'Oswald';
+}
+
+/* Toggle Button */
+#admin-signup-page .toggle-button {
+  font-size: 1rem;
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  box-shadow: none;
+  margin-top: 0px;
+  margin-bottom: 0;
+}
+
+#admin-signup-page .toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+/* Button Group */
+#admin-signup-page .button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 100%;
+  margin: 15px auto; /* Adjusted margin */
+}
+
+/* Buttons within the Button Group */
+#admin-signup-page .button-group button {
+  width: 100%;
+  margin: 0;
+}

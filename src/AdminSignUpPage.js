@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./SignUp.css";
+import "./AdminSignUpPage.css"; // Import the CSS
 
 const AdminSignup = () => {
   const [formData, setFormData] = useState({
@@ -22,16 +22,14 @@ const AdminSignup = () => {
     event.preventDefault();
     setError(null);
 
-    // Trim values to remove leading/trailing spaces
     const trimmedData = {
       username: formData.username.trim(),
       email: formData.email.trim(),
       password: formData.password.trim(),
-      password_confirmation: formData.confirmPassword.trim(), // Match backend field name
+      password_confirmation: formData.confirmPassword.trim(),
       adminSecretKey: formData.secretKey.trim(),
     };
 
-    // Check for empty fields
     if (!trimmedData.username || !trimmedData.email || !trimmedData.password || !trimmedData.password_confirmation || !trimmedData.adminSecretKey) {
       setError("All fields must be filled!");
       return;
@@ -42,7 +40,7 @@ const AdminSignup = () => {
       return;
     }
 
-    console.log("Form Data:", trimmedData);
+    console.log("Admin Signup Form Data:", trimmedData);
 
     try {
       const response = await fetch("http://localhost:5001/signup", {
@@ -56,11 +54,11 @@ const AdminSignup = () => {
         if (data.role === 'admin' && data.message.includes('pending')) {
           setShowPopup(true);
         } else {
-          alert("Signup successful!");
-          localStorage.setItem('token', data.token); // Store the token in localStorage
+          alert("Admin signup successful!");
+          localStorage.setItem('token', data.token);
         }
       } else {
-        setError(data.message || "Signup failed");
+        setError(data.message || "Admin signup failed");
       }
     } catch (error) {
       setError("Error signing up. Please try again.");
@@ -68,86 +66,86 @@ const AdminSignup = () => {
   };
 
   return (
-    <div className="signup-page">
-      <main>
-        <div className="signup-container">
-          <h1>Create an Admin Account</h1>
-          {error && <p className="error-message">{error}</p>}
-          <form onSubmit={handleSubmit}>
-            <div className="input-field">
-              <label htmlFor="username">User Name</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="User name"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="input-field">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="input-field">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="input-field">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="input-field">
-              <label htmlFor="secretKey">Secret Key</label>
-              <input
-                type="text"
-                id="secretKey"
-                name="secretKey"
-                placeholder="Secret Key"
-                value={formData.secretKey}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="button-group">
-              <button type="submit" className="signup-button">Sign Up</button>
-              <Link to="/signup" className="user-signup-link">
-                Looking to sign up as a user? Click here!
-              </Link>
-            </div>
-          </form>
+    <div id="admin-signup-page">
+      <div className="form-container signup-active">
+        <h1>Create an ADMIN Account</h1>
+        {error && <p className="error-message">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="input-field">
+            <label htmlFor="username">User Name</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="User name"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="secretKey">Secret Key</label>
+            <input
+              type="text"
+              id="secretKey"
+              name="secretKey"
+              placeholder="Secret Key"
+              value={formData.secretKey}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="button-group">
+            <button type="submit">Sign Up</button>
+          </div>
+        </form>
+        <button type="button" className="toggle-button">
+          <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
+            Not an admin? Click here!
+          </Link>
+        </button>
+        <div className="admin-link">
+          <Link to="/admin-login" style={{ color: '#00d4ff', textDecoration: 'none' }}>
+            Already have an admin account? Login
+          </Link>
         </div>
-        <div className="login-container">
-          <h2>Already have an account?</h2>
-          <p>If you already have an account, you can log in here:</p>
-          <Link to="/login" className="login-link">Login</Link>
-        </div>
-      </main>
+      </div>
       {showPopup && (
         <div className="admin-popup">
           <div className="admin-popup-content">

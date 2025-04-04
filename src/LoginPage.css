@@ -24,7 +24,7 @@ body {
   left: -1px;
   right: -1px;
   bottom: -1px;
-  background-image: url('./assets/VV_Lounge_form_background.png');
+  background-image: url('./assets/vv_lounge_form_bg_cornersofa.png');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -172,6 +172,7 @@ body {
   display: inline-block;
   transition: 0.3s;
   text-shadow: 0 0 3px rgba(0, 212, 255, 0.6);
+  margin-bottom: 10px;
 }
 
 #login-page .forgot-password a:hover, #login-page .admin-link a:hover {

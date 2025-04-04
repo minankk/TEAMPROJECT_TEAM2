@@ -34,43 +34,39 @@ function ContactUs() {
 
   return (
     <div className="contact-page">
-      <div className="record-shelf"></div>
-      <header className="contact-header">
-        <h1>Contact Us</h1>
-        <p>We'd love to hear from you! Get in touch with us below.</p>
-      </header>
       <div className="contact-form-container">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you! Get in touch with us below:</p>
         <form className="contact-form" onSubmit={handleSubmit}>
-          {['name', 'email', 'subject', 'message'].map((field, index) => (
-            <div key={field} className="form-group" style={{ '--index': index }}>
-              {field !== 'message' ? (
-                <input
-                  type={field === 'email' ? 'email' : 'text'}
-                  id={field}
-                  name={field}
-                  placeholder=" "
-                  value={formData[field]}
-                  onChange={handleChange}
-                  required
-                />
-              ) : (
-                <textarea
-                  id={field}
-                  name={field}
-                  rows="5"
-                  placeholder=" "
-                  value={formData[field]}
-                  onChange={handleChange}
-                  required
-                />
-              )}
+          {['name', 'email', 'subject'].map((field) => (
+            <div key={field} className="form-group">
               <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+              <input
+                type={field === 'email' ? 'email' : 'text'}
+                id={field}
+                name={field}
+                placeholder=" "
+                value={formData[field]}
+                onChange={handleChange}
+                required
+              />
             </div>
           ))}
+          <div key="message" className="form-group">
+            <label htmlFor="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder=" "
+              value={formData.message}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <button type="submit">Send Message</button>
         </form>
       </div>
-
     </div>
   );
 }

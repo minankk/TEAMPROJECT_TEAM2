@@ -43,6 +43,7 @@ import SearchResults from './SearchResults';
 import ArtistsPage from './ArtistsPage';
 import BlogPage from './BlogPage';
 import Newsletter from './Newsletter';
+import AdminLoginPage from './AdminLoginPage';
 
 const AuthContext = createContext();
 
@@ -124,6 +125,7 @@ function App() {
                     <Route path="/t&c" element={<TermsAndConditions />} />
                     {/* <Route path="/signup" element={<Signup />} /> */}
                     <Route path="/admin-signup" element={<AdminSignup />} /> {/* Add the admin signup route */}
+                    <Route path="/admin-login" element={<AdminLoginPage />} /> {/* Add the new admin login route */}
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/delivery-information" element={<DeliveryInformation />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
