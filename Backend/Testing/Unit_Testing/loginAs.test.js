@@ -50,6 +50,7 @@ describe("User Login", () => {
     jest.clearAllMocks();
   });
 
+  //login positive flow
   test("should log in a user successfully", async () => {
     bcrypt.compare.mockResolvedValue(true);
     jwt.sign.mockReturnValue("mockedJWTToken");
@@ -72,6 +73,8 @@ describe("User Login", () => {
       },
     });
   });
+
+  //username and password is missing
   test("should return an error if username or password is missing", async () => {
     req.body = { username: "", password: "" };
 
@@ -83,6 +86,7 @@ describe("User Login", () => {
     });
   });
 
+  //user is not found
   test("should return an error if user is not found", async () => {
     db.execute.mockResolvedValue([[]]);
 
@@ -92,6 +96,7 @@ describe("User Login", () => {
     expect(res.json).toHaveBeenCalledWith({ message: "Please Sign Up" });
   });
 
+  //password is incorrect
   test("should return an error if password is incorrect", async () => {
     db.execute.mockResolvedValue([[mockUser]]);
     bcrypt.compare.mockResolvedValue(false);
@@ -104,6 +109,7 @@ describe("User Login", () => {
     expect(jwt.sign).not.toHaveBeenCalled();
   });
 
+  //internal server error
   test("should handle internal server errors", async () => {
     db.execute.mockRejectedValue(new Error("Database error"));
 
