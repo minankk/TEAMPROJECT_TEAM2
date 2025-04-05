@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./LandingPage.css";
 import ReviewCarousel from "./ReviewCarousel";
-import VinylGenres from "./VinylGenres";
+// import VinylGenres from "./VinylGenres";
 import VinylHistory from "./VinylHistory";
 import VIP_lounge_landing from "./VIP_lounge_landing"
 
@@ -145,9 +145,6 @@ function LandingPage() {
     </button>
   </div>
 </section>
-
-      {/* Vinyl Genre Showcase */}
-      <VinylGenres />
 
        {/* VIP Section Intro */}
       <VIP_lounge_landing />

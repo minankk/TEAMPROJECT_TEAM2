@@ -154,7 +154,7 @@
 
 /* Modal Styles */
 .popup-overlay {
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -162,17 +162,17 @@
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .popup-content {
-  background: url("./assets/record_genre.png");
-  background-size: cover; /* Ensure the background image covers the entire circle */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Ensures no repetition of the image */
+  /* background: url("./assets/record_genre.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 40px;
   text-align: center;
-  border-radius: 50%; /* Keeps the container circular */
+  border-radius: 50%;
   width: 320px;
   height: 320px;
   display: flex;
@@ -183,11 +183,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 }
 
 .popup-content::before {
-  content: "";
+  /* content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -195,74 +195,74 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 50%;
-  z-index: -1;
+  z-index: -1; */
 }
 
 /* Title styling */
 .popup-content h3 {
-  margin-bottom: 15px;
-  color: #ffefe0; /* You can change this to a more neutral color if preferred */
-  font-size: 1.6rem; /* Slightly bigger for better emphasis */
+  /* margin-bottom: 15px;
+  color: #ffefe0;
+  font-size: 1.6rem;
   font-weight: bold;
-  text-transform: uppercase; /* Optional: Makes it look more dynamic */
-  letter-spacing: 2px; /* Adds space for better readability */
+  text-transform: uppercase;
+  letter-spacing: 2px; */
 }
 
 /* Styling the email input */
 .popup-content input {
-  width: 90%; /* Increased width for a more modern, spacious feel */
+  /* width: 90%;
   padding: 12px;
   margin-bottom: 20px;
-  border: 1px solid #ddd; /* Softer border color for a cleaner look */
-  border-radius: 25px; /* Rounded corners for a more polished look */
+  border: 1px solid #ddd;
+  border-radius: 25px;
   text-align: center;
-  font-size: 1rem; /* Slightly larger font for readability */
-  transition: border 0.3s ease-in-out; /* Smooth border transition */
+  font-size: 1rem;
+  transition: border 0.3s ease-in-out; */
 }
 
 /* Hover effect for the email input to make it more interactive */
 .popup-content input:focus {
-  outline: none;
-  border: 2px solid #7e0000; /* Border turns to a soft orange when focused */
-  box-shadow: 0 0 5px rgba(255, 69, 0, 0.5); /* Adds a subtle glow effect */
+  /* outline: none;
+  border: 2px solid #7e0000;
+  box-shadow: 0 0 5px rgba(255, 69, 0, 0.5); */
 }
 
 /* Submit button styling */
 .popup-content button {
-  background: #f0f0f0; /* Soft neutral background */
-  color: #333; /* Darker text for easy readability */
-  border: none;
+  /* background: #f0f0f0;
+  color: #333;
+  border: none; */
   /* padding: 15px; Larger padding for a larger button */
-  font-size: 1rem; /* Larger text for the submit button */
+  /* font-size: 1rem;
   cursor: pointer;
   width: 70%;
-  border-radius: 25px; /* Rounded edges for the submit button */
-  margin-bottom: 15px; /* Space between buttons */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
+  border-radius: 25px;
+  margin-bottom: 15px;
+  /* transition: background-color 0.3s ease, transform 0.2s ease;  */
 }
 
 /* Submit button hover effect */
 .popup-content button:hover {
-  background: #50100e;
+  /* background: #50100e;
   color: white;
-  transform: translateY(-2px); /* Slight lift effect on hover */
+  transform: translateY(-2px); */
 }
 
 /* Close button styling (specific to the close button) */
 .popup-content .close-button {
-  background: #ddd; /* Lighter background for the close button */
-  color: #333; /* Dark text for contrast */
+  /* background: #ddd;
+  color: #333;
   margin-top: 10px;
   border-radius: 25px;
-  padding: 8px 15px; /* Smaller padding for the close button */
-  width: auto; /* Allow width to auto-adjust */
-  font-size: 1rem; /* Adjusted text size for the close button */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
-  display: inline-block; /* Makes sure it fits content properly */
+  padding: 8px 15px;
+  width: auto;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block; */
 }
 
 /* Close button hover effect */
 .popup-content .close-button:hover {
-  background: #50100e; /* Slightly darker on hover */
-  transform: translateY(-2px); /* Adds the lift effect on hover */
+  /* background: #50100e;
+  transform: translateY(-2px); */
 }
