@@ -3,13 +3,16 @@ const db = require('../db');
 const crypto = require('crypto');
 
 exports.checkoutAndCreateOrder = async (req, res) => {
+    const connection = await db.getConnection(); 
+    await connection.beginTransaction();
+
     try {
         const userId = req.user.user_id;
 
         const { items, totalAmount, shippingAddress } = req.body;
 
         if (!items || !Array.isArray(items) || items.length === 0) {
-            await db.rollback(tnx);
+            await connection.rollback();
             return res.status(400).json({ message: 'Order must have at least one item.' });
         }
 
@@ -18,10 +21,11 @@ exports.checkoutAndCreateOrder = async (req, res) => {
         }
 
         if (!shippingAddress || typeof shippingAddress !== 'string') {
-            await db.rollback(tnx);
+            await connection.rollback(); 
             return res.status(400).json({ message: 'Shipping address is required and must be a valid string.' });
         }
-        const [user] = await db.execute(`
+
+        const [user] = await connection.execute(`
             SELECT u.membership_status, COALESCE(SUM(o.total_amount), 0) AS total_spent
             FROM users u
             LEFT JOIN orders o ON u.user_id = o.user_id
@@ -36,7 +40,7 @@ exports.checkoutAndCreateOrder = async (req, res) => {
         const membershipStatus = user[0].membership_status;
         const totalSpent = user[0].total_spent || 0;
 
-        const [cartItems] = await db.execute(`
+        const [cartItems] = await connection.execute(`
             SELECT SUM(ci.quantity * p.price) AS cart_total
             FROM cart ci
             JOIN products p ON ci.product_id = p.product_id
@@ -53,7 +57,7 @@ exports.checkoutAndCreateOrder = async (req, res) => {
         const finalTotalAmount = parseFloat(discountedTotal.toFixed(2));
 
         const trackingNumber = `TN-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
-        const [orderResult] = await db.execute(
+        const [orderResult] = await connection.execute(
             'INSERT INTO orders (user_id, total_amount, shipping_address, status, tracking_number) VALUES (?, ?, ?, ?, ?)',
             [userId, totalAmount, JSON.stringify(shippingAddress), 'Pending', trackingNumber]
         );
@@ -61,35 +65,35 @@ exports.checkoutAndCreateOrder = async (req, res) => {
         const orderId = orderResult.insertId;
         for (const item of items) {
             if (!item.product_id || !item.quantity || !item.price) {
-                await db.rollback(tnx);
+                await connection.rollback(); 
                 return res.status(400).json({ message: 'Each item must have product_id, quantity, and price.' });
             }
 
-            const [productCheck] = await db.execute('SELECT stock_quantity FROM products WHERE product_id = ? FOR UPDATE', [item.product_id], tnx);
+            const [productCheck] = await connection.execute('SELECT stock_quantity FROM inventory WHERE product_id = ? FOR UPDATE', [item.product_id]);
             if (productCheck.length === 0 || productCheck[0].stock_quantity < item.quantity) {
-                await db.rollback(tnx);
+                await connection.rollback(); 
                 return res.status(400).json({ message: `Insufficient stock for product ID: ${item.product_id}` });
             }
 
-            await db.execute(
+            await connection.execute(
                 'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
-                [orderId, item.product_id, item.quantity, item.price],
-                tnx
+                [orderId, item.product_id, item.quantity, item.price]
             );
 
-            await db.execute(
-                'UPDATE products SET stock_quantity = stock_quantity - ? WHERE product_id = ?',
-                [item.quantity, item.product_id],
-                tnx
+            await connection.execute(
+                'UPDATE inventory SET stock_quantity = stock_quantity - ? WHERE product_id = ?',
+                [item.quantity, item.product_id]
             );
         }
-        await db.execute(
-            'INSERT INTO order_tracking (order_id, status, estimated_delivery_date, tracking_date) VALUES (?, ?, ?, NOW())',
-            [orderId, 'Processing', new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)],
-            tnx
-        );
 
-        await db.execute('DELETE FROM cart WHERE user_id = ?', [userId], tnx);
+        await connection.execute(
+            'INSERT INTO order_tracking (order_id, status, estimated_delivery_date) VALUES (?, ?, ?)',
+            [orderId, 'Processing', new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)]
+        );
+        
+        await connection.execute('DELETE FROM cart WHERE user_id = ?', [userId]);
+
+        await connection.commit();
 
         res.status(201).json({
             message: 'Order created successfully',
@@ -103,28 +107,13 @@ exports.checkoutAndCreateOrder = async (req, res) => {
 
     } catch (error) {
         console.error('Error creating order:', error);
+        await connection.rollback(); 
         res.status(500).json({ message: 'Internal server error', error: error.message });
+    } finally {
+        connection.release(); 
     }
 };
 
-
-exports.getOrderHistory = async (req, res) => {
-    try {
-        const userId = req.params.userId;
-        const [orders] = await db.execute(`
-            SELECT o.*, oi.product_id, oi.quantity, oi.price
-            FROM orders o
-            JOIN order_items oi ON o.order_id = oi.order_id
-            WHERE o.user_id = ?
-            ORDER BY o.order_date DESC
-        `, [userId]);
-
-        res.status(200).json(orders);
-    } catch (error) {
-        console.error('Error fetching order history:', error);
-        res.status(500).json({ message: 'Internal server error', error: error.message });
-    }
-};
 
 exports.updateOrderStatus = async (req, res) => {
     try {

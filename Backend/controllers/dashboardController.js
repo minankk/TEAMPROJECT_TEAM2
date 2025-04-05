@@ -330,4 +330,61 @@ exports.markMessageAsRead = async (req, res) => {
     }
   };
 
+  
+  //get order history 
+  exports.getOrderHistory = async (req, res) => {
+    try {
+        const userId = req.user.user_id;
+
+        const [orders] = await db.execute(`
+            SELECT 
+                o.order_id, o.order_date, o.status, o.total_amount, o.shipping_address, 
+                oi.product_id, oi.quantity, oi.price,
+                p.cover_image_url
+            FROM orders o
+            JOIN order_items oi ON o.order_id = oi.order_id
+            JOIN products p ON oi.product_id = p.product_id
+            WHERE o.user_id = ?
+            ORDER BY o.order_date DESC
+        `, [userId]);
+
+        if (orders.length === 0) {
+            return res.status(404).json({ message: 'No orders found for this user.' });
+        }
+
+        const groupedOrders = orders.reduce((acc, order) => {
+            const { order_id, order_date, status, shipping_address, product_id, quantity, cover_image_url } = order;
+            const total_amount = Number(order.total_amount);
+            const price = Number(order.price);
+
+            if (!acc[order_id]) {
+                acc[order_id] = {
+                    order_id,
+                    order_date,
+                    status,
+                    total_amount,
+                    shipping_address,
+                    items: []
+                };
+            }
+
+            acc[order_id].items.push({
+                product_id,
+                quantity,
+                price,
+                cover_image_url
+            });
+
+            return acc;
+        }, {});
+
+        const orderHistory = Object.values(groupedOrders);
+
+        res.status(200).json(orderHistory);
+    } catch (error) {
+        console.error('Error fetching order history:', error);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+};
+
 exports.genBenefitsDiscount = genBenefitsDiscount;
