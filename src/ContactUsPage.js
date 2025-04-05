@@ -28,9 +28,28 @@ function ContactUs() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Message sent successfully!");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    try {
+      const response = await fetch("http://localhost:5001/contactUs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        const errorData = await response.json();
+        alert("Failed to send message: " + errorData.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
+
 
   return (
     <div className="contact-page">
