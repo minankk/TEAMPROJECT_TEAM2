@@ -84,8 +84,8 @@ const LoginPage = () => {
         const data = await response.json();
 
         if (data.token) {
-          login(data.token); // Auth context login
-          navigate('./DashboardPage'); // Redirect after login
+          login(data.token);
+          navigate('/dashboard');
         } else {
           setError(data.message || 'Login failed');
         }
