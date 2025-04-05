@@ -1,49 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import './OrderHistoryPage.css';
+import { useAuth } from './App'; // Import useAuth
 
 const OrderHistoryPage = () => {
-    const [orders, setOrders] = useState([]);
-    const [error, setError] = useState(null);
+    const [orderHistory, setOrderHistory] = useState([]);
+    const { token } = useAuth(); // Get the token
+    const [fetchError, setFetchError] = useState(null); // State for fetch errors
 
     useEffect(() => {
         const fetchOrderHistory = async () => {
-            const token = localStorage.getItem('token'); // Get token from local storage
-            const userId = JSON.parse(localStorage.getItem('user')).user_id; //get userId from local storage
-
-            if (!token || !userId) {
-                setError('Please log in to view your order history.');
-                return;
-            }
-
             try {
-                const response = await fetch(`http://localhost:5001/orders/${userId}`, {
+                const response = await fetch('http://localhost:5001/order-history', {
                     headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch order history');
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new TypeError("Oops, we haven't got JSON!");
                 }
 
                 const data = await response.json();
-                setOrders(data);
-            } catch (err) {
-                setError(err.message);
+                setOrderHistory(data);
+                setFetchError(null); // Clear any previous errors
+            } catch (error) {
+                console.error('Error fetching order history:', error);
+                setFetchError(error.message); // Set the error message
+                setOrderHistory([]); // Set to empty array, to prevent rendering errors.
             }
         };
 
         fetchOrderHistory();
-    }, []);
+    }, [token]); // Run effect when token changes
 
-    if (error) {
-        return <p>{error}</p>;
+    if (fetchError) {
+        return <p>{fetchError}</p>;
     }
 
     return (
         <div className="order-history-page">
             <h2>Order History</h2>
-            {orders.length > 0 ? (
+            {orderHistory.length > 0 ? (
                 <table>
                     <thead>
                         <tr>
@@ -55,7 +57,7 @@ const OrderHistoryPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.reduce((acc, order) => {
+                        {orderHistory.reduce((acc, order) => {
                             const existingOrder = acc.find(o => o.order_id === order.order_id);
                             if (existingOrder) {
                                 existingOrder.items.push({
