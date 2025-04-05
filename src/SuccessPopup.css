@@ -1,0 +1,134 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap'); */
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background: linear-gradient(135deg, rgba(133, 133, 133, 0.2), rgba(0, 0, 0, 0.63)), url("./assets/record_genre.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px;
+  text-align: center;
+  border-radius: 50%;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* box-shadow: 0 0 25px rgba(121, 121, 121, 0.3); */
+  position: relative;
+  animation: popIn 0.6s ease-in-out;
+  /* font-family: 'Montserrat', sans-serif; */
+}
+
+.popup-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.78);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.popup-content h3 {
+  color: #ffefe0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); */
+  font-family: 'Oswald';
+}
+
+.popup-content p {
+  color: #ffefe0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  /* text-transform: uppercase; */
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); */
+  font-family: 'Oswald';
+}
+
+.popup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  align-items: center;
+}
+
+.close-button{
+  background: linear-gradient(45deg, #520f0e, #b62a27);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: 50%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.popup-home-button {
+  background: linear-gradient(45deg, #520f0e, #b62a27);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 15px;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: 50%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.close-button:hover,
+.popup-home-button:hover {
+  background: linear-gradient(45deg, #a81e1b, #d4403e);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.success-popup .icon {
+  color: #ffefe0; /* Soft off-white */
+  font-size: 1.7rem;
+  margin-right: 10px;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 5px #7c1816); /* red glow around the icon */
+}
+
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

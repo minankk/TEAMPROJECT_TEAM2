@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { gsap } from "gsap";
 import "./ContactUsPage.css";
+import SuccessPopup from "./SuccessPopup"; // adjust path if needed
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ function ContactUs() {
     subject: "",
     message: ""
   });
+
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     gsap.fromTo(
@@ -36,20 +39,17 @@ function ContactUs() {
         },
         body: JSON.stringify(formData)
       });
-
       if (response.ok) {
-        alert("Message sent successfully!");
+        setShowSuccess(true);
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
-        const errorData = await response.json();
-        alert("Failed to send message: " + errorData.error);
+        alert("Failed to send message. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred. Please try again.");
     }
   };
-
 
   return (
     <div className="contact-page">
@@ -86,6 +86,13 @@ function ContactUs() {
           <button type="submit">Send Message</button>
         </form>
       </div>
+
+      {showSuccess && (
+        <SuccessPopup
+          message="Message sent successfully!"
+          onClose={() => setShowSuccess(false)}
+        />
+      )}
     </div>
   );
 }
