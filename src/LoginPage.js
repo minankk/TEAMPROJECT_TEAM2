@@ -26,7 +26,73 @@ const LoginPage = () => {
     event.preventDefault();
     setError(null);
 
-    // ... (rest of your handleSubmit logic) ...
+    if (isSignUp) {
+      // Sign Up Logic
+      const trimmedData = {
+        username: formData.username.trim(),
+        email: formData.email.trim(),
+        password: formData.password.trim(),
+        password_confirmation: formData.confirmPassword.trim(),
+      };
+
+      if (!trimmedData.username || !trimmedData.email || !trimmedData.password || !trimmedData.password_confirmation) {
+        setError("All fields are required for signup.");
+        return;
+      }
+
+      if (trimmedData.password !== trimmedData.password_confirmation) {
+        setError("Passwords do not match.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:5001/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(trimmedData),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          login(data.token); // Assuming backend returns a token
+          navigate('/'); // Redirect after signup
+        } else {
+          setError(data.message || "Signup failed");
+        }
+      } catch (error) {
+        setError("Error signing up. Please try again.");
+      }
+
+    } else {
+      // Login Logic
+      const { usernameOrEmail, password } = formData;
+
+      if (!usernameOrEmail.trim() || !password.trim()) {
+        setError("Both fields are required for login.");
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5001/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username: usernameOrEmail.trim(), password: password.trim() }), // Adjust if backend accepts email
+        });
+
+        const data = await response.json();
+
+        if (data.token) {
+          login(data.token); // Auth context login
+          navigate('./DashboardPage'); // Redirect after login
+        } else {
+          setError(data.message || 'Login failed');
+        }
+      } catch (error) {
+        setError('Error logging in: ' + error.message);
+      }
+    }
   };
 
   return (
@@ -107,18 +173,25 @@ const LoginPage = () => {
 
             <div className="button-group">
               <button type="submit">{isSignUp ? 'Sign Up' : 'Log In'}</button>
-              <button type="button" className="toggle-button" onClick={() => setIsSignUp(!isSignUp)}>
-              {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
+              <button
+                type="button"
+                className="toggle-button"
+                onClick={() => {
+                  setError(null);
+                  setIsSignUp(!isSignUp);
+                }}
+              >
+                {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
               </button>
             </div>
           </form>
-          {!isSignUp && (
+
+          {!isSignUp ? (
             <>
               <p className="forgot-password"><Link to="/forgot-password">Forgot Password?</Link></p>
               <p className="admin-link"><Link to="/admin-login">Admin Login</Link></p>
             </>
-          )}
-          {isSignUp && (
+          ) : (
             <p className="admin-link"><Link to="/admin-signup">Admin Sign Up</Link></p>
           )}
         </div>
