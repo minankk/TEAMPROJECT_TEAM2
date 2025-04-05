@@ -85,7 +85,7 @@ const LoginPage = () => {
 
         if (data.token) {
           login(data.token); // Auth context login
-          navigate('./DashboardPage'); // Redirect after login
+          navigate('./dashboard'); // Redirect after login
         } else {
           setError(data.message || 'Login failed');
         }
