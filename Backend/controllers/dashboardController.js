@@ -4,13 +4,13 @@ const bcrypt = require('bcryptjs');
 
 const genBenefitsDiscount = (totalSpent) => {
     if (totalSpent >= 200) {
-        return { tier: "Gold", discount: 0.20 };
+        return { tier: "Gold", discount: 0.25 };
     } else if (totalSpent >= 100) {
-        return { tier: "Silver", discount: 0.15 };
+        return { tier: "Silver", discount: 0.20 };
     } else if (totalSpent >= 50) {
-        return { tier: "Bronze", discount: 0.10 };
+        return { tier: "Bronze", discount: 0.15 };
     }
-    return { tier: "No VIP", discount: 0.05 };
+    return { tier: "No VIP", discount: 0.10 };
 };
 
 exports.viewDashboard = async (req, res) => {
