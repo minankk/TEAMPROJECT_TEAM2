@@ -334,12 +334,16 @@ exports.markMessageAsRead = async (req, res) => {
   //get order history 
   exports.getOrderHistory = async (req, res) => {
     try {
-        const userId = req.user.user_id;  // Use req.user.user_id instead of req.params.userId
+        const userId = req.user.user_id;
 
         const [orders] = await db.execute(`
-            SELECT o.order_id, o.order_date, o.status, o.total_amount, o.shipping_address, oi.product_id, oi.quantity, oi.price
+            SELECT 
+                o.order_id, o.order_date, o.status, o.total_amount, o.shipping_address, 
+                oi.product_id, oi.quantity, oi.price,
+                p.cover_image_url
             FROM orders o
             JOIN order_items oi ON o.order_id = oi.order_id
+            JOIN products p ON oi.product_id = p.product_id
             WHERE o.user_id = ?
             ORDER BY o.order_date DESC
         `, [userId]);
@@ -349,7 +353,9 @@ exports.markMessageAsRead = async (req, res) => {
         }
 
         const groupedOrders = orders.reduce((acc, order) => {
-            const { order_id, order_date, status, total_amount, shipping_address, product_id, quantity, price } = order;
+            const { order_id, order_date, status, shipping_address, product_id, quantity, cover_image_url } = order;
+            const total_amount = Number(order.total_amount);
+            const price = Number(order.price);
 
             if (!acc[order_id]) {
                 acc[order_id] = {
@@ -365,7 +371,8 @@ exports.markMessageAsRead = async (req, res) => {
             acc[order_id].items.push({
                 product_id,
                 quantity,
-                price
+                price,
+                cover_image_url
             });
 
             return acc;
@@ -379,6 +386,5 @@ exports.markMessageAsRead = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
-
 
 exports.genBenefitsDiscount = genBenefitsDiscount;

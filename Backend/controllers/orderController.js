@@ -69,27 +69,23 @@ exports.checkoutAndCreateOrder = async (req, res) => {
                 return res.status(400).json({ message: 'Each item must have product_id, quantity, and price.' });
             }
 
-            // Check inventory stock quantity
             const [productCheck] = await connection.execute('SELECT stock_quantity FROM inventory WHERE product_id = ? FOR UPDATE', [item.product_id]);
             if (productCheck.length === 0 || productCheck[0].stock_quantity < item.quantity) {
                 await connection.rollback(); 
                 return res.status(400).json({ message: `Insufficient stock for product ID: ${item.product_id}` });
             }
 
-            // Insert item into order_items
             await connection.execute(
                 'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
                 [orderId, item.product_id, item.quantity, item.price]
             );
 
-            // Update stock quantity in inventory
             await connection.execute(
                 'UPDATE inventory SET stock_quantity = stock_quantity - ? WHERE product_id = ?',
                 [item.quantity, item.product_id]
             );
         }
 
-        // Insert order tracking info
         await connection.execute(
             'INSERT INTO order_tracking (order_id, status, estimated_delivery_date) VALUES (?, ?, ?)',
             [orderId, 'Processing', new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)]

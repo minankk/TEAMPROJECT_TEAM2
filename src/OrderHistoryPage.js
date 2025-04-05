@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './OrderHistoryPage.css';
-import { useAuth } from './App'; // Import useAuth
 
 const OrderHistoryPage = () => {
     const [orderHistory, setOrderHistory] = useState([]);
-    const { token } = useAuth(); // Get the token
-    const [fetchError, setFetchError] = useState(null); // State for fetch errors
+    const [fetchError, setFetchError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
+        if (!token) {
+            setFetchError('Token not found. Please login again.');
+            setLoading(false);
+            return;
+        }
+
         const fetchOrderHistory = async () => {
             try {
-                const response = await fetch('http://localhost:5001/order-history', {
+                const response = await fetch('http://localhost:5001/dashboard/order-history', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -27,23 +33,29 @@ const OrderHistoryPage = () => {
 
                 const data = await response.json();
                 setOrderHistory(data);
-                setFetchError(null); // Clear any previous errors
+                setFetchError(null);
             } catch (error) {
                 console.error('Error fetching order history:', error);
-                setFetchError(error.message); // Set the error message
-                setOrderHistory([]); // Set to empty array, to prevent rendering errors.
+                setFetchError(error.message);
+                setOrderHistory([]);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchOrderHistory();
-    }, [token]); // Run effect when token changes
+    }, [token]);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     if (fetchError) {
         return <p>{fetchError}</p>;
     }
 
     return (
-        <div className="order-history-page">
+        <div className="order-history-container">
             <h2>Order History</h2>
             {orderHistory.length > 0 ? (
                 <table>
@@ -57,29 +69,7 @@ const OrderHistoryPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {orderHistory.reduce((acc, order) => {
-                            const existingOrder = acc.find(o => o.order_id === order.order_id);
-                            if (existingOrder) {
-                                existingOrder.items.push({
-                                    product_id: order.product_id,
-                                    quantity: order.quantity,
-                                    price: order.price,
-                                });
-                            } else {
-                                acc.push({
-                                    order_id: order.order_id,
-                                    order_date: order.order_date,
-                                    total_amount: order.total_amount,
-                                    status: order.status,
-                                    items: [{
-                                        product_id: order.product_id,
-                                        quantity: order.quantity,
-                                        price: order.price,
-                                    }],
-                                });
-                            }
-                            return acc;
-                        }, []).map(order => (
+                        {orderHistory.map(order => (
                             <tr key={order.order_id}>
                                 <td>{order.order_id}</td>
                                 <td>{new Date(order.order_date).toLocaleDateString()}</td>
@@ -89,6 +79,7 @@ const OrderHistoryPage = () => {
                                     <ul>
                                         {order.items.map(item => (
                                             <li key={item.product_id}>
+                                                <img src={`http://localhost:5001${item.cover_image_url}`} alt={`Product ${item.product_id}`} style={{ width: '50px', marginRight: '10px' }} />
                                                 Product ID: {item.product_id}, Quantity: {item.quantity}, Price: ${item.price.toFixed(2)}
                                             </li>
                                         ))}
