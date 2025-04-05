@@ -22,4 +22,8 @@ router.get('/messages', dashboardController.getUserMessages);
 router.post('/messages/reply', dashboardController.replyToMessage);
 router.put('/messages/read/:messageId', dashboardController.markMessageAsRead);
 
+
+// order history
+router.get('/order-history/:userId', dashboardController.getOrderHistory);
+
 module.exports = router;

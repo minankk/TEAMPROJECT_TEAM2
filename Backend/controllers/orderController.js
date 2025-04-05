@@ -119,24 +119,6 @@ exports.checkoutAndCreateOrder = async (req, res) => {
 };
 
 
-exports.getOrderHistory = async (req, res) => {
-    try {
-        const userId = req.params.userId;
-        const [orders] = await db.execute(`
-            SELECT o.*, oi.product_id, oi.quantity, oi.price
-            FROM orders o
-            JOIN order_items oi ON o.order_id = oi.order_id
-            WHERE o.user_id = ?
-            ORDER BY o.order_date DESC
-        `, [userId]);
-
-        res.status(200).json(orders);
-    } catch (error) {
-        console.error('Error fetching order history:', error);
-        res.status(500).json({ message: 'Internal server error', error: error.message });
-    }
-};
-
 exports.updateOrderStatus = async (req, res) => {
     try {
         const { orderId, status } = req.body;
