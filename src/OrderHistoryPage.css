@@ -1,29 +1,35 @@
-/* Order History Page Styles */
 .order-history-container {
-  background-color: #fff;
+  font-family: 'Titan One', sans-serif;
+  margin: 40px auto;
   padding: 25px;
+  background-color: #f6f6f4;
+  color: #000;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 80%;
+  width: 95%;
   max-width: 800px;
-  text-align: center;
-  margin: 20px auto;
-  color: #000 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  border: 1px solid #ddd;
 }
 
 .order-history-container h2 {
+  font-size: 2rem;
   margin-top: 0;
-  font-size: 24px;
-  color: #333 !important;
+  margin-bottom: 20px;
+  color: #7c1816;
+  text-align: center;
 }
 
 .order-history-container p {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #555 !important;
+  font-size: 1rem;
+  font-weight: lighter;
+  margin-bottom: 15px;
+  color: #000 !important;
 }
 
-/* Table Styles */
 .order-history-container table {
   width: 100%;
   border-collapse: collapse;
@@ -46,9 +52,20 @@
   padding: 0;
 }
 
-/* Add responsiveness */
+@media (max-width: 1024px) {
+  .order-history-container {
+    width: 90%;
+  }
+}
+
 @media (max-width: 768px) {
   .order-history-container {
-      width: 90%;
+    width: 90%;
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  .order-history-container h2 {
+    font-size: 1.8rem;
   }
 }
