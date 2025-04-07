@@ -10,5 +10,7 @@ router.get('/', authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardCont
 router.post('/products', authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardController.addProduct);
 router.put('/products/:id', authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardController.updateProduct);
 router.delete('/products/:id', authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardController.deleteProduct);
+router.put('/orders/:order_id/cancel', authJWT.authenticateJWT, authJWT.verifyAdmin, adminDashboardController.cancelOrder);
+
 
 module.exports = router;

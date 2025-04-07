@@ -1,4 +1,3 @@
-// controllers/salesController.js
 const db = require('../db');
 const formatCurrency = require('../helpers/currencyFormatter');
 
@@ -13,7 +12,6 @@ exports.getSalesProducts = async (req, res) => {
     WHERE p.on_sale = 1
   `)
   .then(([results]) => {
-    // Format each product
     results.forEach(product => {
       product.price = formatCurrency(product.price);
     });
@@ -25,3 +23,40 @@ exports.getSalesProducts = async (req, res) => {
   });
 };
 
+// UNIT TESTS
+if (process.env.NODE_ENV === 'test') {
+  const { getSalesProducts } = module.exports;
+
+  const mockRes = () => ({
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn()
+  });
+
+  describe('Sales Controller', () => {
+    afterEach(() => jest.clearAllMocks());
+
+    test('getSalesProducts - returns on-sale products', async () => {
+      const req = {};
+      const res = mockRes();
+
+      db.execute = jest.fn().mockResolvedValueOnce([[{ product_id: 1, name: 'Sale Product', price: 10 }]]);
+
+      await getSalesProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith(expect.any(Array));
+    });
+
+    test('getSalesProducts - handles db error', async () => {
+      const req = {};
+      const res = mockRes();
+
+      db.execute = jest.fn().mockRejectedValueOnce(new Error('DB error'));
+
+      await getSalesProducts(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ error: expect.any(String) }));
+    });
+  });
+}
