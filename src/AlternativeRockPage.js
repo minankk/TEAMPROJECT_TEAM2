@@ -1,68 +1,19 @@
-// AlternativeRockPage.js
 import React, { useState, useEffect } from 'react';
 import './AlternativeRockPage.css';
 import { useNavigate } from 'react-router-dom';
-import PopUp from "./PopUp"; // Ensure PopUp component is imported
+import PopUp from "./PopUp";
 import { jwtDecode } from "jwt-decode";
 
-const AlternativeRockPage = ({ handleAddToCart }) => {
-    const [alternativeRockAlbums, setAlternativeRockAlbums] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const [selectedProduct, setSelectedProduct] = useState(null);
+const AlternativeRockPage = () => {
+    const [products, setProducts] = useState([]);
     const [favorites, setFavorites] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [popupMessage, setPopupMessage] = useState(null);
+    const navigate = useNavigate();
 
     const showPopup = (message) => {
         setPopupMessage(message);
         setTimeout(() => setPopupMessage(null), 3000);
-    };
-
-    const toggleFavorite = async (productId, event) => {
-        event.stopPropagation();
-        const token = localStorage.getItem('token');
-
-        if (!token || typeof token !== 'string') {
-            console.error("Invalid or missing token. User might not be logged in.");
-            return;
-        }
-
-        try {
-            const decoded = jwtDecode(token);
-            const userId = decoded.user_id;
-
-            const url = `http://localhost:5001/wishlist/add/${productId}`;
-
-            console.log(`Sending POST request to: ${url}`);
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            console.log(`Response status: ${response.status}`);
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.action === "added") {
-                    showPopup("You have added this item to your favorites.");
-                } else if (data.action === "removed") {
-                    showPopup("You have removed this item from your favorites.");
-                }
-                fetchFavorites();
-            } else {
-                console.error('Failed to update favorites:', response);
-                if (response.status === 401) {
-                    console.error("Unauthorized, please log in");
-                } else {
-                    showPopup("Failed to update favorites. Please try again.");
-                }
-            }
-        } catch (error) {
-            console.error('Error updating favorites:', error);
-            showPopup("An unexpected error occurred.");
-        }
     };
 
     const fetchFavorites = async () => {
@@ -71,24 +22,15 @@ const AlternativeRockPage = ({ handleAddToCart }) => {
             try {
                 const decoded = jwtDecode(token);
                 const userId = decoded.user_id;
-                fetch(`http://localhost:5001/wishlist/${userId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        const favoriteIds = data.map(item => item.product_id);
-                        setFavorites(favoriteIds);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching favorites:', error);
-                    });
-            } catch (decodeError) {
-                console.error("Error decoding token:", decodeError);
+                const response = await fetch(`http://localhost:5001/wishlist/${userId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                const favoriteIds = data.map(item => item.product_id);
+                setFavorites(favoriteIds);
+            } catch (err) {
+                console.error('Error fetching favorites:', err);
             }
-        } else {
-            console.log("Token not found or invalid.");
         }
     };
 
@@ -96,69 +38,134 @@ const AlternativeRockPage = ({ handleAddToCart }) => {
         fetchFavorites();
     }, []);
 
-    const openPopup = (productId) => {
-        console.log("Fetching pop-up data for productId:", productId);
-        fetch(`http://localhost:5001/pop-up/${productId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Fetched pop-up data:", data);
-                if (data) {
-                    setSelectedProduct(data);
-                }
-            })
-            .catch((error) => {
-                console.error('Error fetching product details:', error);
+    const toggleFavorite = async (productId, event) => {
+        event.stopPropagation();
+        const token = localStorage.getItem('token');
+
+        if (!token || typeof token !== 'string') {
+            console.error("Invalid or missing token.");
+            return;
+        }
+
+        try {
+            const url = `http://localhost:5001/wishlist/add/${productId}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
             });
+
+            if (response.ok) {
+                const data = await response.json();
+                showPopup(data.action === "added"
+                    ? "You have added this item to your favorites."
+                    : "You have removed this item from your favorites.");
+                fetchFavorites();
+            } else {
+                showPopup("Failed to update favorites. Please try again.");
+            }
+        } catch (error) {
+            console.error('Error updating favorites:', error);
+            showPopup("An unexpected error occurred.");
+        }
     };
 
-    const closePopup = () => {
-        setSelectedProduct(null);
+    const openPopup = (productId) => {
+        fetch(`http://localhost:5001/pop-up/${productId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data) setSelectedProduct(data);
+            })
+            .catch(err => console.error('Error fetching popup data:', err));
+    };
+
+    const closePopup = () => setSelectedProduct(null);
+
+    const handleAddToCart = (productId, event) => {
+        event.stopPropagation();
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            console.error("No token found");
+            return;
+        }
+
+        try {
+            const decoded = jwtDecode(token);
+            const userId = decoded.user_id;
+
+            fetch('http://localhost:5001/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ user_id: userId, product_id: productId, quantity: 1 }),
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.message) {
+                        console.log(data.message);
+                        navigate('/cart');
+                    }
+                })
+                .catch(err => console.error('Add to cart error:', err));
+        } catch (err) {
+            console.error("Error decoding token:", err);
+        }
     };
 
     useEffect(() => {
         fetch('http://localhost:5001/genres/alternative-rock')
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setAlternativeRockAlbums(data.products);
-                setLoading(false);
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data.products || []);
             })
-            .catch((err) => {
-                console.error('Error fetching data:', err);
-                setError(err);
-                setLoading(false);
+            .catch(err => {
+                console.error('Error loading alternative rock albums:', err);
+                setProducts([]);
             });
     }, []);
 
-    if (loading) return <p>Loading Alternative Rock albums...</p>;
-    if (error) return <p>Error loading Alternative Rock albums: {error.message}</p>;
-
     return (
-        <div className="alternative-rock-page-container">
-            <h1>Alternative Rock Albums</h1>
-            <div className="alternative-rock-albums-grid">
-                {alternativeRockAlbums.map((album) => (
-                    <div className="alternative-rock-album-card" key={album.product_id}>
-                        <img src={`http://localhost:5001${album.cover_image_url}`} alt={album.name} className="alternative-rock-album-image" />
-                        <h2 className="alternative-rock-album-name">{album.name}</h2>
-                        <p className="alternative-rock-album-artist">{album.artist_name}</p>
-                        <p className="alternative-rock-album-price">{album.price}</p>
-                        <button className="add-to-cart-alternative-rock" onClick={() => handleAddToCart(album.product_id)}>
-                            Add to Cart
-                        </button>
-                        <button className="read-more-button" onClick={() => openPopup(album.product_id)}>Read More</button>
-                        <button
-                            className={`heart-button ${favorites.includes(album.product_id) ? 'favorited' : ''}`}
-                            onClick={(event) => toggleFavorite(album.product_id, event)}
-                        >
-                            ❤️
-                        </button>
-                    </div>
-                ))}
-            </div>
+        <main className="products-page"> {/* Keep className same as ProductsPage */}
+            <section className="products">
+                <h2>Alternative Rock Albums</h2>
+                <div className="product-grid">
+                    {products.length > 0 ? (
+                        products.map(product => (
+                            <div key={product.product_id} className="product-card" onClick={() => openPopup(product.product_id)}>
+                                <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
+                                <div className="product-info">
+                                    <h3>{product.album_name}</h3>
+                                    <p>{product.artist_name}</p>
+                                    <p>£{product.price}</p>
+                                </div>
+                                <div className="product-actions">
+                                    <button className="buy-button" onClick={(event) => handleAddToCart(product.product_id, event)}>Add to Cart</button>
+                                    <button className="read-more-button" onClick={() => openPopup(product.product_id)}>More</button>
+                                    <button
+                                        className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+                                        onClick={(event) => toggleFavorite(product.product_id, event)}
+                                    >
+                                        {favorites.includes(product.product_id) ? '❤️' : '♡'}
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="no-products-found">No Alternative Rock albums found.</p>
+                    )}
+                </div>
+            </section>
+
             {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
             {popupMessage && <div className="favorite-popup">{popupMessage}</div>}
-        </div>
+        </main>
     );
 };
 
