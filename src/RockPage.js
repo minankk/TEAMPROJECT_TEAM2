@@ -1,68 +1,19 @@
-// RockPage.js
 import React, { useState, useEffect } from 'react';
 import './RockPage.css';
 import { useNavigate } from 'react-router-dom';
-import PopUp from "./PopUp"; // Ensure PopUp component is imported
+import PopUp from "./PopUp";
 import { jwtDecode } from "jwt-decode";
 
-const RockPage = ({ handleAddToCart }) => {
-    const [rockAlbums, setRockAlbums] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const [selectedProduct, setSelectedProduct] = useState(null);
+const RockPage = () => {
+    const [products, setProducts] = useState([]);
     const [favorites, setFavorites] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [popupMessage, setPopupMessage] = useState(null);
+    const navigate = useNavigate();
 
     const showPopup = (message) => {
         setPopupMessage(message);
         setTimeout(() => setPopupMessage(null), 3000);
-    };
-
-    const toggleFavorite = async (productId, event) => {
-        event.stopPropagation();
-        const token = localStorage.getItem('token');
-
-        if (!token || typeof token !== 'string') {
-            console.error("Invalid or missing token. User might not be logged in.");
-            return;
-        }
-
-        try {
-            const decoded = jwtDecode(token);
-            const userId = decoded.user_id;
-
-            const url = `http://localhost:5001/wishlist/add/${productId}`;
-
-            console.log(`Sending POST request to: ${url}`);
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            console.log(`Response status: ${response.status}`);
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.action === "added") {
-                    showPopup("You have added this item to your favorites.");
-                } else if (data.action === "removed") {
-                    showPopup("You have removed this item from your favorites.");
-                }
-                fetchFavorites();
-            } else {
-                console.error('Failed to update favorites:', response);
-                if (response.status === 401) {
-                    console.error("Unauthorized, please log in");
-                } else {
-                    showPopup("Failed to update favorites. Please try again.");
-                }
-            }
-        } catch (error) {
-            console.error('Error updating favorites:', error);
-            showPopup("An unexpected error occurred.");
-        }
     };
 
     const fetchFavorites = async () => {
@@ -71,101 +22,112 @@ const RockPage = ({ handleAddToCart }) => {
             try {
                 const decoded = jwtDecode(token);
                 const userId = decoded.user_id;
-                fetch(`http://localhost:5001/wishlist/${userId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        const favoriteIds = data.map(item => item.product_id);
-                        setFavorites(favoriteIds);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching favorites:', error);
-                    });
-            } catch (decodeError) {
-                console.error("Error decoding token:", decodeError);
+                const response = await fetch(`http://localhost:5001/wishlist/${userId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                setFavorites(data.map(item => item.product_id));
+            } catch (err) {
+                console.error('Error fetching favorites:', err);
             }
-        } else {
-            console.log("Token not found or invalid.");
+        }
+    };
+
+    useEffect(() => { fetchFavorites(); }, []);
+
+    const toggleFavorite = async (productId, event) => {
+        event.stopPropagation();
+        const token = localStorage.getItem('token');
+        if (!token || typeof token !== 'string') return;
+
+        try {
+            const response = await fetch(`http://localhost:5001/wishlist/add/${productId}`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                showPopup(data.action === "added" ? "Added to favorites." : "Removed from favorites.");
+                fetchFavorites();
+            } else {
+                showPopup("Failed to update favorites.");
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showPopup("Unexpected error.");
+        }
+    };
+
+    const openPopup = (productId) => {
+        fetch(`http://localhost:5001/pop-up/${productId}`)
+            .then(res => res.json())
+            .then(data => setSelectedProduct(data))
+            .catch(err => console.error('Popup fetch error:', err));
+    };
+
+    const closePopup = () => setSelectedProduct(null);
+
+    const handleAddToCart = (productId, event) => {
+        event.stopPropagation();
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        try {
+            const decoded = jwtDecode(token);
+            fetch('http://localhost:5001/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ user_id: decoded.user_id, product_id: productId, quantity: 1 }),
+            })
+                .then(res => res.ok && res.json())
+                .then(() => navigate('/cart'))
+                .catch(err => console.error('Cart error:', err));
+        } catch (err) {
+            console.error("Token decode error:", err);
         }
     };
 
     useEffect(() => {
-        fetchFavorites();
-    }, []);
-
-    const openPopup = (productId) => {
-        console.log("Fetching pop-up data for productId:", productId);
-        fetch(`http://localhost:5001/pop-up/${productId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Fetched pop-up data:", data);
-                if (data) {
-                    setSelectedProduct(data);
-                }
-            })
-            .catch((error) => {
-                console.error('Error fetching product details:', error);
-            });
-    };
-
-    const closePopup = () => {
-        setSelectedProduct(null);
-    };
-
-    useEffect(() => {
         fetch('http://localhost:5001/genres/rock')
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setRockAlbums(data.products);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error('Error fetching data:', err);
-                setError(err);
-                setLoading(false);
-            });
+            .then(res => res.json())
+            .then(data => setProducts(data.products || []))
+            .catch(err => console.error('Fetch rock albums error:', err));
     }, []);
-
-    if (loading) return <p>Loading Rock albums...</p>;
-    if (error) return <p>Error loading Rock albums: {error.message}</p>;
 
     return (
-        <div className="rock-page-container">
-            <h1>Rock Albums</h1>
-            <div className="rock-albums-grid">
-                {rockAlbums.map((album) => (
-                    <div className="rock-album-card" key={album.product_id}>
-                        <img
-                            src={`http://localhost:5001${album.cover_image_url}`}
-                            alt={album.name}
-                            className="rock-album-image"
-                        />
-                        <h2 className="rock-album-name">{album.name}</h2>
-                        <p className="rock-album-artist">{album.artist_name}</p>
-                        <p className="rock-album-price">{album.price}</p>
-                        <button
-                            className="add-to-cart-rock"
-                            onClick={() => handleAddToCart(album.product_id)}
-                        >
-                            Add to Cart
-                        </button>
-                        <button className="read-more-button" onClick={() => openPopup(album.product_id)}>Read More</button>
-                        <button
-                            className={`heart-button ${favorites.includes(album.product_id) ? 'favorited' : ''}`}
-                            onClick={(event) => toggleFavorite(album.product_id, event)}
-                        >
-                            ❤️
-                        </button>
-                    </div>
-                ))}
-            </div>
+        <main className="products-page">
+            <section className="products">
+                <h2>Rock Albums</h2>
+                <div className="product-grid">
+                    {products.map(product => (
+                        <div key={product.product_id} className="product-card" onClick={() => openPopup(product.product_id)}>
+                            <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
+                            <div className="product-info">
+                                <h3>{product.album_name}</h3>
+                                <p>{product.artist_name}</p>
+                                <p>£{product.price}</p>
+                            </div>
+                            <div className="product-actions">
+                                <button className="buy-button" onClick={(e) => handleAddToCart(product.product_id, e)}>Add to Cart</button>
+                                <button className="read-more-button" onClick={() => openPopup(product.product_id)}>More</button>
+                                <button
+                                    className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+                                    onClick={(e) => toggleFavorite(product.product_id, e)}
+                                >
+                                    {favorites.includes(product.product_id) ? '❤️' : '♡'}
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
             {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
             {popupMessage && <div className="favorite-popup">{popupMessage}</div>}
-        </div>
+        </main>
     );
 };
 
