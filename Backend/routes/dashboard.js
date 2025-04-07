@@ -9,10 +9,10 @@ router.get('/', dashboardController.viewDashboard);
 router.get('/profile', dashboardController.getProfile);
 
 //update the profile info
-router.put('/update', dashboardController.updateProfile);
+router.put('/profile/update', dashboardController.updateProfile);
 
 //to change password
-router.post('/change-password', dashboardController.changePassword);
+router.post('/profile/change-password', dashboardController.changePassword);
 
 // Display order tracking information
 router.get('/order/track/:trackingNumber', dashboardController.viewOrderTracking);

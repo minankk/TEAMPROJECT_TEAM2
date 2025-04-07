@@ -15,7 +15,7 @@ const UserProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch('/dashboard/profile', {
+        const response = await fetch('http://localhost:5001/dashboard/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -67,7 +67,7 @@ const UserProfilePage = () => {
 
     try {
       // Assuming your backend route for updating profile is '/dashboard/update'
-      const response = await fetch('/dashboard/update', {
+      const response = await fetch('http://localhost:5001/dashboard/profile/update', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
