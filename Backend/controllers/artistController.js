@@ -18,7 +18,6 @@ exports.getArtistById = async (req, res) => {
     try {
         const artistId = req.params.artistId;
 
-        // Fetch artist details
         const [artistDetails] = await db.execute(`
             SELECT a.artist_id, a.name, ab.bio, ab.image_url
             FROM artists a
@@ -30,7 +29,6 @@ exports.getArtistById = async (req, res) => {
             return res.status(404).json({ message: 'Artist not found' });
         }
 
-        // Fetch products by the artist
         const [artistProducts] = await db.execute(`
             SELECT p.product_id, p.name, p.price, p.cover_image_url
             FROM products p
@@ -49,3 +47,58 @@ exports.getArtistById = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
+// UNIT TESTS
+if (process.env.NODE_ENV === 'test') {
+    const { getAllArtists, getArtistById } = module.exports;
+
+    const mockRes = () => ({
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn()
+    });
+
+    describe('Artist Controller', () => {
+        afterEach(() => jest.clearAllMocks());
+
+        test('getAllArtists - returns artists list', async () => {
+            const req = {};
+            const res = mockRes();
+
+            db.execute = jest.fn().mockResolvedValueOnce([[{ artist_id: 1, name: 'Nirvana' }]]);
+
+            await getAllArtists(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith(expect.any(Array));
+        });
+
+        test('getArtistById - returns artist with products', async () => {
+            const req = { params: { artistId: 1 } };
+            const res = mockRes();
+
+            db.execute = jest
+                .fn()
+                .mockResolvedValueOnce([[{ artist_id: 1, name: 'Nirvana' }]])
+                .mockResolvedValueOnce([[{ product_id: 1, name: 'Nevermind' }]]);
+
+            await getArtistById(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith(
+                expect.objectContaining({ artist_id: 1, products: expect.any(Array) })
+            );
+        });
+
+        test('getArtistById - artist not found', async () => {
+            const req = { params: { artistId: 999 } };
+            const res = mockRes();
+
+            db.execute = jest.fn().mockResolvedValueOnce([[]]);
+
+            await getArtistById(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(404);
+            expect(res.json).toHaveBeenCalledWith({ message: 'Artist not found' });
+        });
+    });
+}
