@@ -1,0 +1,546 @@
+/* VIPSignupPage.css */
+/* General styles */
+#vipSignupContainer.single-bg-hero-theme {
+  font-family: 'PT Serif', serif;
+  background-color: black;
+  color: #f0f0f0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Hero Section with Background Image */
+#vipSignupContainer #vipHeroSignup.hero { /* Added #vipSignupContainer */
+  background-image: url('./assets/Lounge_signup.png');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 10px 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  height: 80vh;
+}
+
+#vipSignupContainer #vipHeroSignup.hero::before { /* Added #vipSignupContainer */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.692);
+  backdrop-filter: blur(2.5px);
+}
+
+#vipSignupContainer #vipHeroSignup #heroOverlay.hero-overlay { /* Added #vipSignupContainer and #vipHeroSignup */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+  background-color: transparent;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent.hero-content { /* Added #vipSignupContainer and #vipHeroSignup */
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroTitleVIPsignup { /* Added all parent IDs */
+  font-family: 'Righteous', sans-serif;
+  font-size: 4.0rem;
+  color: #00aaff;
+  margin-bottom: 20px;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroTitleVIPsignup .step-into { /* Added all parent IDs */
+  font-size: 5rem;
+  color: #ffeedc;
+  font-family: sans-serif;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroTitleVIPsignup .the { /* Added all parent IDs */
+  font-family: "Great Vibes", cursive;
+  font-size: 5rem;
+  font-weight: bold;
+  color: #48c2ff;
+  text-shadow:
+    0 0 2px #00aaff,
+    0 0 5px #0088cc;
+    animation: flicker 7s infinite steps(30) ;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroTitleVIPsignup .lounge { /* Added all parent IDs */
+  font-family: "Righteous", sans-serif;
+  font-size: 5rem;
+  font-weight: bold;
+  color: #48c2ff;
+  text-shadow:
+    0 0 2px #00aaff,
+    0 0 5px #0088cc;
+    animation: flicker 7s infinite steps(30);
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  5% { opacity: 0.9; }
+  10% { opacity: 0.7; }
+  15% { opacity: 1; }
+  20% { opacity: 0.8; }
+  25% { opacity: 0.6; }
+  30% { opacity: 1; }
+  35% { opacity: 0.75; }
+  40% { opacity: 0.85; }
+  45% { opacity: 0.65; }
+  50% { opacity: 1; }
+  55% { opacity: 0.75; }
+  60% { opacity: 0.85; }
+  65% { opacity: 0.95; }
+  70% { opacity: 1; }
+  75% { opacity: 0.9; }
+  80% { opacity: 0.7; }
+  85% { opacity: 0.6; }
+  90% { opacity: 0.95; }
+  95% { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroIntro { /* Added all parent IDs */
+  font-size: 1.2rem;
+  color: #ddd;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroButtons.hero-buttons { /* Added all parent IDs */
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinMonthlyHero.hero-button { /* Added all parent IDs */
+  display: inline-block;
+  padding: 15px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+  background-color: #00aaff;
+  color: #222;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinMonthlyHero.hero-button:hover { /* Added all parent IDs */
+  background-color: #0088cc;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinAnnualHero.hero-button { /* Added all parent IDs */
+  display: inline-block;
+  padding: 15px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+  background-color: #7a1917;
+  color: #fff;
+}
+
+#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinAnnualHero.hero-button:hover { /* Added all parent IDs */
+  background-color: #52110e;
+}
+
+.perk-icon {
+  color: #b69b00; /* Gold or lounge-style */
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+
+/* Signup Content Section */
+#vipSignupContainer #signupContent.signup-content {
+  max-width: 960px;
+  width: 100%;
+  background-color: #282828;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  margin: 40px auto;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+#vipSignupContainer #signupContent #discountTiersTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #00aaff;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+#vipSignupContainer #signupContent #discountTiers.discount-tiers,
+#vipSignupContainer #signupContent #subscriptionOptions.subscription-options,
+#vipSignupContainer #signupContent #howToJoin.how-to-join {
+  margin-bottom: 40px;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  text-align: left;
+}
+
+#vipSignupContainer #signupContent #discountTiers p,
+#vipSignupContainer #signupContent #subscriptionOptions p,
+#vipSignupContainer #signupContent #howToJoin p,
+#vipSignupContainer #signupContent #subscriptionOptions ul li,
+#vipSignupContainer #signupContent #discountList li {
+  line-height: 1.7;
+  margin-bottom: 10px;
+  color: #ddd;
+}
+
+#vipSignupContainer #signupContent #discountList {
+  list-style: none;
+  padding-left: 0;
+}
+
+#vipSignupContainer #signupContent #discountList li {
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+}
+
+#vipSignupContainer #signupContent #discountList li:last-child {
+  border-bottom: none;
+}
+
+#vipSignupContainer #signupContent #discountList strong {
+  color: #00aaff;
+  font-weight: bold;
+}
+
+#vipSignupContainer #signupContent #subscriptionOptionsTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #00aaff;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+#vipSignupContainer #signupContent #plansContainer.plans-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#vipSignupContainer #signupContent #monthlyPlan.plan,
+#vipSignupContainer #signupContent #annualPlan.plan {
+  background-color: #333;
+  color: #eee;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  flex: 1;
+}
+
+#vipSignupContainer #signupContent #annualPlan.plan.popular {
+  background-color: #00aaff;
+  color: #222;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#vipSignupContainer #signupContent #monthlyPlanTitle,
+#vipSignupContainer #signupContent #annualPlanTitle {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: bold;
+}
+
+#vipSignupContainer #signupContent #monthlyPlanPrice,
+#vipSignupContainer #signupContent #annualPlanPrice {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#vipSignupContainer #signupContent #annualPlanSavings {
+  font-size: 0.8rem;
+  color: #ffdd00;
+}
+
+#vipSignupContainer #signupContent #monthlyPlanDetails,
+#vipSignupContainer #signupContent #annualPlanDetails {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+#vipSignupContainer #signupContent #howToJoinTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #00aaff;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+#vipSignupContainer #signupContent #howToJoin.how-to-join {
+  text-align: center;
+}
+
+#vipSignupContainer #signupContent #howToJoin #paymentInfo {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+#vipSignupContainer #signupContent #vipGallery.vip-gallery {
+  margin-bottom: 40px;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: #1a1a1a;
+  text-align: center;
+}
+
+#vipSignupContainer #signupContent #vipGallery h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #00aaff;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+#vipSignupContainer #signupContent #vipGallery .image-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#vipSignupContainer #signupContent #vipGallery .vip-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+#vipSignupContainer #signupContent #vipGallery .vip-image:hover {
+  transform: scale(1.03);
+}
+
+
+/* Responsive adjustments for the hero section */
+@media (max-width: 768px) {
+  #vipSignupContainer #vipHeroSignup.hero {
+      padding: 80px 20px;
+      align-items: flex-start;
+  }
+
+  #vipSignupContainer #vipHeroSignup #heroOverlay.hero-overlay {
+      text-align: center;
+      align-items: center;
+  }
+
+  #vipSignupContainer #vipHeroSignup #heroContent.hero-content {
+      max-width: 95%;
+  }
+
+  #vipSignupContainer #vipHeroSignup #heroContent #heroTitleVIPsignup {
+      font-size: 3.0rem;
+  }
+
+  #vipSignupContainer #vipHeroSignup #heroContent #heroIntro {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+  }
+
+  #vipSignupContainer #vipHeroSignup #heroContent #heroButtons.hero-buttons {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  #vipSignupContainer #vipHeroSignup #heroContent #heroButtons .hero-button {
+      width: 80%;
+      margin-bottom: 10px;
+  }
+}
+
+/* Updated Styles for the Image Gallery Pop-up (Attempt 2) */
+#vipSignupContainer #vipGallery {
+  margin-top: 20px;
+  text-align: center; /* Center the heading */
+  padding-bottom: 20px; /* Add some padding at the bottom */
+}
+
+#vipSignupContainer #vipGallery h2 {
+  margin-bottom: 15px; /* Slightly reduce heading margin */
+}
+
+#vipSignupContainer #vipGallery .image-gallery {
+  display: grid;
+  place-items: center; /* Centers items both horizontally and vertically */
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto; /* Center the gallery section itself */
+}
+
+#vipSignupContainer #vipGallery .main-image-container {
+  /* Remove margin: 0 auto; from here */
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  cursor: pointer;
+}
+
+
+#vipSignupContainer #vipGallery .main-image-container img {
+  display: block;
+  width: 100%;
+  height: 300px; /* or adjust this based on design */
+  object-fit: cover; /* maintains aspect ratio, crops if necessary */
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease-in-out;
+}
+
+
+#vipSignupContainer #vipGallery .main-image-container:hover .main-image {
+  transform: scale(1.05);
+}
+
+#vipSignupContainer #vipGallery .thumbnail-strip {
+  display: flex;
+  gap: 8px; /* Slightly reduce thumbnail gap */
+  overflow-x: auto;
+  padding: 10px 0;
+  width: 100%; /* Take full width of the gallery container */
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#vipSignupContainer #vipGallery .thumbnail {
+  width: 50px; /* Further reduce thumbnail width */
+  height: 38px; /* Adjust height accordingly */
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+#vipSignupContainer #vipGallery .thumbnail:hover,
+#vipSignupContainer #vipGallery .thumbnail.active {
+  opacity: 1;
+  border-color: #00aaff;
+}
+
+/* Styles for the Pop-up Overlay (No changes needed here for centering) */
+.gallery-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+}
+
+.gallery-popup-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0s;
+}
+
+.gallery-popup-content {
+  position: relative;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none; /* remove default shadows */
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+.gallery-popup-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain; /* preserves the image fully */
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* optional subtle shadow */
+  background-color: transparent;
+}
+
+
+.popup-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5em;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.popup-close-button:hover {
+  opacity: 1;
+}
+
+.popup-navigation-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  font-size: 1.5em;
+  z-index: 1100;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.popup-navigation-button:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.popup-prev-button {
+  left: 20px;
+}
+
+.popup-next-button {
+  right: 20px;
+}
