@@ -62,9 +62,15 @@ const Overview = () => {
           <h2>Overview</h2>
           <p><strong>Username:</strong> {data.username || 'N/A'}</p>
           <p><strong>Message:</strong> {data.message || 'No new messages'}</p>
-          <p><strong>Orders:</strong> {data.orders ? data.orders.length : 0}</p>
-          <p><strong>Wishlist Items:</strong> {data.wishlist ? data.wishlist.length : 0}</p>
+          <p><strong>Orders:</strong> {data.orderCount ?? 0}</p>
+          <p><strong>Wishlist Items:</strong> {data.wishlistCount ?? 0}</p>
           <p><strong>Wallet Balance:</strong> ${data.walletBalance || '0.00'}</p>
+          {data.isVIP && data.benefits && (
+          <div className="vip-info">
+          <p><strong>VIP Tier:</strong> {data.benefits.tier}</p>
+          <p><strong>Discount:</strong> {data.benefits.discount * 100}%</p>
+    </div>
+)}
       </div>
   );
 };

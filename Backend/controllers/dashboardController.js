@@ -16,6 +16,7 @@ const genBenefitsDiscount = (totalSpent) => {
 exports.viewDashboard = async (req, res) => {
     try {
         const userId = req.user.user_id;
+
         const [userDetails] = await db.execute(
             'SELECT user_name, email, membership_status FROM users WHERE user_id = ?',
             [userId]
@@ -27,6 +28,7 @@ exports.viewDashboard = async (req, res) => {
 
         const user = userDetails[0];
         const isVIP = user.membership_status === 'vip';
+
         const [spendingData] = await db.execute(`
             SELECT COALESCE(SUM(total_amount), 0) AS totalSpent
             FROM orders
@@ -35,11 +37,32 @@ exports.viewDashboard = async (req, res) => {
 
         const totalSpent = spendingData[0].totalSpent;
 
+        const [orderCountData] = await db.execute(`
+            SELECT COUNT(*) AS orderCount
+            FROM orders
+            WHERE user_id = ?
+        `, [userId]);
+
+        const orderCount = orderCountData[0].orderCount;
+
+        const [wishlistData] = await db.execute(`
+            SELECT COUNT(*) AS wishlistCount
+            FROM wishlist
+            WHERE user_id = ?
+        `, [userId]);
+        
+        const wishlistCount = wishlistData[0].wishlistCount;
+        
+
         const benefits = isVIP ? genBenefitsDiscount(totalSpent) : null;
 
         res.status(200).json({
-            message: `Welcome to your dashboard, ${user.user_name}!`,
+            username: user.user_name,
+            message: `Welcome to your dashboard!`,
             isVIP: isVIP,
+            totalSpent: totalSpent,
+            orderCount: orderCount,
+            wishlistCount: wishlistCount,
             benefits: benefits
         });
 
@@ -48,6 +71,7 @@ exports.viewDashboard = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 exports.getProfile = async (req, res) => {
     try {
@@ -163,37 +187,39 @@ exports.viewOrderTracking = async (req, res) => {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const orderId = req.params.orderId;
+        const trackingNumber = req.params.trackingNumber;
 
-        if (!orderId) {
-            return res.status(400).json({ message: 'Order ID is required' });
+        if (!trackingNumber) {
+            return res.status(400).json({ message: 'Tracking number is required' });
         }
 
-        // to get the order information
         const [orderDetails] = await db.execute(
-            'SELECT o.order_id, o.status AS order_status, o.shipping_address, t.status AS tracking_status, t.estimated_delivery_date ' +
-            'FROM orders o LEFT JOIN order_tracking t ON o.order_id = t.order_id ' +
-            'WHERE o.user_id = ? AND o.order_id = ?',
-            [decoded.user_id, orderId]
+            `SELECT order_id, tracking_number, status AS order_status, shipping_address
+             FROM orders 
+             WHERE tracking_number = ? AND user_id = ?`,
+            [trackingNumber, decoded.user_id]
         );
-
+        
         if (orderDetails.length === 0) {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-        res.status(200).json({
-            order_id: orderDetails[0].order_id,
-            order_status: orderDetails[0].order_status,
-            shipping_address: orderDetails[0].shipping_address,
-            tracking_status: orderDetails[0].tracking_status,
-            estimated_delivery_date: orderDetails[0].estimated_delivery_date
-        });
+        const order = orderDetails[0];
+
+        if (order.shipping_address?.startsWith('"') && order.shipping_address.endsWith('"')) {
+            order.shipping_address = order.shipping_address.slice(1, -1);
+        }
+
+        res.status(200).json(order);
 
     } catch (error) {
         console.error('Error fetching order tracking:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
+
+
+
 
   // Get user's received messages
 exports.getUserMessages = async (req, res) => {
