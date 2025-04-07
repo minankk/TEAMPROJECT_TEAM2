@@ -101,7 +101,6 @@ app.use('/pre-orders', preOrderRoutes);
 app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
 app.use('/logout',authJWT.authenticateJWT,logoutRoute)
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
-app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
 app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
 app.use("/wishlist", authJWT.authenticateJWT,wishlistRouter);
 app.use("/membership", authJWT.authenticateJWT ,membershipRoutes)
