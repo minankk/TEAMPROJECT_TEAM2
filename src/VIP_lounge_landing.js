@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./VIP_lounge_landing.css";
 import Lounge_Background from "./assets/VV_LOUNGE_BACKGROUND.png";
+import { Link } from 'react-router-dom';
 
 const VIPLoungeLanding = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -31,18 +32,13 @@ const VIPLoungeLanding = () => {
         <span class="lounge">LOUNGE</span>
       </h2>
         <p>
-        The Vinyl Vault Lounge isn't just about buying vinyl—it's where music
-          lovers come together. As a member, you’ll unlock
-          exclusive discounts, access to killer deals, early pre-orders, and
-          get the inside scoop with our newsletter—plus, it's totally free to
-          join. So kick back, relax, and enjoy the perks of being part of the
-          VIP sound experience.
+        The Vinyl Vault Lounge isn’t just about buying vinyl—it’s a community where music lovers come together. As a member, you'll enjoy exclusive discounts, access to unbeatable deals, early pre-orders, insider news through our newsletter, and special invitations to exclusive community events. So kick back, relax, and enjoy the perks of being part of the VIP sound experience..
         </p>
-        <button className="join-now-button" onClick={handleJoinClick}>
-          Join Now <span className="arrow">→</span>
-        </button>
+        <Link to="/vip-signup" className="join-now-button">
+            Join Now <span className="arrow">→</span>
+        </Link>
       </div>
-      {showPopup && (
+      {/* {showPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
             <h3>Unlock Your VIP Access</h3>
@@ -59,7 +55,7 @@ const VIPLoungeLanding = () => {
             <button className="close-button" onClick={handleClosePopup}>Close</button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

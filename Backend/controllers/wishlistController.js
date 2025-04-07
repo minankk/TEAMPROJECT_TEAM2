@@ -95,3 +95,43 @@ exports.getWishlist = async (req, res) => {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
+
+// UNIT TESTS (for development only — remove before production)
+if (process.env.NODE_ENV === 'test') {
+    const { addToWishlist, getWishlist } = module.exports;
+    const db = require('../db');
+  
+    const mockRes = () => ({
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    });
+  
+    describe('Wishlist Controller', () => {
+      afterEach(() => jest.clearAllMocks());
+  
+      test('addToWishlist - adds when not in wishlist', async () => {
+        const req = { user: { user_id: 1 }, params: { productId: 1 } };
+        const res = mockRes();
+  
+        db.execute = jest.fn()
+          .mockResolvedValueOnce([[]]) // not in wishlist
+          .mockResolvedValueOnce(); // insert
+  
+        await addToWishlist(req, res);
+  
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ action: 'added' }));
+      });
+  
+      test('getWishlist - returns wishlist', async () => {
+        const req = { user: { user_id: 1 }, params: { user_id: 1 } };
+        const res = mockRes();
+  
+        db.execute = jest.fn().mockResolvedValueOnce([[{ wishlist_id: 1, product_id: 1 }]]);
+        await getWishlist(req, res);
+  
+        expect(res.status).toHaveBeenCalledWith(200);
+      });
+    });
+  }
+  
