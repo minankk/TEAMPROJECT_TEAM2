@@ -1,12 +1,22 @@
+/* PopPage.css - Styled to match the Products Page */
+
+.pop-page-container {
+  font-family: "Oswald", sans-serif; /* Match Products page font */
 .products-page {
   font-family: "Oswald", sans-serif;
   margin: 0;
+  padding: 20px; /* Adjust padding as needed */
+  background-color: #f6f6f4; /* Match Products page background */
+  color: #000; /* Match Products page text color */
   padding: 0;
   background-color: #f8f8f8;
   color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  min-height: auto; /* Adjust min-height */
+  overflow-y: auto;
   min-height: 100vh;
   box-sizing: border-box;
   position: relative;
@@ -26,6 +36,11 @@
   z-index: 0;
 }
 
+h1 {
+  font-size: 2rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #ad2321; /* Match Products page heading color */
 .products {
   margin-left: 0;
   width: 95%;
@@ -44,6 +59,10 @@
 
 .product-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Match Products page grid */
+  gap: 8px; /* Match Products page grid gap */
+  justify-items: stretch; /* Match Products page justify-items */
+  margin-bottom: 20px;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 8px;
   justify-items: stretch;
@@ -67,10 +86,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  background: rgba(255, 255, 255, 0.15); /* Match Products page card background */
+  backdrop-filter: blur(10px); /* Match Products page card blur */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Match Products page card border */
+  border-radius: 16px; /* Match Products page card border-radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Match Products page card box-shadow */
+  padding: 15px; /* Match Products page card padding */
+  width: 100%;
+  max-width: 300px; /* Match Products page card max-width */
+  min-height: auto;
+  border: none; /* Remove original border */
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out; /* Match Products page card transition */
+/*overflow: hidden;*/
+  position: relative;
   transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
   position: relative;
 }
 
+.pop-album-card:hover {
+  transform: scale(1.01); /* Match Products page card hover */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Match Products page card hover shadow */
 .product-card:hover {
   transform: scale(1.01);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -93,19 +128,31 @@
   margin-bottom: 5px;
 }
 
+.pop-album-name {
+  font-size: 1.1rem; /* Match Products page name size */
+  margin: 0.5px 0;
+  color: black; /* Match Products page name color */
 .product-info h3 {
   font-size: 1.1rem;
   margin: 0.5px 0;
   color: black;
 }
 
+.pop-album-price {
+  font-size: 0.9rem; /* Match Products page price size */
 .product-info p {
   font-size: 0.9rem;
   font-weight: bold;
+  color: #ad2321; /* Match Products page price color */
+  margin-bottom: 0.5px;
   color: #ad2321;
   margin-bottom: 0.5px;
 }
 
+.pop-album-description { /* Keep original styling if needed */
+  font-size: 1rem;
+  font-weight: lighter;
+  margin-bottom: 10px;
 .product-actions {
   display: flex;
   gap: 5px;
@@ -115,14 +162,21 @@
   width: 100%;
 }
 
+.add-to-cart-pop {
+  background-color: #620b0b; /* Match Products page button background */
+  color: white; /* Match Products page button text color */
+  padding: 10px 15px; /* Match Products page button padding */
 .buy-button {
   background-color: #620b0b;
   color: white;
   padding: 10px 15px;
   border: none;
+  border-radius: 8px; /* Match Products page button border-radius */
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 1rem; /* Match Products page button font size */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Match Products page button shadow */
   font-size: 1rem;
   text-decoration: none;
   width: 60%;
@@ -148,11 +202,15 @@
   white-space: nowrap;
 }
 
+.add-to-cart-pop:hover {
+  background-color: rgb(141, 8, 8); /* Match Products page button hover background */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Match Products page button hover shadow */
 .read-more-button:hover {
   color: #555;
   border-color: #555;
 }
 
+/* Heart Button Styles - Match Products Page */
 .read-more-button::after {
   content: " →";
   margin-left: 5px;
@@ -162,6 +220,15 @@
   position: absolute;
   top: 10px;
   right: 10px;
+  background-color: rgba(255, 255, 255, 0.3); /* Match Products page heart bg */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Match Products page heart border */
+  font-size: 1.3em;
+  cursor: pointer;
+  color: lightgray; /* Default heart color */
+  z-index: 1;
+  transition: color 0.3s ease;
+  border-radius: 5px;
+  padding: 5px;
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.4);
   color: lightgray;
@@ -173,6 +240,7 @@
 }
 
 .heart-button.favorited {
+  color: red; /* Match Products page favorited color */
   color: red;
 }
 
@@ -189,12 +257,18 @@
 }
 
 @media (max-width: 1024px) {
+  .pop-albums-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px; /* Adjust gap for smaller screens */
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
+  .pop-albums-grid {
+      grid-template-columns: 1fr;
+      gap: 15px; /* Adjust gap for smaller screens */
   .product-grid {
     grid-template-columns: 1fr;
   }

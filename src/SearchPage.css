@@ -1,16 +1,16 @@
-/* Overall page layout */
+\/* Overall page layout */
 .search-page {
-    font-family: "Oswald", sans-serif;
+    font-family: "Oswald", sans-serif; /* Match Products page font */
     margin: 0;
     padding: 0;
-    background: radial-gradient(#efd9d4, #fff);
-    color: #fff;
+    background-color: #f6f6f4; /* Match Products page background */
+    color: #000; /* Match Products page text color */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Banner section */
+/* Banner section - Kept as is, adjusted font */
 .search-page .search-banner {
     position: relative;
     width: 100%;
@@ -27,7 +27,7 @@
     object-fit: cover;
     margin: 0;
     padding: 0;
-    filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6);
+    filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6); /* Add similar filter if desired */
 }
 
 .search-page .search-banner-text {
@@ -58,15 +58,20 @@
     top: 735px; /* Adjust this value to match the height of the banner */
     left: 0;
     width: 250px;
-    height: 800px;
-    padding: 15px;
-    background: transparent; /* Remove background color */
-    border-right: 1px solid #ddd;
+    height: fit-content; /* Adjust height */
+    padding: 20px; /* Adjust padding */
+    background: rgba(255, 255, 255, 0.15); /* Match Products page filter background */
+    backdrop-filter: blur(10px); /* Match Products page filter blur */
+    border-right: 1px solid rgba(255, 255, 255, 0.2); /* Match Products page filter border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Match Products page filter shadow */
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 8px; /* Match Products page filter gap */
     font-family: "Courier New", Courier, monospace;
     z-index: 2; /* Ensure the sidebar is above other content */
+    border-radius: 16px; /* Match Products page filter border-radius */
+    max-height: 485px;
+    overflow-y: auto;
 }
 
 .filters.fixed {
@@ -75,21 +80,38 @@
 }
 
 .filters label {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Match Products page filter label size */
     font-weight: bold;
     color: #333;
+    margin-bottom: 2px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.filters label:nth-child(5),
+.filters label:nth-child(6) {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.filters label input {
+    vertical-align: middle;
+    margin-right: 3px;
 }
 
 .filters input, .filters select {
     font-size: 1rem;
-    padding: 10px;
-    border: none; /* Remove border */
-    background: transparent; /* Remove background */
+    padding: 5px 8px; /* Match Products page filter input padding */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Match Products page filter input border */
+    background: rgba(255, 255, 255, 0.1); /* Match Products page filter input background */
+    backdrop-filter: blur(5px); /* Match Products page filter input blur */
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-decoration: underline; /* Underline text */
     color: #333; /* Text color */
     position: relative;
+    border-radius: 8px; /* Match Products page filter input border-radius */
 }
 
 .filters select::after {
@@ -104,14 +126,14 @@
 }
 
 .filters button {
-    background-color: #7a1917;
+    background-color: #620b0b; /* Match Products page filter button background */
     color: white;
     padding: 10px 16px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Match Products page filter button shadow */
 }
 
 .filters button:hover {
@@ -130,109 +152,147 @@
 .search-page .search-results h2 {
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #ad2321;
+    color: #ad2321; /* Match Products page heading color */
 }
 
-.search-page .search-grid {
+.search-page .search-grid { /* Use the same class name as Products page */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Match Products page grid */
+    gap: 8px; /* Match Products page grid gap */
+    justify-items: stretch; /* Match Products page justify-items */
 }
 
-.search-page .search-card {
+.search-page .search-card { /* Use the same class name as Products page */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: transparent; /* Make background transparent */
-    padding: 0; /* Remove padding */
-    border: none; /* Remove border */
-    box-shadow: none; /* Remove box-shadow */
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.15); /* Match Products page card background */
+    backdrop-filter: blur(10px); /* Match Products page card blur */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Match Products page card border */
+    border-radius: 16px; /* Match Products page card border-radius */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Match Products page card box-shadow */
+    padding: 15px; /* Match Products page card padding */
     width: 100%;
-    max-width: 280px;
-    min-height: 420px;
-    transition: transform 0.3s ease-in-out;
+    max-width: 300px; /* Match Products page card max-width */
+    min-height: auto; /* Adjust min-height */
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out; /* Match Products page card transition */
 }
 
-.search-page .search-card:hover {
-    transform: scale(1.05);
+.search-page .search-card:hover { /* Use the same class name */
+    transform: scale(1.01); /* Match Products page card hover */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Match Products page card hover shadow */
 }
 
-.search-page .search-image {
+.search-page .search-image { /* Use the same class name */
     width: 100%;
     height: auto;
-    max-height: 200px;
-    object-fit: contain;
-    border-radius: 10px;
+    max-height: 300px; /* Match Products page image max-height */
+    object-fit: cover; /* Match Products page image object-fit */
+    border-radius: 8px; /* Match Products page image border-radius */
+    margin-bottom: 10px;
 }
 
 /* Search Info */
-.search-page .search-info {
+.search-page .search-info { /* Use the same class name */
     margin-top: 10px;
     text-align: center; /* Center align text */
+    flex-grow: 1; /* Take up remaining space */
 }
 
-.search-page .search-info h3 {
-    font-size: 1.2rem;
-    margin: 10px 0;
+.search-page .search-info h3 { /* Match Products page product name style */
+    font-size: 1.1rem;
+    margin: 0.5px 0;
     color: black;
 }
 
-.search-page .search-info p {
-    font-size: 1rem;
+.search-page .search-info p { /* Match Products page product price style */
+    font-size: 0.9rem;
     font-weight: bold;
     color: #ad2321;
 }
 
 /* Buy Button */
-.search-page .buy-button {
-    background-color: #7a1917;
+.search-page .buy-button { /* Use the same class name */
+    background-color: #620b0b; /* Match Products page button background */
     color: white;
-    padding: 10px 16px;
+    padding: 10px 15px;
     border: none;
-    border-radius: 20px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Match Products page button shadow */
+    font-size: 1rem;
+    text-decoration: none;
+    width: auto;
 }
 
 .search-page .buy-button:hover {
-    background-color: #52110e;
+    background-color: rgb(141, 8, 8); /* Match Products page button hover background */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Match Products page button hover shadow */
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .search-page .search-grid {
+    .search-page .search-grid { /* Use the same class name */
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 }
 
 @media (max-width: 768px) {
-    .search-page .search-grid {
+    .search-page .search-grid { /* Use the same class name */
         grid-template-columns: 1fr;
+        gap: 15px;
     }
 
     .search-page .search-results h2 {
         font-size: 1.8rem;
     }
+
+    .filters {
+        position: static;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+        gap: 10px;
+        max-height: none;
+        overflow-y: visible;
+        border-radius: 0;
+    }
+
+    .filters > * {
+        margin-bottom: 0;
+    }
 }
 
 /* Heart Button */
-.search-page .heart-button {
-    background: none;
-    border: none;
-    font-size: 1.5em;
+.search-page .heart-button { /* Use the same class name */
+    background-color: rgba(255, 255, 255, 0.3); /* Match Products page heart bg */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Match Products page heart border */
+    font-size: 1.3em;
     cursor: pointer;
-    color: gray !important; /* Default heart color */
+    color: lightgray !important; /* Default heart color */
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
 }
 
-.search-page .heart-button.favorited {
-    color: red; /* Favorited heart color */
+.search-page .heart-button.favorited { /* Use the same class name */
+    color: red !important; /* Favorited heart color */
 }
 
 /* Favorite Popup */
-.search-page .favorite-popup {
+.search-page .favorite-popup { /* Use the same class name */
     position: absolute;
     bottom: 20px;
     left: 50%;
