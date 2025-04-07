@@ -9,43 +9,47 @@ exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
         console.log('Received login request');
-        // Validation for the username and password
-        if (!username || !password) {
-            return res.status(400).json({ message: 'username and password are required' });
-        }
-        const [results] = await db.execute('SELECT * FROM users WHERE user_name = ?', [username]);
 
-        // If no user found
-        if (results.length === 0) {
-            return res.status(400).json({ message: 'Please Sign Up' });
+        if (!username || !password) {
+            return res.status(400).json({ message: 'username or email and password are required' });
         }
+
+        const [results] = await db.execute(
+            'SELECT * FROM users WHERE user_name = ? OR email = ?', 
+            [username, username]
+        );
+
+        if (results.length === 0) {
+            return res.status(400).json({ message: 'User not found. Please Sign Up.' });
+        }
+
         const user = results[0];
 
-        // Comparing the hashed password in db to check if it matches with the user  
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Password do not match' });
+            return res.status(400).json({ message: 'Password does not match' });
         }
-      
-        //Generate JWT Token with user details
-        const payload = { 
-            user_id: user.user_id, 
-            username: user.user_name, 
+
+        const payload = {
+            user_id: user.user_id,
+            username: user.user_name,
             email: user.email,
-            role: user.role 
+            role: user.role
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
 
-        console.log("Generated Token Payload:", payload); // Debugging
+        console.log("Generated Token Payload:", payload);
+
         return res.status(200).json({
             message: 'Login successful',
             token: token,
-            user: { 
-                user_id: user.user_id, 
-                username: user.user_name, 
-                email: user.email, 
-                role: user.role 
+            user: {
+                user_id: user.user_id,
+                username: user.user_name,
+                email: user.email,
+                mail: user.email,
+                role: user.role
             }
         });
 
@@ -54,6 +58,7 @@ exports.login = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
 
 //logout
 
