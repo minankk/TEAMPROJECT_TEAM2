@@ -62,7 +62,7 @@
   font-family: "Great Vibes", cursive;
   font-size: 3rem;
   font-weight: bold;
-  color: #00aaff;
+  color: #48c2ff;
   text-shadow:
     0 0 2px #00aaff,
     0 0 5px #0088cc; /* Reduced glow for sharpness */
@@ -73,7 +73,7 @@
   font-family: "Righteous", sans-serif;
   font-size: 3rem;
   font-weight: bold;
-  color: #00aaff;
+  color: #48c2ff;
   text-shadow:
     0 0 2px #00aaff,
     0 0 5px #0088cc; /* Reduced glow for sharpness */
@@ -265,4 +265,44 @@
 .popup-content .close-button:hover {
   /* background: #50100e;
   transform: translateY(-2px); */
+}
+
+/* Style for the Link component to look like the button */
+.vip-lounge-section .join-now-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #7a1917;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-family: sans-serif;
+}
+
+.vip-lounge-section .join-now-button:hover {
+  background: #52110e;
+  transform: none;
+}
+
+.vip-lounge-section .join-now-button .arrow {
+  display: inline-block;
+  font-weight: 900;
+  font-size: 2rem;
+  transition: transform 0.3s ease-in-out;
+  vertical-align: middle;
+  line-height: 1;
+  position: relative;
+  top: -2px;
+}
+
+.vip-lounge-section .join-now-button:hover .arrow {
+  transform: translateX(7px);
 }
