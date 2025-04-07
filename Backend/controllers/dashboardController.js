@@ -16,6 +16,7 @@ const genBenefitsDiscount = (totalSpent) => {
 exports.viewDashboard = async (req, res) => {
     try {
         const userId = req.user.user_id;
+
         const [userDetails] = await db.execute(
             'SELECT user_name, email, membership_status FROM users WHERE user_id = ?',
             [userId]
@@ -27,6 +28,7 @@ exports.viewDashboard = async (req, res) => {
 
         const user = userDetails[0];
         const isVIP = user.membership_status === 'vip';
+
         const [spendingData] = await db.execute(`
             SELECT COALESCE(SUM(total_amount), 0) AS totalSpent
             FROM orders
@@ -35,11 +37,32 @@ exports.viewDashboard = async (req, res) => {
 
         const totalSpent = spendingData[0].totalSpent;
 
+        const [orderCountData] = await db.execute(`
+            SELECT COUNT(*) AS orderCount
+            FROM orders
+            WHERE user_id = ?
+        `, [userId]);
+
+        const orderCount = orderCountData[0].orderCount;
+
+        const [wishlistData] = await db.execute(`
+            SELECT COUNT(*) AS wishlistCount
+            FROM wishlist
+            WHERE user_id = ?
+        `, [userId]);
+        
+        const wishlistCount = wishlistData[0].wishlistCount;
+        
+
         const benefits = isVIP ? genBenefitsDiscount(totalSpent) : null;
 
         res.status(200).json({
-            message: `Welcome to your dashboard, ${user.user_name}!`,
+            username: user.user_name,
+            message: `Welcome to your dashboard!`,
             isVIP: isVIP,
+            totalSpent: totalSpent,
+            orderCount: orderCount,
+            wishlistCount: wishlistCount,
             benefits: benefits
         });
 
@@ -48,6 +71,7 @@ exports.viewDashboard = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 exports.getProfile = async (req, res) => {
     try {
