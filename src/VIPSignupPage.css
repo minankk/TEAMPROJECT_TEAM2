@@ -1,5 +1,5 @@
 /* VIPSignupPage.css */
-/* General styles */
+/* ----------------------------------------HERO----------------------------------------------- */
 #vipSignupContainer.single-bg-hero-theme {
   font-family: 'PT Serif', serif;
   background-color: black;
@@ -126,81 +126,46 @@
   text-align: center;
 }
 
-#vipSignupContainer #vipHeroSignup #heroContent #heroButtons.hero-buttons { /* Added all parent IDs */
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-}
+/* -------------------------------Signup Content Section------------------------------------- */
 
-#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinMonthlyHero.hero-button { /* Added all parent IDs */
-  display: inline-block;
-  padding: 15px 40px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2rem;
-  transition: background-color 0.3s ease;
-  background-color: #00aaff;
-  color: #222;
-}
-
-#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinMonthlyHero.hero-button:hover { /* Added all parent IDs */
-  background-color: #0088cc;
-}
-
-#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinAnnualHero.hero-button { /* Added all parent IDs */
-  display: inline-block;
-  padding: 15px 40px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2rem;
-  transition: background-color 0.3s ease;
-  background-color: #7a1917;
-  color: #fff;
-}
-
-#vipSignupContainer #vipHeroSignup #heroContent #heroButtons #joinAnnualHero.hero-button:hover { /* Added all parent IDs */
-  background-color: #52110e;
+#vipSignupContainer #signupContent.signup-content {
+  max-width: 960px;
+  width: 100%;
+  background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  margin: 40px auto;
+  color: #f5f5dc;
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  border: 1px solid #3a3a3a;
 }
 
 .perk-icon {
-  color: #b69b00; /* Gold or lounge-style */
+  color: #b69b00;
   margin-right: 0.5rem;
   font-size: 1.2rem;
   vertical-align: middle;
 }
 
-
-/* Signup Content Section */
-#vipSignupContainer #signupContent.signup-content {
-  max-width: 960px;
-  width: 100%;
-  background-color: #282828;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-  margin: 40px auto;
-  color: #f0f0f0;
-  text-align: center;
-}
-
-#vipSignupContainer #signupContent #discountTiersTitle {
-  font-family: 'Space Grotesk', sans-serif;
-  color: #00aaff;
-  margin-top: 0;
+#vipSignupContainer #signupContent #discountTiersTitle,
+#vipSignupContainer #signupContent #subscriptionOptionsTitle,
+#vipSignupContainer #signupContent #howToJoinTitle {
+  color: #f5f5dc;
+  font-size: 2rem;
   margin-bottom: 20px;
-  font-size: 1.8rem;
-  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-#vipSignupContainer #signupContent #discountTiers.discount-tiers,
-#vipSignupContainer #signupContent #subscriptionOptions.subscription-options,
-#vipSignupContainer #signupContent #howToJoin.how-to-join {
+#vipSignupContainer #signupContent #discountTiers,
+#vipSignupContainer #signupContent #subscriptionOptions,
+#vipSignupContainer #signupContent #howToJoin {
   margin-bottom: 40px;
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #333;
+  padding: 24px;
+  border-radius: 12px;
+  background-color: #1a1a1a;
+  border: 1px solid #3b3b3b;
   text-align: left;
 }
 
@@ -209,9 +174,10 @@
 #vipSignupContainer #signupContent #howToJoin p,
 #vipSignupContainer #signupContent #subscriptionOptions ul li,
 #vipSignupContainer #signupContent #discountList li {
+  color: #e0e0e0;
   line-height: 1.7;
   margin-bottom: 10px;
-  color: #ddd;
+  font-size: 1rem;
 }
 
 #vipSignupContainer #signupContent #discountList {
@@ -220,8 +186,8 @@
 }
 
 #vipSignupContainer #signupContent #discountList li {
-  padding: 8px 0;
-  border-bottom: 1px solid #333;
+  padding: 10px 0;
+  border-bottom: 1px solid #444;
 }
 
 #vipSignupContainer #signupContent #discountList li:last-child {
@@ -229,76 +195,68 @@
 }
 
 #vipSignupContainer #signupContent #discountList strong {
-  color: #00aaff;
+  color: #d86c5e;
   font-weight: bold;
 }
 
-#vipSignupContainer #signupContent #subscriptionOptionsTitle {
-  font-family: 'Space Grotesk', sans-serif;
-  color: #00aaff;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  text-align: center;
-}
-
-#vipSignupContainer #signupContent #plansContainer.plans-container {
+#vipSignupContainer #signupContent #plansContainer {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   justify-content: center;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
-#vipSignupContainer #signupContent #monthlyPlan.plan,
-#vipSignupContainer #signupContent #annualPlan.plan {
-  background-color: #333;
-  color: #eee;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+#vipSignupContainer #signupContent #monthlyPlan,
+#vipSignupContainer #signupContent #annualPlan {
+  background-color: #222;
+  box-shadow: 0 0 12px #000000d4, 0 0 25px rgba(34, 30, 30, 0.5);
+  color: #f5f5dc;
+  padding: 24px;
+  border-radius: 10px;
   flex: 1;
+  min-width: 260px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#vipSignupContainer #signupContent #annualPlan.plan.popular {
-  background-color: #00aaff;
-  color: #222;
+#vipSignupContainer #signupContent #annualPlan.popular {
+  background-color: #7a1917;
+  color: #f5f5dc;
   transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 12px #7a1917, 0 0 25px rgba(122, 25, 23, 0.5);
+  animation: pulse 3s infinite ease-in-out;
 }
 
 #vipSignupContainer #signupContent #monthlyPlanTitle,
 #vipSignupContainer #signupContent #annualPlanTitle {
-  margin-top: 0;
+  font-size: 1.3rem;
   margin-bottom: 10px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: bold;
+  color: #f5f5dc;
+  text-decoration: none;
 }
 
 #vipSignupContainer #signupContent #monthlyPlanPrice,
 #vipSignupContainer #signupContent #annualPlanPrice {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 10px;
+  color: #f5f5dc;
 }
 
 #vipSignupContainer #signupContent #annualPlanSavings {
-  font-size: 0.8rem;
-  color: #ffdd00;
+  font-size: 0.85rem;
+  color: #ffd700;
 }
 
 #vipSignupContainer #signupContent #monthlyPlanDetails,
 #vipSignupContainer #signupContent #annualPlanDetails {
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-#vipSignupContainer #signupContent #howToJoinTitle {
-  font-family: 'Space Grotesk', sans-serif;
-  color: #00aaff;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  text-align: center;
+@keyframes pulse {
+  0%, 100% { transform: scale(1.05); }
+  50% { transform: scale(1.07); }
 }
 
 #vipSignupContainer #signupContent #howToJoin.how-to-join {
@@ -307,8 +265,11 @@
 
 #vipSignupContainer #signupContent #howToJoin #paymentInfo {
   font-size: 0.85rem;
-  color: #aaa;
+  color: #bbb;
 }
+
+
+/*  --------------------------------GALLERY SECTION------------------------------------ */
 
 #vipSignupContainer #signupContent #vipGallery.vip-gallery {
   margin-bottom: 40px;
@@ -346,44 +307,6 @@
   transform: scale(1.03);
 }
 
-
-/* Responsive adjustments for the hero section */
-@media (max-width: 768px) {
-  #vipSignupContainer #vipHeroSignup.hero {
-      padding: 80px 20px;
-      align-items: flex-start;
-  }
-
-  #vipSignupContainer #vipHeroSignup #heroOverlay.hero-overlay {
-      text-align: center;
-      align-items: center;
-  }
-
-  #vipSignupContainer #vipHeroSignup #heroContent.hero-content {
-      max-width: 95%;
-  }
-
-  #vipSignupContainer #vipHeroSignup #heroContent #heroTitleVIPsignup {
-      font-size: 3.0rem;
-  }
-
-  #vipSignupContainer #vipHeroSignup #heroContent #heroIntro {
-      font-size: 1.3rem;
-      margin-bottom: 30px;
-  }
-
-  #vipSignupContainer #vipHeroSignup #heroContent #heroButtons.hero-buttons {
-      flex-direction: column;
-      align-items: center;
-  }
-
-  #vipSignupContainer #vipHeroSignup #heroContent #heroButtons .hero-button {
-      width: 80%;
-      margin-bottom: 10px;
-  }
-}
-
-/* Updated Styles for the Image Gallery Pop-up (Attempt 2) */
 #vipSignupContainer #vipGallery {
   margin-top: 20px;
   text-align: center; /* Center the heading */
@@ -410,7 +333,6 @@
   cursor: pointer;
 }
 
-
 #vipSignupContainer #vipGallery .main-image-container img {
   display: block;
   width: 100%;
@@ -420,7 +342,6 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease-in-out;
 }
-
 
 #vipSignupContainer #vipGallery .main-image-container:hover .main-image {
   transform: scale(1.05);
@@ -453,7 +374,7 @@
   border-color: #00aaff;
 }
 
-/* Styles for the Pop-up Overlay (No changes needed here for centering) */
+/* -------------------------------Styles for the Pop-up Overlay ----------------------*/
 .gallery-popup-overlay {
   position: fixed;
   top: 0;
@@ -480,7 +401,7 @@
   position: relative;
   background-color: transparent;
   border-radius: 0;
-  box-shadow: none; /* remove default shadows */
+  box-shadow: none;
   max-width: 90%;
   max-height: 90%;
   display: flex;
@@ -494,9 +415,9 @@
   display: block;
   max-width: 100%;
   max-height: 90vh;
-  object-fit: contain; /* preserves the image fully */
+  object-fit: contain;
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* optional subtle shadow */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
   background-color: transparent;
 }
 

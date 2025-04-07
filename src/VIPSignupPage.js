@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './VIPSignupPage.css';
 import { Link } from 'react-router-dom';
-import { FaRocket, FaNewspaper } from 'react-icons/fa';
+import { FaRocket, FaNewspaper, FaArrowRight } from 'react-icons/fa';
 // import HeroBackgroundImage from './assets/vv_lounge_form_bg_cornersofa.png';
 import image1 from './assets/listeninglounge_vv_Vip.png';
 import image2 from './assets/Listening_room_lounge.png';
@@ -9,6 +9,8 @@ import image3 from './assets/VIP_HERO_LANDING.jpeg';
 
 const VIPSignupPage = () => {
     const monthlyPrice = '2.99';
+    const annualPrice = '29.99';
+    const annualSavings = '16%';
     const galleryImages = [image1, image2, image3];
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -77,13 +79,13 @@ const VIPSignupPage = () => {
                             <strong>Standard VIP (First Order):</strong> 10% off your initial purchase.
                         </li>
                         <li id="discountBronze">
-                            <strong>Bronze VIP:</strong> 15% discount on all orders.
+                            <strong>Bronze VIP:</strong> 15% discount on all orders (requires £50 total order history).
                         </li>
                         <li id="discountSilver">
-                            <strong>Silver VIP:</strong> 20% discount on all orders.
+                            <strong>Silver VIP:</strong> 20% discount on all orders (requires £100 total order history).
                         </li>
                         <li id="discountGold">
-                            <strong>Gold VIP:</strong> 25% discount on all orders.
+                            <strong>Gold VIP:</strong> 25% discount on all orders (requires £200 total order history).
                         </li>
                     </ul>
                 </section>
@@ -92,48 +94,38 @@ const VIPSignupPage = () => {
                     <h2 id="subscriptionOptionsTitle">Subscription Plans</h2>
                     <p>Choose the plan that suits your vinyl journey:</p>
                     <div id="plansContainer" className="plans-container">
-                        <div id="monthlyPlan" className="plan">
+                        <Link
+                            id="monthlyPlan"
+                            to="/payment/vip-monthly"
+                            className="plan monthly-plan-link"
+                        >
                             <h3 id="monthlyPlanTitle">Monthly Subscription</h3>
-                            <p id="monthlyPlanPrice" className="price">£X.XX / month</p> {/* Replace £X.XX */}
+                            <p id="monthlyPlanPrice" className="price">£{monthlyPrice} / month</p>
                             <p id="monthlyPlanDetails" className="details">
                                 Enjoy all VIP benefits with a flexible monthly commitment.
                             </p>
-                        </div>
-                        <div id="annualPlan" className="plan popular">
+                            <span className="arrow-icon"><FaArrowRight /></span>
+                        </Link>
+                        <Link
+                            id="annualPlan"
+                            to="/payment/vip-annual"
+                            className="plan popular annual-plan-link"
+                        >
                             <h3 id="annualPlanTitle">Annual Subscription</h3>
                             <p id="annualPlanPrice" className="price">
-                                £Y.YY / year <span id="annualPlanSavings" className="savings">(Save Z%)</span>
-                            </p>{" "}
-                            {/* Replace £Y.YY and Z */}
+                                £{annualPrice} / year <span id="annualPlanSavings" className="savings">(Save {annualSavings})</span>
+                            </p>
                             <p id="annualPlanDetails" className="details">
                                 Commit for a year and enjoy a discounted rate on your VIP membership.
                             </p>
-                        </div>
-                    </div>
-                    <div id="heroButtons" className="hero-buttons">
-                        <Link
-                            id="joinMonthlyHero"
-                            to="/payment/vip-monthly"
-                            className="join-button hero-button monthly"
-                        >
-                            Join Monthly
-                        </Link>
-                        <Link
-                            id="joinAnnualHero"
-                            to="/payment/vip-annual"
-                            className="join-button hero-button annual"
-                        >
-                            Join Annually
+                            <span className="arrow-icon"><FaArrowRight /></span>
                         </Link>
                     </div>
-                </section>
-
-                <section id="howToJoin" className="how-to-join">
-                    <h2 id="howToJoinTitle">Ready to Elevate Your Collection?</h2>
-                    <p>Select your preferred subscription and join THE LOUNGE today!</p>
-                    <p id="paymentInfo" className="payment-info">
-                        You will be redirected to our secure payment gateway to complete your subscription.
-                    </p>
+                    <div id="howToJoin" className="how-to-join combined-section">
+                        <p id="paymentInfo" className="payment-info">
+                            You will be redirected to our secure payment gateway to complete your subscription.
+                        </p>
+                    </div>
                 </section>
             </div>
 
