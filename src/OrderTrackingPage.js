@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './OrderTrackingPage.css'; // You'll create this CSS file
+import './OrderTrackingPage.css';
 
 const OrderTrackingPage = () => {
     const [trackingNumber, setTrackingNumber] = useState('');
@@ -12,8 +12,31 @@ const OrderTrackingPage = () => {
     };
 
     const handleTrackOrder = async () => {
-        // Function to fetch order details will go here
-        console.log('Tracking:', trackingNumber);
+        setError('');
+        setOrder(null);
+        setLoading(true);
+
+        try {
+            const response = await fetch(`http://localhost:5001/dashboard/order/track/${trackingNumber}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Something went wrong');
+            }
+
+            setOrder(data);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -41,32 +64,14 @@ const OrderTrackingPage = () => {
                 <div className="order-details">
                     <h3>Order Details</h3>
                     <p><strong>Order ID:</strong> {order.order_id}</p>
-                    <p><strong>Order Date:</strong> {new Date(order.order_date).toLocaleDateString()}</p>
-                    <p><strong>Status:</strong> {order.status}</p>
+                    <p><strong>Status:</strong> {order.order_status}</p>
                     <p><strong>Shipping Address:</strong> {order.shipping_address}</p>
-                    <h4>Order Items:</h4>
-                    <ul>
-                        {order.items && order.items.map(item => (
-                            <li key={item.product_id}>
-                                Product ID: {item.product_id}, Quantity: {item.quantity}, Price: ${item.price.toFixed(2)}
-                            </li>
-                        ))}
-                    </ul>
-                    {order.tracking_updates && order.tracking_updates.length > 0 && (
-                        <div className="tracking-updates">
-                            <h4>Tracking Updates:</h4>
-                            <ul>
-                                {order.tracking_updates.map((update, index) => (
-                                    <li key={index}>
-                                        <strong>Status:</strong> {update.status},
-                                        <strong>Date:</strong> {new Date(update.tracking_date).toLocaleString()}
-                                        {update.estimated_delivery_date && (
-                                            `, <strong>Estimated Delivery:</strong> ${new Date(update.estimated_delivery_date).toLocaleDateString()}`
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+
+                    {order.tracking_status && (
+                        <p><strong>Tracking Status:</strong> {order.tracking_status}</p>
+                    )}
+                    {order.estimated_delivery_date && (
+                        <p><strong>Estimated Delivery:</strong> {new Date(order.estimated_delivery_date).toLocaleDateString()}</p>
                     )}
                 </div>
             )}

@@ -15,7 +15,7 @@ router.put('/update', dashboardController.updateProfile);
 router.post('/change-password', dashboardController.changePassword);
 
 // Display order tracking information
-router.get('/order/:orderId', dashboardController.viewOrderTracking);
+router.get('/order/track/:trackingNumber', dashboardController.viewOrderTracking);
 
 // User-only routes (dashboard related)
 router.get('/messages', dashboardController.getUserMessages);
