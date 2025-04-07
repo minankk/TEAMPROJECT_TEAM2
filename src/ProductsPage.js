@@ -158,20 +158,29 @@ const ProductsPage = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        let url = 'http://localhost:5001/products';
+        let queryParams = [];
+        let url = 'http://localhost:5001/products/multiplefilter';
 
-        if (filters.bestSeller) {
+        if (filters.genre && filters.genre !== '') {
+            queryParams.push(`genre=${filters.genre}`);
+        }
+        if (filters.artist && filters.artist !== '') {
+            queryParams.push(`artist=${filters.artist}`);
+        }
+        if (filters.releaseDecade && filters.releaseDecade !== '') {
+            queryParams.push(`decade=${filters.releaseDecade}`);
+        }
+
+        if (queryParams.length > 0) {
+            url += `?${queryParams.join('&')}`;
+        } else if (filters.bestSeller) {
             url = 'http://localhost:5001/products/bestsellers';
         } else if (filters.onSale) {
             url = 'http://localhost:5001/products/onsale';
-        } else if (filters.genre) {
-            url = `http://localhost:5001/products/genre/${filters.genre}`;
-        } else if (filters.artist) {
-            url = `http://localhost:5001/products/artist/${filters.artist}`;
         } else if (filters.priceRange > 0) {
             url = `http://localhost:5001/products/price/${filters.priceRange}`;
-        } else if (filters.releaseDecade) {
-            url = `http://localhost:5001/products/decade/${filters.releaseDecade}`;
+        } else {
+            url = 'http://localhost:5001/products'; // Default to all products
         }
 
         fetch(url, {
@@ -214,13 +223,19 @@ const ProductsPage = () => {
     };
 
     const generateTitle = () => {
-        if (filters.bestSeller) return `All Best-Selling Products`;
-        if (filters.onSale) return `All Products on Sale`;
-        if (filters.artist) return `All products by ${filters.artist}`;
-        if (filters.genre) return `All ${filters.genre} products`;
-        if (filters.priceRange > 0) return `All products priced at £${filters.priceRange}`;
-        if (filters.releaseDecade) return `All products from the ${filters.releaseDecade}s`;
-        return 'All Products';
+        const activeFilters = [];
+        if (filters.bestSeller) activeFilters.push('Best Sellers');
+        if (filters.onSale) activeFilters.push('On Sale');
+        if (filters.artist && filters.artist !== '') activeFilters.push(`by ${filters.artist}`);
+        if (filters.genre && filters.genre !== '') activeFilters.push(`${filters.genre}`);
+        if (filters.priceRange > 0) activeFilters.push(`priced at £${filters.priceRange}`);
+        if (filters.releaseDecade && filters.releaseDecade !== '') activeFilters.push(`from the ${filters.releaseDecade}s`);
+
+        if (activeFilters.length === 0) {
+            return 'All Products';
+        } else {
+            return `Filtered Products: ${activeFilters.join(' & ')}`;
+        }
     };
 
     const handleAddToCart = (productId, event) => {
@@ -341,33 +356,39 @@ const ProductsPage = () => {
             </section>
 
             <section className="products">
-                <h2>{generateTitle()}</h2>
-                <div className="product-grid">
-                    {products.map((product) => (
-                        <div key={product.product_id} className="product-card">
-                            <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
-                            <div className="product-info">
-                                <h3>{product.album_name}</h3>
-                                <p>{product.artist_name}</p>
-                                <p>£{product.price}</p>
-                                <div className="product-actions">
-                                    <button className="buy-button" onClick={(event) => handleAddToCart(product.product_id, event)}>Add to Cart</button>
-                                    <button className="read-more-button" onClick={() => openPopup(product.product_id)}>Read More</button>
-                                    <button
-                                        className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
-                                        onClick={(event) => toggleFavorite(product.product_id, event)}
-                                    >
-                                        {favorites.includes(product.product_id) ? '❤️' : '♡'}
-                                    </button>
-                                </div>
+    <h2>{generateTitle()}</h2>
+    <div className="product-grid">
+        {products.length > 0 ? (
+            products.map((product) => (
+                <div key={product.product_id} className="product-card">
+                    <div className="product-container">
+                        <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
+                        <div className="product-info">
+                            <h3>{product.album_name}</h3>
+                            <p>{product.artist_name}</p>
+                            <p>{product.price}</p>
+                            <div className="product-actions">
+                                <button className="buy-button" onClick={(event) => handleAddToCart(product.product_id, event)}>Add to Cart</button>
+                                <button className="read-more-button" onClick={() => openPopup(product.product_id)}>More</button>
+                                <button
+                                    className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+                                    onClick={(event) => toggleFavorite(product.product_id, event)}
+                                >
+                                    {favorites.includes(product.product_id) ? '❤️' : '♡'}
+                                </button>
                             </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </section>
-            {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
-            {popupMessage && <div className="favorite-popup">{popupMessage}</div>}
-        </main>
+            ))
+        ) : (
+            <p className="no-products-found">No products found matching your filters, try another combination.</p>
+        )}
+    </div>
+</section>
+{selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
+{popupMessage && <div className="favorite-popup">{popupMessage}</div>}
+</main>
     );
 };
 
