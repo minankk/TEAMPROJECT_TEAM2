@@ -44,6 +44,7 @@ import ArtistsPage from './ArtistsPage';
 import BlogPage from './BlogPage';
 import Newsletter from './Newsletter';
 import AdminLoginPage from './AdminLoginPage';
+import VIPSignupPage from './VIPSignupPage';
 
 const AuthContext = createContext();
 
@@ -144,6 +145,7 @@ function App() {
                     <Route path="/genres/rock" element={<RockPage />} />
                     <Route path="/search-results" element={<SearchResults />} />
                     <Route path="/artists" element={<ArtistsPage />} />
+                    <Route path="/vip-signup" element={<VIPSignupPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />}>
                     <Route index element={<AdminOverview />} /> {/* Default route */}
                     <Route path="overview" element={<AdminOverview />} />
