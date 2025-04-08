@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./VipPaymentPage.css";
 
 function VipPaymentPage() {
@@ -33,44 +32,35 @@ function VipPaymentPage() {
             return;
         }
 
-        const token = localStorage.getItem('token'); // Retrieve the token
-
+        const token = localStorage.getItem('token');
         if (!token) {
             alert("You are not logged in. Please log in to proceed with payment.");
             return;
         }
 
-        const planDetails = selectedPlan === "monthly" ? { type: "monthly", price: 2.99 } : { type: "annual", price: 29.99 };
+        // Set plan price
+        const amount = selectedPlan === "monthly" ? 2.99 : 29.99;
 
         try {
-            const paymentDetails = {
-                planType: planDetails.type,
-                amount: planDetails.price,
-                paymentMethod: "card", // Assuming card payment for now
-                cardDetails: {
-                    name: paymentData.name,
-                    cardNumber: paymentData.cardNumber,
-                    expiryDate: paymentData.expiryDate,
-                    cvv: paymentData.cvv,
-                },
-            };
-
-            const response = await fetch("http://localhost:5001/vip-subscribe", { // Replace with your actual API endpoint
+            const response = await fetch("http://localhost:5001/process-payment", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`, // Include the token
+                    Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(paymentDetails),
+                body: JSON.stringify({
+                    amount: amount,
+                    paymentMethod: "card", // Fixed value used by backend
+                }),
             });
 
+            const responseData = await response.json();
+
             if (response.ok) {
-                const responseData = await response.json();
-                alert(`Payment successful! You are now a VIP member (${planDetails.type}).`);
-                navigate('/vip-success'); // Redirect to a success page
+                alert(`Payment successful! You are now a VIP member (${selectedPlan}).`);
+                navigate('/vip-success');
             } else {
-                const errorData = await response.json();
-                alert(`Payment failed: ${errorData.message || "Please try again."}`);
+                alert(`Payment failed: ${responseData.message || "Please try again."}`);
             }
         } catch (error) {
             console.error("Error:", error);
