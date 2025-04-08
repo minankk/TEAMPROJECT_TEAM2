@@ -1,0 +1,250 @@
+/* VipPaymentPage.css */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Orbitron', sans-serif;
+  background-color: black;
+}
+
+.vip-payment-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  z-index: 0;
+  text-align: center;
+}
+
+.vip-payment-page::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('./assets/listeninglounge_vv_Vip.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(2px);
+  z-index: -2;
+}
+
+.vip-payment-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle, rgba(23, 96, 122, 0.4) 0%, rgba(0, 0, 0, 0.8) 60%);
+  animation: vignettePulse 5s ease-in-out infinite;
+}
+
+@keyframes vignettePulse {
+  0%, 100% {
+    background-color: rgba(0, 0, 0, 0.45);
+  }
+  50% {
+    background-color: rgba(122, 25, 23, 0.35);
+  }
+}
+
+.vip-payment-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease-in-out;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.vip-payment-container:hover {
+  box-shadow: 0 0 10px rgb(100, 0, 0), 0 0 30px rgba(100, 0, 0, 0.623);
+}
+
+.vip-payment-header {
+  color: white;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.vip-payment-header h1 {
+  font-size: 2rem;
+  margin: 0 0 10px;
+  font-family: 'Oswald';
+}
+
+.vip-payment-header p {
+  font-size: 1rem;
+  color: #f4f4f4;
+  font-family: 'Oswald';
+  margin: 0;
+}
+
+.plan-selection {
+  /* margin-bottom: 25px; */
+  width: 100%;
+  text-align: left;
+}
+
+.plan-selection h2 {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-family: 'Oswald';
+}
+
+.plan-selection select {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  outline: #ffffff;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(197, 197, 197, 0.3);
+  font-family: 'Oswald';
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.plan-selection select option {
+  color: black;
+}
+
+.payment-form-container {
+  /* margin-top: 20px; */
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.payment-form-container h2 {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  font-family: 'Oswald';
+  width: 100%;
+  text-align: left;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.payment-form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  color: white;
+  font-size: 14px;
+  font-family: 'Oswald';
+  width: 100%;
+}
+
+.payment-form input[type="text"] {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  outline: #ffffff;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(197, 197, 197, 0.3);
+  font-family: 'Oswald';
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.payment-form input::placeholder {
+  color: #f4f4f4;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.card-details > div {
+  flex: 1;
+}
+
+.payment-form button[type="submit"] {
+  background-color: #620b0b;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px rgba(119, 12, 12, 0.8);
+  font-weight: bold;
+  width: 100%;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.payment-form button[type="submit"]:hover {
+  background-color: rgb(141, 8, 8);
+  box-shadow: 0 0 25px rgb(63, 7, 7);
+  transform: scale(1.05);
+}
+
+.payment-back-link {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.payment-back-link a {
+  text-decoration: none;
+  color: #9cd6ff;
+  font-size: 1rem;
+  display: inline-block;
+  transition: 0.3s;
+  text-shadow: 0 0 3px rgba(0, 212, 255, 0.6);
+  font-family: 'Oswald';
+}
+
+.payment-back-link a:hover {
+  color: #9cd6ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+}

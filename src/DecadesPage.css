@@ -1,0 +1,174 @@
+/* frontend/src/pages/DecadesPage.css - Enhanced to match ProductsPage */
+.decades-page {
+    font-family: "Oswald", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    z-index: 0;
+  }
+  
+  .decades-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./assets/istockphoto-182154211-612x612.jpg');
+    background-repeat: repeat;
+    filter: brightness(80%) sepia(2) contrast(1) saturate(0.6) opacity(70%) hue-rotate(-50deg);
+    z-index: 0;
+  }
+  
+  /* Main Content Layout */
+  .decades-page-container {
+    display: flex;
+    gap: 20px;
+    padding: 40px 5%;
+    z-index: 1;
+    position: relative;
+  }
+  
+  /* Decade List Sidebar */
+  .decades-list {
+    width: 250px;
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    padding-right: 20px;
+  }
+  
+  .decades-list h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #ad2321;
+    font-size: 1.4rem;
+  }
+  
+  .decades-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .decades-list li {
+    margin-bottom: 8px;
+  }
+  
+  .decades-list button {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    color: #000;
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .decades-list button:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #7a1917;
+  }
+  
+  /* Products Section */
+  .decade-products {
+    flex-grow: 1;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .decade-products h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ad2321;
+  }
+  
+  /* Grid Layout */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+    padding: 20px 0;
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0;
+  }
+  
+  /* Product Card */
+  .product-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /* Product Info */
+  .product-card h3 {
+    margin: 0.5px 0;
+    font-size: 1.1rem;
+    color: #000;
+  }
+  
+  .product-card p {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #ad2321;
+    margin-bottom: 0.5px;
+  }
+  
+  /* Responsive Tuning */
+  @media (max-width: 1024px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .decades-page-container {
+      flex-direction: column;
+      padding: 20px 5%;
+    }
+  
+    .decades-list {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 20px;
+    }
+  
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  

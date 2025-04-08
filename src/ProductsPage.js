@@ -4,13 +4,13 @@ import PopUp from "./PopUp";
 import './ProductsPage.css';
 import VinylRetro from './assets/VinylRetro.webp';
 import { jwtDecode } from "jwt-decode";
+import TestFilter from './TestFilter';
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [originalArtists, setOriginalArtists] = useState([]);
     const [originalGenres, setOriginalGenres] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const footerRef = useRef(null);
     const [filters, setFilters] = useState({
         artist: '',
         genre: '',
@@ -21,6 +21,26 @@ const ProductsPage = () => {
     });
     const [favorites, setFavorites] = useState([]);
     const [popupMessage, setPopupMessage] = useState(null);
+    const [showFilters, setShowFilters] = useState(false);
+
+    const bannerRef = useRef(null);
+const [bannerHeight, setBannerHeight] = useState(0);
+
+useEffect(() => {
+    const updateBannerHeight = () => {
+      if (bannerRef.current) {
+        setBannerHeight(bannerRef.current.offsetHeight);
+      }
+    };
+  
+    updateBannerHeight(); // Initial run
+    window.addEventListener('resize', updateBannerHeight); // Update on resize
+  
+    return () => window.removeEventListener('resize', updateBannerHeight);
+  }, []);
+  
+
+    console.log("ProductsPage component rendered!");
 
     const showPopup = (message) => {
         setPopupMessage(message);
@@ -125,8 +145,19 @@ const ProductsPage = () => {
 
     const navigate = useNavigate();
 
+    const [slideIn, setSlideIn] = useState(false);
+
+    useEffect(() => {
+  if (showFilters) {
+    // trigger slide in a tick after render
+    setTimeout(() => setSlideIn(true), 10);
+  } else {
+    setSlideIn(false); // reset when closed
+  }
+}, [showFilters]);
+
     const Banner = () => (
-        <section className="products-banner">
+        <section className="products-banner" ref={bannerRef}>
             <img src={VinylRetro} alt="Vinyl Collection" className="products-banner-image" />
             <div className="products-banner-text">
                 <h1>Browse the Products and Get the Best Offer</h1>
@@ -211,6 +242,10 @@ const ProductsPage = () => {
         });
     };
 
+    const applyFilters = () => {
+        setShowFilters(false);
+    }
+
     const resetFilters = () => {
         setFilters({
             artist: '',
@@ -287,7 +322,7 @@ const ProductsPage = () => {
         }
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
         const handleScroll = () => {
             const sidebar = document.querySelector('.filters');
             const banner = document.querySelector('.products-banner');
@@ -295,9 +330,9 @@ const ProductsPage = () => {
             if (sidebar && banner) { // Check if elements exist
                 const bannerHeight = banner.offsetHeight;
                 if (window.scrollY >= bannerHeight) {
-                    sidebar.classList.add('fixed');
+                    //sidebar.classList.add('fixed');
                 } else {
-                    sidebar.classList.remove('fixed');
+                   // sidebar.classList.remove('fixed');
                 }
             }
         };
@@ -307,89 +342,134 @@ const ProductsPage = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, []);*/
 
     return (
-        <main className="products-page">
+        <>
+          <main className={`products-page ${showFilters ? 'blur-background' : ''}`}>
             <Banner />
-            <section className="filters">
-                <select name="artist" value={filters.artist} onChange={handleFilterChange}>
-                    <option value="">All Artists</option>
-                    {originalArtists.map(artist => (
-                        <option key={artist} value={artist}>{artist}</option>
-                    ))}
-                </select>
-
-                <select name="genre" value={filters.genre} onChange={handleFilterChange}>
-                    <option value="">All Genres</option>
-                    {originalGenres.map(genre => (
-                        <option key={genre} value={genre}>{genre}</option>
-                    ))}
-                </select>
-
-                <select name="releaseDecade" value={filters.releaseDecade} onChange={handleFilterChange}>
-                    <option value="">All Decades</option>
-                    <option value="1970">1970s</option>
-                    <option value="1980">1980s</option>
-                    <option value="1990">1990s</option>
-                    <option value="2000">2000s</option>
-                    <option value="2010">2010s</option>
-                    <option value="2020">2020s</option>
-                </select>
-
-                <label>Price Range: £{filters.priceRange}</label>
-                <input type="range" name="priceRange" min="0" max="50" step="1" value={filters.priceRange} onChange={handleFilterChange} />
-
-                <label>
-                    <input type="checkbox" name="bestSeller" checked={filters.bestSeller} onChange={handleFilterChange} />
-                    Best Seller
-                </label>
-
-                <label>
-                    <input type="checkbox" name="onSale" checked={filters.onSale} onChange={handleFilterChange} />
-                    On Sale
-                </label>
-
-                <button onClick={resetFilters}>
-                    Reset Filters
-                </button>
-            </section>
-
+      
+            <div className="filter-link-container">
+              <button className="filter-link" onClick={() => setShowFilters(true)}>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                  <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                </svg>
+                Filters
+              </button>
+            </div>
+      
             <section className="products">
-    <h2>{generateTitle()}</h2>
-    <div className="product-grid">
-        {products.length > 0 ? (
-            products.map((product) => (
-                <div key={product.product_id} className="product-card">
-                    <div className="product-container">
+              <h2>{generateTitle()}</h2>
+              <div className="product-grid">
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <div key={product.product_id} className="product-card">
+                      <div className="product-container">
                         <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
                         <div className="product-info">
-                            <h3>{product.album_name}</h3>
-                            <p>{product.artist_name}</p>
-                            <p>{product.price}</p>
-                            <div className="product-actions">
-                                <button className="buy-button" onClick={(event) => handleAddToCart(product.product_id, event)}>Add to Cart</button>
-                                <button className="read-more-button" onClick={() => openPopup(product.product_id)}>More</button>
-                                <button
-                                    className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
-                                    onClick={(event) => toggleFavorite(product.product_id, event)}
-                                >
-                                    {favorites.includes(product.product_id) ? '❤️' : '♡'}
-                                </button>
-                            </div>
+                          <h3>{product.album_name}</h3>
+                          <p>{product.artist_name}</p>
+                          <p>{product.price}</p>
+                          <div className="product-actions">
+                            <button className="buy-button" onClick={(e) => handleAddToCart(product.product_id, e)}>Add to Cart</button>
+                            <button className="read-more-button" onClick={() => openPopup(product.product_id)}>More</button>
+                            <button
+                              className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+                              onClick={(e) => toggleFavorite(product.product_id, e)}
+                            >
+                              {favorites.includes(product.product_id) ? '❤️' : '♡'}
+                            </button>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  ))
+                ) : (
+                  <p className="no-products-found">No products found matching your filters, try another combination.</p>
+                )}
+              </div>
+            </section>
+      
+            {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
+            {popupMessage && <div className="favorite-popup">{popupMessage}</div>}
+          </main>
+      
+          {showFilters && (
+  <div
+    className="filters-overlay"
+    onClick={() => setShowFilters(false)}
+  >
+    <section
+      className={`filters-popup ${slideIn ? 'open' : ''}`}
+      onClick={(e) => e.stopPropagation()}
+    >
+            <div className="filters-header">
+      <h2>Filter Products</h2>
+      <button className="close-filters" onClick={() => setShowFilters(false)}>✕</button>
+    </div>      
+                <select name="artist" value={filters.artist} onChange={handleFilterChange}>
+                  <option value="">All Artists</option>
+                  {originalArtists.map((artist) => (
+                    <option key={artist} value={artist}>{artist}</option>
+                  ))}
+                </select>
+      
+                <select name="genre" value={filters.genre} onChange={handleFilterChange}>
+                  <option value="">All Genres</option>
+                  {originalGenres.map((genre) => (
+                    <option key={genre} value={genre}>{genre}</option>
+                  ))}
+                </select>
+      
+                <select name="releaseDecade" value={filters.releaseDecade} onChange={handleFilterChange}>
+                  <option value="">All Decades</option>
+                  <option value="1970">1970s</option>
+                  <option value="1980">1980s</option>
+                  <option value="1990">1990s</option>
+                  <option value="2000">2000s</option>
+                  <option value="2010">2010s</option>
+                  <option value="2020">2020s</option>
+                </select>
+      
+                <label>Price Range: £{filters.priceRange}</label>
+                <input
+                  type="range"
+                  name="priceRange"
+                  min="0"
+                  max="50"
+                  step="1"
+                  value={filters.priceRange}
+                  onChange={handleFilterChange}
+                />
+      
+                <label>
+                  <input
+                    type="checkbox"
+                    name="bestSeller"
+                    checked={filters.bestSeller}
+                    onChange={handleFilterChange}
+                  />
+                  Best Seller
+                </label>
+      
+                <label>
+                  <input
+                    type="checkbox"
+                    name="onSale"
+                    checked={filters.onSale}
+                    onChange={handleFilterChange}
+                  />
+                  On Sale
+                </label>
+      
+                <div className="filters-actions">
+                  <button onClick={applyFilters}>Apply Filters</button>
+                  <button onClick={resetFilters}>Reset Filters</button>
                 </div>
-            ))
-        ) : (
-            <p className="no-products-found">No products found matching your filters, try another combination.</p>
-        )}
-    </div>
-</section>
-{selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
-{popupMessage && <div className="favorite-popup">{popupMessage}</div>}
-</main>
-    );
-};
-
-export default ProductsPage;
+              </section>
+            </div>
+          )}
+        </>
+      );
+    }
+export default ProductsPage;      
