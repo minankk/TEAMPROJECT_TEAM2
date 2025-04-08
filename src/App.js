@@ -52,63 +52,69 @@ import VipPaymentPage from './VipPaymentPage';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null); // Start with null token
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
+    const [token, setToken] = useState(null); // Start with null token
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+  
+    useEffect(() => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
-          // Verify the token with the backend
-          fetch('http://localhost:5001/verify-token', {
-              headers: {
-                  'Authorization': `Bearer ${storedToken}`
-              }
-          })
+        fetch('http://localhost:5001/verify-token', {
+          headers: {
+            'Authorization': `Bearer ${storedToken}`
+          }
+        })
           .then(response => {
-              if (response.ok) {
-                  setToken(storedToken); // Set token from localStorage if it is valid
-                  setIsLoggedIn(true); // Set logged in state
-              } else {
-                  localStorage.removeItem('token'); // Remove invalid token
-                  setIsLoggedIn(false); // Set logged out state
-              }
+            if (response.ok) {
+              setToken(storedToken);
+              setIsLoggedIn(true);
+            } else {
+              localStorage.removeItem('token');
+              setIsLoggedIn(false);
+            }
           })
           .catch(() => {
-              localStorage.removeItem('token'); // Remove invalid token
-              setIsLoggedIn(false); // Set logged out state
+            localStorage.removeItem('token');
+            setIsLoggedIn(false);
           });
       }
-  }, []);
-
-  useEffect(() => {
+    }, []);
+  
+    useEffect(() => {
       if (token) {
-          localStorage.setItem('token', token);
-          setIsLoggedIn(true); // Set logged in state
+        localStorage.setItem('token', token);
+        setIsLoggedIn(true);
       } else {
-          localStorage.removeItem('token');
-          setIsLoggedIn(false); // Set logged out state
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
       }
-  }, [token]);
-
-  const login = (newToken) => {
+    }, [token]);
+  
+    const login = (newToken) => {
       console.log('Logging in with token:', newToken);
       setToken(newToken);
       navigate('/dashboard');
-  };
-
-  const logout = () => {
-      console.log('Logging out');
-      setToken(null);
-      navigate('/login');
-  };
-
-  return (
+    };
+  
+    const logout = () => {
+        console.log('Logging out');
+        navigate('/logout'); // Go to logout page first
+      
+        setTimeout(() => {
+          setToken(null);
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+        }, 100); // Small delay so LogoutPage loads
+      };
+      
+  
+    return (
       <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
-          {children}
+        {children}
       </AuthContext.Provider>
-  );
-};
+    );
+  };
+  
 
 const useAuth = () => useContext(AuthContext);
 

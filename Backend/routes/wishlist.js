@@ -12,6 +12,5 @@ router.delete('/remove/:productId', wishlistController.removeFromWishlist);
 // Get user's wishlist route
 router.get('/:user_id', wishlistController.getWishlist);
 
-//router.get('/',  wishlistController.getWishlist);
 
 module.exports = router;
