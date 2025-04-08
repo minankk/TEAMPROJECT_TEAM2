@@ -114,6 +114,26 @@
   background-color: #00aaff;
 }
 
+.empty-inbox-message {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  color: #ccc;
+  margin-top: 30px;
+}
+
+.empty-inbox-message a.contact-link {
+  color: #9cd6ff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.empty-inbox-message a.contact-link:hover {
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.8);
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .user-messages-page {
