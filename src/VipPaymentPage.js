@@ -42,7 +42,7 @@ function VipPaymentPage() {
         const amount = selectedPlan === "monthly" ? 2.99 : 29.99;
 
         try {
-            const response = await fetch("http://localhost:5001/process-payment", {
+            const response = await fetch("http://localhost:5001/membership/process-payment", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
