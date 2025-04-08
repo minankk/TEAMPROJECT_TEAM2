@@ -4,7 +4,7 @@ import PopUp from "./PopUp";
 import './ProductsPage.css';
 import VinylRetro from './assets/VinylRetro.webp';
 import { jwtDecode } from "jwt-decode";
-import TestFilter from './TestFilter';
+// import TestFilter from './TestFilter';
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
@@ -32,13 +32,13 @@ useEffect(() => {
         setBannerHeight(bannerRef.current.offsetHeight);
       }
     };
-  
+
     updateBannerHeight(); // Initial run
     window.addEventListener('resize', updateBannerHeight); // Update on resize
-  
+
     return () => window.removeEventListener('resize', updateBannerHeight);
   }, []);
-  
+
 
     console.log("ProductsPage component rendered!");
 
@@ -348,7 +348,7 @@ useEffect(() => {
         <>
           <main className={`products-page ${showFilters ? 'blur-background' : ''}`}>
             <Banner />
-      
+
             <div className="filter-link-container">
               <button className="filter-link" onClick={() => setShowFilters(true)}>
                 <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
@@ -357,7 +357,7 @@ useEffect(() => {
                 Filters
               </button>
             </div>
-      
+
             <section className="products">
               <h2>{generateTitle()}</h2>
               <div className="product-grid">
@@ -389,11 +389,11 @@ useEffect(() => {
                 )}
               </div>
             </section>
-      
+
             {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
             {popupMessage && <div className="favorite-popup">{popupMessage}</div>}
           </main>
-      
+
           {showFilters && (
   <div
     className="filters-overlay"
@@ -406,21 +406,21 @@ useEffect(() => {
             <div className="filters-header">
       <h2>Filter Products</h2>
       <button className="close-filters" onClick={() => setShowFilters(false)}>✕</button>
-    </div>      
+    </div>
                 <select name="artist" value={filters.artist} onChange={handleFilterChange}>
                   <option value="">All Artists</option>
                   {originalArtists.map((artist) => (
                     <option key={artist} value={artist}>{artist}</option>
                   ))}
                 </select>
-      
+
                 <select name="genre" value={filters.genre} onChange={handleFilterChange}>
                   <option value="">All Genres</option>
                   {originalGenres.map((genre) => (
                     <option key={genre} value={genre}>{genre}</option>
                   ))}
                 </select>
-      
+
                 <select name="releaseDecade" value={filters.releaseDecade} onChange={handleFilterChange}>
                   <option value="">All Decades</option>
                   <option value="1970">1970s</option>
@@ -430,7 +430,7 @@ useEffect(() => {
                   <option value="2010">2010s</option>
                   <option value="2020">2020s</option>
                 </select>
-      
+
                 <label>Price Range: £{filters.priceRange}</label>
                 <input
                   type="range"
@@ -441,7 +441,7 @@ useEffect(() => {
                   value={filters.priceRange}
                   onChange={handleFilterChange}
                 />
-      
+
                 <label>
                   <input
                     type="checkbox"
@@ -451,7 +451,7 @@ useEffect(() => {
                   />
                   Best Seller
                 </label>
-      
+
                 <label>
                   <input
                     type="checkbox"
@@ -461,7 +461,7 @@ useEffect(() => {
                   />
                   On Sale
                 </label>
-      
+
                 <div className="filters-actions">
                   <button onClick={applyFilters}>Apply Filters</button>
                   <button onClick={resetFilters}>Reset Filters</button>
@@ -472,4 +472,4 @@ useEffect(() => {
         </>
       );
     }
-export default ProductsPage;      
+export default ProductsPage;
