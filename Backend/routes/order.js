@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/orderController');
 
-// POST /orders (Create a new order)
+// POST /orders
 router.post('/', orderController.checkoutAndCreateOrder);
 
 // PUT /admin/orders/status (Update order status - admin only)
