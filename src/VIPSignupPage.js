@@ -96,7 +96,7 @@ const VIPSignupPage = () => {
                     <div id="plansContainer" className="plans-container">
                         <Link
                             id="monthlyPlan"
-                            to="/payment/vip-monthly" /* need to change :) */
+                            to="/vip-payment" /* need to change :) */
                             className="plan monthly-plan-link"
                         >
                             <h3 id="monthlyPlanTitle">Monthly Subscription</h3>
@@ -108,7 +108,7 @@ const VIPSignupPage = () => {
                         </Link>
                         <Link
                             id="annualPlan"
-                            to="/payment/vip-annual" /* need to change :) */
+                            to="/vip-payment" /* need to change :) */
                             className="plan popular annual-plan-link"
                         >
                             <h3 id="annualPlanTitle">Annual Subscription</h3>
