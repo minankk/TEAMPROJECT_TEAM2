@@ -22,6 +22,8 @@ const OrderHistoryPage = () => {
                     }
                 });
 
+                console.log('Raw Response:', response); // Log the entire response object
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

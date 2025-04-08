@@ -1,16 +1,16 @@
 /* Overall page layout */
 .sales-page {
-  font-family: 'Titan One', sans-serif;
+  font-family: "Oswald", sans-serif; /* Match Products page font */
   margin: 0;
   padding: 0;
-  background-color: #f6f6f4;
-  color: #000;
+  background-color: #f6f6f4; /* Match Products page background */
+  color: #000; /* Match Products page text color */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Banner section */
+/* Banner section - Kept as is, adjusted font */
 .sales-page .sales-banner {
   position: relative;
   width: 100%;
@@ -27,6 +27,7 @@
   object-fit: cover;
   margin: 0;
   padding: 0;
+  filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6); /* Add similar filter if desired */
 }
 
 .sales-page .sales-banner-text {
@@ -59,14 +60,14 @@
 .sales-page .sales-products h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #7c1816;
+  color: #ad2321; /* Match Products page heading color */
 }
 
-.sales-page .product-grid {
+.sales-page .product-grid { /* Use the same class name as Products page */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px; /* Increased gap between cards */
-  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Match Products page minmax */
+  gap: 8px; /* Match Products page grid gap */
+  justify-items: stretch; /* Match Products page justify-items */
 }
 
 /* Sales Product Card */
@@ -75,79 +76,85 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.15); /* Match Products page card background */
+  backdrop-filter: blur(10px); /* Match Products page card blur */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Match Products page card border */
+  border-radius: 16px; /* Match Products page card border-radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Match Products page card box-shadow */
+  padding: 15px; /* Match Products page card padding */
   width: 100%;
-  max-width: 280px;
-  min-height: 420px;
-  border: 1px solid #ddd;
-  transition: transform 0.3s ease-in-out;
-  overflow: hidden;
-}
+  max-width: 300px; /* Match Products page card max-width */
+  min-height: auto; /* Adjust min-height */
+  border: none; /* Remove original border */
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out; /* Match Products page card transition */
+/*overflow: hidden;*/}
 
 .sales-page .sales-product-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.01); /* Match Products page card hover */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Match Products page card hover shadow */
 }
 
 /* Sales Product Image */
-.sales-page .sales-product-image {
+.sales-page .sales-product-image { /* Use the same class name */
   width: 100%;
   height: auto;
-  max-height: 200px;
-  object-fit: contain;
-  border-radius: 10px;
+  max-height: 300px; /* Match Products page image max-height */
+  object-fit: cover; /* Match Products page image object-fit */
+  border-radius: 8px; /* Match Products page image border-radius */
 }
 
 /* Sales Product Info */
 .sales-page .sales-product-info {
   margin-top: 10px;
   flex-grow: 1;
+  text-align: center;
 }
 
-.sales-page .sales-product-info h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
+.sales-page .sales-product-info h3 { /* Match Products page product name style */
+  font-size: 1.1rem;
+  margin: 0.5px 0;
   color: black;
-
 }
 
-.sales-page .sales-product-info p {
-  font-size: 1rem;
+.sales-page .sales-product-info p { /* Match Products page product price style */
+  font-size: 0.9rem;
   font-weight: bold;
-  color: #7c1816;
+  color: #ad2321;
 }
 
 /* Add to Cart Button */
-.sales-page .add-to-cart-button {
-  background-color: black;
-  color: white;
-  padding: 10px 16px;
+.sales-page .add-to-cart-button { /* Use a more general class name if applicable */
+  background-color: #620b0b; /* Match Products page button background */
+  color: white; /* Match Products page button text color */
+  padding: 10px 15px; /* Match Products page button padding */
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Match Products page button border-radius */
   cursor: pointer;
   transition: background-color 0.3s;
-  border-radius: 20px;
+  font-size: 1rem; /* Match Products page button font size */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Match Products page button shadow */
 }
 
 .sales-page .add-to-cart-button:hover {
-  background-color: #7c1816;
+  background-color: rgb(141, 8, 8); /* Match Products page button hover background */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Match Products page button hover shadow */
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .sales-page .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .sales-page .product-grid { /* Use the same class name */
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px; /* Adjust gap for smaller screens */
   }
 }
 
 @media (max-width: 768px) {
-  .sales-page .product-grid {
-    grid-template-columns: 1fr;
+  .sales-page .product-grid { /* Use the same class name */
+      grid-template-columns: 1fr;
+      gap: 15px; /* Adjust gap for smaller screens */
   }
 
   .sales-page .sales-products h2 {
-    font-size: 1.8rem;
+      font-size: 1.8rem;
   }
 }
