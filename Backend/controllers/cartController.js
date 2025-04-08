@@ -59,7 +59,7 @@ exports.addToCart = async (req, res) => {
 };
 
 
-// GET /cart/:user_id (Fetch items in the user's cart)
+// GET cart items)
 exports.getCartItems = async (req, res) => {
     const urlUserId = req.params.user_id;
     const tokenUserId = req.user?.user_id;
@@ -94,7 +94,7 @@ exports.getCartItems = async (req, res) => {
     }
 };
 
-// DELETE /cart/remove/:cart_id (Remove item from the cart)
+// DELETE cart items
 exports.removeFromCart = async (req, res) => {
     const { cart_id } = req.params;
     const tokenUserId = req.user?.user_id;
@@ -104,7 +104,6 @@ exports.removeFromCart = async (req, res) => {
     }
 
     try {
-        // Verify user ownership
         const [cartItem] = await db.execute(`SELECT user_id FROM cart WHERE cart_id = ?`, [cart_id]);
 
         if (cartItem.length === 0) {
@@ -124,7 +123,7 @@ exports.removeFromCart = async (req, res) => {
 };
 
 // Function to handle order placement
-exports.placeOrder = async (req, res) => {
+/*exports.placeOrder = async (req, res) => {
     if (!req.user || !req.user.userId) {
         return res.status(401).json({ error: 'Unauthorized: user_id missing' });
     }
@@ -165,7 +164,7 @@ exports.placeOrder = async (req, res) => {
         console.error("Error in placeOrder:", error); 
         return res.status(500).json({ error: 'Failed to place order' });
       }
-};
+};*/
 
 //Add a cart count endpoint for SQL database
 exports.cartCount = async (req, res) => {
