@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import logo from "../assets/logo-red2.png";
-import { useAuth } from "../App"; 
+import { useAuth } from "../App";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -65,7 +65,8 @@ const Navbar = () => {
                         )}
                     </li>
                     <li><Link to="/sale">SALE</Link></li>
-                    <li><Link to="/about-us">ABOUT US</Link></li>
+                    <li><Link to="/vip-signup">VIP</Link></li>
+                    <li><Link to="/blog">BLOG</Link></li>
                 </ul>
             </nav>
             <div className="search-cart">
