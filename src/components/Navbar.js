@@ -91,7 +91,7 @@ const Navbar = () => {
                     </button>
                     {isLoggedIn && (
                         <ul className={`user-dropdown-menu ${userDropdownOpen ? 'open' : ''}`}>
-                            <li><Link to="/profile">Profile</Link></li>
+                            <li><Link to="/dashboard">Dashboard</Link></li>
                             <li><Link to="/orders">Orders</Link></li>
                             <li><button onClick={logout}>Logout</button></li>
                         </ul>
