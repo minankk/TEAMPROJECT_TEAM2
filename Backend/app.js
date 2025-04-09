@@ -99,10 +99,14 @@ app.use("/subscribe", subscribeRoutes)
 app.use("/decades",decadesRoutes)
 app.use('/pre-orders', preOrderRoutes);
 
+//revenueReport
+app.use('/api/revenue', revenueRoutes); 
+
 //protected Routes for users 
 app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
 app.use('/logout',authJWT.authenticateJWT,logoutRoute)
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
+app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
 app.use('/cart',authJWT.authenticateJWT, myCartRoutes);
 app.use("/wishlist", authJWT.authenticateJWT,wishlistRouter);
 app.use("/membership", authJWT.authenticateJWT ,membershipRoutes)
