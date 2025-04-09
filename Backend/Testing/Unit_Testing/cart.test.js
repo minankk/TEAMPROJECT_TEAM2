@@ -38,20 +38,20 @@ describe('Cart Controller Tests', () => {
         });
 
         it('should update cart item quantity if item already exists', async () => {
-             req.body = { product_id: 1, quantity: 2 };
-             db.execute
-                 .mockResolvedValueOnce([[{ stock_quantity: 5 }]])
-                 .mockResolvedValueOnce([[{ cart_id: 10, quantity: 1 }]])
-                 .mockResolvedValueOnce([]);
+            req.body = { product_id: 1, quantity: 2 };
+            db.execute
+                .mockResolvedValueOnce([[{ stock_quantity: 5 }]])
+                .mockResolvedValueOnce([[{ cart_id: 10, quantity: 1 }]])
+                .mockResolvedValueOnce([]);
 
-             await cartController.addToCart(req, res);
+            await cartController.addToCart(req, res);
 
-             expect(db.execute).toHaveBeenCalledWith(
-                 `UPDATE cart SET quantity = ? WHERE cart_id = ?`,
-                 [3, 10]
-             );
-             expect(res.status).toHaveBeenCalledWith(200);
-             expect(res.json).toHaveBeenCalledWith({ message: 'Cart item quantity updated successfully' });
+            expect(db.execute).toHaveBeenCalledWith(
+                `UPDATE cart SET quantity = ? WHERE cart_id = ?`,
+                [3, 10]
+            );
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({ message: 'Cart item quantity updated successfully' });
         });
 
         it('should return 401 if user_id is missing', async () => {
@@ -75,9 +75,9 @@ describe('Cart Controller Tests', () => {
 
         it('should return 400 if quantity is not greater than 0', async () => {
             req.body = { product_id: 1, quantity: 0 };
-        
+
             await cartController.addToCart(req, res);
-        
+
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.json).toHaveBeenCalledWith({ error: 'Quantity must be greater than 0' });
         });
@@ -101,6 +101,7 @@ describe('Cart Controller Tests', () => {
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.json).toHaveBeenCalledWith({ error: 'Insufficient stock' });
         });
+
         it('should return 400 if updated quantity exceeds available stock', async () => {
             req.body = { product_id: 1, quantity: 10 };
             db.execute
@@ -228,36 +229,40 @@ describe('Cart Controller Tests', () => {
             expect(res.json).toHaveBeenCalledWith({ error: 'Failed to remove item from cart' });
         });
     });
+
     describe('placeOrder', () => {
-    it('should place order successfully', async () => {
-    db.execute
-        .mockResolvedValueOnce([[{ product_id: 1, quantity: 2 }]])
-        .mockResolvedValueOnce([[{ stock_quantity: 3 }]])
-        .mockResolvedValueOnce([{ insertId: 100 }])
-        .mockResolvedValueOnce([[{ price: 50 }]])
-        .mockResolvedValueOnce([])  
-        .mockResolvedValueOnce([])   
-        .mockResolvedValueOnce([])
-        .mockResolvedValueOnce([]);
-        req.user = { userId: 1, user_id: 1 };
+        it('should place order successfully', async () => {
+            db.execute
+                .mockResolvedValueOnce([[{ product_id: 1, quantity: 2 }]]) // get cart items
+                .mockResolvedValueOnce([[{ stock_quantity: 3 }]]) // check stock
+                .mockResolvedValueOnce([{ insertId: 100 }]) // insert order
+                .mockResolvedValueOnce([[{ price: 50 }]]) // get product price
+                .mockResolvedValueOnce([]) // insert order_items
+                .mockResolvedValueOnce([]) // update inventory
+                .mockResolvedValueOnce([]) // update order total
+                .mockResolvedValueOnce([]); // clear cart
 
-    await cartController.placeOrder(req, res);
+            req.user = { userId: 1, user_id: 1 };
 
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Order placed successfully' });
-});
+            await cartController.placeOrder(req, res);
 
-      it('should return 400 if cart is empty', async () => {
-          db.execute.mockResolvedValueOnce([[]]);
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith({ message: 'Order placed successfully' });
+        });
 
-          await cartController.placeOrder(req, res);
+        it('should return 400 if cart is empty', async () => {
+            db.execute.mockResolvedValueOnce([[]]);
 
-          expect(res.status).toHaveBeenCalledWith(400);
-          expect(res.json).toHaveBeenCalledWith({ error: 'Cart is empty' });
-      });
+            await cartController.placeOrder(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(400);
+            expect(res.json).toHaveBeenCalledWith({ error: 'Cart is empty' });
+        });
 
         it('should return 400 if insufficient stock', async () => {
-            db.execute.mockResolvedValueOnce([[{ product_id: 1, quantity: 2 }]]).mockResolvedValueOnce([[{ stock_quantity: 1 }]])
+            db.execute
+                .mockResolvedValueOnce([[{ product_id: 1, quantity: 2 }]])
+                .mockResolvedValueOnce([[{ stock_quantity: 1 }]]);
 
             await cartController.placeOrder(req, res);
 
@@ -265,15 +270,16 @@ describe('Cart Controller Tests', () => {
             expect(res.json).toHaveBeenCalledWith({ error: 'Insufficient stock for product 1' });
         });
 
-      it('should return 500 on database error', async () => {
-          db.execute.mockRejectedValue(new Error('Database error'));
+        it('should return 500 on database error', async () => {
+            db.execute.mockRejectedValue(new Error('Database error'));
 
-          await cartController.placeOrder(req, res);
+            await cartController.placeOrder(req, res);
 
-          expect(res.status).toHaveBeenCalledWith(500);
-          expect(res.json).toHaveBeenCalledWith({ error: 'Failed to place order' });
-      });
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.json).toHaveBeenCalledWith({ error: 'Failed to place order' });
+        });
     });
+
     describe('cartCount', () => {
         it('should return cart count successfully', async () => {
             db.execute.mockResolvedValueOnce([[{ count: 5 }]]);

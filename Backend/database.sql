@@ -1005,3 +1005,19 @@ INSERT INTO pre_orders (user_id, product_id, quantity, status) VALUES
 (7, 107, 1, 'Delivered'),
 (8, 108, 2, 'Returned'),
 (9, 109, 3, 'On Hold');
+
+
+-- Additional info for revenueReport logic
+ALTER TABLE orders
+ADD COLUMN discount_code VARCHAR(255);
+
+-- Orders without discount
+INSERT INTO orders (user_id, status, total_amount, shipping_address) VALUES (1, 'completed', 15, 'Address A');
+INSERT INTO orders (user_id, status, total_amount, shipping_address) VALUES (2, 'completed', 20, 'Address B');
+
+-- Orders with discount
+INSERT INTO orders (user_id, status, total_amount, shipping_address, discount_code) VALUES (1, 'completed', 20, 'Address C', 'SUMMER20');
+INSERT INTO orders (user_id, status, total_amount, shipping_address, discount_code) VALUES (3, 'completed', 10, 'Address D', 'NEWCUSTOMER');
+
+-- Orders without discount (discount_code is explicitly NULL)
+INSERT INTO orders (user_id, status, total_amount, shipping_address, discount_code) VALUES (2, 'completed', 30, 'Address E', NULL);
