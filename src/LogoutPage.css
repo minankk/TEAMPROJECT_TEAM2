@@ -1,67 +1,75 @@
-/* Logout Page Styling */
+/* Logout Page Styles */
 .logout-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f3f4f6; 
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  height: 100vh;
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.logout-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('./assets/vv_lounge_form_bg_cornersofa.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+.logout-container::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
 }
 
 .logout-box {
-  background-color: #ffffff; 
-  border-radius: 12px; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem; 
-  max-width: 400px; 
-  width: 100%; 
-  min-height: 455px; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  text-align: center; 
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+  max-width: 400px;
+  color: white;
+  backdrop-filter: blur(10px);
 }
-
 
 .logout-box h1 {
-  font-size: 2.5rem; 
-  font-family: "Oswald", sans-serif; 
-  font-weight: 600; 
-  margin-bottom: 1.5rem; 
-  color: #111827; 
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-.logout-message {
-  font-size: 1.5rem; 
-  color: #4b5563; 
-  margin-bottom: 1rem; 
-}
-
+.logout-message,
 .logout-submessage {
-  font-size: 1.125rem; 
-  color: #6b7280; 
-  margin-bottom: 1.5rem; 
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #9cd6ff;
+  text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
 }
 
 .logout-button {
-  background-color: #7c1816; 
-  color: #ffffff; 
-  padding: 0.75rem 1.5rem; 
+  background-color: #620b0b;
+  color: white;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
   border: none;
-  border-radius: 8px; 
-  font-size: 1.25rem; 
-  font-weight: 600; 
-  cursor: pointer; 
-  transition: transform 0.2s ease; 
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(100, 0, 0, 0.8);
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .logout-button:hover {
-  background-color: #a0211e; 
-  transform: translateY(-3px); 
-  transition: background-color 0.3s ease, transform 0.2s ease; 
+  background-color: #a0211e;
+  transform: scale(1.05);
 }
-
-.logout-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); 
-};

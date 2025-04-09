@@ -123,7 +123,7 @@ exports.removeFromCart = async (req, res) => {
 };
 
 // Function to handle order placement
-/*exports.placeOrder = async (req, res) => {
+exports.placeOrder = async (req, res) => {
     if (!req.user || !req.user.userId) {
         return res.status(401).json({ error: 'Unauthorized: user_id missing' });
     }
@@ -164,7 +164,7 @@ exports.removeFromCart = async (req, res) => {
         console.error("Error in placeOrder:", error); 
         return res.status(500).json({ error: 'Failed to place order' });
       }
-};*/
+};
 
 //Add a cart count endpoint for SQL database
 exports.cartCount = async (req, res) => {

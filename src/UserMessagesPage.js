@@ -99,33 +99,46 @@ const UserMessagesPage = () => {
     return (
         <div className="user-messages-page">
             <h2>Messages</h2>
-            {error && <p className="error">{error}</p>}
-
-            <ul className="message-list">
-                {messages.map((message) => (
-                    <li key={message.message_id}>
-                        <p><strong>From:</strong> {message.sender_id}</p>
-                        <p>{message.message}</p>
-                        <p>Sent at: {new Date(message.sent_at).toLocaleString()}</p>
-                        {!message.is_read && (
-                            <button onClick={() => handleMarkAsRead(message.message_id)}>Mark as Read</button>
-                        )}
-                        <button onClick={() => setSelectedMessageId(message.message_id)}>Reply</button>
-                        {selectedMessageId === message.message_id && (
-                            <div className="reply-section">
-                                <textarea
-                                    placeholder="Enter your reply"
-                                    value={replyMessage}
-                                    onChange={(e) => setReplyMessage(e.target.value)}
-                                />
-                                <button onClick={handleReply}>Send Reply</button>
-                            </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
+    
+            {/* Show error only if it's not due to empty inbox */}
+            {error && messages.length === 0 ? (
+                <p className="error">{error}</p>
+            ) : null}
+    
+            {messages.length === 0 ? (
+                <div className="empty-inbox-message">
+                    <p>Your inbox is currently empty.</p>
+                    <p>
+                        If you need to reach us, please use our{' '}
+                        <a href="/contact-us" className="contact-link">Contact Us</a> form.
+                    </p>
+                </div>
+            ) : (
+                <ul className="message-list">
+                    {messages.map((message) => (
+                        <li key={message.message_id}>
+                            <p><strong>From:</strong> {message.sender_id}</p>
+                            <p>{message.message}</p>
+                            <p>Sent at: {new Date(message.sent_at).toLocaleString()}</p>
+                            {!message.is_read && (
+                                <button onClick={() => handleMarkAsRead(message.message_id)}>Mark as Read</button>
+                            )}
+                            <button onClick={() => setSelectedMessageId(message.message_id)}>Reply</button>
+                            {selectedMessageId === message.message_id && (
+                                <div className="reply-section">
+                                    <textarea
+                                        placeholder="Enter your reply"
+                                        value={replyMessage}
+                                        onChange={(e) => setReplyMessage(e.target.value)}
+                                    />
+                                    <button onClick={handleReply}>Send Reply</button>
+                                </div>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
-};
-
+}
 export default UserMessagesPage;

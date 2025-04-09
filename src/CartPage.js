@@ -146,57 +146,39 @@ export default function ShoppingCart() {
     };
 
     return (
-        <div className="cart-container">
+        <div id="cart-page">
+          <div className="cart-container">
             <h1 className="cart-title">Your Shopping Cart</h1>
-
+      
             <div className="cart-items">
-                {cart.length === 0 ? (
-                    <p className="text-gray-500 text-center">Your cart is empty.</p>
-                ) : (
-                    cart.map((item) => (
-                        <div key={item.id} className="cart-item">
-                            <img src={item.image} alt={item.name} className="cart-item-img" />
-                            <div className="cart-item-details">
-                                <span className="cart-item-title">{item.name}</span>
-                                <span className="cart-item-price">£{item.price}</span>
-                            </div>
-                            <div className="quantity-controls">
-                                <button
-                                    className="quantity-button"
-                                    onClick={() => decreaseQuantity(item.id)}
-                                >
-                                    -
-                                </button>
-                                <input
-                                    type="text"
-                                    value={item.quantity}
-                                    readOnly
-                                    className="quantity-input"
-                                />
-                                <button
-                                    className="quantity-button"
-                                    onClick={() => increaseQuantity(item.id)}
-                                >
-                                    +
-                                </button>
-                            </div>
-                            <button
-                                className="remove-button"
-                                onClick={() => removeFromCart(item.id)}
-                            >
-                                Remove
-                            </button>
-                        </div>
-                    ))
-                )}
+              {cart.length === 0 ? (
+                <p className="text-gray-500 text-center">Your cart is empty.</p>
+              ) : (
+                cart.map((item) => (
+                  <div key={item.id} className="cart-item">
+                    <img src={item.image} alt={item.name} className="cart-item-img" />
+                    <div className="cart-item-details">
+                      <span className="cart-item-title">{item.name}</span>
+                      <span className="cart-item-price">£{item.price}</span>
+                    </div>
+                    <div className="quantity-controls">
+                      <button className="quantity-button" onClick={() => decreaseQuantity(item.id)}>-</button>
+                      <input type="text" value={item.quantity} readOnly className="quantity-input" />
+                      <button className="quantity-button" onClick={() => increaseQuantity(item.id)}>+</button>
+                    </div>
+                    <button className="remove-button" onClick={() => removeFromCart(item.id)}>Remove</button>
+                  </div>
+                ))
+              )}
             </div>
-
+      
             <div className="cart-summary">
-                <div className="total-price">Total: £{totalPrice}</div>
-                <button className="checkout-button" onClick={handleCheckout}>
-                    Checkout
-                </button>
+              <div className="total-price">Total: £{totalPrice}</div>
+              <button className="checkout-button" onClick={handleCheckout}>
+                Checkout
+              </button>
             </div>
+          </div>
         </div>
-    );
+      );
 }
