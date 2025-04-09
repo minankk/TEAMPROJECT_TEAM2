@@ -44,6 +44,7 @@ const subscribeRoutes = require('./routes/subscribe');
 const popUpRoutes = require('./routes/popUpRoutes');
 const membershipRoutes = require('./routes/membership');
 const preOrderRoutes = require('./routes/preOrderRoutes');
+const revenueRoutes = require('./routes/revenueRoutes'); 
 
 
 //admin
