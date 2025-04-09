@@ -40,16 +40,16 @@ const Footer = () => {
         <div className="footer-column">
           <h4>Follow Us On:</h4>
           <div className="social-icons">
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <a href="https://x.com/vault_viny" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
               <FaXTwitter />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/officailvinylvaultrecords/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <FaInstagram />
             </a>
             <a href="mailto:info@vinylvault.com" aria-label="Email">
               <FaEnvelope />
             </a>
-            <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+            <a href="https://open.spotify.com/?trackId=0g1Y10aIIdJDkcSEuAq51k" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
               <FaSpotify />
             </a>
           </div>
