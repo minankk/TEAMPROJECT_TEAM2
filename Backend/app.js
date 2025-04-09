@@ -23,7 +23,6 @@ dotenv.config({
 const authJWT = require('./middlewares/jwtAuthMiddleware');
 const authRoutes = require('./routes/login');
 const signUpRoutes = require('./routes/signup');
-const adminDashboardRoutes = require('./routes/adminRoutes/adminDashboard');
 const sessionRoutes = require('./routes/checksession');
 const forgotPasswordRoute = require('./routes/forgotPassword');
 const resetPasswordRoute = require('./routes/resetPassword');
@@ -44,6 +43,7 @@ const subscribeRoutes = require('./routes/subscribe');
 const popUpRoutes = require('./routes/popUpRoutes');
 const membershipRoutes = require('./routes/membership');
 const preOrderRoutes = require('./routes/preOrderRoutes');
+const revenueRoutes = require('./routes/revenueRoutes'); 
 
 
 //admin

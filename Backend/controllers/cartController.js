@@ -71,11 +71,17 @@ exports.getCartItems = async (req, res) => {
     if (parseInt(urlUserId) !== tokenUserId) {
         return res.status(403).json({ error: 'Forbidden: User IDs do not match' });
     }
-    
 
     try {
         const [cartItems] = await db.execute(
-            `SELECT c.cart_id, p.name AS product_name, a.name AS artist_name, p.price, c.quantity, p.cover_image_url
+            `SELECT 
+                c.cart_id,
+                p.product_id,
+                p.name AS product_name,
+                a.name AS artist_name,
+                p.price,
+                c.quantity,
+                p.cover_image_url
             FROM cart c
             JOIN products p ON c.product_id = p.product_id
             JOIN artists a ON p.artist_id = a.artist_id
@@ -93,6 +99,7 @@ exports.getCartItems = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch cart items', details: error.message });
     }
 };
+
 
 // DELETE cart items
 exports.removeFromCart = async (req, res) => {
