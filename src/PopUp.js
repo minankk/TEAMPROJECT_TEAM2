@@ -1,38 +1,27 @@
-import React, { useState } from "react";
+// PopUp.js
+import React, { useState, useEffect } from "react";
 import "./PopUp.css";
 
 const PopUp = ({ product, onClose, onAddToCart }) => {
-  const [isExpanded, setIsExpanded] = useState({
-    awards: false,
-    records: false,
-    genres: false,
-    interesting_facts: false,
-  });
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
-  const handleReadMoreClick = (section) => {
-    setIsExpanded((prevState) => ({
-      ...prevState,
-      [section]: !prevState[section],
-    }));
-  };
-
-  if (!product) {
-    console.error("PopUp: Product prop is missing or invalid.");
-    return null;
-  }
+  if (!product) return null;
 
   const handleAddToCartClick = (event) => {
     event.stopPropagation();
     if (onAddToCart && product.product_id) {
       onAddToCart(product.product_id);
-    } else {
-      console.error("PopUp: product_id is missing or invalid.");
     }
   };
 
   return (
-    <div className="popup-overlay">
-      <div className="popup">
+    <div className="popup-overlay" style={{ paddingTop: '60px', paddingBottom: '40px' }}>
+      <div className="popup small">
         <button className="popup-close" onClick={onClose}>
           &times;
         </button>
@@ -44,10 +33,7 @@ const PopUp = ({ product, onClose, onAddToCart }) => {
             src={`http://localhost:5001${product.cover_image_url}`}
             alt={product.album_name}
             className="popup-image"
-            onError={(e) => {
-              e.target.src = "/path_to_default_image.jpg"; // Fallback image
-              console.error("PopUp: Image failed to load:", product.cover_image_url);
-            }}
+            onError={(e) => (e.target.src = "/path_to_default_image.jpg")}
           />
         ) : (
           <p>Image not available.</p>
@@ -56,73 +42,15 @@ const PopUp = ({ product, onClose, onAddToCart }) => {
         <p><strong>Release Date:</strong> {product.release_date || "Not available"}</p>
         <p><strong>Hit Singles:</strong> {product.hit_singles || "Not available"}</p>
 
-        {/* Display Awards with Read More */}
-        {product.awards && (
-          <p
-            className={isExpanded.awards ? "expanded" : ""}
-            onClick={() => handleReadMoreClick("awards")}
-          >
-            <strong>Awards:</strong> {product.awards}
-            {product.awards.length > 50 && ( // Example: Show "Read More" if awards are longer
-              <span className="read-more-link">
-                {isExpanded.awards ? " (Show Less)" : " (Read More)"}
-              </span>
-            )}
+        {['awards', 'records', 'genres_popup', 'interesting_facts'].map((key) => (
+          <p key={key}>
+            <strong>{key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}:</strong> {product[key] || "Not available"}
           </p>
-        )}
-        {!product.awards && <p><strong>Awards:</strong> Not available</p>}
-
-        {/* Display Records with Read More */}
-        {product.records && (
-          <p
-            className={isExpanded.records ? "expanded" : ""}
-            onClick={() => handleReadMoreClick("records")}
-          >
-            <strong>Records:</strong> {product.records}
-            {product.records.length > 50 && ( // Example: Show "Read More" if records are longer
-              <span className="read-more-link">
-                {isExpanded.records ? " (Show Less)" : " (Read More)"}
-              </span>
-            )}
-          </p>
-        )}
-        {!product.records && <p><strong>Records:</strong> Not available</p>}
-
-        {/* Display Genres with Read More */}
-        {product.genres_popup && (
-          <p
-            className={isExpanded.genres ? "expanded" : ""}
-            onClick={() => handleReadMoreClick("genres")}
-          >
-            <strong>Genres:</strong> {product.genres_popup}
-            {product.genres_popup.length > 50 && ( // Example: Show "Read More" if genres are longer
-              <span className="read-more-link">
-                {isExpanded.genres ? " (Show Less)" : " (Read More)"}
-              </span>
-            )}
-          </p>
-        )}
-        {!product.genres_popup && <p><strong>Genres:</strong> Not available</p>}
-
-        {/* Display Interesting Facts with Read More */}
-        {product.interesting_facts && (
-          <p
-            className={isExpanded.interesting_facts ? "expanded" : ""}
-            onClick={() => handleReadMoreClick("interesting_facts")}
-          >
-            <strong>Interesting Facts:</strong> {product.interesting_facts}
-            {product.interesting_facts.length > 50 && ( // Example: Show "Read More" if facts are longer
-              <span className="read-more-link">
-                {isExpanded.interesting_facts ? " (Show Less)" : " (Read More)"}
-              </span>
-            )}
-          </p>
-        )}
-        {!product.interesting_facts && <p><strong>Interesting Facts:</strong> Not available</p>}
+        ))}
 
         <div>
           <h3>Related Albums:</h3>
-          {product.related_albums && product.related_albums.length > 0 ? (
+          {product.related_albums?.length ? (
             <div className="related-albums">
               {product.related_albums.map((album, index) => (
                 <div key={index} className="related-album">
@@ -131,10 +59,7 @@ const PopUp = ({ product, onClose, onAddToCart }) => {
                     src={`http://localhost:5001${album.related_album_image || "/path_to_default_image.jpg"}`}
                     alt={album.related_album_name}
                     className="related-album-image"
-                    onError={(e) => {
-                      e.target.src = "/path_to_default_image.jpg"; // Fallback image
-                      console.error("PopUp: Image failed to load:", album.related_album_image);
-                    }}
+                    onError={(e) => (e.target.src = "/path_to_default_image.jpg")}
                   />
                 </div>
               ))}

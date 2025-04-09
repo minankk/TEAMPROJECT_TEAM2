@@ -110,30 +110,46 @@ const FavoritesPage = () => {
     if (error) return <p className="error">Error: {error}</p>;
 
     return (
-        <div className="favorites-page">
-            <h2>Favorites</h2>
+<div className="dashboard-content favorites-page"> {/* ← combines styles */}
+    <div className="favorites-container">
+                <h2>Favorites</h2>
             {favorites.length > 0 ? (
+              <>
+                <p className="favorites-info-text">
+                  Click the ❤️ to remove items from your favorites.
+                </p>
                 <div className="favorites-grid">
-                    {favorites.map((product) => (
-                        product && <div key={product.product_id} className="favorite-item">
-                            <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="favorite-image" />
-                            <h3>{product.album_name}</h3>
-                            <p>{product.artist_name}</p>
-                            <p>${product.price}</p>
-                            <div
-                                className={`heart-icon ${favorites.some(fav => fav?.product_id === product.product_id) ? 'filled' : 'outlined'}`}
-                                onClick={(event) => toggleFavorite(product.product_id, event)}
-                            >
-                                ❤️
-                            </div>
-                        </div>
-                    ))}
+                  {favorites.map((product) => {
+                    if (!product) return null;
+      
+                    return (
+                      <div key={product.product_id} className="favorite-item">
+                        <img
+                          src={`http://localhost:5001${product.cover_image_url}`}
+                          alt={product.album_name}
+                          className="favorite-image"
+                        />
+                        <h3>{product.album_name}</h3>
+                        <p>{product.artist_name}</p>
+                        <p>{Number(product?.price ?? 0).toFixed(2)}</p>
+                        <button
+                          className="heart-button favorited"
+                          onClick={(event) => toggleFavorite(product.product_id, event)}
+                          title="Remove from favorites"
+                        >
+                          ♥
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
+              </>
             ) : (
-                <p>No favorites found.</p>
+              <p className="no-favorites">You haven’t added anything to your favorites yet.</p>
             )}
+          </div>
         </div>
-    );
-};
+      );
+    };
 
 export default FavoritesPage;

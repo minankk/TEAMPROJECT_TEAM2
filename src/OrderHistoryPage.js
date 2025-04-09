@@ -22,6 +22,8 @@ const OrderHistoryPage = () => {
                     }
                 });
 
+                console.log('Raw Response:', response); // Log the entire response object
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -90,8 +92,12 @@ const OrderHistoryPage = () => {
                     </tbody>
                 </table>
             ) : (
-                <p>No order history found.</p>
-            )}
+<div className="no-history-message">
+    <h3>No Orders Yet</h3>
+    <p>Looks like you haven’t placed any orders yet.</p>
+    <p>Once you do, your history will show up here.</p>
+  </div>
+)}
         </div>
     );
 };

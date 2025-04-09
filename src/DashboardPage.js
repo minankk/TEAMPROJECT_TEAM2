@@ -58,20 +58,30 @@ const Overview = () => {
   if (error) return <p className="error">Error: {error}</p>;
 
   return (
-      <div className="overview">
-          <h2>Overview</h2>
-          <p><strong>Username:</strong> {data.username || 'N/A'}</p>
-          <p><strong>Message:</strong> {data.message || 'No new messages'}</p>
-          <p><strong>Orders:</strong> {data.orderCount ?? 0}</p>
-          <p><strong>Wishlist Items:</strong> {data.wishlistCount ?? 0}</p>
-          <p><strong>Wallet Balance:</strong> ${data.walletBalance || '0.00'}</p>
-          {data.isVIP && data.benefits && (
-          <div className="vip-info">
-          <p><strong>VIP Tier:</strong> {data.benefits.tier}</p>
-          <p><strong>Discount:</strong> {data.benefits.discount * 100}%</p>
+    <div className="overview">
+    <h2>Overview</h2>
+    <div className="overview-grid">
+      <div className="overview-item"><strong>Username:</strong><span>{data.username || 'N/A'}</span></div>
+      <div className="overview-item"><strong>Message:</strong><span>{data.message || 'No new messages'}</span></div>
+      <div className="overview-item"><strong>Orders:</strong><span>{data.orderCount ?? 0}</span></div>
+      <div className="overview-item"><strong>Wishlist Items:</strong><span>{data.wishlistCount ?? 0}</span></div>
+      <div className="overview-item"><strong>Wallet Balance:</strong><span>£{data.walletBalance || '0.00'}</span></div>
     </div>
-)}
-      </div>
+          <div className="vip-info">
+  {data.isVIP && data.benefits ? (
+    <>
+      <h3>🎖 VIP Member</h3>
+      <p><strong>Tier:</strong> {data.benefits.tier}</p>
+      <p><strong>Discount:</strong> {data.benefits.discount * 100}%</p>
+    </>
+  ) : (
+    <>
+      <h3>🚫 Not a VIP Member</h3>
+      <p>Unlock exclusive perks and discounts by joining our VIP program!</p>
+    </>
+  )}
+</div>
+</div>
   );
 };
 const DashboardPage = () => {
