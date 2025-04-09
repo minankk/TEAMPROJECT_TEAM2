@@ -52,27 +52,43 @@ describe("User Login", () => {
 
   //login positive flow
   test("should log in a user successfully", async () => {
-    bcrypt.compare.mockResolvedValue(true);
+   bcrypt.compare.mockResolvedValue(true);
     jwt.sign.mockReturnValue("mockedJWTToken");
-  
+
+    const req = {
+        body: {
+            username: "testuser", 
+        },
+    };
+
+    const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+    };
+
+    db.execute = jest.fn().mockResolvedValue([[{ user_id: 1, username: "testuser", email: "test@example.com", role: "user" }]]);
+    
     await authController.login(req, res);
-  
-    console.log('res.status calls:', res.status.mock.calls);
-    console.log('res.json calls:', res.json.mock.calls);
-  
-    expect(db.execute).toHaveBeenCalledWith("SELECT * FROM users WHERE user_name = ?", ["testuser"]);
+
+    expect(db.execute).toHaveBeenCalledWith(
+        "SELECT * FROM users WHERE user_name = ? OR email = ?", 
+        ["testuser", "testuser"]
+    );
+
     expect(res.status).toHaveBeenCalledWith(200);
+
     expect(res.json).toHaveBeenCalledWith({
-      message: "Login successful",
-      token: "mockedJWTToken",
-      user: {
-        user_id: 1,
-        username: "testuser",
-        email: "test@example.com",
-        role: "user",
-      },
+        message: "Login successful",
+        token: "mockedJWTToken",
+        user: {
+            user_id: 1,
+            username: "testuser",
+            email: "test@example.com",
+            role: "user",
+        },
     });
-  });
+});
+
 
   //username and password is missing
   test("should return an error if username or password is missing", async () => {
@@ -82,7 +98,7 @@ describe("User Login", () => {
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      message: "username and password are required",
+      message: "username or email and password are required",
     });
   });
 
@@ -93,7 +109,7 @@ describe("User Login", () => {
     await authController.login(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: "Please Sign Up" });
+    expect(res.json).toHaveBeenCalledWith({ message: "User not found. Please Sign Up." });
   });
 
   //password is incorrect
@@ -104,7 +120,7 @@ describe("User Login", () => {
     await authController.login(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: "Password do not match" });
+    expect(res.json).toHaveBeenCalledWith({ message: "Password does not match" });
     expect(bcrypt.compare).toHaveBeenCalledWith("correctpassword", mockUser.password);
     expect(jwt.sign).not.toHaveBeenCalled();
   });

@@ -23,7 +23,6 @@ dotenv.config({
 const authJWT = require('./middlewares/jwtAuthMiddleware');
 const authRoutes = require('./routes/login');
 const signUpRoutes = require('./routes/signup');
-const adminDashboardRoutes = require('./routes/adminRoutes/adminDashboard');
 const sessionRoutes = require('./routes/checksession');
 const forgotPasswordRoute = require('./routes/forgotPassword');
 const resetPasswordRoute = require('./routes/resetPassword');
