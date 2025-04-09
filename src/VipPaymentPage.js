@@ -79,7 +79,7 @@ function VipPaymentPage() {
                 <div className="plan-selection">
                     <h2>Select Your Plan</h2>
                     <select value={selectedPlan} onChange={handlePlanChange} required>
-                        <option value="">-- Select a Plan --</option>
+                        <option value=""> Select a Plan:</option>
                         <option value="monthly">Monthly (£2.99/month)</option>
                         <option value="annual">Annual (£29.99/year)</option>
                     </select>
@@ -145,7 +145,7 @@ function VipPaymentPage() {
                 )}
 
                 <div className="payment-back-link">
-                    <Link to="/vip-signup">Go back to VIP Signup</Link>
+                    <Link to="/vip-signup">Go back to VIP info</Link>
                 </div>
             </div>
         </div>

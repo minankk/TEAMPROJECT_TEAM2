@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './VIPSignupPage.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaRocket, FaNewspaper, FaArrowRight } from 'react-icons/fa';
-// import HeroBackgroundImage from './assets/vv_lounge_form_bg_cornersofa.png';
 import image1 from './assets/listeninglounge_vv_Vip.png';
 import image2 from './assets/Listening_room_lounge.png';
 import image3 from './assets/VIP_HERO_LANDING.jpeg';
+import { jwtDecode } from 'jwt-decode';
 
 const VIPSignupPage = () => {
     const monthlyPrice = '2.99';
@@ -15,6 +15,25 @@ const VIPSignupPage = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupImageIndex, setPopupImageIndex] = useState(0);
+
+    const navigate = useNavigate();
+
+    const handleSubscriptionClick = (planType) => {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            navigate('/login', { state: { redirectTo: `/vip-payment?plan=${planType}` } });
+            return;
+        }
+
+        try {
+            jwtDecode(token); // Validate token
+            navigate(`/vip-payment?plan=${planType}`);
+        } catch (error) {
+            localStorage.removeItem('token');
+            navigate('/login', { state: { redirectTo: `/vip-payment?plan=${planType}` } });
+        }
+    };
 
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
@@ -55,7 +74,9 @@ const VIPSignupPage = () => {
                             <span className="the">The </span>
                             <span className="lounge">LOUNGE</span>
                         </h1>
-                        <p id="heroIntro" className="hero-intro">Gain exclusive access to premium collections, special discounts, and members-only events as part of our VIP community!</p>
+                        <p id="heroIntro" className="hero-intro">
+                            Gain exclusive access to premium collections, special discounts, and members-only events as part of our VIP community!
+                        </p>
                     </div>
                 </div>
             </header>
@@ -94,10 +115,13 @@ const VIPSignupPage = () => {
                     <h2 id="subscriptionOptionsTitle">Subscription Plans</h2>
                     <p>Choose the plan that suits your vinyl journey:</p>
                     <div id="plansContainer" className="plans-container">
-                        <Link
+                        <div
                             id="monthlyPlan"
-                            to="/vip-payment" /* need to change :) */
                             className="plan monthly-plan-link"
+                            onClick={() => handleSubscriptionClick('monthly')}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => e.key === 'Enter' && handleSubscriptionClick('monthly')}
                         >
                             <h3 id="monthlyPlanTitle">Monthly Subscription</h3>
                             <p id="monthlyPlanPrice" className="price">£{monthlyPrice} / month</p>
@@ -105,11 +129,15 @@ const VIPSignupPage = () => {
                                 Enjoy all VIP benefits with a flexible monthly commitment.
                             </p>
                             <span className="arrow-icon"><FaArrowRight /></span>
-                        </Link>
-                        <Link
+                        </div>
+
+                        <div
                             id="annualPlan"
-                            to="/vip-payment" /* need to change :) */
                             className="plan popular annual-plan-link"
+                            onClick={() => handleSubscriptionClick('annual')}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => e.key === 'Enter' && handleSubscriptionClick('annual')}
                         >
                             <h3 id="annualPlanTitle">Annual Subscription</h3>
                             <p id="annualPlanPrice" className="price">
@@ -119,7 +147,7 @@ const VIPSignupPage = () => {
                                 Commit for a year and enjoy a discounted rate on your VIP membership.
                             </p>
                             <span className="arrow-icon"><FaArrowRight /></span>
-                        </Link>
+                        </div>
                     </div>
                     <div id="howToJoin" className="how-to-join combined-section">
                         <p id="paymentInfo" className="payment-info">
@@ -129,7 +157,6 @@ const VIPSignupPage = () => {
                 </section>
             </div>
 
-            {/* Gallery at the bottom */}
             <section id="vipGallery" className="vip-gallery">
                 <h2>Peek Inside our new private listening room</h2>
                 <div className="image-gallery">
@@ -156,7 +183,6 @@ const VIPSignupPage = () => {
                 </div>
             </section>
 
-            {/* The Pop-up Overlay */}
             {isPopupOpen && (
                 <div className={`gallery-popup-overlay open`} onClick={closePopup}>
                     <div className="gallery-popup-content" onClick={(e) => e.stopPropagation()}>

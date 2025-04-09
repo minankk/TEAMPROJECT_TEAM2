@@ -43,7 +43,6 @@
   max-width: 280px;
 }
 
-
 .footer-column {
   flex: 1;
   min-width: 180px;
@@ -100,11 +99,116 @@
   transform: scale(1.1);
 }
 
-.footer-bottom {
+/* Newsletter and Footer Bottom Row */
+.footer-bottom-row {
   width: 100%;
-  text-align: right;
+  max-width: 1100px;
+  /* margin: 0 auto; */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  /* padding-top: 20px; */
+  /* margin-top: 20px; */
+  flex-wrap: wrap;
+}
+
+.footer-newsletter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.newsletter-heading {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  line-height: 1.4;
+  max-width: 280px;
+  margin: 0 0 4px 0;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.newsletter-input {
+  padding: 10px 20px;
+  border-radius: 9999px;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  background-color: #1f1f1f;
+  color: #f6f6f4;
+  border: 1px solid #333;
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.newsletter-input::placeholder {
+  color: #aaa;
+}
+
+.newsletter-button {
+  padding: 10px 20px;
+  border-radius: 9999px;
+  border: none;
+  background-color: #7c1816;
+  color: #f6f6f4;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.newsletter-button:hover {
+  background-color: #a12220;
+}
+
+.footer-bottom {
   font-size: 0.85rem;
   opacity: 0.75;
-  padding: 2px;
-  margin-top: 0;
+  text-align: right;
+}
+
+.success-message {
+  color: #4CAF50;
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+
+/* Responsive */
+@media (max-width: 600px) {
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .newsletter-input,
+  .newsletter-button {
+    width: 100%;
+  }
+
+  .footer-bottom {
+    text-align: left;
+  }
 }
