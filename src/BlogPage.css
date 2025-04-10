@@ -2,7 +2,7 @@
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #f0f2f5, #e1e5ea);
+  background: linear-gradient(pink , rgb(242, 221, 225), #e1e5ea);
   color: #333;
   display: flex;
   flex-direction: column;
