@@ -122,8 +122,11 @@ const Footer = () => {
 
       {/* Bottom Row: Newsletter + Copyright */}
       <div className="footer-bottom-row">
+      <div className="footer-bottom">
+          <p>&copy; {new Date().getFullYear()} Vinyl Vault. All Rights Reserved.</p>
+        </div>
         <form className="footer-newsletter" onSubmit={handleNewsletterSubmit}>
-          <p className="newsletter-heading">Subscribe to our newsletter!</p>
+          <p className="newsletter-heading">Subscribe to our newsletter for the latest offers!</p>
           <div className="newsletter-form-wrapper">
             <input
               type="email"
@@ -144,10 +147,6 @@ const Footer = () => {
           {message && <p className="success-message">{message}</p>}
           {error && <p className="error-message">{error}</p>}
         </form>
-
-        <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Vinyl Vault. All Rights Reserved.</p>
-        </div>
       </div>
     </footer>
   );
