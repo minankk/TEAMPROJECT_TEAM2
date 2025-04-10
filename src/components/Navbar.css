@@ -239,31 +239,82 @@
   display: inline-block;
 }
 
+/* Remove bullet points and reset spacing */
 .user-dropdown-menu {
-  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
   position: absolute;
-  top: 60%;
+  top: 100%;
   right: 0;
   background: #151515;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  padding: 10px 0;
-  z-index: 1000;
+  z-index: 1100;
+  min-width: 220px;
+  border-radius: 6px;
+  display: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Oswald', sans-serif;
 }
 
+.user-dropdown-menu.open {
+  display: block;
+}
+
+/* Match item padding and font from Browse Products dropdown */
 .user-dropdown-menu li {
   padding: 10px 20px;
 }
 
 .user-dropdown-menu li a,
 .user-dropdown-menu li button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
   color: #f6f6f4 !important;
   font-size: 1.2rem;
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   transition: color 0.3s ease;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Hover match */
+.user-dropdown-menu li a:hover,
+.user-dropdown-menu li button:hover {
+  color: #7c1816 !important;
+}
+
+.user-dropdown-menu.open {
+  display: block;
+}
+
+.user-dropdown-menu li {
+  padding: 10px 20px;
+}
+.user-dropdown-menu li {
+  list-style: none;
+}
+
+
+.user-dropdown-menu li a,
+.user-dropdown-menu li button {
+  display: block;
+  width: 100%;
   background: none;
   border: none;
+  color: #f6f6f4 !important;
+  font-size: 1.2rem;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  text-align: left;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .user-dropdown-menu li a:hover,
@@ -271,9 +322,19 @@
   color: #7c1816 !important;
 }
 
-.user-dropdown:hover .user-dropdown-menu,
-.user-dropdown-menu.open {
+/* .user-dropdown:hover .dropdown-menu,
+.dropdown-menu.open {
   display: block;
+} */
+
+.user-dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 15px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid #151515;
 }
 
 
@@ -311,4 +372,25 @@
   .search-input {
     width: 200px;
   }
+}
+
+/* Wishlist Icon */
+.wishlist-btn {
+  color: #f6f6f4;
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.3s;
+  background: transparent;
+  border: none;
+}
+
+.wishlist-btn:hover {
+  color: #7c1816;
+}
+
+/* User Dropdown now shares dropdown-menu styling */
+.user-dropdown-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
