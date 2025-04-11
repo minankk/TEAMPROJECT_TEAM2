@@ -60,7 +60,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
-        fetch('http://localhost:5001/verify-token', {
+        fetch('http://localhost:5001/check-token', {
           headers: {
             'Authorization': `Bearer ${storedToken}`
           }
