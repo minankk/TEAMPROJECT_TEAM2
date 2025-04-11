@@ -73,9 +73,18 @@ app.use((req, res, next) => {
 // Serve images from the 'public/images' folder
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
  
+// CORS policy setup
+const allowedOrigins = ['http://localhost:3000']; 
+
 app.use(cors({
-  origin: 'http://localhost:3000',  
-  credentials: true,
+  origin: function(origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) { 
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,  
 }));
  
 /***
