@@ -3,7 +3,9 @@ const router = express.Router();
 const adminDashboardController = require('../../controllers/adminDashboardController');
 
 // GET /admin/dashboard (Get dashboard data including reports and products)
-//router.get('/',  adminDashboardController.getDashboardData);
+router.get('/',  adminDashboardController.getDashboardData);
+router.get('/products', adminDashboardController.getAllProducts);
+
 
 // Product Management Endpoints (within the dashboard)
 router.post('/products', adminDashboardController.addProduct);

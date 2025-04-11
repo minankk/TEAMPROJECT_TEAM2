@@ -106,6 +106,33 @@ exports.addProduct = async (req, res) => {
     }
 };
 
+exports.getAllProducts = async (req, res) => {
+    try {
+      const [products] = await db.execute('SELECT * FROM products');
+      res.status(200).json(products);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch products', error: error.message });
+    }
+  };
+  
+
+exports.getDashboardData = async (req, res) => {
+    try {
+        const [totalSales] = await db.execute('SELECT SUM(total_amount) AS total_sales FROM orders');
+        const [totalUsers] = await db.execute('SELECT COUNT(*) AS total_users FROM users');
+        const [totalProducts] = await db.execute('SELECT COUNT(*) AS total_products FROM products');
+
+        res.status(200).json({
+            sales: totalSales[0].total_sales,
+            users: totalUsers[0].total_users,
+            products: totalProducts[0].total_products
+        });
+    } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+};
+
 exports.updateProduct = async (req, res) => {
     try {
         const { id } = req.params;

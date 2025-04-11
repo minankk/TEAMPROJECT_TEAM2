@@ -1,0 +1,94 @@
+#admin-approve-page {
+    font-family: 'Orbitron', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('./assets/VV_form_bg_pink_blue.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 30px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  #admin-approve-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  #admin-approve-page .form-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 35px 40px;
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  #admin-approve-page .form-container:hover {
+    box-shadow: 0 0 10px rgb(100, 0, 0), 0 0 30px rgba(100, 0, 0, 0.623);
+  }
+  
+  #admin-approve-page h1 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-family: 'Oswald';
+  }
+  
+  #admin-approve-page .email-display {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  #admin-approve-page .status-message {
+    color: limegreen;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  #admin-approve-page .error-message {
+    color: red;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  #admin-approve-page .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  #admin-approve-page .button-group button {
+    background-color: #620b0b;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    box-shadow: 0 0 15px rgba(119, 12, 12, 0.8);
+    font-weight: bold;
+  }
+  
+  #admin-approve-page .button-group button:hover {
+    background-color: rgb(141, 8, 8);
+    box-shadow: 0 0 25px rgb(63, 7, 7);
+    transform: scale(1.05);
+  }
+  
