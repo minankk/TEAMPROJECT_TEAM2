@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const dashboardController = require('../controllers/dashboardController');
+const { authenticateJWT } = require('../middlewares/jwtAuthMiddleware'); // Make sure the path to your middleware is correct
 
 //dashboard message
-router.get('/', dashboardController.viewDashboard);
+router.get('/', authenticateJWT, dashboardController.viewDashboard);
 
 //get profile info
-router.get('/profile', dashboardController.getProfile);
+router.get('/profile', authenticateJWT, dashboardController.getProfile);
 
 //update the profile info
 router.put('/profile/update', dashboardController.updateProfile);

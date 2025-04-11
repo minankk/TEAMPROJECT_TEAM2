@@ -1,0 +1,28 @@
+.analytics-page {
+    width: 100%;
+    padding: 20px 40px;
+    color: white;
+  }
+  
+  .analytics-page h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #9cd6ff;
+    text-shadow: 0 0 5px #9cd6ff;
+  }
+  
+  .chart-container {
+    margin-bottom: 50px;
+    background: rgba(255, 255, 255, 0.07);
+    padding: 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+  }
+  
+  .chart-container h3 {
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  

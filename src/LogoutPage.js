@@ -1,55 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LogoutPage.css";
-import { useAuth } from "./App";
+import './LogoutPage.css';
 
 const LogoutPage = () => {
-    const navigate = useNavigate();
-    const { logout } = useAuth();
-    const [logoutComplete, setLogoutComplete] = useState(false);
-    const [logoutAttempted, setLogoutAttempted] = useState(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log("LogoutPage useEffect running");
-        if (!logoutAttempted) {
-            setLogoutAttempted(true);
-            const logoutUser = async () => {
-                const storedToken = localStorage.getItem("token");
-
-                try {
-                    const response = await fetch("http://localhost:5001/logout", {
-                        method: "POST",
-                        headers: {
-                            Authorization: `Bearer ${storedToken}`,
-                            "Content-Type": "application/json",
-                        },
-                    });
-
-                    if (response.ok) {
-                        console.log("Backend logout successful");
-                        localStorage.removeItem("token");
-                        sessionStorage.clear();
-                        logout();
-                        setLogoutComplete(true);
-                    } else {
-                        console.error("Backend logout failed:", response.status);
-                        setLogoutComplete(true);
-                    }
-                } catch (error) {
-                    console.error("Error during logout:", error);
-                    setLogoutComplete(true);
-                }
-            };
-
-            logoutUser();
-        }
-    }, [logout]);
-
-    console.log("LogoutPage rendered");
-
-    const handleBackToLogin = () => {
-        navigate("/login");
-    };
+  useEffect(() => {
+    // Clear session data on logout
+    localStorage.removeItem("token");
+    sessionStorage.clear();
+  }, []);
 
     return (
         <div className="logout-container">
