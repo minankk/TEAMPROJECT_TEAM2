@@ -1,138 +1,207 @@
-/* General Styles */
-html, body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Arial', sans-serif;
+#payment-page {
+  position: relative;
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  /* background: url('./assets/vinyl-texture.webp') no-repeat center center; */
+/* Blurred background image */
+#payment-page::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('./assets/vv_lounge_form_bg_cornersofa.png');
+  background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(1.5px); 
+  z-index: 0; /* behind everything */
 }
 
+/* Dark overlay on top of the blur */
+#payment-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Main content */
 .payment-page {
+  position: relative;
+  z-index: 2; /* above blur and overlay */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding: 40px 20px;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
 
+/* Header */
 .payment-header {
-  width: 100%;
-  background-color: black;
-  color: white;
-  padding: 40px 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 15px 20px;
+  margin-bottom: 20px;
   text-align: center;
+  font-size: 1rem;
+  font-weight: 100;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+  max-width: 600px;
+  width: 100%;
+}
+
+.payment-content {
+  position: relative;
+  z-index: 2; /* Critical: ensures it stays above the blur and overlay */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.payment-details-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  flex-wrap: wrap;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Form Container */
+.payment-form {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+  padding: 30px;
+  width: 100%;
+  max-width: 420px;
+  transition: transform 0.3s ease;
 }
 
 .payment-form-container {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.payment-form {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 50px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  width: 50%;
   max-width: 600px;
-  transition: transform 0.3s ease;
+  min-width: 560px;
 }
 
 .payment-form:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
 }
 
 .payment-form label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  font-size: 16px;
-  color: #ffffff;
+  font-size: 14px;
+  color: #fff;
+  font-family: 'Oswald';
 }
 
 .payment-form input {
   width: 100%;
   padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s ease;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: 0.3s ease;
+  font-family: 'Oswald';
 }
 
 .payment-form input:focus {
-  border-color: #7c1816;
+  border-color: #9cd6ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
   outline: none;
 }
 
+/* Card details (flex inside) */
 .card-details {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .card-details div {
   flex: 1;
 }
 
+/* Submit button */
 .payment-form button {
   width: 100%;
-  background: #7c1816;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
+  padding: 14px;
+  border-radius: 25px;
   border: none;
-  transition: background 0.3s ease;
+  background-color: #620b0b;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(119, 12, 12, 0.8);
+  transition: all 0.3s ease;
 }
 
 .payment-form button:hover {
-  background: black;
-  transform: translateY(-2px);
+  background-color: rgb(141, 8, 8);
+  box-shadow: 0 0 25px rgb(63, 7, 7);
+  transform: scale(1.03);
 }
 
-.payment-details-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  padding: 20px;
-}
-
+/* Order Summary */
 .order-summary-container {
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
   padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  width: 40%;
-  max-width: 500px;
+  width: 100%;
+  max-width: 300px;
+  min-width: 200px;
+  color: white;
+  flex: 1;
 }
 
 .order-summary-container h2 {
-  border-bottom: 2px solid #7c1816;
+  border-bottom: 2px solid #9cd6ff;
   padding-bottom: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
 .order-summary-container ul {
   list-style: none;
   padding: 0;
-  margin-bottom: 15px;
+  margin: 0;
 }
 
 .order-summary-container li {
-  padding: 8px 0;
-  border-bottom: 1px dashed #444;
   display: flex;
   justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
 }
 
 .order-summary-container li:last-child {
@@ -140,17 +209,29 @@ body {
 }
 
 .summary-total {
-  padding-top: 15px;
-  font-size: 1.2em;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
   text-align: right;
 }
 
 .summary-shipping {
-  margin-top: 15px;
+  margin-top: 20px;
   padding-top: 10px;
-  border-top: 1px solid #444;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.95rem;
+  color: #ccc;
 }
 
-.summary-shipping p {
-  margin-top: 5px;
+/* Responsive */
+@media (max-width: 768px) {
+  .payment-details-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .payment-form,
+  .order-summary-container {
+    width: 90%;
+  }
 }

@@ -48,6 +48,7 @@ import Newsletter from './Newsletter';
 import AdminLoginPage from './AdminLoginPage';
 import VIPSignupPage from './VIPSignupPage';
 import VipPaymentPage from './VipPaymentPage';
+import AdminApprovalPage from './AdminApprovalPage';
 
 const AuthContext = createContext();
 
@@ -158,13 +159,14 @@ function App() {
                     <Route path="/artists" element={<ArtistsPage />} />
                     <Route path="/vip-signup" element={<VIPSignupPage />} />
                     <Route path="/vip-payment" element={<VipPaymentPage />} />
+                    <Route path="/admin/approve" element={<AdminApprovalPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />}>
                     <Route index element={<AdminOverview />} /> {/* Default route */}
                     <Route path="overview" element={<AdminOverview />} />
                     <Route path="messages" element={<MessagesPage />} />
                     <Route path="products" element={<ProductsManagementPage />} />
                     <Route path="users" element={<UserManagementPage />} />
-                    <Route path="order-management" element={<OrderManagementPage />} />
+                    <Route path="orders" element={<OrderManagementPage />} />
                     <Route path="analytics" element={<AnalyticsPage />} />
 
                     </Route>

@@ -43,7 +43,8 @@ const subscribeRoutes = require('./routes/subscribe');
 const popUpRoutes = require('./routes/popUpRoutes');
 const membershipRoutes = require('./routes/membership');
 const preOrderRoutes = require('./routes/preOrderRoutes');
-const revenueRoutes = require('./routes/revenueRoutes'); 
+const revenueRoutes = require('./routes/revenueRoutes');
+
 
 
 //admin
@@ -100,7 +101,7 @@ app.use("/decades",decadesRoutes)
 app.use('/pre-orders', preOrderRoutes);
 
 //revenueReport
-app.use('/api/revenue', revenueRoutes); 
+app.use('/revenue', revenueRoutes); 
 
 //protected Routes for users 
 app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)

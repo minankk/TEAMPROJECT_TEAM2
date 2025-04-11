@@ -1,0 +1,74 @@
+.products-management-page {
+    padding: 30px;
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .products-management-page h2,
+  .products-management-page h3 {
+    color: #00d4ff;
+    text-shadow: 0 0 8px #00d4ff;
+    margin-bottom: 20px;
+  }
+  
+  .form-grid input,
+  .update-form input {
+    margin: 8px 5px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+  }
+  
+  .form-grid button,
+  .update-form button {
+    padding: 10px 15px;
+    margin: 10px 5px;
+    border-radius: 10px;
+    background: #00d4ff;
+    color: black;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .products-management-page ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .products-management-page li {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }  
+  .products-management-page button {
+    padding: 12px 20px;
+    margin: 8px 5px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    background-color: #00d4ff;
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .products-management-page button:hover {
+    background-color: #00bcd4;
+    transform: scale(1.05);
+  }

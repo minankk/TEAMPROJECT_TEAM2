@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './AdminLoginPage.css'; // Import CSS for styling
+import { Link, useNavigate } from 'react-router-dom'; 
+import './AdminLoginPage.css';
 
 const AdminLoginPage = () => {
+  const navigate = useNavigate(); // ✅ Keep this inside the component
+
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',   // using username to match backend
     password: '',
   });
   const [error, setError] = useState(null);
@@ -18,19 +20,17 @@ const AdminLoginPage = () => {
     setError(null);
 
     const trimmedData = {
-      email: formData.email.trim(),
+      username: formData.username.trim(),
       password: formData.password.trim(),
     };
 
-    if (!trimmedData.email || !trimmedData.password) {
+    if (!trimmedData.username || !trimmedData.password) {
       setError('Please fill in all fields.');
       return;
     }
 
-    console.log('Admin Login Form Data:', trimmedData);
-
     try {
-      const response = await fetch('http://localhost:5001/admin/login', { // Adjust your API endpoint
+      const response = await fetch('http://localhost:5001/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(trimmedData),
@@ -38,10 +38,8 @@ const AdminLoginPage = () => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log('Admin Login Successful:', data);
         localStorage.setItem('token', data.token);
-        // Redirect to the admin dashboard or a protected admin area
-        // I will add the admin dashboard logic once we're ready to add it
+        navigate('/admin'); // redirect to admin dashboard
       } else {
         setError(data.message || 'Admin login failed.');
       }
@@ -57,13 +55,13 @@ const AdminLoginPage = () => {
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="input-field">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="username">Email or Username</label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
+              type="text"                      // ✅ Changed from email to text
+              id="username"
+              name="username"                 // ✅ Matches backend logic
+              placeholder="Email or Username"
+              value={formData.username}
               onChange={handleChange}
               required
             />
