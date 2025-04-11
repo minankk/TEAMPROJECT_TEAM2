@@ -98,15 +98,12 @@ const AuthProvider = ({ children }) => {
     };
   
     const logout = () => {
-        console.log('Logging out');
-        navigate('/logout'); // Go to logout page first
-      
-        setTimeout(() => {
-          setToken(null);
-          localStorage.removeItem('token');
-          setIsLoggedIn(false);
-        }, 100); // Small delay so LogoutPage loads
-      };
+      console.log('Logging out');
+      setToken(null);
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+      navigate('/logout');
+  };
       
   
     return (

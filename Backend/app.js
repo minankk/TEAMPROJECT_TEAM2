@@ -23,7 +23,7 @@ dotenv.config({
 const authJWT = require('./middlewares/jwtAuthMiddleware');
 const authRoutes = require('./routes/login');
 const signUpRoutes = require('./routes/signup');
-const sessionRoutes = require('./routes/checksession');
+const tokenRoutes = require('./routes/checktoken');
 const forgotPasswordRoute = require('./routes/forgotPassword');
 const resetPasswordRoute = require('./routes/resetPassword');
 const logoutRoute = require('./routes/logout');
@@ -74,9 +74,18 @@ app.use((req, res, next) => {
 // Serve images from the 'public/images' folder
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
  
+// CORS policy setup
+const allowedOrigins = ['http://localhost:3000']; 
+
 app.use(cors({
-  origin: 'http://localhost:3000',  
-  credentials: true,
+  origin: function(origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) { 
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,  
 }));
  
 /***
@@ -104,7 +113,7 @@ app.use('/pre-orders', preOrderRoutes);
 app.use('/revenue', revenueRoutes); 
 
 //protected Routes for users 
-app.use("/checksession",authJWT.authenticateJWT , sessionRoutes)
+app.use("/check-token", authJWT.authenticateJWT, tokenRoutes);
 app.use('/logout',authJWT.authenticateJWT,logoutRoute)
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
 app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
