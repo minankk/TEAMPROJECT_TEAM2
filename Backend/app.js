@@ -112,7 +112,7 @@ app.use('/pre-orders', preOrderRoutes);
 app.use('/api/revenue', revenueRoutes); 
 
 //protected Routes for users 
-app.use("/check-token",authJWT.authenticateJWT , tokenRoutes)
+app.use("/check-token", authJWT.authenticateJWT, tokenRoutes);
 app.use('/logout',authJWT.authenticateJWT,logoutRoute)
 app.use("/dashboard",authJWT.authenticateJWT, dashboardRoutes);
 app.use("/profile",authJWT.authenticateJWT, dashboardRoutes)
