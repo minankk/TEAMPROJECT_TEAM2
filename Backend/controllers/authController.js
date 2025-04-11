@@ -62,21 +62,33 @@ exports.login = async (req, res) => {
 
 //logout
 
-   exports.logout = async (req, res) => {
+exports.logout = async (req, res) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
+    console.log("logoutController: Received token:", token);
 
     if (!token) {
+        console.log("logoutController: No token provided");
         return res.status(400).json({ message: 'No token provided' });
     }
+
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        console.log("logoutController: Verified token:", decoded);
+
         await db.execute(
             'INSERT INTO blacklisted_tokens (token, expires_at) VALUES (?, FROM_UNIXTIME(?))',
             [token, decoded.exp]
         );
+        console.log("logoutController: Token blacklisted successfully");
         return res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
-        return res.status(400).json({ message: 'Invalid token' });
+        console.error("logoutController: Error during logout:", error);
+
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+
+        return res.status(400).json({ message: 'Logout failed' });
     }
 };
 
