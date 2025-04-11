@@ -72,7 +72,8 @@ function PaymentPage() {
 
 
     return (
-        <div className="payment-page">
+        <div id="payment-page">
+        <div className="payment-content">
             <header className="payment-header">
                 <h1>Secure Payment</h1>
                 <p>Complete your order by entering your payment details below.</p>
@@ -173,6 +174,7 @@ function PaymentPage() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

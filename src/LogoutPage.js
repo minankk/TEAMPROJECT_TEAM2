@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LogoutPage.css";
+import './LogoutPage.css';
 
 const LogoutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     // Clear session data on logout
-    localStorage.removeItem("authToken");
+    localStorage.removeItem("token");
     sessionStorage.clear();
   }, []);
 
