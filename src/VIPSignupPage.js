@@ -151,7 +151,10 @@ const VIPSignupPage = () => {
                     </div>
                     <div id="howToJoin" className="how-to-join combined-section">
                         <p id="paymentInfo" className="payment-info">
-                            You will be redirected to our secure payment gateway to complete your subscription.
+                        If you're not signed in, please log into your Vinyl Vault account to join The Lounge.
+                        </p>
+                        <p id="paymentInfo" className="payment-info">
+                        Already signed in? You'll be redirected to our secure payment gateway to complete your subscription.
                         </p>
                     </div>
                 </section>
