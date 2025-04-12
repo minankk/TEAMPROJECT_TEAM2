@@ -33,13 +33,18 @@
   z-index: 2;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
-  padding: 2rem;
+  padding: 35px 40px 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   border: 2px solid rgba(255, 255, 255, 0.3);
-  text-align: center;
-  max-width: 400px;
   color: white;
   backdrop-filter: blur(10px);
+  max-width: 400px;
+  width: 350px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
 }
 
 .logout-box h1 {
@@ -51,7 +56,7 @@
 .logout-message,
 .logout-submessage {
   font-size: 1rem;
-  margin-bottom: 1rem;
+  margin: 5rem 0;
   color: #9cd6ff;
   text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
 }
@@ -67,9 +72,15 @@
   cursor: pointer;
   box-shadow: 0 0 15px rgba(100, 0, 0, 0.8);
   transition: transform 0.2s ease, background-color 0.3s ease;
+  width: 100%;
 }
 
 .logout-button:hover {
   background-color: #a0211e;
   transform: scale(1.05);
+}
+
+.logout-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
 }
