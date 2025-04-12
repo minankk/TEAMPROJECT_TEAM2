@@ -22,8 +22,21 @@ exports.getSalesReport = async (req, res) => {
 
 exports.getUserActivityReport = async (req, res) => {
     try {
-        const [newSignups] = await db.execute('SELECT DATE_FORMAT(created_at, "%Y-%m-%d") AS date, COUNT(*) AS count FROM users GROUP BY date ORDER BY date');
-        const [activeUsers] = await db.execute('SELECT DATE_FORMAT(last_login, "%Y-%m-%d") AS date, COUNT(*) AS count FROM users WHERE last_login >= DATE_SUB(NOW(), INTERVAL 30 DAY) GROUP BY date ORDER BY date');
+        // Get users who signed up in the last 30 days
+        const [newSignups] = await db.execute(
+            `SELECT user_id, user_name, email, created_at 
+             FROM users 
+             WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY) 
+             ORDER BY created_at DESC`
+        );
+
+        // Get users who logged in in the last 30 days
+        const [activeUsers] = await db.execute(
+            `SELECT user_id, user_name, email, last_login 
+             FROM users 
+             WHERE last_login >= DATE_SUB(NOW(), INTERVAL 30 DAY) 
+             ORDER BY last_login DESC`
+        );
 
         res.status(200).json({ newSignups, activeUsers });
     } catch (error) {
@@ -31,6 +44,7 @@ exports.getUserActivityReport = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
 
 exports.getProductReport = async (req, res) => {
     try {
