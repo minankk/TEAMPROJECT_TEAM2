@@ -48,6 +48,7 @@ import Newsletter from './Newsletter';
 import AdminLoginPage from './AdminLoginPage';
 import VIPSignupPage from './VIPSignupPage';
 import VipPaymentPage from './VipPaymentPage';
+import AdminApprovalPage from './AdminApprovalPage';
 
 const AuthContext = createContext();
 
@@ -59,7 +60,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
-        fetch('http://localhost:5001/verify-token', {
+        fetch('http://localhost:5001/check-token', {
           headers: {
             'Authorization': `Bearer ${storedToken}`
           }
@@ -97,15 +98,12 @@ const AuthProvider = ({ children }) => {
     };
   
     const logout = () => {
-        console.log('Logging out');
-        navigate('/logout'); // Go to logout page first
-      
-        setTimeout(() => {
-          setToken(null);
-          localStorage.removeItem('token');
-          setIsLoggedIn(false);
-        }, 100); // Small delay so LogoutPage loads
-      };
+      console.log('Logging out');
+      setToken(null);
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+      navigate('/logout');
+  };
       
   
     return (
@@ -158,13 +156,14 @@ function App() {
                     <Route path="/artists" element={<ArtistsPage />} />
                     <Route path="/vip-signup" element={<VIPSignupPage />} />
                     <Route path="/vip-payment" element={<VipPaymentPage />} />
+                    <Route path="/admin/approve" element={<AdminApprovalPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />}>
                     <Route index element={<AdminOverview />} /> {/* Default route */}
                     <Route path="overview" element={<AdminOverview />} />
                     <Route path="messages" element={<MessagesPage />} />
                     <Route path="products" element={<ProductsManagementPage />} />
                     <Route path="users" element={<UserManagementPage />} />
-                    <Route path="order-management" element={<OrderManagementPage />} />
+                    <Route path="orders" element={<OrderManagementPage />} />
                     <Route path="analytics" element={<AnalyticsPage />} />
 
                     </Route>

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
 import logo from "../assets/logo-red2.png";
 import { useAuth } from "../App";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { isLoggedIn, logout } = useAuth(); // Use global auth state
+    const { isLoggedIn, logout } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
     const [genresOpen, setGenresOpen] = useState(false);
@@ -69,18 +69,20 @@ const Navbar = () => {
                     <li><Link to="/blog">BLOG</Link></li>
                 </ul>
             </nav>
+
             <div className="search-cart">
                 <div className="search-box">
-                <form className="search-box" onSubmit={handleSearchSubmit}>
-                    <input
-                        type="text"
-                        placeholder="Search records, artists, genres..."
-                        className="search-input"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                    />
-                </form>
+                    <form onSubmit={handleSearchSubmit}>
+                        <input
+                            type="text"
+                            placeholder="Search records, artists, genres..."
+                            className="search-input"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                    </form>
                 </div>
+
                 <div
                     className="user-dropdown"
                     onMouseEnter={() => isLoggedIn && setUserDropdownOpen(true)}
@@ -90,13 +92,16 @@ const Navbar = () => {
                         <FaUser />
                     </button>
                     {isLoggedIn && (
-                        <ul className={`user-dropdown-menu ${userDropdownOpen ? 'open' : ''}`}>
-                            <li><Link to="/dashboard">Dashboard</Link></li>
-                            <li><Link to="/orders">Orders</Link></li>
-                            <li><button onClick={logout}>Logout</button></li>
-                        </ul>
-                    )}
+  <ul className={`user-dropdown-menu ${userDropdownOpen ? 'open' : ''}`}>
+    <li><Link to="/dashboard">Dashboard</Link></li>
+    <li><Link to="/orders">Orders</Link></li>
+    <li><Link to="/favourites">Favourites</Link></li>
+    <li><button onClick={logout}>Logout</button></li>
+  </ul>
+)}
+
                 </div>
+
                 <Link to="/cart" className="cart-btn">
                     <FaShoppingCart />
                 </Link>

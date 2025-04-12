@@ -147,14 +147,15 @@ const AdminSignup = () => {
         </div>
       </div>
       {showPopup && (
-        <div className="admin-popup">
-          <div className="admin-popup-content">
-            <h2>Signup Request Sent</h2>
-            <p>Your signup request has been sent. You will be notified of your approval status shortly.</p>
-            <button onClick={() => setShowPopup(false)}>Close</button>
-          </div>
-        </div>
-      )}
+  <div className="admin-popup">
+    <div className="admin-popup-content">
+      <h2>Request Sent for Approval</h2>
+      <p>Your signup request has been received and is pending admin approval.</p>
+      <p>Please try logging in after a few days to check if your account has been approved or rejected.</p>
+      <button onClick={() => setShowPopup(false)}>Close</button>
+    </div>
+  </div>
+)}
     </div>
   );
 };

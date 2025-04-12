@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Outlet } from 'react-router-dom';
-import './AdminDashboardPage.css'; // Assuming you create a CSS file
+import './AdminDashboardPage.css';
 
 const AdminSidebar = () => {
     const navigate = useNavigate();
@@ -25,56 +25,126 @@ const AdminSidebar = () => {
 };
 
 const AdminOverview = () => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [dashboardData, setDashboardData] = useState(null);
+    const [salesReport, setSalesReport] = useState([]);
+    const [userActivity, setUserActivity] = useState(null);
+    const [productStats, setProductStats] = useState(null);
     const [error, setError] = useState(null);
-    const token = localStorage.getItem('token'); // Get the token from localStorage
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchDashboardData = async () => {
             try {
-                const response = await fetch("http://localhost:5001/admin/overview", { // Update endpoint
-                    headers: {
-                        'Authorization': `Bearer ${token}` // Include the token in the headers
-                    }
+                const res = await fetch('http://localhost:5001/admin/dashboard', {
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data");
-                }
-                const result = await response.json();
-                setData(result);
+                const json = await res.json();
+                setDashboardData(json);
             } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+                setError('Failed to fetch dashboard data');
             }
         };
 
-        fetchData();
+        const fetchSales = async () => {
+            try {
+                const res = await fetch('http://localhost:5001/admin/reports/sales?reportType=monthly', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const json = await res.json();
+                setSalesReport(json);
+            } catch {
+                console.error('Sales report fetch failed');
+            }
+        };
+
+        const fetchUsers = async () => {
+            try {
+                const res = await fetch('http://localhost:5001/admin/reports/user-activity', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const json = await res.json();
+                setUserActivity(json);
+            } catch {
+                console.error('User activity fetch failed');
+            }
+        };
+
+        const fetchProducts = async () => {
+            try {
+                const res = await fetch('http://localhost:5001/admin/reports/products', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const json = await res.json();
+                setProductStats(json);
+            } catch {
+                console.error('Product stats fetch failed');
+            }
+        };
+
+        fetchDashboardData();
+        fetchSales();
+        fetchUsers();
+        fetchProducts();
     }, [token]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p className="error">Error: {error}</p>;
+    if (error) return <div className="error">{error}</div>;
 
     return (
         <div className="admin-overview">
             <h2>Admin Overview</h2>
-            <p><strong>Total Users:</strong> {data.totalUsers || 'N/A'}</p>
-            <p><strong>Total Products:</strong> {data.totalProducts || 'N/A'}</p>
-            <p><strong>Total Orders:</strong> {data.totalOrders || 'N/A'}</p>
-            <p><strong>New Messages:</strong> {data.newMessages || '0'}</p>
-            {/* Add more overview data as needed */}
+           {dashboardData && (
+    <div className="overview-grid">
+        <div className="overview-card">
+            <strong>Total Users</strong>
+            <span>{dashboardData.users}</span>
+        </div>
+        <div className="overview-card">
+            <strong>Total Products</strong>
+            <span>{dashboardData.products}</span>
+        </div>
+        <div className="overview-card">
+            <strong>Total Sales</strong>
+            <span>{dashboardData.sales}</span>
+        </div>
+    </div>
+)}
+
+            {salesReport.length > 0 && (
+                <div className="overview-section">
+                    <h3>Monthly Sales Report</h3>
+                    <ul>
+                        {salesReport.map((entry, index) => (
+                            <li key={index}>{entry.period}: £{entry.sales}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+            {userActivity && (
+                <div className="overview-section">
+                    <h3>User Activity (Last 30 Days)</h3>
+                    <p>Recent Signups: {userActivity.newSignups.length}</p>
+                    <p>Active Users: {userActivity.activeUsers.length}</p>
+                </div>
+            )}
+
+            {productStats && (
+                <div className="overview-section">
+                    <h3>Top Selling Products</h3>
+                    <ul>
+                        {productStats.mostSoldItems.map((item, idx) => (
+                            <li key={idx}>{item.name} - {item.total_sold} sold</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
 
 const AdminDashboardPage = () => {
     const location = useLocation();
-    const showSidebar = !location.pathname.startsWith('/logout'); // Keep sidebar on all admin pages
-
-    console.log('Rendering AdminDashboardPage');
-    console.log('Location:', location.pathname);
-    console.log('Show Sidebar:', showSidebar);
+    const showSidebar = !location.pathname.startsWith('/logout');
 
     return (
         <div className="admin-dashboard">

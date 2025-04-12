@@ -4,26 +4,34 @@ const db = require('../db');
 const authenticateJWT = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
+        console.log("authenticateJWT: Received authHeader:", authHeader);
+
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(401).json({ message: 'Access Denied: No token provided' });
+            console.log("authenticateJWT: No or invalid authHeader");
+            return res.status(401).json({ message: 'Access Denied: No token provided or invalid format' });
         }
 
         const token = authHeader.split(' ')[1];
+        console.log("authenticateJWT: Extracted token:", token);
 
         const [rows] = await db.execute('SELECT 1 FROM blacklisted_tokens WHERE token = ?', [token]);
         if (rows.length > 0) {
+            console.log("authenticateJWT: Token blacklisted");
             return res.status(401).json({ message: 'Access Denied: Token Blacklisted' });
         }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        
+        console.log("authenticateJWT: Decoded token:", decoded);
+
         if (!decoded || !decoded.user_id) {
+            console.log("authenticateJWT: Invalid token: user_id missing");
             return res.status(401).json({ message: 'Invalid token: user_id is missing' });
         }
 
         req.user = decoded;
         next();
     } catch (error) {
-        console.error('JWT Authentication Error:', error);
+        console.error('authenticateJWT: JWT Authentication Error:', error);
         if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ message: 'Token expired. Please log in again.' });
         } else if (error.name === 'JsonWebTokenError') {

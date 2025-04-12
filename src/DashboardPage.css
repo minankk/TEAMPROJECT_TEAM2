@@ -19,7 +19,7 @@ html, body {
 /* Background Image + Overlay */
 .dashboard::before {
   content: "";
-  position: fixed;
+  position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: url('./assets/4a20a328-ee54-49be-b8bf-2e6e0fd4d210.png') center/cover no-repeat;
   filter: blur(2px);
@@ -29,7 +29,7 @@ html, body {
 
 .dashboard::after {
   content: "";
-  position: fixed;
+  position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: -1;

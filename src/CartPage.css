@@ -7,7 +7,7 @@
 /* Background Image */
 #cart-page::before {
   content: "";
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -21,7 +21,7 @@
 /* Vignette Overlay for Readability */
 #cart-page::after {
   content: "";
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
