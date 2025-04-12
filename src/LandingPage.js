@@ -4,6 +4,7 @@ import ReviewCarousel from "./ReviewCarousel";
 // import VinylGenres from "./VinylGenres";
 import VinylHistory from "./VinylHistory";
 import VIP_lounge_landing from "./VIP_lounge_landing"
+import Newsletter from "./LandNewsletter.js";
 
 // Import Hero Section Images
 import Recordstore from "./assets/VINYL_STORE_HERO_LANDING.jpeg";
@@ -146,7 +147,10 @@ function LandingPage() {
   </div>
 </section>
 
-       {/* VIP Section Intro */}
+      {/* Newsletter Section */}
+      <Newsletter />
+
+      {/* VIP Section Intro */}
       <VIP_lounge_landing />
 
     </div>
