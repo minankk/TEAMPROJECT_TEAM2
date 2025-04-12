@@ -95,6 +95,11 @@ exports.getOrderReport = async (req, res) => {
 exports.cancelOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
+        
+        if (!orderId) {
+            return res.status(400).json({ message: 'Order ID is required' });
+        }
+
         const [orderCheck] = await db.execute('SELECT status FROM orders WHERE order_id = ?', [orderId]);
 
         if (orderCheck.length === 0) {
@@ -113,6 +118,7 @@ exports.cancelOrder = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
 
 exports.addProduct = async (req, res) => {
     try {

@@ -12,7 +12,7 @@ const OrderManagementPage = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:5001/admin/dashboard/orders", {
+      const response = await fetch("http://localhost:5001/admin/dashboard/order-report", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -26,8 +26,8 @@ const OrderManagementPage = () => {
 
   const cancelOrder = async (order_id) => {
     try {
-      const response = await fetch(`http://localhost:5001/admin/dashboard/orders/${order_id}/cancel`, {
-        method: "PUT",
+      const response = await fetch(`http://localhost:5001/admin/dashboard/orders/cancel/${order_id}`, {
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
