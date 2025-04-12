@@ -7,6 +7,9 @@ router.get('/sales-report', adminDashboardController.getSalesReport);
 
 router.get('/user-activity-report', adminDashboardController.getUserActivityReport);
 
+router.get('/product-report', adminDashboardController.getProductReport);
+
+
 
 // GET /admin/dashboard (Get dashboard data including reports and products)
 router.get('/',  adminDashboardController.getDashboardData);

@@ -48,7 +48,14 @@ exports.getUserActivityReport = async (req, res) => {
 
 exports.getProductReport = async (req, res) => {
     try {
-        const [stockLevels] = await db.execute('SELECT product_id, name, stock_quantity FROM products');
+        // Fetch stock levels from the inventory table and join with products to get the name
+        const [stockLevels] = await db.execute(`
+            SELECT i.product_id, p.name, i.stock_quantity
+            FROM inventory i
+            JOIN products p ON i.product_id = p.product_id
+        `);
+
+        // Fetch the most sold items from the order_items table
         const [mostSoldItems] = await db.execute(`
             SELECT p.name, SUM(oi.quantity) AS total_sold
             FROM products p
@@ -64,6 +71,7 @@ exports.getProductReport = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
 
 exports.getOrderReport = async (req, res) => {
     try {
