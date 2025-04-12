@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const adminDashboardController = require('../../controllers/adminDashboardController');
 
+//report 
+router.get('/sales-report', adminDashboardController.getSalesReport);
+
+router.get('/user-activity-report', adminDashboardController.getUserActivityReport);
+
+
 // GET /admin/dashboard (Get dashboard data including reports and products)
 router.get('/',  adminDashboardController.getDashboardData);
 router.get('/products', adminDashboardController.getAllProducts);

@@ -30,6 +30,8 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Password does not match' });
         }
 
+        await db.execute('UPDATE users SET last_login = NOW() WHERE user_id = ?', [user.user_id]);
+
         const payload = {
             user_id: user.user_id,
             username: user.user_name,
