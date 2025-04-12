@@ -123,9 +123,9 @@ const Footer = () => {
       {/* Bottom Row: Newsletter + Copyright */}
       <div className="footer-bottom-row">
       <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Vinyl Vault. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Vinyl Vault. All Rights Reserved.</p>
         </div>
-        <form className="footer-newsletter" onSubmit={handleNewsletterSubmit}>
+        <form id="vinyl-vault-footer-newsletter" className="footer-newsletter" onSubmit={handleNewsletterSubmit}>
           <p className="newsletter-heading">Subscribe to our newsletter for the latest offers!</p>
           <div className="newsletter-form-wrapper">
             <input

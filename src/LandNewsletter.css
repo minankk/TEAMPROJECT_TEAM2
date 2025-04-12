@@ -1,0 +1,173 @@
+.newsletter-section {
+  background: linear-gradient(135deg, #000000 0%, #333333 100%);
+  color: #f0f0f0;
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid #500f0e;
+}
+
+.newsletter-wrapper {
+  max-width: 1200px;
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.newsletter-text-content {
+  /* Styles for text */
+}
+
+.newsletter-form-wrapper {
+  /* Styles for form */
+}
+
+.newsletter-image-box {
+  max-width: 350px;
+  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.newsletter-image-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.newsletter-header {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.newsletter-underline {
+  width: 50%;
+  height: 3px;
+  background: #a8211e;
+  margin-bottom: 1rem;
+}
+
+.newsletter-subtext {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  font-family: 'Trocchi';
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.newsletter-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #444;
+  border-radius: 25px;
+  background: #333;
+  color: #f0f0f0;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.newsletter-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #a8211e;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.newsletter-button:hover {
+  background: #c63632;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+.newsletter-thankyou {
+  font-size: 1.1rem;
+  color: #a1f0d1;
+  margin-top: 1rem;
+}
+
+/* Layout for larger screens (Three Columns) */
+@media (min-width: 769px) {
+  .newsletter-wrapper {
+    grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+    grid-template-areas:
+      "text form image";
+  }
+
+  .newsletter-text-content {
+    grid-area: text;
+    align-self: center;
+    text-align: left; /* Align text to the left in its column */
+  }
+
+  .newsletter-form-wrapper {
+    grid-area: form;
+    align-self: center;
+    display: flex;
+    flex-direction: column; /* Stack input and button in the column */
+    align-items: center; /* Center items horizontally in the wrapper */
+  }
+
+  .newsletter-image-box {
+    grid-area: image;
+    align-self: center;
+    justify-self: end; /* Align image to the right in its column */
+  }
+
+  .newsletter-form {
+    align-items: center; /* Center items horizontally within the form */
+    width: 80%; /* Limit the width of the form container */
+    margin: 0 auto; /* Center the form container itself */
+  }
+
+  .newsletter-input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #444;
+    border-radius: 25px;
+    background: #333;
+    color: #f0f0f0;
+    font-size: 1rem;
+    width: 100%; /* Take full width of the centered form */
+  }
+
+  .newsletter-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #a8211e;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    width: 100%; /* Take full width of the centered form */
+  }
+}
