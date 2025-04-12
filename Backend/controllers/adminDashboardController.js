@@ -1,4 +1,6 @@
 const db = require('../db');
+const formatCurrency = require('../helpers/currencyFormatter');
+
 
 exports.getSalesReport = async (req, res) => {
     try {
@@ -119,31 +121,6 @@ exports.cancelOrder = async (req, res) => {
     }
 };
 
-
-exports.addProduct = async (req, res) => {
-    try {
-        const { name, artist_id, album_id, genre_id, release_date, price, cover_image_url } = req.body;
-        await db.execute(
-            'INSERT INTO products (name, artist_id, album_id, genre_id, release_date, price, cover_image_url) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [name, artist_id, album_id, genre_id, release_date, price, cover_image_url]
-        );
-        res.status(201).json({ message: 'Product added successfully' });
-    } catch (error) {
-        console.error('Error adding product:', error);
-        res.status(500).json({ message: 'Internal server error', error: error.message });
-    }
-};
-
-exports.getAllProducts = async (req, res) => {
-    try {
-      const [products] = await db.execute('SELECT * FROM products');
-      res.status(200).json(products);
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to fetch products', error: error.message });
-    }
-  };
-  
-
 exports.getDashboardData = async (req, res) => {
     try {
         const [totalSales] = await db.execute('SELECT SUM(total_amount) AS total_sales FROM orders');
@@ -161,20 +138,55 @@ exports.getDashboardData = async (req, res) => {
     }
 };
 
+
+exports.getAllProducts = async (req, res) => {
+  try {
+    const [products] = await db.execute('SELECT * FROM products');
+    const formattedProducts = products.map((product) => {
+      product.price = formatCurrency(product.price, product.currency); 
+      return product;
+    });
+
+    res.status(200).json(formattedProducts);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch products', error: error.message });
+  }
+};
+
+  
+exports.addProduct = async (req, res) => {
+    try {
+        const { name, artist_id, album_id, genre_id, release_date, price, cover_image_url } = req.body;
+        await db.execute(
+            'INSERT INTO products (name, artist_id, album_id, genre_id, release_date, price, cover_image_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())',
+            [name, artist_id, album_id, genre_id, release_date, price, cover_image_url]
+        );
+        
+        res.status(201).json({ message: 'Product added successfully' });
+    } catch (error) {
+        console.error('Error adding product:', error);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+};
+
+
 exports.updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, artist_id, album_id, genre_id, release_date, price, cover_image_url } = req.body;
+
         await db.execute(
-            'UPDATE products SET name = ?, artist_id = ?, album_id = ?, genre_id = ?, release_date = ?, price = ?, cover_image_url = ? WHERE product_id = ?',
+            'UPDATE products SET name = ?, artist_id = ?, album_id = ?, genre_id = ?, release_date = ?, price = ?, cover_image_url = ?, updated_at = NOW() WHERE product_id = ?',
             [name, artist_id, album_id, genre_id, release_date, price, cover_image_url, id]
         );
+
         res.status(200).json({ message: 'Product updated successfully' });
     } catch (error) {
         console.error('Error updating product:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
 
 exports.deleteProduct = async (req, res) => {
     try {
