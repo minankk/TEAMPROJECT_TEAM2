@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const adminDashboardController = require('../../controllers/adminDashboardController');
 
-//report 
+//report -sales
 router.get('/sales-report', adminDashboardController.getSalesReport);
 
+//report -user-activity
 router.get('/user-activity-report', adminDashboardController.getUserActivityReport);
+
+//report - product report
+router.get('/product-report', adminDashboardController.getProductReport);
+
+//report - order report
+router.get('/order-report', adminDashboardController.getOrderReport);
+
+//cancel order
+router.delete('/orders/cancel/:orderId', adminDashboardController.cancelOrder);
 
 
 // GET /admin/dashboard (Get dashboard data including reports and products)
@@ -17,7 +27,7 @@ router.get('/products', adminDashboardController.getAllProducts);
 router.post('/products', adminDashboardController.addProduct);
 router.put('/products/:id',  adminDashboardController.updateProduct);
 router.delete('/products/:id', adminDashboardController.deleteProduct);
-router.put('/orders/:order_id/cancel', adminDashboardController.cancelOrder);
+
 
 
 module.exports = router;
