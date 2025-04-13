@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./LandNewsletter.css";
-import newsletterImage from "./assets/newsletter_vv_1:1.jpeg"; // Make sure the path is correct
+import newsletterImage from "./assets/newsletter_vv_1by1.jpeg";
 
 function Newsletter() {
   const [email, setEmail] = useState("");
