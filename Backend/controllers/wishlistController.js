@@ -4,6 +4,17 @@ exports.addToWishlist = async (req, res) => {
     try {
         const userId = req.user?.user_id;
         const productId = req.params.productId;
+
+        console.log("req.user:", req.user);
+        console.log("req.params:", req.params);
+        console.log("userId:", req.user?.user_id);
+        console.log("productId:", req.params.productId);
+
+
+        if (!userId || !productId || isNaN(productId)) {
+            return res.status(400).json({ message: "Invalid user or product ID" });
+        }
+        
         const [existingWishlistItem] = await db.execute(
             'SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?',
             [userId, productId]

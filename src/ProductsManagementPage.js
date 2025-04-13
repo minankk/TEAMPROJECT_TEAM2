@@ -17,34 +17,55 @@ const ProductsManagementPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [updatedProduct, setUpdatedProduct] = useState({ ...newProduct });
 
+  const formatDateForInput = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('http://localhost:5001/products', {
+      const res = await fetch('http://localhost:5001/admin/dashboard/products', {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
-      setProducts(data);
+
+      const cleanedProducts = data.map(product => ({
+        ...product,
+        price: typeof product.price === 'string'
+          ? product.price.replace(/[^0-9.]/g, '')
+          : product.price,
+        release_date: formatDateForInput(product.release_date)
+      }));
+
+      setProducts(cleanedProducts);
     } catch {
       setMessage('Failed to load products');
     }
   };
-
+  
   const handleInputChange = (e, type = 'new') => {
     const { name, value } = e.target;
+    const cleanValue = name === 'price' ? value.replace(/[^0-9.]/g, '') : value;
+
     if (type === 'new') {
-      setNewProduct(prev => ({ ...prev, [name]: value }));
+      setNewProduct(prev => ({ ...prev, [name]: cleanValue }));
     } else {
-      setUpdatedProduct(prev => ({ ...prev, [name]: value }));
+      setUpdatedProduct(prev => ({ ...prev, [name]: cleanValue }));
     }
   };
+  
 
   const createProduct = async () => {
     try {
-      const res = await fetch('http://localhost:5001/admin/dashboard/products', {
+      const res = await fetch('http://localhost:5001/admin/dashboard/add/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,12 +94,16 @@ const ProductsManagementPage = () => {
 
   const selectProductForUpdate = (product) => {
     setSelectedProduct(product);
-    setUpdatedProduct({ ...product });
+    setUpdatedProduct({
+      ...product,
+      release_date: formatDateForInput(product.release_date),
+      price: product.price.toString()
+    });
   };
 
   const updateProduct = async () => {
     try {
-      const res = await fetch(`http://localhost:5001/admin/dashboard/products/${selectedProduct.product_id}`, {
+      const res = await fetch(`http://localhost:5001/admin/dashboard/update/products/${selectedProduct.product_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +124,7 @@ const ProductsManagementPage = () => {
 
   const deleteProduct = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5001/admin/dashboard/products/${id}`, {
+      const res = await fetch(`http://localhost:5001/admin/dashboard/delete/products/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`
@@ -137,7 +162,7 @@ const ProductsManagementPage = () => {
       <ul>
         {products.map((product) => (
           <li key={product.product_id}>
-            <span>{product.name} - {product.price}</span>
+            <span>{product.name} - £{product.price}</span>
             <div>
               <button onClick={() => selectProductForUpdate(product)}>Edit</button>
               <button onClick={() => deleteProduct(product.product_id)}>Delete</button>

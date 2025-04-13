@@ -14,7 +14,7 @@ const AnalyticsPage = () => {
   useEffect(() => {
     const fetchSalesData = async () => {
       try {
-        const res = await fetch("http://localhost:5001/admin/reports/sales?reportType=monthly", {
+        const res = await fetch("http://localhost:5001/admin/dashboard/sales-report?reportType=daily", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`Sales fetch failed: ${await res.text()}`);
@@ -24,23 +24,39 @@ const AnalyticsPage = () => {
         console.error(err);
       }
     };
-  
+
     const fetchUserActivity = async () => {
       try {
-        const res = await fetch("http://localhost:5001/admin/reports/user-activity", {
+        const res = await fetch("http://localhost:5001/admin/dashboard/user-activity-report", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`User activity fetch failed: ${await res.text()}`);
         const data = await res.json();
-        setUserActivity(data);
+    
+        const grouped = {};
+        data.newSignups.forEach((user) => {
+          const date = new Date(user.created_at).toISOString().split("T")[0]; 
+          grouped[date] = grouped[date] ? [...grouped[date], user] : [user];
+        });
+    
+        const chartData = Object.keys(grouped).map((date) => ({
+          date,
+          count: grouped[date].length, 
+        }));
+    
+        setUserActivity({
+          newSignups: data.newSignups,
+          activeUsers: data.activeUsers,
+          chartData, 
+        });
       } catch (err) {
         console.error(err);
       }
     };
-  
+
     const fetchTopProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5001/admin/reports/products", {
+        const res = await fetch("http://localhost:5001/admin/dashboard/product-report", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`Product fetch failed: ${await res.text()}`);
@@ -50,12 +66,18 @@ const AnalyticsPage = () => {
         console.error(err);
       }
     };
-  
+
     fetchSalesData();
     fetchUserActivity();
     fetchTopProducts();
   }, [token]);
-  
+
+  // Check if topProducts is an array and has data
+  const formattedTopProducts = topProducts.map((product) => ({
+    name: product.name,
+    total_sold: product.total_sold,
+  }));
+
   return (
     <div className="analytics-page">
       <h2>Analytics</h2>
@@ -75,7 +97,7 @@ const AnalyticsPage = () => {
       {/* User Activity */}
       <div className="chart-container">
         <h3>User Signups (Daily)</h3>
-        <BarChart width={600} height={300} data={userActivity.newSignups}>
+        <BarChart width={600} height={300} data={userActivity.chartData}>
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
@@ -83,27 +105,57 @@ const AnalyticsPage = () => {
         </BarChart>
       </div>
 
-      {/* Top Products */}
-      <div className="chart-container">
-        <h3>Top Selling Products</h3>
-        <PieChart width={400} height={300}>
-          <Pie
-            data={topProducts}
-            dataKey="total_sold"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={100}
-            fill="#8884d8"
-            label
-          >
-            {topProducts.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={['#ff6b6b', '#00d4ff', '#7effb2', '#e0ff6b'][index % 4]} />
+      <div className="user-activity-overview">
+        <h3>User Activity (Last 30 Days)</h3>
+
+        <div className="activity-section">
+          <h4>Recent Signups: {userActivity.newSignups.length}</h4>
+          <ul>
+            {userActivity.newSignups.map((user, index) => (
+              <li key={index}>
+                {user.user_name} ({user.email}) – Signed up on {new Date(user.created_at).toLocaleDateString()}
+              </li>
             ))}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
+          </ul>
+        </div>
+
+        <div className="activity-section">
+          <h4>Active Users: {userActivity.activeUsers.length}</h4>
+          <ul>
+            {userActivity.activeUsers.map((user, index) => (
+              <li key={index}>
+                {user.user_name} ({user.email}) – Last login: {new Date(user.last_login).toLocaleString()}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Top Products */}
+      <div className="chart-container pie-chart-container">
+        <h3>Top Selling Products</h3>
+        {formattedTopProducts.length === 0 ? (
+          <p>No top-selling products data available.</p>
+        ) : (
+          <PieChart width={500} height={300}>
+            <Pie
+              data={formattedTopProducts}
+              dataKey="total_sold"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#8884d8"
+              label
+            >
+              {formattedTopProducts.map((_, index) => (
+                <Cell key={`cell-${index}`} fill={['#ff6b6b', '#00d4ff', '#7effb2', '#e0ff6b'][index % 4]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        )}
       </div>
     </div>
   );

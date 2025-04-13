@@ -1021,3 +1021,6 @@ INSERT INTO orders (user_id, status, total_amount, shipping_address, discount_co
 
 -- Orders without discount (discount_code is explicitly NULL)
 INSERT INTO orders (user_id, status, total_amount, shipping_address, discount_code) VALUES (2, 'completed', 30, 'Address E', NULL);
+
+
+ALTER TABLE users ADD last_login DATETIME DEFAULT NULL;

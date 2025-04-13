@@ -2,16 +2,49 @@ const express = require('express');
 const router = express.Router();
 const adminDashboardController = require('../../controllers/adminDashboardController');
 
-// GET /admin/dashboard (Get dashboard data including reports and products)
+// admin - dashboard -> overview
 router.get('/',  adminDashboardController.getDashboardData);
+
+/**
+ * Analytics section
+ */
+
+//report -sales
+router.get('/sales-report', adminDashboardController.getSalesReport);
+
+//report -user-activity
+router.get('/user-activity-report', adminDashboardController.getUserActivityReport);
+
+//report - product report
+router.get('/product-report', adminDashboardController.getProductReport);
+
+/**
+ * Order Management
+ */
+
+//report - order report
+router.get('/order-report', adminDashboardController.getOrderReport);
+
+//cancel order
+router.delete('/orders/cancel/:orderId', adminDashboardController.cancelOrder);
+
+
+/**
+ * Product Management
+ */
+
+//view all products
 router.get('/products', adminDashboardController.getAllProducts);
 
+//add a product
+router.post('/add/products', adminDashboardController.addProduct);
 
-// Product Management Endpoints (within the dashboard)
-router.post('/products', adminDashboardController.addProduct);
-router.put('/products/:id',  adminDashboardController.updateProduct);
-router.delete('/products/:id', adminDashboardController.deleteProduct);
-router.put('/orders/:order_id/cancel', adminDashboardController.cancelOrder);
+//update a product
+router.put('/update/products/:id',  adminDashboardController.updateProduct);
+
+
+router.delete('/delete/products/:id', adminDashboardController.deleteProduct);
+
 
 
 module.exports = router;

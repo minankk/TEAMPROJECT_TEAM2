@@ -1,4 +1,6 @@
 const db = require('../db');
+const formatCurrency = require('../helpers/currencyFormatter');
+
 
 exports.getSalesReport = async (req, res) => {
     try {
@@ -22,8 +24,21 @@ exports.getSalesReport = async (req, res) => {
 
 exports.getUserActivityReport = async (req, res) => {
     try {
-        const [newSignups] = await db.execute('SELECT DATE_FORMAT(created_at, "%Y-%m-%d") AS date, COUNT(*) AS count FROM users GROUP BY date ORDER BY date');
-        const [activeUsers] = await db.execute('SELECT DATE_FORMAT(last_login, "%Y-%m-%d") AS date, COUNT(*) AS count FROM users WHERE last_login >= DATE_SUB(NOW(), INTERVAL 30 DAY) GROUP BY date ORDER BY date');
+        // Get users who signed up in the last 30 days
+        const [newSignups] = await db.execute(
+            `SELECT user_id, user_name, email, created_at 
+             FROM users 
+             WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY) 
+             ORDER BY created_at DESC`
+        );
+
+        // Get users who logged in in the last 30 days
+        const [activeUsers] = await db.execute(
+            `SELECT user_id, user_name, email, last_login 
+             FROM users 
+             WHERE last_login >= DATE_SUB(NOW(), INTERVAL 30 DAY) 
+             ORDER BY last_login DESC`
+        );
 
         res.status(200).json({ newSignups, activeUsers });
     } catch (error) {
@@ -32,9 +47,17 @@ exports.getUserActivityReport = async (req, res) => {
     }
 };
 
+
 exports.getProductReport = async (req, res) => {
     try {
-        const [stockLevels] = await db.execute('SELECT product_id, name, stock_quantity FROM products');
+        // Fetch stock levels from the inventory table and join with products to get the name
+        const [stockLevels] = await db.execute(`
+            SELECT i.product_id, p.name, i.stock_quantity
+            FROM inventory i
+            JOIN products p ON i.product_id = p.product_id
+        `);
+
+        // Fetch the most sold items from the order_items table
         const [mostSoldItems] = await db.execute(`
             SELECT p.name, SUM(oi.quantity) AS total_sold
             FROM products p
@@ -51,15 +74,22 @@ exports.getProductReport = async (req, res) => {
     }
 };
 
+
 exports.getOrderReport = async (req, res) => {
     try {
         const [orders] = await db.execute(`
             SELECT o.order_id, o.user_id, o.order_date, o.status, o.total_amount, o.shipping_address,
-                   oi.product_id, oi.quantity, oi.price, p.name AS product_name, i.stock_quantity
+                   GROUP_CONCAT(DISTINCT CONCAT(oi.product_id, ':', oi.quantity, ':', oi.price) SEPARATOR ', ') AS order_items,
+                   GROUP_CONCAT(DISTINCT p.name ORDER BY oi.product_id SEPARATOR ', ') AS product_names,
+                   SUM(oi.quantity) AS total_quantity,
+                   SUM(oi.quantity * oi.price) AS total_price,
+                   MAX(i.stock_quantity) AS stock_quantity
             FROM orders o
             JOIN order_items oi ON o.order_id = oi.order_id
             JOIN products p ON oi.product_id = p.product_id
             LEFT JOIN inventory i ON p.product_id = i.product_id
+            WHERE o.status != 'Cancelled'
+            GROUP BY o.order_id
             ORDER BY o.order_date DESC
         `);
 
@@ -70,9 +100,15 @@ exports.getOrderReport = async (req, res) => {
     }
 };
 
+
 exports.cancelOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
+        
+        if (!orderId) {
+            return res.status(400).json({ message: 'Order ID is required' });
+        }
+
         const [orderCheck] = await db.execute('SELECT status FROM orders WHERE order_id = ?', [orderId]);
 
         if (orderCheck.length === 0) {
@@ -92,30 +128,6 @@ exports.cancelOrder = async (req, res) => {
     }
 };
 
-exports.addProduct = async (req, res) => {
-    try {
-        const { name, artist_id, album_id, genre_id, release_date, price, cover_image_url } = req.body;
-        await db.execute(
-            'INSERT INTO products (name, artist_id, album_id, genre_id, release_date, price, cover_image_url) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [name, artist_id, album_id, genre_id, release_date, price, cover_image_url]
-        );
-        res.status(201).json({ message: 'Product added successfully' });
-    } catch (error) {
-        console.error('Error adding product:', error);
-        res.status(500).json({ message: 'Internal server error', error: error.message });
-    }
-};
-
-exports.getAllProducts = async (req, res) => {
-    try {
-      const [products] = await db.execute('SELECT * FROM products');
-      res.status(200).json(products);
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to fetch products', error: error.message });
-    }
-  };
-  
-
 exports.getDashboardData = async (req, res) => {
     try {
         const [totalSales] = await db.execute('SELECT SUM(total_amount) AS total_sales FROM orders');
@@ -133,20 +145,55 @@ exports.getDashboardData = async (req, res) => {
     }
 };
 
+
+exports.getAllProducts = async (req, res) => {
+  try {
+    const [products] = await db.execute('SELECT * FROM products');
+    const formattedProducts = products.map((product) => {
+      product.price = formatCurrency(product.price, product.currency); 
+      return product;
+    });
+
+    res.status(200).json(formattedProducts);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch products', error: error.message });
+  }
+};
+
+  
+exports.addProduct = async (req, res) => {
+    try {
+        const { name, artist_id, album_id, genre_id, release_date, price, cover_image_url } = req.body;
+        await db.execute(
+            'INSERT INTO products (name, artist_id, album_id, genre_id, release_date, price, cover_image_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())',
+            [name, artist_id, album_id, genre_id, release_date, price, cover_image_url]
+        );
+        
+        res.status(201).json({ message: 'Product added successfully' });
+    } catch (error) {
+        console.error('Error adding product:', error);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+};
+
+
 exports.updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, artist_id, album_id, genre_id, release_date, price, cover_image_url } = req.body;
+
         await db.execute(
-            'UPDATE products SET name = ?, artist_id = ?, album_id = ?, genre_id = ?, release_date = ?, price = ?, cover_image_url = ? WHERE product_id = ?',
+            'UPDATE products SET name = ?, artist_id = ?, album_id = ?, genre_id = ?, release_date = ?, price = ?, cover_image_url = ?, updated_at = NOW() WHERE product_id = ?',
             [name, artist_id, album_id, genre_id, release_date, price, cover_image_url, id]
         );
+
         res.status(200).json({ message: 'Product updated successfully' });
     } catch (error) {
         console.error('Error updating product:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
 
 exports.deleteProduct = async (req, res) => {
     try {
