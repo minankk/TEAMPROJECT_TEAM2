@@ -11,7 +11,7 @@ exports.login = async (req, res) => {
         console.log('Received login request');
 
         if (!username || !password) {
-            return res.status(400).json({ message: 'username or email and password are required' });
+            return res.status(400).json({ message: 'Username or email and password are required' });
         }
 
         const [results] = await db.execute(
@@ -28,6 +28,12 @@ exports.login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Password does not match' });
+        }
+
+        if (user.role === 'admin' && user.approval_status !== 'approved') {
+            return res.status(403).json({
+                message: 'Admin approval is pending. You cannot log in until approved.'
+            });
         }
 
         await db.execute('UPDATE users SET last_login = NOW() WHERE user_id = ?', [user.user_id]);
@@ -50,7 +56,6 @@ exports.login = async (req, res) => {
                 user_id: user.user_id,
                 username: user.user_name,
                 email: user.email,
-                mail: user.email,
                 role: user.role
             }
         });
@@ -60,6 +65,7 @@ exports.login = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
 
 
 //logout
@@ -247,6 +253,7 @@ exports.signup = async (req, res) => {
             sendAdminApprovalNotification(username, email);
             return res.status(200).json({
                 message: 'Admin registration request sent for approval',
+                status: 'pending',
                 role,
                 token
             });

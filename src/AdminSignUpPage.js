@@ -51,7 +51,7 @@ const AdminSignup = () => {
 
       const data = await response.json();
       if (response.ok) {
-        if (data.role === 'admin' && data.message.includes('pending')) {
+        if (data.role === 'admin' && data.status.includes('pending')) {
           setShowPopup(true);
         } else {
           alert("Admin signup successful!");
