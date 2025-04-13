@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PopUp from "./PopUp";
 import './ProductsPage.css';
-import VinylRetro from './assets/VinylRetro.webp';
+import VinylRetro from './assets/BannerP.png';
 import { jwtDecode } from "jwt-decode";
 // import TestFilter from './TestFilter';
 
@@ -15,13 +15,16 @@ const ProductsPage = () => {
         artist: '',
         genre: '',
         releaseDecade: '',
-        priceRange: 0,
+        minPrice: 0,
+        maxPrice: 1000,
         bestSeller: false,
         onSale: false,
     });
     const [favorites, setFavorites] = useState([]);
     const [popupMessage, setPopupMessage] = useState(null);
     const [showFilters, setShowFilters] = useState(false);
+    const [cartPopupVisible, setCartPopupVisible] = useState(false);
+
 
     const bannerRef = useRef(null);
 const [bannerHeight, setBannerHeight] = useState(0);
@@ -251,7 +254,8 @@ useEffect(() => {
             artist: '',
             genre: '',
             releaseDecade: '',
-            priceRange: 0,
+            minPrice: 0,
+            maxPrice: 1000,
             bestSeller: false,
             onSale: false,
         });
@@ -309,8 +313,8 @@ useEffect(() => {
                     console.log('Response data:', data);
                     if (data.message) {
                         console.log(data.message);
-                        navigate('/cart');
-                    } else {
+                        setCartPopupVisible(true);
+                        setTimeout(() => setCartPopupVisible(false), 4500); // Show popup slightly longer                    } else {
                         console.error('Failed to add item to cart');
                     }
                 })
@@ -343,6 +347,11 @@ useEffect(() => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);*/
+    const filteredProducts = products.filter(product => {
+        const price = parseFloat(product.price?.replace(/[^\d.]/g, '')) || 0;
+        return price >= filters.minPrice && price <= filters.maxPrice;
+      });
+      
 
     return (
         <>
@@ -361,11 +370,31 @@ useEffect(() => {
             <section className="products">
               <h2>{generateTitle()}</h2>
               <div className="product-grid">
-                {products.length > 0 ? (
-                  products.map((product) => (
+              {filteredProducts.length > 0 ? (
+  filteredProducts.map((product) => (
+
                     <div key={product.product_id} className="product-card">
                       <div className="product-container">
                         <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
+                        <button
+                              className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+                              onClick={(e) => toggleFavorite(product.product_id, e)}
+                            >
+<svg
+  className={`heart-icon ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="24"
+  height="24"
+  fill={favorites.includes(product.product_id) ? 'red' : '#333'}
+>
+  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+    4.42 3 7.5 3c1.74 0 3.41 0.81 
+    4.5 2.09C13.09 3.81 14.76 3 16.5 3 
+    19.58 3 22 5.42 22 8.5c0 
+    3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+</svg>                            </button>
+
                         <div className="product-info">
                           <h3>{product.album_name}</h3>
                           <p>{product.artist_name}</p>
@@ -373,12 +402,6 @@ useEffect(() => {
                           <div className="product-actions">
                             <button className="buy-button" onClick={(e) => handleAddToCart(product.product_id, e)}>Add to Cart</button>
                             <button className="read-more-button" onClick={() => openPopup(product.product_id)}>More</button>
-                            <button
-                              className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
-                              onClick={(e) => toggleFavorite(product.product_id, e)}
-                            >
-                              {favorites.includes(product.product_id) ? '❤️' : '♡'}
-                            </button>
                           </div>
                         </div>
                       </div>
@@ -391,8 +414,15 @@ useEffect(() => {
             </section>
 
             {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
-            {popupMessage && <div className="favorite-popup">{popupMessage}</div>}
+            {popupMessage && <div className="favorite-popup">🎶 {popupMessage} 🎶</div>}
           </main>
+
+          {cartPopupVisible && (
+  <div className="cart-added-popup">
+    ✅ Added to cart! <a href="/cart">Go to Cart</a>
+  </div>
+)}
+
 
           {showFilters && (
   <div
@@ -407,6 +437,7 @@ useEffect(() => {
       <h2>Filter Products</h2>
       <button className="close-filters" onClick={() => setShowFilters(false)}>✕</button>
     </div>
+            <div className="filters-body">
                 <select name="artist" value={filters.artist} onChange={handleFilterChange}>
                   <option value="">All Artists</option>
                   {originalArtists.map((artist) => (
@@ -431,16 +462,25 @@ useEffect(() => {
                   <option value="2020">2020s</option>
                 </select>
 
-                <label>Price Range: £{filters.priceRange}</label>
-                <input
-                  type="range"
-                  name="priceRange"
-                  min="0"
-                  max="50"
-                  step="1"
-                  value={filters.priceRange}
-                  onChange={handleFilterChange}
-                />
+                <label>Min Price (£)</label>
+<input
+  type="number"
+  name="minPrice"
+  min="0"
+  max="1000"
+  value={filters.minPrice}
+  onChange={handleFilterChange}
+/>
+
+<label>Max Price (£)</label>
+<input
+  type="number"
+  name="maxPrice"
+  min="0"
+  max="1000"
+  value={filters.maxPrice}
+  onChange={handleFilterChange}
+/>
 
                 <label>
                   <input
@@ -465,6 +505,7 @@ useEffect(() => {
                 <div className="filters-actions">
                   <button onClick={applyFilters}>Apply Filters</button>
                   <button onClick={resetFilters}>Reset Filters</button>
+                </div>
                 </div>
               </section>
             </div>
