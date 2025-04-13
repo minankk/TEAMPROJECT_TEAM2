@@ -3,7 +3,7 @@ const db = require('../db');
 const crypto = require('crypto');
 const dashboardController = require('./dashboardController');
 
-/*
+
 
 exports.checkoutAndCreateOrder = async (req, res) => {
     const connection = await db.getConnection(); 
@@ -132,9 +132,9 @@ exports.updateOrderStatus = async (req, res) => {
     }
 };
 
-*/
 
-exports.checkoutAndCreateOrder = async (req, res) => {
+
+/*exports.checkoutAndCreateOrder = async (req, res) => {
     const connection = await db.getConnection(); 
     await connection.beginTransaction();
 
@@ -182,32 +182,26 @@ exports.checkoutAndCreateOrder = async (req, res) => {
             WHERE c.user_id = ?
         `, [userId]);
 
-        // Check if the cart is empty
         if (cartItems.length === 0) {
             await connection.rollback();
             return res.status(404).json({ message: 'Cart is empty.' });
         }
 
-        // Calculate discount based on membership status
         let cartTotal = 0;
         let discountInfo = { tier: "No VIP", discount: 0 };
         if (membershipStatus === 'vip') {
             discountInfo = dashboardController.genBenefitsDiscount(totalSpent);
         }
 
-        // Calculate cart total
         cartItems.forEach(item => {
             cartTotal += parseFloat(item.price) * item.quantity;
         });
 
-        // Apply discount to total
         const discountedTotal = cartTotal * (1 - discountInfo.discount);
         const finalTotalAmount = parseFloat(discountedTotal.toFixed(2));
 
-        // Generate a unique tracking number for the order
         const trackingNumber = `TN-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
 
-        // Insert the order into the database
         const [orderResult] = await connection.execute(`
             INSERT INTO orders (user_id, total_amount, shipping_address, status, tracking_number)
             VALUES (?, ?, ?, ?, ?)
@@ -215,14 +209,12 @@ exports.checkoutAndCreateOrder = async (req, res) => {
 
         const orderId = orderResult.insertId;
 
-        // Process each item in the order
         for (const item of items) {
             if (!item.product_id || !item.quantity || !item.price) {
                 await connection.rollback();
                 return res.status(400).json({ message: 'Each item must have product_id, quantity, and price.' });
             }
 
-            // Check if there is enough stock for the product
             const [productCheckResult] = await connection.execute(`
                 SELECT stock_quantity FROM inventory WHERE product_id = ?
             `, [item.product_id]);
@@ -235,31 +227,25 @@ exports.checkoutAndCreateOrder = async (req, res) => {
                 return res.status(400).json({ message: "Not enough stock" });
             }
 
-            // Insert the item into the order_items table
             await connection.execute(`
                 INSERT INTO order_items (order_id, product_id, quantity, price)
                 VALUES (?, ?, ?, ?)
             `, [orderId, item.product_id, item.quantity, item.price]);
 
-            // Update inventory stock
             await connection.execute(`
                 UPDATE inventory SET stock_quantity = stock_quantity - ? WHERE product_id = ?
             `, [item.quantity, item.product_id]);
         }
 
-        // Insert order tracking
         await connection.execute(`
             INSERT INTO order_tracking (order_id, status, estimated_delivery_date)
             VALUES (?, ?, ?)
         `, [orderId, 'Processing', new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)]);
 
-        // Clear the user's cart
         await connection.execute('DELETE FROM cart WHERE user_id = ?', [userId]);
 
-        // Commit the transaction
         await connection.commit();
 
-        // Return the success response
         res.status(201).json({
             message: 'Order created successfully',
             membershipTier: discountInfo.tier,
@@ -294,4 +280,4 @@ exports.updateOrderStatus = async (req, res) => {
         console.error('Error updating order status:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
-};
+};*/
