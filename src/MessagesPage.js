@@ -6,6 +6,8 @@ const MessagesPage = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [receiverId, setReceiverId] = useState('');
+    const [replyMessages, setReplyMessages] = useState({}); 
+    const [messageId, setMessageId] = useState('');
     const [error, setError] = useState('');
     const token = localStorage.getItem('token');
     const isAdmin = token ? jwtDecode(token).role === 'admin' : false;
@@ -16,30 +18,29 @@ const MessagesPage = () => {
         }
     }, [isAdmin, token]);
  
-    const fetchAdminMessages = async () => {
-        try {
-            const response = await fetch('http://localhost:5001/admin/messages/history', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json', // Add Content-Type if your backend expects JSON
-                },
-            });
- 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(`Failed to fetch messages: ${response.status} - ${errorData.message || response.statusText}`);
-            }
- 
-            const data = await response.json();
-            setMessages(data);
-            setError('');
-        } catch (err) {
-            console.error('Error fetching admin messages:', err);
-            setError('Failed to fetch messages.');
+    
+const fetchAdminMessages = async () => {
+    try {
+        const response = await fetch('http://localhost:5001/admin/messages/history', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Failed to fetch messages: ${response.status} - ${errorData.message || response.statusText}`);
         }
-    };
- 
+
+        const data = await response.json();
+        setMessages(data);
+    } catch (err) {
+        console.error('Error fetching messages:', err);
+    }
+};
+
     const handleSendMessage = async () => {
         try {
             const response = await fetch('http://localhost:5001/admin/messages/send', {
@@ -48,16 +49,19 @@ const MessagesPage = () => {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ receiverId, message: newMessage }),
+                body: JSON.stringify({
+                    receiverName: receiverId, 
+                    message: newMessage
+                }),
             });
- 
+    
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(`Failed to send message: ${response.status} - ${errorData.message || response.statusText}`);
             }
- 
+    
             setNewMessage('');
-            setReceiverId('');
+            setReceiverId(''); 
             fetchAdminMessages();
             setError('');
         } catch (err) {
@@ -65,14 +69,46 @@ const MessagesPage = () => {
             setError('Failed to send message.');
         }
     };
- 
+
+    const handleReply = async (messageId) => {
+        try {
+            const response = await fetch('http://localhost:5001/admin/messages/reply', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: replyMessages[messageId], // Use the replyMessages object
+                    messageId: messageId,
+                }),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to send reply: ${response.status} - ${errorData.message || response.statusText}`);
+            }
+    
+            setReplyMessages(prevState => {
+                const newState = { ...prevState };
+                delete newState[messageId]; // Clear the reply input after sending
+                return newState;
+            });
+            fetchAdminMessages();
+        } catch (err) {
+            console.error('Error sending reply:', err);
+        }
+    };
+    
+    
+    
     const handleDeleteMessage = async (messageId) => {
         try {
-            const response = await fetch(`http://localhost:5001/admin/messages/${messageId}`, {
+            const response = await fetch(`http://localhost:5001/admin/messages/delete/${messageId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json', // You might not need Content-Type for DELETE, but it's good practice to include if your API expects it
+                    'Content-Type': 'application/json', 
                 },
             });
  
@@ -97,11 +133,11 @@ const MessagesPage = () => {
         <div className="messages-page">
             <h2>Admin Messages</h2>
             {error && <p className="error">{error}</p>}
- 
+    
             <div className="message-form">
                 <input
                     type="text"
-                    placeholder="Receiver ID"
+                    placeholder="Receiver Name"
                     value={receiverId}
                     onChange={(e) => setReceiverId(e.target.value)}
                 />
@@ -112,19 +148,42 @@ const MessagesPage = () => {
                 />
                 <button onClick={handleSendMessage}>Send Message</button>
             </div>
- 
+    
             <ul className="message-list">
-                {messages.map((message) => (
-                    <li key={message.message_id}>
-                        <p><strong>To:</strong> {message.receiver_id}</p>
-                        <p>{message.message}</p>
-                        <p>Sent at: {new Date(message.sent_at).toLocaleString()}</p>
-                        <button onClick={() => handleDeleteMessage(message.message_id)}>Delete</button>
-                    </li>
-                ))}
-            </ul>
+    {messages.length > 0 ? (
+        messages.map((message) => (
+            <li key={message.message_id}>
+                <p><strong>From:</strong> {message.sender_name}</p>
+                <p><strong>To:</strong> {message.receiver_name}</p>
+                <p>{message.message}</p>
+                <p><strong>Sent at:</strong> {new Date(message.sent_at).toLocaleString()}</p>
+
+                <div className="reply-section">
+                    <textarea
+                        placeholder="Reply to this message"
+                        value={replyMessages[message.message_id] || ''}
+                        onChange={(e) => setReplyMessages({
+                            ...replyMessages,
+                            [message.message_id]: e.target.value
+                        })}
+                    />
+                    <button onClick={() => handleReply(message.message_id)}>Send Reply</button>
+                </div>
+
+                {message.sender_id === jwtDecode(token).user_id && (
+                    <button className="delete-btn" onClick={() => handleDeleteMessage(message.message_id)}>Delete</button>
+                )}
+            </li>
+        ))
+    ) : (
+        <p>No messages available.</p>
+    )}
+</ul>
+
         </div>
     );
+    
+    
 };
  
 export default MessagesPage;

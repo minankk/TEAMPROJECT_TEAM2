@@ -79,11 +79,17 @@ exports.getOrderReport = async (req, res) => {
     try {
         const [orders] = await db.execute(`
             SELECT o.order_id, o.user_id, o.order_date, o.status, o.total_amount, o.shipping_address,
-                   oi.product_id, oi.quantity, oi.price, p.name AS product_name, i.stock_quantity
+                   GROUP_CONCAT(DISTINCT CONCAT(oi.product_id, ':', oi.quantity, ':', oi.price) SEPARATOR ', ') AS order_items,
+                   GROUP_CONCAT(DISTINCT p.name ORDER BY oi.product_id SEPARATOR ', ') AS product_names,
+                   SUM(oi.quantity) AS total_quantity,
+                   SUM(oi.quantity * oi.price) AS total_price,
+                   MAX(i.stock_quantity) AS stock_quantity
             FROM orders o
             JOIN order_items oi ON o.order_id = oi.order_id
             JOIN products p ON oi.product_id = p.product_id
             LEFT JOIN inventory i ON p.product_id = i.product_id
+            WHERE o.status != 'Cancelled'
+            GROUP BY o.order_id
             ORDER BY o.order_date DESC
         `);
 
@@ -93,6 +99,7 @@ exports.getOrderReport = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
+
 
 exports.cancelOrder = async (req, res) => {
     try {
