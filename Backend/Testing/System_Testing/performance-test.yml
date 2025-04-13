@@ -8,6 +8,8 @@ config:
     fields:
       - email
       - password
+  plugins:
+    expect: {}
   defaults:
     headers:
       Content-Type: "application/json"
@@ -20,11 +22,14 @@ scenarios:
           json:
             username: "{{ email }}"
             password: "{{ password }}"
+          expect:
+            - statusCode: 200
           capture:
             - json: "$.token"
               as: token
             - json: "$.user.user_id"
               as: user_id
+
       - post:
           url: "/cart/add"
           headers:
@@ -32,6 +37,9 @@ scenarios:
           json:
             product_id: 1
             quantity: 1
+          expect:
+            - statusCode: 201
+
       - post:
           url: "/orders"
           headers:
@@ -42,4 +50,6 @@ scenarios:
                 quantity: 1
                 price: 20.00
             totalAmount: 20.00
-            shippingAddress: "123 Test St"
+            shippingAddress: "123 Test Street"
+          expect:
+            - statusCode: 201
