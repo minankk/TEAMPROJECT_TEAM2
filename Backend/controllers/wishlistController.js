@@ -30,7 +30,6 @@ exports.addToWishlist = async (req, res) => {
 };
 
 
-
 exports.removeFromWishlist = async (req, res) => {
     try {
         const userId = req.user?.user_id; 

@@ -1,0 +1,45 @@
+config:
+  target: "http://localhost:5001"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+  payload:
+    path: "C:/Users/Asus/TEAMPROJECT_TEAM2/Backend/Testing/System_Testing/users.csv"
+    fields:
+      - email
+      - password
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: Full User Purchase Flow
+    flow:
+      - post:
+          url: "/login"
+          json:
+            username: "{{ email }}"
+            password: "{{ password }}"
+          capture:
+            - json: "$.token"
+              as: token
+            - json: "$.user.user_id"
+              as: user_id
+      - post:
+          url: "/cart/add"
+          headers:
+            Authorization: "Bearer {{ token }}"
+          json:
+            product_id: 1
+            quantity: 1
+      - post:
+          url: "/orders"
+          headers:
+            Authorization: "Bearer {{ token }}"
+          json:
+            items:
+              - product_id: 1
+                quantity: 1
+                price: 20.00
+            totalAmount: 20.00
+            shippingAddress: "123 Test St"
