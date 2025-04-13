@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from "jwt-decode"; // Import jwtDecode
+import { jwtDecode } from "jwt-decode"; 
 import './CartPage.css';
 
 export default function ShoppingCart() {
@@ -10,7 +10,7 @@ export default function ShoppingCart() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
-            navigate('/login'); // Redirect if no token
+            navigate('/login'); 
             return;
         }
 
@@ -21,7 +21,7 @@ export default function ShoppingCart() {
             fetch(`http://localhost:5001/cart/${user_id}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Include Authorization header
+                    'Authorization': `Bearer ${token}`, 
                 },
             })
             .then(response => {
@@ -44,6 +44,7 @@ export default function ShoppingCart() {
                 if (data.cartItems) {
                     const fetchedCartItems = data.cartItems.map(item => ({
                         id: item.cart_id,
+                        product_id: item.product_id, 
                         name: item.product_name,
                         price: item.price,
                         quantity: item.quantity,
@@ -51,7 +52,7 @@ export default function ShoppingCart() {
                     }));
                     setCart(fetchedCartItems);
                 } else {
-                    setCart([]); // Clear cart if no items are returned
+                    setCart([]); 
                 }
             })
             .catch(error => {
@@ -106,7 +107,6 @@ export default function ShoppingCart() {
       })
       .then(data => {
           if (data.message) {
-              // Refetch cart data after successful deletion
               fetch(`http://localhost:5001/cart/${user_id}`, {
                   method: 'GET',
                   headers: {
@@ -118,6 +118,7 @@ export default function ShoppingCart() {
                   if (data.cartItems) {
                       const fetchedCartItems = data.cartItems.map(item => ({
                           id: item.cart_id,
+                          product_id: item.product_id,   
                           name: item.product_name,
                           price: item.price,
                           quantity: item.quantity,
@@ -125,7 +126,7 @@ export default function ShoppingCart() {
                       }));
                       setCart(fetchedCartItems);
                   } else {
-                      setCart([]); // Clear cart if no items are returned
+                      setCart([]); 
                   }
               })
               .catch(error => {
