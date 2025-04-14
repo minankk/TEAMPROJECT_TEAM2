@@ -2,24 +2,52 @@ const db = require('../db');
 const formatDate = require('../helpers/dateFormatter');
 const formatCurrency = require('../helpers/currencyFormatter');
 
+
+const LOW_STOCK_THRESHOLD = 5;
+
 exports.getAllProducts = (req, res) => {
-  db.execute(`
-      SELECT p.product_id, p.name AS album_name, a.name AS artist_name, g.name AS genre_name,
-             p.price, p.cover_image_url
-      FROM products p
-      JOIN artists a ON p.artist_id = a.artist_id
-      JOIN genres g ON p.genre_id = g.genre_id
-  `)
-  .then(([results]) => {
+  const query = `
+    SELECT 
+      p.product_id, 
+      p.name AS album_name, 
+      a.name AS artist_name, 
+      g.name AS genre_name,
+      p.price, 
+      p.cover_image_url,
+      inv.stock_quantity,
+      CASE 
+        WHEN inv.stock_quantity <= ? THEN TRUE 
+        ELSE FALSE 
+      END AS low_stock
+    FROM products p
+    JOIN artists a ON p.artist_id = a.artist_id
+    JOIN genres g ON p.genre_id = g.genre_id
+    LEFT JOIN (
+      SELECT i1.product_id, i1.stock_quantity
+      FROM inventory i1
+      INNER JOIN (
+          SELECT product_id, MAX(inventory_id) AS max_inv_id
+          FROM inventory
+          GROUP BY product_id
+      ) i2 ON i1.product_id = i2.product_id AND i1.inventory_id = i2.max_inv_id
+    ) AS inv ON p.product_id = inv.product_id
+  `;
+
+  db.execute(query, [5])
+    .then(([results]) => {
       results.forEach(product => {
-          product.price = formatCurrency(product.price);
+        product.price = formatCurrency(product.price);
       });
       res.status(200).json(results);
-  }).catch((err) => {
-    console.error("Error fetching products:", err);
-    res.status(500).json({ error: "Failed to fetch products" });
-  });
+    })
+    .catch((err) => {
+      console.error("Error fetching products:", err);
+      res.status(500).json({ error: "Failed to fetch products" });
+    });
 };
+
+
+
 
 exports.getProductById = async (req, res) => {
   const { productId } = req.params;
