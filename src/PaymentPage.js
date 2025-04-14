@@ -46,7 +46,6 @@ function PaymentPage() {
                     quantity: item.quantity,
                     price: item.price
                 })),
-                totalAmount: totalAmount,
                 shippingAddress: paymentData.billingAddress,
             };
 
@@ -63,7 +62,15 @@ function PaymentPage() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                alert("Payment successful! Order ID: " + responseData.orderId);
+            
+                alert(
+                    `Payment successful!\n` +
+                    `Order ID: ${responseData.orderId}\n` +
+                    `VIP Tier: ${responseData.membershipTier}\n` +
+                    `Discount Applied: ${responseData.discountApplied}%\n` +
+                    `Final Total: £${responseData.finalTotalAmount}`
+                );
+            
                 navigate('/order-success', {
                     state: { trackingNumber: responseData.tracking_number }
                 });
