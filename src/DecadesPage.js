@@ -159,10 +159,12 @@ function DecadesPage() {
 
             {popupMessage && <div className="decades-popup">{popupMessage}</div>}
             {cartPopupVisible && (
-                <div className="cart-added-popup">
-                    ✅ Added to cart! <a href="/cart">Go to Cart</a>
-                </div>
-            )}
+            <div className="cart-added-popup">
+  ✅ Added to cart!{" "}
+  <button onClick={() => navigate('/cart')} className="go-to-cart-link">
+    Go to Cart
+  </button>
+</div>)}
             {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
         </div>
     );
