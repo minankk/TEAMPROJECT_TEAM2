@@ -9,6 +9,7 @@ const AlternativeRockPage = () => {
     const [favorites, setFavorites] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [popupMessage, setPopupMessage] = useState(null);
+    const [cartPopupVisible, setCartPopupVisible] = useState(false);
     const navigate = useNavigate();
 
     const showPopup = (message) => {
@@ -110,7 +111,8 @@ const AlternativeRockPage = () => {
                 .then(data => {
                     if (data.message) {
                         console.log(data.message);
-                        navigate('/cart');
+                        setCartPopupVisible(true);
+                        setTimeout(() => setCartPopupVisible(false), 4500);              
                     }
                 })
                 .catch(err => console.error('Add to cart error:', err));
@@ -140,20 +142,33 @@ const AlternativeRockPage = () => {
                         products.map(product => (
                             <div key={product.product_id} className="product-card" onClick={() => openPopup(product.product_id)}>
                                 <img src={`http://localhost:5001${product.cover_image_url}`} alt={product.album_name} className="product-image" />
+                                <button
+                  className={`alternative-rock-heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+                  onClick={(e) => toggleFavorite(product.product_id, e)}
+                >
+                  <svg
+                    className={`heart-icon ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    fill={favorites.includes(product.product_id) ? 'red' : '#333'}
+                  >
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                      2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09 
+                      C13.09 3.81 14.76 3 16.5 3 
+                      19.58 3 22 5.42 22 8.5 
+                      c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
+                </button>
                                 <div className="product-info">
                                     <h3>{product.album_name}</h3>
                                     <p>{product.artist_name}</p>
-                                    <p>£{product.price}</p>
+                                    <p>{product.price}</p>
                                 </div>
                                 <div className="product-actions">
                                     <button className="buy-button" onClick={(event) => handleAddToCart(product.product_id, event)}>Add to Cart</button>
                                     <button className="read-more-button" onClick={() => openPopup(product.product_id)}>More</button>
-                                    <button
-                                        className={`heart-button ${favorites.includes(product.product_id) ? 'favorited' : ''}`}
-                                        onClick={(event) => toggleFavorite(product.product_id, event)}
-                                    >
-                                        {favorites.includes(product.product_id) ? '❤️' : '♡'}
-                                    </button>
                                 </div>
                             </div>
                         ))
@@ -165,6 +180,12 @@ const AlternativeRockPage = () => {
 
             {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
             {popupMessage && <div className="favorite-popup">{popupMessage}</div>}
+            {cartPopupVisible && (
+        <div className="cart-added-popup">
+          ✅ Added to cart! <a href="/cart">Go to Cart</a>
+        </div>
+      )}
+
         </main>
     );
 };
