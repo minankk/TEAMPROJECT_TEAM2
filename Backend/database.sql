@@ -1024,3 +1024,15 @@ INSERT INTO orders (user_id, status, total_amount, shipping_address, discount_co
 
 
 ALTER TABLE users ADD last_login DATETIME DEFAULT NULL;
+
+INSERT INTO artists_bio (artist_id, bio, image_url) VALUES
+(
+    (SELECT artist_id FROM artists WHERE name = 'Charli XCX'),
+    'Charli XCX, born Charlotte Emma Aitchison in Cambridge in 1992, is a British singer-songwriter known for her genre-defying electro-pop. Rising from Myspace beginnings, she broke through with hits like "I Love It" and "Fancy." Her bold style, avant-garde visuals, and trailblazing music earned her critical acclaim. In 2024, her sixth album *Brat* made waves in pop culture, and she was crowned Best British Songwriter at the 2025 Brit Awards.',
+    'Backend\public\images\artists_info\Charli XCX.jpg'
+),
+(
+    (SELECT artist_id FROM artists WHERE name = 'The Masterplan'),
+    'Masterplan is a German power metal band formed in 2001 by ex-Helloween members Roland Grapow and Uli Kusch. Blending powerful vocals with melodic precision, their debut album *Masterplan* in 2003 gained a cult following. With soaring anthems and high-octane performances, the band carved a loyal fanbase and has stayed strong in the European metal scene, continuing to evolve while keeping their roots in epic melodic storytelling.',
+    'Backend\public\images\artists_info\Masterplan.jpg'
+);
