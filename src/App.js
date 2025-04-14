@@ -49,6 +49,7 @@ import AdminLoginPage from './AdminLoginPage';
 import VIPSignupPage from './VIPSignupPage';
 import VipPaymentPage from './VipPaymentPage';
 import AdminApprovalPage from './AdminApprovalPage';
+import TrackOrderPage from './TrackOrderPage';
 
 const AuthContext = createContext();
 
@@ -157,6 +158,7 @@ function App() {
                     <Route path="/vip-signup" element={<VIPSignupPage />} />
                     <Route path="/vip-payment" element={<VipPaymentPage />} />
                     <Route path="/admin/approve" element={<AdminApprovalPage />} />
+                    <Route path="/track-order" element={<TrackOrderPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />}>
                     <Route index element={<AdminOverview />} /> {/* Default route */}
                     <Route path="overview" element={<AdminOverview />} />

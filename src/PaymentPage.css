@@ -172,16 +172,20 @@
 
 /* Order Summary */
 .order-summary-container {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.3); /* darker base for contrast */
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25); /* subtle border */
   border-radius: 20px;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 0 10px rgba(255, 255, 255, 0.05),
+    0 0 25px rgba(255, 255, 255, 0.15); /* soft outer and inner glow */
   padding: 30px;
   width: 100%;
   max-width: 300px;
   min-width: 200px;
   color: white;
   flex: 1;
+  transition: background 0.3s ease;
 }
 
 .order-summary-container h2 {

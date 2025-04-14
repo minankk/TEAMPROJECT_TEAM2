@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import "./PaymentPage.css";
 
 function PaymentPage() {
@@ -176,8 +176,7 @@ function PaymentPage() {
                             </div>
                         )}
                         <div className="summary-back">
-                            <a href="./cart">Not sure? Go back</a>
-                        </div>
+                        <Link to="/cart" className="summary-back-link">Not sure? Go back</Link>                        </div>
                     </div>
                 </div>
             </div>

@@ -143,9 +143,15 @@ export default function ShoppingCart() {
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const handleCheckout = () => {
-        navigate("/payment-page", { state: { cartItems: cart, totalAmount: totalPrice } });
+        if (cart.length === 0) {
+            alert("Your cart is empty. Add items before checking out.");
+            return;
+        }
+    
+        navigate("/payment-page", {
+            state: { cartItems: cart, totalAmount: totalPrice }
+        });
     };
-
     return (
         <div id="cart-page">
           <div className="cart-container">
@@ -175,9 +181,13 @@ export default function ShoppingCart() {
       
             <div className="cart-summary">
               <div className="total-price">Total: £{totalPrice}</div>
-              <button className="checkout-button" onClick={handleCheckout}>
-                Checkout
-              </button>
+              <button
+  className="checkout-button"
+  onClick={handleCheckout}
+  disabled={cart.length === 0}
+>
+  Checkout
+</button>
             </div>
           </div>
         </div>
