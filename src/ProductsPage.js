@@ -418,10 +418,12 @@ useEffect(() => {
           </main>
 
           {cartPopupVisible && (
-  <div className="cart-added-popup">
-    ✅ Added to cart! <a href="/cart">Go to Cart</a>
-  </div>
-)}
+            <div className="cart-added-popup">
+  ✅ Added to cart!{" "}
+  <button onClick={() => navigate('/cart')} className="go-to-cart-link">
+    Go to Cart
+  </button>
+</div>)}
 
 
           {showFilters && (

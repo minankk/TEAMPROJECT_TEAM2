@@ -95,7 +95,7 @@ const Navbar = () => {
   <ul className={`user-dropdown-menu ${userDropdownOpen ? 'open' : ''}`}>
     <li><Link to="/dashboard">Dashboard</Link></li>
     <li><Link to="/dashboard/profile">Profile</Link></li>
-    <li><Link to="/favourites">Favourites</Link></li>
+    <li><Link to="/dashboard/favorites">Favourites</Link></li>
     <li><button onClick={logout}>Logout</button></li>
   </ul>
 )}
