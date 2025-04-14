@@ -218,30 +218,39 @@ exports.viewOrderTracking = async (req, res) => {
     }
 };
 
-
-
-
   // Get user's received messages
-exports.getUserMessages = async (req, res) => {
+  exports.getUserMessages = async (req, res) => {
     try {
-        console.log('Decoded User:', req.user);
         const userID = req.user?.user_id;
+
         if (!userID) {
             return res.status(400).json({ error: 'User ID is missing' });
         }
+
         const [messages] = await db.query(
-            'SELECT * FROM messages WHERE receiver_id = ? ORDER BY sent_at DESC',
+            `SELECT 
+                m.message_id,
+                m.sender_id,
+                u.user_name AS sender_name,
+                m.receiver_id,
+                m.message,
+                m.sent_at,
+                m.is_read,
+                m.parent_id
+             FROM messages m
+             JOIN users u ON m.sender_id = u.user_id
+             WHERE m.receiver_id = ?
+             ORDER BY m.sent_at DESC`,
             [userID]
         );
-        if (messages.length === 0) {
-            return res.status(404).json({ message: 'No messages found for this user' });
-        }
-        res.json(messages);
+
+        return res.status(200).json(messages);
     } catch (error) {
         console.error('Error fetching messages:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 };
+
 
 // Reply to a message
 exports.replyToMessage = async (req, res) => {
