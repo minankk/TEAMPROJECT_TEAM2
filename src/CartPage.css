@@ -91,6 +91,9 @@
 .cart-item-details {
   flex-grow: 1;
   padding-left: 20px;
+  flex-direction: column;
+  gap: 6px; 
+  display: flex;
 }
 
 .cart-item-title {
@@ -98,6 +101,7 @@
   font-weight: bold;
   font-family: 'Oswald', sans-serif;
   color: white;
+  margin-bottom: 6px;
 }
 
 .cart-item-price {
