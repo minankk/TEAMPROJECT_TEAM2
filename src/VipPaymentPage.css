@@ -151,8 +151,8 @@ html, body {
   font-size: 1.5rem;
   margin-bottom: 15px;
   font-family: 'Oswald';
-  width: 100%;
-  text-align: left;
+  /* width: 100%;
+  text-align: left; */
 }
 
 .payment-form {

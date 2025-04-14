@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import "./VipPaymentPage.css";
+import SuccessPopup from "./SuccessPopup";
+import { FaCrown } from "react-icons/fa";
 
 function VipPaymentPage() {
     const navigate = useNavigate();
@@ -11,6 +13,8 @@ function VipPaymentPage() {
         expiryDate: "",
         cvv: "",
     });
+
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,7 +42,6 @@ function VipPaymentPage() {
             return;
         }
 
-        // Set plan price
         const amount = selectedPlan === "monthly" ? 2.99 : 29.99;
 
         try {
@@ -50,15 +53,14 @@ function VipPaymentPage() {
                 },
                 body: JSON.stringify({
                     amount: amount,
-                    paymentMethod: "card", // Fixed value used by backend
+                    paymentMethod: "card",
                 }),
             });
 
             const responseData = await response.json();
 
             if (response.ok) {
-                alert(`Payment successful! You are now a VIP member (${selectedPlan}).`);
-                navigate('/vip-success');
+                setShowSuccessPopup(true);
             } else {
                 alert(`Payment failed: ${responseData.message || "Please try again."}`);
             }
@@ -79,7 +81,7 @@ function VipPaymentPage() {
                 <div className="plan-selection">
                     <h2>Select Your Plan</h2>
                     <select value={selectedPlan} onChange={handlePlanChange} required>
-                        <option value=""> Select a Plan:</option>
+                        <option value="">Select a Plan:</option>
                         <option value="monthly">Monthly (£2.99/month)</option>
                         <option value="annual">Annual (£29.99/year)</option>
                     </select>
@@ -148,6 +150,16 @@ function VipPaymentPage() {
                     <Link to="/vip-signup">Go back to VIP info</Link>
                 </div>
             </div>
+
+            {showSuccessPopup && (
+                <SuccessPopup
+                    onClose={() => setShowSuccessPopup(false)}
+                    title="Welcome to the Lounge"
+                    message="You are now a VIP member. Enjoy exclusive perks!"
+                    icon={FaCrown}
+                    redirectTo="/dashboard"
+                />
+            )}
         </div>
     );
 }
