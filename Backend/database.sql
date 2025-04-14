@@ -584,97 +584,97 @@ INSERT INTO artists_bio (artist_id, bio, image_url) VALUES
 (
     (SELECT artist_id FROM artists WHERE name = 'Nirvana'),
     'Formed in 1987 in Aberdeen, Washington, Nirvana was pivotal in bringing grunge music to the mainstream. Led by vocalist and guitarist Kurt Cobain, alongside bassist Krist Novoselic and drummer Dave Grohl, the band’s breakthrough came with Nevermind (1991), featuring the anthemic Smells Like Teen Spirit. Their raw sound and introspective lyrics captured the angst of a generation, making them one of the most influential bands of the ''90s. Nirvana''s success was tragically cut short by Cobain''s death in 1994, but their legacy continues to shape rock music and alternative culture worldwide.',
-    'Backend/public/images/artists_info/nirvana-nv002stdo.jpg'
+    'Backend\public\images\artists_info\Nirvana.webp'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Oasis'),
     'Emerging from Manchester in 1991, Oasis became synonymous with the Britpop movement. Led by the Gallagher brothers, Liam and Noel, the band''s confident swagger and anthemic songwriting defined a generation. Their 1994 debut, Definitely Maybe, became one of the fastest-selling albums in UK history, followed by (What’s the Story) Morning Glory? (1995), featuring classics like Wonderwall and Don’t Look Back in Anger. Despite internal tensions and an eventual breakup in 2009, Oasis remains one of the most influential British rock bands, with their music continuing to inspire fans and artists alike.',
-    'Backend/public/images/artists_info/oasis.webp'
+    'Backend\public\images\artists_info\Oasis.jpg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Radiohead'),
     'Formed in 1985 in Abingdon, England, Radiohead is known for their innovative and ever-evolving sound. After breaking through with Creep (1992), they transcended alt-rock with OK Computer (1997), a landmark album exploring themes of technology and alienation. Fronted by Thom Yorke, with Johnny and Colin Greenwood, Ed O''Brien, and Philip Selway, the band continued to push musical boundaries with electronic and experimental elements in Kid A (2000) and beyond. Their ability to constantly reinvent themselves has earned them critical acclaim, a dedicated fanbase, and a legacy as one of the most groundbreaking bands in modern music.',
-    'Backend/public/images/artists_info/Radiohead in 1997.avif'
+    'Backend\public\images\artists_info\Radiohead-1994.webp'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Green Day'),
     'Pioneers of pop-punk, Green Day formed in 1987 in California, led by Billie Joe Armstrong, Mike Dirnt, and Tré Cool. Their 1994 album Dookie catapulted them to fame with hits like Basket Case and When I Come Around. Known for their energetic style and rebellious lyrics, they reached new heights with the politically charged American Idiot (2004), a rock opera that resonated with a generation. With multiple Grammy Awards and a place in the Rock and Roll Hall of Fame, Green Day continues to shape punk rock while maintaining their signature high-energy performances.',
-    'Backend/public/images/artists_info/green day.webp'
+    'Backend\public\images\artists_info\green day.jpeg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Sabrina Carpenter'),
     'Sabrina Carpenter, born on May 11, 1999, in Quakertown, Pennsylvania, is an American singer, songwriter, and actress. She gained prominence starring as Maya Hart on the Disney Channel series "Girl Meets World" (2014–2017). Transitioning to music, Carpenter released her debut single, "Can''t Blame a Girl for Trying," in 2014, followed by albums including "Eyes Wide Open" (2015) and "Evolution" (2016). Her 2022 album, "Emails I Can''t Send," featured the viral hit "Nonsense." In 2024, her sixth album, "Short n'' Sweet," debuted at number one on the Billboard 200, producing chart-topping singles like "Espresso." Carpenter has also appeared in films such as "The Hate U Give" (2018) and "Clouds" (2020), and made her Broadway debut in "Mean Girls" (2020)',
-    'Backend/public/images/artists_info/sabrina carpenter.jpeg'
+    'Backend\public\images\artists_info\sabrina carpenter.jpeg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Ariana Grande'),
     'Ariana Grande, born in 1993 in Boca Raton, Florida, rose to fame as a child star before transitioning into a global pop sensation. With a powerhouse voice influenced by R&B, she debuted with Yours Truly (2013) and quickly became known for her vocal range and emotional depth. Albums like Sweetener (2018) and Thank U, Next (2019) cemented her status as one of pop’s biggest stars. Hits like No Tears Left to Cry and 7 Rings showcase her ability to blend vulnerability with confidence, making her one of the most influential artists of her generation.',
-    'Backend/public/images/artists_info/ariana grande.jpg'
+    'Backend\public\images\artists_info\ariana grande.webp'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Fleetwood Mac'),
     'Fleetwood Mac, formed in 1967, evolved into one of the most successful rock bands of all time. Originally a British blues band, they found global fame with their classic lineup of Stevie Nicks, Lindsey Buckingham, Christine McVie, John McVie, and Mick Fleetwood. Their 1977 album Rumours, featuring Go Your Own Way and Dreams, became one of the best-selling albums ever. Known for their harmonious blend of rock and pop, Fleetwood Mac''s music continues to transcend generations. Despite lineup changes and personal drama, their influence remains strong, with their songs still beloved by fans worldwide.',
-    'Backend/public/images/artists_info/fleetwood mac.jpg'
+    'Backend\public\images\artists_info\FleetwoodMac.jpg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Michael Jackson'),
     'Dubbed the "King of Pop," Michael Jackson revolutionized music, dance, and entertainment. Born in 1958, he began as a child star with the Jackson 5 before launching a solo career that redefined pop music. His 1982 album Thriller remains the best-selling album of all time, with hits like Billie Jean and Beat It. Known for his groundbreaking music videos and signature dance moves like the moonwalk, Jackson''s impact is immeasurable. Despite controversies, his legacy as a musical genius endures, influencing countless artists and shaping modern pop culture.',
-    'Backend/public/images/artists_info/michael - jackson.jpg'
+    'Backend\public\images\artists_info\Micheal jackson.jpeg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Olivia Rodrigo'),
     'Born in 2003, Olivia Rodrigo rose to fame with her debut single Drivers License (2021), which shattered streaming records and cemented her status as a voice of Gen Z. Her debut album, SOUR, showcased her emotional songwriting and blend of pop and alternative influences. With tracks like Good 4 U and Deja Vu, she explored themes of heartbreak and self-discovery. Her follow-up, GUTS (2023), reinforced her reputation as a talented lyricist. Rodrigo''s ability to connect with listeners through raw, authentic storytelling has made her one of the most exciting young artists in music today.',
-    'Backend/public/images/artists_info/olivia rodrigo.webp'
+    'Backend\public\images\artists_info\olivia-rodrigo.avif'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Ashnikko'),
     'Ashnikko, born Ashton Nicole Casey in 1996, is an American artist known for her blend of hyper-pop, hip-hop, and punk influences. Rising to fame with STUPID (2019) and Daisy (2020), she built a reputation for bold, unconventional music and feminist themes. Her debut album DEMIDEVIL (2021) showcased her genre-defying sound and unapologetic persona. With a distinctive aesthetic and high-energy performances, Ashnikko has carved out a unique space in modern pop music, challenging conventions and embracing individuality with every track she releases.',
-    'Backend/public/images/artists_info/Ashnikko.webp'
+    'Backend\public\images\artists_info\Ashnikko.jpg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Pink Floyd'),
     'Formed in 1965, Pink Floyd became pioneers of progressive rock, known for their concept albums and atmospheric sound. Led by Roger Waters, David Gilmour, Richard Wright, and Nick Mason, they created some of the most influential albums in music history, including The Dark Side of the Moon (1973) and The Wall (1979). Their music explores themes of time, war, mental health, and societal control, with intricate compositions and psychedelic elements. Even after decades, Pink Floyd’s work continues to captivate audiences, solidifying their place as one of rock’s most legendary bands.',
-    'Backend/public/images/artists_info/pink floyd.jpg'
+    'Backend\public\images\artists_info\Pink floyd.jpeg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Led Zeppelin'),
     'Led Zeppelin, formed in 1968, revolutionized rock music with their blend of blues, hard rock, and folk influences. Comprised of Robert Plant, Jimmy Page, John Paul Jones, and John Bonham, the band created timeless classics like Stairway to Heaven, Whole Lotta Love, and Kashmir. Their electrifying performances and innovative studio techniques set new standards for rock musicianship. Despite disbanding after Bonham’s death in 1980, their influence on rock and metal remains unmatched, with their music continuing to inspire generations of artists and fans alike.',
-    'Backend/public/images/artists_info/Led_Zeppelin.jpg'
+    'Backend\public\images\artists_info\Led Zeppelin.jpg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'The Beatles'),
     'The Beatles, formed in 1960 in Liverpool, are regarded as the most influential band in history. Composed of John Lennon, Paul McCartney, George Harrison, and Ringo Starr, they transformed pop and rock music with their innovative songwriting and experimental sound. From early hits like Love Me Do to groundbreaking albums like Sgt. Pepper’s Lonely Hearts Club Band, their music evolved rapidly, shaping the course of modern music. Even after their breakup in 1970, their legacy endures, with their songs remaining cultural landmarks that continue to inspire artists and audiences worldwide.',
-    'Backend/public/images/artists_info/The-Beatles.webp'
+    'Backend\public\images\artists_info\the beatles.jpg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Eagles'),
     'The Eagles, formed in 1971, became one of the best-selling rock bands of all time, blending rock with country harmonies. Their album Hotel California (1976) produced timeless hits like the title track and New Kid in Town. Known for their smooth melodies and intricate guitar work, Don Henley, Glenn Frey, Joe Walsh, and others defined the sound of ''70s rock. Despite breakups and reunions, the Eagles’ music remains iconic, with their greatest hits album ranking among the best-selling records in history. Their influence on country rock and soft rock continues to be felt today.',
-    'Backend/public/images/artists_info/Eagles.webp'
+    'Backend\public\images\artists_info\eagles.jpeg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = '50 Cent'),
     'Born Curtis Jackson in 1975, 50 Cent emerged as a dominant force in hip-hop in the early 2000s. His debut album, Get Rich or Die Tryin’ (2003), featuring hits like In Da Club and Many Men, established him as a rap superstar. Discovered by Eminem and Dr. Dre, he combined gritty street narratives with mainstream appeal. Beyond music, 50 Cent built a successful business empire, including ventures in film, television, and entrepreneurship. His influence on rap culture extends beyond his music, making him one of the most recognized figures in hip-hop.',
-    'Backend/public/images/artists_info/50 cent.webp'
+    'Backend\public\images\artists_info\50-Cent.avif'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Kendrick Lamar'),
     'Kendrick Lamar is widely regarded as one of the greatest hip-hop artists of his generation. Emerging from Compton, California, he gained recognition with Good Kid, M.A.A.D City (2012) before reaching critical heights with To Pimp a Butterfly (2015), an album blending jazz, funk, and politically charged lyrics. His storytelling, social commentary, and intricate lyricism have earned him multiple Grammy Awards and even a Pulitzer Prize for DAMN. (2017). With his thought-provoking music and cultural impact, Lamar continues to shape hip-hop as both an art form and a means of activism.',
-    'Backend/public/images/artists_info/Kendrick_Lamar.jpg'
+    'Backend\public\images\artists_info\kendric lamar.avif'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Jay-Z'),
     'Jay-Z, born Shawn Carter in 1969, went from Brooklyn hustler to hip-hop mogul, becoming one of the most successful rappers of all time. His debut album Reasonable Doubt (1996) set the stage for a career defined by lyrical brilliance, business acumen, and cultural influence. With classic albums like The Blueprint and 4:44, Jay-Z has consistently evolved, tackling themes of success, race, and personal growth. As the founder of Roc Nation and a billionaire entrepreneur, he has shaped not only hip-hop but the entire music industry.',
-    'Backend/public/images/artists_info/jay z.jpg'
+    'Backend\public\images\artists_info\j zay.avif'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'Eminem'),
     'Eminem, born Marshall Mathers in 1972, is one of the most influential and controversial rappers in history. Rising to fame with The Slim Shady LP (1999), his provocative lyrics, storytelling, and technical skill set him apart. Albums like The Marshall Mathers LP and The Eminem Show solidified his reputation as a masterful lyricist, tackling personal struggles, fame, and social issues. Discovered by Dr. Dre, he became one of the best-selling artists of all time, influencing generations of rappers with his raw honesty and rapid-fire delivery.',
-    'Backend/public/images/artists_info/Eminem.jpeg'
+    'Backend\public\images\artists_info\Eminem.jpeg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.'),
     'The Notorious B.I.G., born Christopher Wallace in 1972, became one of hip-hop’s most iconic figures before his tragic death in 1997. With his deep voice, smooth flow, and vivid storytelling, he brought East Coast rap to the forefront. His debut album, Ready to Die (1994), produced hits like Juicy and Big Poppa, while Life After Death (1997) cemented his legendary status. Despite his short career, Biggie’s impact on hip-hop remains profound, with his influence still shaping the genre decades later.',
-    'Backend/public/images/artists_info/the_notorious B.I.G.jpg'
+    'Backend\public\images\artists_info\the notorious big.webp'
 );
 
 CREATE TABLE favorites (
