@@ -1,4 +1,8 @@
 const db = require('../db');
+const normalizeImagePath = (path) => {
+    if (!path) return null;
+    return path.replace(/\\/g, '/').replace(/^Backend\/public/, '');
+};
 
 exports.getAllArtists = async (req, res) => {
     try {
@@ -7,7 +11,13 @@ exports.getAllArtists = async (req, res) => {
             FROM artists a
             LEFT JOIN artists_bio ab ON a.artist_id = ab.artist_id
         `);
-        res.status(200).json(artists);
+
+        const updatedArtists = artists.map(artist => ({
+            ...artist,
+            image_url: normalizeImagePath(artist.image_url)
+        }));
+
+        res.status(200).json(updatedArtists);
     } catch (error) {
         console.error('Error fetching artists:', error);
         res.status(500).json({ message: 'Internal server error', error: error.message });
@@ -37,6 +47,7 @@ exports.getArtistById = async (req, res) => {
 
         const artist = {
             ...artistDetails[0],
+            image_url: normalizeImagePath(artistDetails[0].image_url),
             products: artistProducts
         };
 
@@ -47,4 +58,3 @@ exports.getArtistById = async (req, res) => {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
-

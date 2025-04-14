@@ -1028,11 +1028,31 @@ ALTER TABLE users ADD last_login DATETIME DEFAULT NULL;
 INSERT INTO artists_bio (artist_id, bio, image_url) VALUES
 (
     (SELECT artist_id FROM artists WHERE name = 'Charli XCX'),
-    'Charli XCX, born Charlotte Emma Aitchison in Cambridge in 1992, is a British singer-songwriter known for her genre-defying electro-pop. Rising from Myspace beginnings, she broke through with hits like "I Love It" and "Fancy." Her bold style, avant-garde visuals, and trailblazing music earned her critical acclaim. In 2024, her sixth album *Brat* made waves in pop culture, and she was crowned Best British Songwriter at the 2025 Brit Awards.',
-    'Backend\public\images\artists_info\Charli XCX.jpg'
+    'Charli XCX is a fearless force in pop. Known for her edgy electro-pop hits and boundary-pushing style, she’s become a cult icon of the digital age. With a flair for experimental sounds and bold visuals, she fuses mainstream bangers with underground vibes — a true iconoclast.',
+    'images/artists_info/Charli XCX.jpg'
 ),
 (
     (SELECT artist_id FROM artists WHERE name = 'The Masterplan'),
-    'Masterplan is a German power metal band formed in 2001 by ex-Helloween members Roland Grapow and Uli Kusch. Blending powerful vocals with melodic precision, their debut album *Masterplan* in 2003 gained a cult following. With soaring anthems and high-octane performances, the band carved a loyal fanbase and has stayed strong in the European metal scene, continuing to evolve while keeping their roots in epic melodic storytelling.',
-    'Backend\public\images\artists_info\Masterplan.jpg'
+    'The Masterplan, a British rock band born in the late ’90s, blends soaring anthems with gritty riffs. Known for nostalgic lyrics and electrifying live shows, they channel a raw energy that pays homage to Britpop’s golden age while carving out their own unique voice.',
+    'images/artists_info/Masterplan.jpg'
 );
+
+UPDATE artists_bio SET image_url = 'images/artists_info/Nirvana.webp' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Nirvana');
+UPDATE artists_bio SET image_url = 'images/artists_info/Oasis.jpg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Oasis');
+UPDATE artists_bio SET image_url = 'images/artists_info/Radiohead-1994.webp' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Radiohead');
+UPDATE artists_bio SET image_url = 'images/artists_info/green day.jpeg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Green Day');
+UPDATE artists_bio SET image_url = 'images/artists_info/sabrina carpenter.jpeg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Sabrina Carpenter');
+UPDATE artists_bio SET image_url = 'images/artists_info/ariana grande.webp' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Ariana Grande');
+UPDATE artists_bio SET image_url = 'images/artists_info/FleetwoodMac.jpg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Fleetwood Mac');
+UPDATE artists_bio SET image_url = 'images/artists_info/Micheal jackson.jpeg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Michael Jackson');
+UPDATE artists_bio SET image_url = 'images/artists_info/olivia-rodrigo.avif' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Olivia Rodrigo');
+UPDATE artists_bio SET image_url = 'images/artists_info/Ashnikko.jpg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Ashnikko');
+UPDATE artists_bio SET image_url = 'images/artists_info/Pink floyd.jpeg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Pink Floyd');
+UPDATE artists_bio SET image_url = 'images/artists_info/Led Zeppelin.jpg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Led Zeppelin');
+UPDATE artists_bio SET image_url = 'images/artists_info/the beatles.jpg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'The Beatles');
+UPDATE artists_bio SET image_url = 'images/artists_info/eagles.jpeg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Eagles');
+UPDATE artists_bio SET image_url = 'images/artists_info/50-Cent.avif' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = '50 Cent');
+UPDATE artists_bio SET image_url = 'images/artists_info/kendric lamar.avif' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Kendrick Lamar');
+UPDATE artists_bio SET image_url = 'images/artists_info/j zay.avif' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Jay-Z');
+UPDATE artists_bio SET image_url = 'images/artists_info/Eminem.jpeg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Eminem');
+UPDATE artists_bio SET image_url = 'images/artists_info/the notorious big.webp' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.');
