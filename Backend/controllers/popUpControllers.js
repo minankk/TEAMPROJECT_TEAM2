@@ -9,24 +9,28 @@ exports.getPopUpInfo = async (req, res) => {
 
     const [results] = await db.execute(`
       SELECT 
-        p.product_id, 
-        p.name AS album_name, 
-        p.cover_image_url, 
-        p.release_date,
-        ap.hit_singles, 
-        ap.awards, 
-        ap.records, 
-        ap.genres_popup, 
-        ap.interesting_facts, 
-        ra.related_album_id, 
-        a.title AS related_album_name, 
-        rai.image_url AS related_album_image
-      FROM products p
-      LEFT JOIN albums_pop_up ap ON p.album_id = ap.album_id
-      LEFT JOIN related_albums ra ON ap.album_id = ra.album_id
-      LEFT JOIN albums a ON ra.related_album_id = a.album_id
-      LEFT JOIN related_album_images rai ON ra.related_album_id = rai.related_album_id
-      WHERE p.product_id = ?;
+  p.product_id, 
+  p.name AS album_name, 
+  p.cover_image_url, 
+  p.release_date,
+  p.price,
+  ar.name AS artist_name,                            -- ✅ artist name from proper join
+  ap.hit_singles, 
+  ap.awards, 
+  ap.records, 
+  ap.genres_popup, 
+  ap.interesting_facts, 
+  ra.related_album_id, 
+  rel_albums.title AS related_album_name, 
+  rai.image_url AS related_album_image
+  FROM products p
+  LEFT JOIN albums main_albums ON p.album_id = main_albums.album_id     
+  LEFT JOIN artists ar ON main_albums.artist_id = ar.artist_id         
+  LEFT JOIN albums_pop_up ap ON p.album_id = ap.album_id
+  LEFT JOIN related_albums ra ON ap.album_id = ra.album_id
+  LEFT JOIN albums rel_albums ON ra.related_album_id = rel_albums.album_id
+  LEFT JOIN related_album_images rai ON ra.related_album_id = rai.related_album_id
+  WHERE p.product_id = ?;
     `, [productId]);
 
     if (results.length === 0) {
@@ -47,10 +51,12 @@ exports.getPopUpInfo = async (req, res) => {
     res.status(200).json({
       album_name: product.album_name,
       cover_image_url: product.cover_image_url,
+      artist_name: product.artist_name, 
       release_date: formattedReleaseDate,
       hit_singles: product.hit_singles,
       awards: product.awards,
       records: product.records,
+      price: product.price,  
       genres_popup: product.genres_popup,
       interesting_facts: product.interesting_facts,
       related_albums: uniqueRelatedAlbums,  
