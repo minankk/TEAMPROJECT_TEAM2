@@ -21,7 +21,7 @@ dotenv.config({
 })
  
 const authJWT = require('./middlewares/jwtAuthMiddleware');
-const authRoutes = require('./routes/login');
+const authRoutes = require('./routes/loginAsUser');
 const signUpRoutes = require('./routes/signup');
 const tokenRoutes = require('./routes/checktoken');
 const forgotPasswordRoute = require('./routes/forgotPassword');
@@ -53,7 +53,7 @@ const adminUserProfileRoutes = require('./routes/adminRoutes/adminUserProfile');
 const adminMembershipRoutes = require("./routes/adminRoutes/adminMembership");
 const adminMessageRoutes = require("./routes/adminRoutes/adminMessageRoutes");
 const admindashboardRoutes = require("./routes/adminRoutes/adminDashboard");
-
+const adminLoginRoutes = require('./routes/adminRoutes/adminLogin');
 
 
 // notification
@@ -125,6 +125,7 @@ app.use('/orders', authJWT.authenticateJWT ,orderRoutes);
 
 //admin
 app.use("/admin-signup", signUpRoutes);
+app.use("/admin", adminLoginRoutes);
 app.use("/admin-approval", adminApprovalRoutes);
 app.use("/admin/dashboard", authJWT.authenticateJWT, authJWT.verifyAdmin, admindashboardRoutes);
 app.use("/admin/users", authJWT.authenticateJWT, authJWT.verifyAdmin, adminUserProfileRoutes); 
