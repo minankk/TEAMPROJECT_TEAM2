@@ -1,11 +1,9 @@
-/* Overall page layout */
 .products-page {
-  font-family: "Oswald", sans-serif;
+  font-family: "Orbitron", sans-serif;
   margin: 0;
   padding: 0;
-  /*background: linear-gradient(#f0f0f0, #e0e0e0);*/
-  background-color: #f8f8f8;
-  color: #333;
+  background: linear-gradient(135deg, #fdfbff 0%, #f3f0ff 25%, #f0e0ff 45%, #d2b6ff 65%, #b6a3f5 85%, #9e8ee2 100%);
+  color: #111;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,13 +17,13 @@
 .products-page::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./assets/istockphoto-182154211-612x612.jpg');
-  background-repeat: repeat;
-  filter: brightness(80%) sepia(2) contrast(1) saturate(0.6) opacity(70%) hue-rotate(-50deg);  z-index: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(0, 247, 255, 0.15), transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(255, 0, 64, 0.1), transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .products-page.blur-background {
@@ -36,20 +34,32 @@
 .products-page .products-banner {
   position: relative;
   width: 100%;
-  max-height: 600px;
-  height: auto;
+  max-height: 656px;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
+  background-color: #000;
 }
 
+/* Keep this updated version from earlier */
 .products-page .products-banner-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  margin: 0;
-  padding: 0;
-  filter: brightness(50%) sepia(0.5) contrast(0.8) saturate(0.6);
+  height: auto;
+  max-height: 656px;
+  display: block;
+  margin: 0 auto;
+  filter: brightness(0.85) saturate(0.9) hue-rotate(-5deg);
+}
+
+/* ADD this new gradient shadow overlay */
+.products-page .products-banner::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%; /* Adjust intensity */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .products-page .products-banner-text {
@@ -63,7 +73,7 @@
   max-width: 28%;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
   font-weight: bold;
-  z-index: 1;
+  z-index: 2;
 }
 
 .products-page .products-banner-text h1 {
@@ -123,48 +133,79 @@
 .filters-popup {
   position: relative;
   top: 142px;
-  height: auto;
-  max-height: calc(100vh - 120px);
-  max-height: 90vh;
   left: 0;
   width: 320px;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
-  padding: 20px;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-right: 5px solid #ad2321;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 30px 20px;
+  box-shadow:
+    0 0 30px rgba(173, 35, 33, 0.3),
+    0 0 60px rgba(255, 0, 128, 0.15),
+    -4px 0 15px rgba(0, 0, 0, 0.2);
   z-index: 1001;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  transform: translateX(-100%);
-  transition: transform 0.4s ease-in-out;
+  gap: 24px;
   overflow-y: auto;
+  max-height: 90vh;
+  transition: transform 0.4s ease-in-out;
+  transform: translateX(-100%);
   cursor: default;
+  font-family: 'Montserrat', sans-serif;
+  color: #eee;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 25px 20px;
+  height: 90vh;
 }
 
 .filters-popup.open {
   transform: translateX(0);
 }
 
-.filters-popup label,
+
 .filters-popup select,
-.filters-popup input[type="range"] {
-  width: 100%;
-  margin-bottom: 15px;
+.filters-popup input[type="number"],
+.filters-popup input[type="range"],
+.filters-popup input[type="checkbox"] {
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  color: #222;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  transition: 0.2s ease;
+}
+.filters-popup select:focus,
+.filters-popup input:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
-.filters-popup input[type="checkbox"] {
-  margin-right: 8px;
+
+.filters-popup label {
+  font-weight: 600;
+  color: #f2f2f2;
+  margin-top: 10px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 
 .filters-body {
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 25px;
   width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
+  height: 90vh;
+  margin-bottom:100px;
 }
 
 .filters-header {
@@ -176,41 +217,52 @@
 }
 
 .filters-header h2 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  color: #ffffff;
   margin: 0;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4), 0 0 20px #ad2321;
 }
 
 .filters-actions {
+  position: sticky;
+  bottom: 0;
+  padding: 15px 20px;
+  backdrop-filter: blur(12px);
   display: flex;
   gap: 10px;
-  margin-top: auto;
   width: 100%;
   justify-content: flex-end;
+  z-index: 10;
+  margin-top: 20px;
 }
 
-.filters-actions button {
-  background-color: #620b0b;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 1rem;
-}
-
-.filters-actions button:hover {
-  background-color: #52110e;
-}
-
-.filters-actions button:last-child {
-  background-color: #444;
-}
-
-.filters-actions button:last-child:hover {
-  background-color: #333;
-}
+  .filters-actions button {
+    background-color: #620b0b;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(173, 35, 33, 0.4);
+    margin-right: 20px;
+  }
+  
+  .filters-actions button:hover {
+    background-color: #8e1e1b;
+    box-shadow: 0 0 15px rgba(173, 35, 33, 0.6);
+  }
+  
+  .filters-actions button:last-child {
+    background-color: #333;
+  }
+  
+  .filters-actions button:last-child:hover {
+    background-color: #555;
+  }
+  
 
 /* Product Grid Container */
 .products-page .products {
@@ -241,12 +293,9 @@
 
 /* Product Card (Now the Block Container) */
 .products-page .product-card {
-  background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
-  backdrop-filter: blur(10px); /* Apply a blur to the background content */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
-  border-radius: 16px; /* Rounded corners */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.08);  backdrop-filter: blur(10px); /* Apply a blur to the background content */
+  border: 1px solid rgba(255, 255, 255, 0.2);  border-radius: 16px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);  padding: 15px;
   margin: 10px;
   width: 300px; /* Adjust as needed */
   min-height: auto;
@@ -257,6 +306,8 @@
   transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out; /* Add transition for hover effect */
   box-sizing: border-box;
   position: relative;
+  backdrop-filter: blur(10px);
+  color: white;
 }
 
 .products-page .product-card:hover {
@@ -349,24 +400,53 @@
   border-color: #555;
 }
 
-/* Heart Button */
+.heart-icon {
+  transition: transform 0.2s ease, fill 0.3s ease;
+  cursor: pointer;
+}
+
+.heart-icon.favorited {
+  animation: pulse 0.5s ease;
+  fill: red !important;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+ /* Heart button below image */
 .products-page .heart-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Subtle white border */
-  color: lightgray;
-  font-size: 1.3em;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  padding: 5px;
-  min-width: auto;
-  border-radius: 5px;
-  backdrop-filter: blur(5px); /* Apply blur to the heart button background */
+  position: static;
+  margin-top: 10px;
+  align-self: center;
+  background: rgba(255, 255, 255, 0.40);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.2em;
+  padding: 6px 10px;
+  transition: 0.3s ease;
+  display: flex;
+  justify-self: center;
 }
 
 .products-page .heart-button.favorited {
-  color: red;
+  color: #ff3b3b;
+  text-shadow: 0 0 5px #ff3b3b;
+}
+
+.products-page .heart-button:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #ff5e5e;
+  transform: scale(1.1);
 }
 
 /* Adjust flex order to position heart and read more */
@@ -427,14 +507,76 @@
   }
 }
 
-.products-page .favorite-popup {
-  position: absolute;
-  bottom: 20px;
+.favorite-popup {
+  position: fixed;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  z-index: 10;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  z-index: 9999; /* Bump this way up */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  animation: fadeInOut 3s ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+.cart-added-popup {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(26, 150, 26, 0.9);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  z-index: 9999;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeInOut 4.5s ease-in-out;
+}
+
+.cart-added-popup a {
+  color: #fff;
+  font-weight: bold;
+  margin-left: 10px;
+  text-decoration: underline;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
 }
