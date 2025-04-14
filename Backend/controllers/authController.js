@@ -5,7 +5,109 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 
-exports.login = async (req, res) => {
+exports.loginUser = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Username or email and password are required' });
+        }
+
+        const [results] = await db.execute(
+            'SELECT * FROM users WHERE user_name = ? OR email = ?', 
+            [username, username]
+        );
+
+        if (results.length === 0) {
+            return res.status(400).json({ message: 'User not found. Please Sign Up.' });
+        }
+
+        const user = results[0];
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Password does not match' });
+        }
+
+        await db.execute('UPDATE users SET last_login = NOW() WHERE user_id = ?', [user.user_id]);
+
+        const payload = {
+            user_id: user.user_id,
+            username: user.user_name,
+            email: user.email,
+            role: user.role
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
+
+        return res.status(200).json({
+            message: 'User login successful',
+            token,
+            user: payload
+        });
+
+    } catch (error) {
+        console.error('User login error:', error.stack);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.loginAdmin = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Username or email and password are required' });
+        }
+
+        const [results] = await db.execute(
+            'SELECT * FROM users WHERE user_name = ? OR email = ?', 
+            [username, username]
+        );
+
+        if (results.length === 0) {
+            return res.status(400).json({ message: 'User not found.' });
+        }
+
+        const user = results[0];
+
+        if (user.role !== 'admin') {
+            return res.status(403).json({ message: 'Unauthorized. Only admins can log in here.' });
+        }
+
+        if (user.approval_status !== 'approved') {
+            return res.status(403).json({ message: 'Admin approval pending. Access denied.' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Password does not match' });
+        }
+
+        await db.execute('UPDATE users SET last_login = NOW() WHERE user_id = ?', [user.user_id]);
+
+        const payload = {
+            user_id: user.user_id,
+            username: user.user_name,
+            email: user.email,
+            role: user.role
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
+
+        return res.status(200).json({
+            message: 'Admin login successful',
+            token,
+            user: payload
+        });
+
+    } catch (error) {
+        console.error('Admin login error:', error.stack);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+/*exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
         console.log('Received login request');
@@ -28,6 +130,10 @@ exports.login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Password does not match' });
+        }
+
+        if (user.role !== 'admin') {
+            return res.status(403).json({ message: 'Unauthorized access. Only admins can log in here.' });
         }
 
         if (user.role === 'admin' && user.approval_status !== 'approved') {
@@ -64,7 +170,7 @@ exports.login = async (req, res) => {
         console.error('Login error:', error.stack);
         return res.status(500).json({ message: 'Internal server error' });
     }
-};
+};*/
 
 
 
