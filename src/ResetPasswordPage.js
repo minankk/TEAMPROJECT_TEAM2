@@ -1,7 +1,7 @@
-// ResetPasswordPage.js
+// src/ResetPasswordPage.js
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './ResetPasswordPage.css'; // Import the CSS
+import './ResetPasswordPage.css';
 
 const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
@@ -11,7 +11,7 @@ const ResetPasswordPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const token = searchParams.get('token'); // Get token from URL query params
+    const token = searchParams.get('token');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,11 +29,9 @@ const ResetPasswordPage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/',  { // Replace with your backend URL
+            const response = await fetch('http://localhost:5001/reset-password', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token, newPassword: password }),
             });
 
@@ -41,8 +39,7 @@ const ResetPasswordPage = () => {
 
             if (response.ok) {
                 setMessage(data.message);
-                // Redirect to login or home after successful reset
-                setTimeout(() => navigate('/login'), 2000); // Redirect after 2 seconds
+                setTimeout(() => navigate('/login'), 2000);
             } else {
                 setError(data.message || 'An error occurred.');
             }
