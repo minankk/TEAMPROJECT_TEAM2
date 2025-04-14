@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ArtistsPage.css';
 import { jwtDecode } from "jwt-decode";
 import PopUp from './PopUp';
+import { useNavigate } from 'react-router-dom';
 
 function ArtistsPage() {
     const [artists, setArtists] = useState([]);
@@ -11,6 +12,9 @@ function ArtistsPage() {
     const [popupMessage, setPopupMessage] = useState(null);
     const [cartPopupVisible, setCartPopupVisible] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         fetch('http://localhost:5001/artists?timestamp=' + new Date().getTime())
@@ -187,10 +191,12 @@ function ArtistsPage() {
 
             {popupMessage && <div className="artists-popup">{popupMessage}</div>}
             {cartPopupVisible && (
-                <div className="cart-added-popup">
-                    ✅ Added to cart! <a href="/cart">Go to Cart</a>
-                </div>
-            )}
+            <div className="cart-added-popup">
+  ✅ Added to cart!{" "}
+  <button onClick={() => navigate('/cart')} className="go-to-cart-link">
+    Go to Cart
+  </button>
+</div>)}
             {selectedProduct && <PopUp product={selectedProduct} onClose={closePopup} />}
         </div>
     );
