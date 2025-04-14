@@ -23,7 +23,7 @@
   animation: popupFadeIn 0.5s ease-in-out;
 }
 
-@keyframes productpopupFadeIn {
+@keyframes popupFadeIn {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -33,6 +33,7 @@
     transform: translateY(0);
   }
 }
+
 
 .product-popup-content {
   flex: 1;
@@ -151,6 +152,13 @@
   border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
 .review-form input,
 .review-form textarea {
   padding: 10px;
@@ -168,6 +176,27 @@
 }
 .rating-stars span:hover {
   transform: scale(1.2);
+}
+
+
+/* Style the Submit Review button */
+.review-form button[type="submit"] {
+  background-color: #620b0b;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px rgba(173, 35, 33, 0.4);
+  align-self: flex-end;
+}
+
+.review-form button[type="submit"]:hover {
+  background-color: #8e1e1b;
+  box-shadow: 0 0 15px rgba(173, 35, 33, 0.6);
 }
 
 /* Reviews list display */
