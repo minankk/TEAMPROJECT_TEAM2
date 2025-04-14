@@ -54,8 +54,8 @@ const LoginPage = () => {
 
         const data = await response.json();
         if (response.ok) {
-          login(data.token); // Assuming backend returns a token
-          navigate('/'); // Redirect after signup
+          login(data.token);
+          navigate('/dashboard', { state: { signupSuccess: true } });
         } else {
           setError(data.message || "Signup failed");
         }
