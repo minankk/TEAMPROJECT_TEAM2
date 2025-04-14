@@ -117,7 +117,7 @@ const UserMessagesPage = () => {
                 <ul className="message-list">
                     {messages.map((message) => (
                         <li key={message.message_id}>
-                            <p><strong>From:</strong> {message.sender_id}</p>
+                            <p><strong>From:</strong> {message.sender_name}</p>
                             <p>{message.message}</p>
                             <p>Sent at: {new Date(message.sent_at).toLocaleString()}</p>
                             {!message.is_read && (
