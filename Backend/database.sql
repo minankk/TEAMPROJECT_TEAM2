@@ -1025,7 +1025,7 @@ INSERT INTO orders (user_id, status, total_amount, shipping_address, discount_co
 
 ALTER TABLE users ADD last_login DATETIME DEFAULT NULL;
 
-INSERT INTO artists_bio (artist_id, bio, image_url) VALUES
+IINSERT INTO artists_bio (artist_id, bio, image_url) VALUES
 (
     (SELECT artist_id FROM artists WHERE name = 'Charli XCX'),
     'Charli XCX is a fearless force in pop. Known for her edgy electro-pop hits and boundary-pushing style, she’s become a cult icon of the digital age. With a flair for experimental sounds and bold visuals, she fuses mainstream bangers with underground vibes — a true iconoclast.',
@@ -1036,7 +1036,7 @@ INSERT INTO artists_bio (artist_id, bio, image_url) VALUES
     'The Masterplan, a British rock band born in the late ’90s, blends soaring anthems with gritty riffs. Known for nostalgic lyrics and electrifying live shows, they channel a raw energy that pays homage to Britpop’s golden age while carving out their own unique voice.',
     'images/artists_info/Masterplan.jpg'
 );
-
+ 
 UPDATE artists_bio SET image_url = 'images/artists_info/Nirvana.webp' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Nirvana');
 UPDATE artists_bio SET image_url = 'images/artists_info/Oasis.jpg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Oasis');
 UPDATE artists_bio SET image_url = 'images/artists_info/Radiohead-1994.webp' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Radiohead');
@@ -1056,3 +1056,23 @@ UPDATE artists_bio SET image_url = 'images/artists_info/kendric lamar.avif' WHER
 UPDATE artists_bio SET image_url = 'images/artists_info/j zay.avif' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Jay-Z');
 UPDATE artists_bio SET image_url = 'images/artists_info/Eminem.jpeg' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'Eminem');
 UPDATE artists_bio SET image_url = 'images/artists_info/the notorious big.webp' WHERE artist_id = (SELECT artist_id FROM artists WHERE name = 'The Notorious B.I.G.');
+
+
+DELETE FROM artists_bio WHERE artist_id = 20;
+DELETE FROM artists WHERE artist_id = 20;
+DELETE FROM artists WHERE artist_id = 21;
+
+ALTER TABLE artists
+DROP COLUMN bio,
+DROP COLUMN profile_image_url;
+
+DELETE FROM artists_bio
+WHERE artist_bio_id = 5;
+
+UPDATE artists_bio
+SET artist_id = 10
+WHERE artist_bio_id = 1;
+
+UPDATE artists_bio
+SET image_url = 'images/artists_info/Charli XCX.jpg'
+WHERE artist_bio_id = 1;

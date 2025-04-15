@@ -1,8 +1,14 @@
 const db = require('../db');
+
+
 const normalizeImagePath = (path) => {
     if (!path) return null;
-    return path.replace(/\\/g, '/').replace(/^Backend\/public/, '');
+    return '/' + path
+        .replace(/\\/g, '/')
+        .replace(/^Backend\/public\//, '');
 };
+
+
 
 exports.getAllArtists = async (req, res) => {
     try {
