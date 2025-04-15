@@ -94,15 +94,15 @@ const AdminOverview = () => {
             <h2>Admin Overview</h2>
            {dashboardData && (
     <div className="overview-grid">
-        <div className="overview-card">
+        <div className="admin-overview-card">
             <strong>Total Users</strong>
             <span>{dashboardData.users}</span>
         </div>
-        <div className="overview-card">
+        <div className="admin-overview-card">
             <strong>Total Products</strong>
             <span>{dashboardData.products}</span>
         </div>
-        <div className="overview-card">
+        <div className="admin-overview-card">
             <strong>Total Sales</strong>
             <span>{dashboardData.sales}</span>
         </div>
@@ -110,7 +110,7 @@ const AdminOverview = () => {
 )}
 
             {salesReport.length > 0 && (
-                <div className="overview-section">
+                <div className="admin-overview-section">
                     <h3>Monthly Sales Report</h3>
                     <ul>
                         {salesReport.map((entry, index) => (
@@ -121,7 +121,7 @@ const AdminOverview = () => {
             )}
 
             {userActivity && (
-                <div className="overview-section">
+                <div className="admin-overview-section">
                     <h3>User Activity (Last 30 Days)</h3>
                     <p>Recent Signups: {userActivity.newSignups.length}</p>
                     <p>Active Users: {userActivity.activeUsers.length}</p>
@@ -129,7 +129,7 @@ const AdminOverview = () => {
             )}
 
             {productStats && (
-                <div className="overview-section">
+                <div className="admin-overview-section">
                     <h3>Top Selling Products</h3>
                     <ul>
                         {productStats.mostSoldItems.map((item, idx) => (

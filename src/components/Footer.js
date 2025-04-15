@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 import Logo from "../assets/logo-red2.png";
-import { FaXTwitter, FaInstagram, FaEnvelope, FaSpotify } from "react-icons/fa6";
+import { FaXTwitter, FaInstagram, FaSpotify } from "react-icons/fa6";
+import { FaSnapchatGhost } from "react-icons/fa";
+
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -50,7 +52,7 @@ const Footer = () => {
       });
 
       if (!response.ok) {
-        const text = await response.text(); // raw response
+        const text = await response.text();
         try {
           const errorData = JSON.parse(text);
           throw new Error(errorData.message || 'Failed to subscribe.');
@@ -72,7 +74,6 @@ const Footer = () => {
   return (
     <footer className="footer-container">
       <div className="footer-content">
-        {/* Left Section: Logo & Description */}
         <div className="footer-left">
           <img src={Logo} alt="Vinyl Vault Logo" className="footer-logo" />
           <p className="footer-tagline">
@@ -81,7 +82,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Middle Sections: Links */}
         <div className="footer-column">
           <h4>Customer Service</h4>
           <ul>
@@ -100,7 +100,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Social Media Icons */}
         <div className="footer-column">
           <h4>Follow Us On:</h4>
           <div className="social-icons">
@@ -110,8 +109,8 @@ const Footer = () => {
             <a href="https://www.instagram.com/officailvinylvaultrecords/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <FaInstagram />
             </a>
-            <a href="mailto:info@vinylvault.com" aria-label="Email">
-              <FaEnvelope />
+            <a href="https://www.snapchat.com/web/" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
+              <FaSnapchatGhost />
             </a>
             <a href="https://open.spotify.com/?trackId=0g1Y10aIIdJDkcSEuAq51k" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
               <FaSpotify />
@@ -120,9 +119,8 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Row: Newsletter + Copyright */}
       <div className="footer-bottom-row">
-      <div className="footer-bottom">
+        <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Vinyl Vault. All Rights Reserved.</p>
         </div>
         <form id="vinyl-vault-footer-newsletter" className="footer-newsletter" onSubmit={handleNewsletterSubmit}>
