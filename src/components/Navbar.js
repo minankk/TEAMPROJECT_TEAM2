@@ -6,7 +6,7 @@ import { useAuth } from "../App";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logout, user, role } = useAuth();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [userDropdownOpen, setUserDropdownOpen] = useState(false);
     const [genresOpen, setGenresOpen] = useState(false);
@@ -14,8 +14,13 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const handleUserClick = () => {
-        navigate(isLoggedIn ? "/dashboard" : "/login");
-    };
+        if (!isLoggedIn) {
+          navigate("/login");
+        } else {
+          navigate(role === 'admin' ? "/admin" : "/dashboard");
+        }
+      };
+      
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -91,15 +96,23 @@ const Navbar = () => {
                     <button className="user-btn" onClick={handleUserClick}>
                         <FaUser />
                     </button>
-                    {isLoggedIn && (
+                    {isLoggedIn && role && (
   <ul className={`user-dropdown-menu ${userDropdownOpen ? 'open' : ''}`}>
-    <li><Link to="/dashboard">Dashboard</Link></li>
-    <li><Link to="/dashboard/profile">Profile</Link></li>
-    <li><Link to="/dashboard/favorites">Favourites</Link></li>
-    <li><button onClick={logout}>Logout</button></li>
+    {role === "admin" ? (
+      <>
+        <li><Link to="/admin">Dashboard</Link></li>
+        <li><Link to="/admin/analytics">Analytics</Link></li>
+      </>
+    ) : (
+      <>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><Link to="/dashboard/profile">Profile</Link></li>
+        <li><Link to="/dashboard/favorites">Favourites</Link></li>
+      </>
+    )}
+    <li><button onClick={() => navigate("/logout")}>Logout</button></li>
   </ul>
 )}
-
                 </div>
 
                 <Link to="/cart" className="cart-btn">
