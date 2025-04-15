@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, Outlet } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LandingPage from './LandingPage';
@@ -55,33 +56,43 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
+  
     if (storedToken) {
+      const decoded = jwtDecode(storedToken); // Still decode immediately
+      setUser(decoded);
+      setToken(storedToken);
+      setIsLoggedIn(true);
+  
       fetch('http://localhost:5001/check-token', {
-        headers: {
-          'Authorization': `Bearer ${storedToken}`
+        headers: { Authorization: `Bearer ${storedToken}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.loggedIn) {
+          console.warn("Token invalid or blacklisted");
+          setUser(null);
+          setToken(null);
+          setIsLoggedIn(false);
+          localStorage.removeItem('token');
+        } else {
+          setUser(data.user); // overrides local decode if backend returns updated info
         }
       })
-        .then(response => {
-          if (response.ok) {
-            setToken(storedToken);
-            setIsLoggedIn(true);
-          } else {
-            localStorage.removeItem('token');
-            setIsLoggedIn(false);
-          }
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-          setIsLoggedIn(false);
-        });
+      .catch(() => {
+        setUser(null);
+        setToken(null);
+        setIsLoggedIn(false);
+        localStorage.removeItem('token');
+      });
     }
   }, []);
-
+  
   useEffect(() => {
     if (token) {
       localStorage.setItem('token', token);
@@ -104,21 +115,22 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (newToken) => {
-    console.log('Logging in with token:', newToken);
+    const decoded = jwtDecode(newToken);
     setToken(newToken);
-    navigate('/dashboard');
+    setUser(decoded);
+    setIsLoggedIn(true);
+    navigate(decoded.role === 'admin' ? '/admin' : '/dashboard');
   };
 
   const logout = () => {
-    console.log('Logging out');
+    setUser(null);
     setToken(null);
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     navigate('/logout');
   };
-
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
+    <AuthContext.Provider value={{ token, user, role: user?.role, isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

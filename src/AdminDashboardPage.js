@@ -18,6 +18,7 @@ const AdminSidebar = () => {
                 <li><button onClick={() => handleNavigation('/admin/users')}>User Management</button></li>
                 <li><button onClick={() => handleNavigation('/admin/orders')}>Order Management</button></li>
                 <li><button onClick={() => handleNavigation('/admin/analytics')}>Analytics</button></li>
+                <li><button onClick={() => handleNavigation('/dashboard')}>User Mock Dashboard</button></li>
                 <li><button onClick={() => handleNavigation('/logout')}>Logout</button></li>
             </ul>
         </div>
