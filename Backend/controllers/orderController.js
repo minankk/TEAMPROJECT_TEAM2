@@ -62,7 +62,7 @@ exports.checkoutAndCreateOrder = async (req, res) => {
         const trackingNumber = `TN-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
         const [orderResult] = await connection.execute(
             'INSERT INTO orders (user_id, total_amount, shipping_address, status, tracking_number) VALUES (?, ?, ?, ?, ?)',
-            [userId, totalAmount, JSON.stringify(shippingAddress), 'Pending', trackingNumber]
+            [userId, finalTotalAmount, JSON.stringify(shippingAddress), 'Pending', trackingNumber]
         );
 
         const orderId = orderResult.insertId;

@@ -5,7 +5,7 @@ import "./PaymentPage.css";
 function PaymentPage() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { cartItems, totalAmount } = location.state || {};
+    const { cartItems, totalAmount, originalAmount, discountApplied } = location.state || {};
     const [paymentData, setPaymentData] = useState({
         name: "",
         cardNumber: "",
@@ -63,11 +63,21 @@ function PaymentPage() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                alert("Payment successful! Order ID: " + responseData.orderId);
-                navigate('/order-success', {
-                    state: { trackingNumber: responseData.tracking_number }
-                });
-            } else {
+                alert(
+                    `Payment successful!\n\nOrder ID: ${responseData.orderId}\nMembership: ${responseData.membershipTier}\nOriginal: £${responseData.originalTotal.toFixed(2)}\nDiscount Applied: ${responseData.discountApplied}%\nFinal Total: £${responseData.finalTotalAmount}`
+                  );
+                  navigate('/order-success', {
+                    state: {
+                      trackingNumber: responseData.tracking_number,
+                      orderSummary: {
+                        orderId: responseData.orderId,
+                        membershipTier: responseData.membershipTier,
+                        discountApplied: responseData.discountApplied,
+                        finalTotalAmount: responseData.finalTotalAmount
+                      }
+                    }
+                  });
+                    } else {
                 const errorData = await response.json();
                 alert(`Payment failed: ${errorData.message || "Please try again."}`);
             }
@@ -154,21 +164,25 @@ function PaymentPage() {
                     </div>
 
                     <div className="order-summary-container">
-                        <h2>Order Summary</h2>
-                        {cartItems && cartItems.length > 0 ? (
-                            <ul>
-                                {cartItems.map((item) => (
-                                    <li key={item.cart_id || item.product_id}>
-                                        {item.product_name || item.name} x {item.quantity} - £{(item.price * item.quantity).toFixed(2)}
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>Your cart is empty.</p>
-                        )}
-                        <div className="summary-total">
-                            <strong>Total: £{totalAmount ? totalAmount.toFixed(2) : '0.00'}</strong>
-                        </div>
+                    <h2>Order Summary</h2>
+<ul>
+  {cartItems.map((item) => (
+    <li key={item.product_id}>
+      {item.name} x {item.quantity} - £{(item.price * item.quantity).toFixed(2)}
+    </li>
+  ))}
+</ul>
+
+{discountApplied > 0 && (
+  <div className="summary-discount">
+    <div>Original: £{originalAmount.toFixed(2)}</div>
+    <div>Discount: -£{discountApplied.toFixed(2)}</div>
+  </div>
+)}
+
+<div className="summary-total">
+  <strong>Final Total: £{totalAmount.toFixed(2)}</strong>
+</div>
                         {paymentData.billingAddress && (
                             <div className="summary-shipping">
                                 <strong>Shipping To:</strong>
