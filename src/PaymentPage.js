@@ -46,7 +46,6 @@ function PaymentPage() {
                     quantity: item.quantity,
                     price: item.price
                 })),
-                totalAmount: totalAmount,
                 shippingAddress: paymentData.billingAddress,
             };
 
