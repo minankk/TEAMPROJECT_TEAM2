@@ -53,10 +53,18 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-.logout-message,
+.logout-message {
+  font-size: 1.2rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  color: #9cd6ff;
+  text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+}
+
 .logout-submessage {
   font-size: 1rem;
-  margin: 5rem 0;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
   color: #9cd6ff;
   text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
 }
