@@ -6,7 +6,7 @@ import './CartPage.css';
 export default function ShoppingCart() {
     const [cart, setCart] = useState([]);
     const navigate = useNavigate();
-    const [userStatus, setUserStatus] = useState(null);
+    const [userStatus, setUserStatus] = useState({ membership: null, discount: 0 });
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -59,23 +59,27 @@ export default function ShoppingCart() {
             .catch(error => {
                 console.error('Error fetching cart items:', error);
             });
+            fetch(`http://localhost:5001/user/status`, {
+                method: 'GET',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                },
+              })
+                .then(res => {
+                  if (!res.ok) throw new Error('Failed to fetch user status');
+                  return res.json();
+                })
+                .then(data => {
+                  const membership = data?.membership || null;
+                  const discount = typeof data?.discount === 'number' ? data.discount : 0;
+                  setUserStatus({ membership, discount });
+                })
+                .catch(err => console.error('Error fetching user status:', err));
         } catch (error) {
             console.error("Error decoding token:", error);
             localStorage.removeItem('token');
             navigate('/login');
         }
-        fetch(`http://localhost:5001/user/status`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        })
-        .then(res => {
-            if (!res.ok) throw new Error('Failed to fetch user status');
-            return res.json();
-        })
-        .then(data => setUserStatus(data))
-        .catch(err => console.error('Error fetching user status:', err));
     }, [navigate]);
 
     const increaseQuantity = (id) => {
@@ -203,23 +207,23 @@ const discountedTotal = totalPrice - discountAmount;
             </div>
       
             <div className="cart-summary">
-  {userStatus?.membership === 'vip' && (
+            {userStatus && userStatus.membership === 'vip' && (
     <div className="vip-discount-banner">
       🎉 <strong>VIP Member:</strong> {vipDiscountRate * 100}% discount applied
     </div>
   )}
 
-  <div className="total-price">
-    {userStatus?.membership === 'vip' ? (
-      <>
-        <div>Original: £{totalPrice.toFixed(2)}</div>
-        <div>Discount: -£{discountAmount.toFixed(2)}</div>
-        <div><strong>Final: £{discountedTotal.toFixed(2)}</strong></div>
-      </>
-    ) : (
-      <>Total: £{totalPrice.toFixed(2)}</>
-    )}
-  </div>
+<div className="total-price">
+            {vipDiscountRate > 0 ? (
+              <>
+                <div>Original: £{totalPrice.toFixed(2)}</div>
+                <div>Discount: -£{discountAmount.toFixed(2)}</div>
+                <div><strong>Final: £{discountedTotal.toFixed(2)}</strong></div>
+              </>
+            ) : (
+              <>Total: £{totalPrice.toFixed(2)}</>
+            )}
+          </div>
 
   <button className="checkout-button" onClick={handleCheckout} disabled={cart.length === 0}>
     Checkout
