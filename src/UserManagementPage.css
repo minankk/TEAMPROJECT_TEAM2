@@ -98,11 +98,18 @@
     background: rgba(255, 255, 255, 0.08);
     border: 2px solid rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
+    box-sizing: border-box;
   }
+
+  .user-management-page .update-form input,
+.user-management-page .update-form select {
+  width: 100%;
+  box-sizing: border-box;
+}
   .vip-toggle-btn {
     margin-top: 20px;
     padding: 12px 20px;
-    background-color: #7effb2;
+    background-color: #51a271;
     color: #000;
     border: none;
     border-radius: 8px;
