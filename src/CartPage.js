@@ -6,6 +6,7 @@ import './CartPage.css';
 export default function ShoppingCart() {
     const [cart, setCart] = useState([]);
     const navigate = useNavigate();
+    const [userStatus, setUserStatus] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -63,6 +64,18 @@ export default function ShoppingCart() {
             localStorage.removeItem('token');
             navigate('/login');
         }
+        fetch(`http://localhost:5001/user/status`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to fetch user status');
+            return res.json();
+        })
+        .then(data => setUserStatus(data))
+        .catch(err => console.error('Error fetching user status:', err));
     }, [navigate]);
 
     const increaseQuantity = (id) => {
@@ -142,6 +155,10 @@ export default function ShoppingCart() {
   };
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const vipDiscountRate = userStatus?.discount || 0;
+const discountAmount = totalPrice * vipDiscountRate;
+const discountedTotal = totalPrice - discountAmount;
+
     const handleCheckout = () => {
         if (cart.length === 0) {
             alert("Your cart is empty. Add items before checking out.");
@@ -149,8 +166,14 @@ export default function ShoppingCart() {
         }
     
         navigate("/payment-page", {
-            state: { cartItems: cart, totalAmount: totalPrice }
-        });
+            state: {
+              cartItems: cart,
+              totalAmount: discountedTotal,
+              originalAmount: totalPrice,
+              discountApplied: discountAmount
+            }
+          });
+          
     };
     return (
         <div id="cart-page">
@@ -180,15 +203,28 @@ export default function ShoppingCart() {
             </div>
       
             <div className="cart-summary">
-              <div className="total-price">Total: £{totalPrice}</div>
-              <button
-  className="checkout-button"
-  onClick={handleCheckout}
-  disabled={cart.length === 0}
->
-  Checkout
-</button>
-            </div>
+  {userStatus?.membership === 'vip' && (
+    <div className="vip-discount-banner">
+      🎉 <strong>VIP Member:</strong> {vipDiscountRate * 100}% discount applied
+    </div>
+  )}
+
+  <div className="total-price">
+    {userStatus?.membership === 'vip' ? (
+      <>
+        <div>Original: £{totalPrice.toFixed(2)}</div>
+        <div>Discount: -£{discountAmount.toFixed(2)}</div>
+        <div><strong>Final: £{discountedTotal.toFixed(2)}</strong></div>
+      </>
+    ) : (
+      <>Total: £{totalPrice.toFixed(2)}</>
+    )}
+  </div>
+
+  <button className="checkout-button" onClick={handleCheckout} disabled={cart.length === 0}>
+    Checkout
+  </button>
+</div>
           </div>
         </div>
       );
