@@ -43,11 +43,24 @@ const AnalyticsPage = () => {
           date,
           count: grouped[date].length, 
         }));
+
+        const groupedLogins = {};
+data.activeUsers.forEach((user) => {
+  const date = new Date(user.last_login).toISOString().split("T")[0];
+  groupedLogins[date] = groupedLogins[date] ? [...groupedLogins[date], user] : [user];
+});
+
+const activeUserChart = Object.keys(groupedLogins).map((date) => ({
+  date,
+  count: groupedLogins[date].length,
+}));
+
     
         setUserActivity({
           newSignups: data.newSignups,
           activeUsers: data.activeUsers,
           chartData, 
+          activeChart: activeUserChart
         });
       } catch (err) {
         console.error(err);
@@ -61,11 +74,16 @@ const AnalyticsPage = () => {
         });
         if (!res.ok) throw new Error(`Product fetch failed: ${await res.text()}`);
         const data = await res.json();
-        setTopProducts(data.mostSoldItems);
+    
+        setTopProducts(data.mostSoldItems.map(item => ({
+          ...item,
+          total_sold: Number(item.total_sold),
+        })));
       } catch (err) {
         console.error(err);
       }
     };
+    
 
     fetchSalesData();
     fetchUserActivity();
@@ -108,6 +126,26 @@ const AnalyticsPage = () => {
       <div className="user-activity-overview">
         <h3>User Activity (Last 30 Days)</h3>
 
+        <div className="chart-container">
+    <h4>Signups Per Day</h4>
+    <BarChart width={600} height={250} data={userActivity.chartData}>
+      <XAxis dataKey="date" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="count" fill="#ff6b6b" />
+    </BarChart>
+  </div>
+
+  <div className="chart-container">
+    <h4>Active Users Per Day</h4>
+    <BarChart width={600} height={250} data={userActivity.activeChart}>
+      <XAxis dataKey="date" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="count" fill="#00d4ff" />
+    </BarChart>
+  </div>
+
         <div className="activity-section">
           <h4>Recent Signups: {userActivity.newSignups.length}</h4>
           <ul>
@@ -133,30 +171,18 @@ const AnalyticsPage = () => {
 
       {/* Top Products */}
       <div className="chart-container pie-chart-container">
-        <h3>Top Selling Products</h3>
-        {formattedTopProducts.length === 0 ? (
-          <p>No top-selling products data available.</p>
-        ) : (
-          <PieChart width={500} height={300}>
-            <Pie
-              data={formattedTopProducts}
-              dataKey="total_sold"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              fill="#8884d8"
-              label
-            >
-              {formattedTopProducts.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={['#ff6b6b', '#00d4ff', '#7effb2', '#e0ff6b'][index % 4]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        )}
-      </div>
+      <h3>Top Selling Products</h3>
+  {formattedTopProducts.length === 0 || !formattedTopProducts.some(p => p.total_sold > 0) ? (
+    <p>No top-selling products data available.</p>
+  ) : (
+    <BarChart width={600} height={300} data={formattedTopProducts}>
+      <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} angle={-25} textAnchor="end" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Bar dataKey="total_sold" fill="#00d4ff" />
+    </BarChart>
+  )}      </div>
     </div>
   );
 };
