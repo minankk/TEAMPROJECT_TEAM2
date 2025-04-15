@@ -27,7 +27,6 @@ const LoginPage = () => {
     setError(null);
 
     if (isSignUp) {
-      // Sign Up Logic
       const trimmedData = {
         username: formData.username.trim(),
         email: formData.email.trim(),
@@ -62,9 +61,7 @@ const LoginPage = () => {
       } catch (error) {
         setError("Error signing up. Please try again.");
       }
-
     } else {
-      // Login Logic
       const { usernameOrEmail, password } = formData;
 
       if (!usernameOrEmail.trim() || !password.trim()) {
@@ -78,7 +75,7 @@ const LoginPage = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ username: usernameOrEmail.trim(), password: password.trim() }), // Adjust if backend accepts email
+          body: JSON.stringify({ username: usernameOrEmail.trim(), password: password.trim() }),
         });
 
         const data = await response.json();
@@ -106,86 +103,37 @@ const LoginPage = () => {
               <>
                 <div className="input-field">
                   <label htmlFor="username">User Name</label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="User name"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                  />
+                  <input type="text" id="username" name="username" placeholder="User name" value={formData.username} onChange={handleChange} required />
                 </div>
                 <div className="input-field">
                   <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
+                  <input type="email" id="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
                 </div>
               </>
             )}
             {!isSignUp && (
               <div className="input-field">
                 <label htmlFor="usernameOrEmail">Username or Email</label>
-                <input
-                  type="text"
-                  id="usernameOrEmail"
-                  name="usernameOrEmail"
-                  placeholder="Username or Email"
-                  value={formData.usernameOrEmail}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="text" id="usernameOrEmail" name="usernameOrEmail" placeholder="Username or Email" value={formData.usernameOrEmail} onChange={handleChange} required />
               </div>
             )}
             <div className="input-field">
               <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
+              <input type="password" id="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
             </div>
             {isSignUp && (
               <div className="input-field">
                 <label htmlFor="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder="Confirm password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" value={formData.confirmPassword} onChange={handleChange} required />
               </div>
             )}
-
             <div className="button-group">
               <button type="submit">{isSignUp ? 'Sign Up' : 'Log In'}</button>
-              <button
-                type="button"
-                className="toggle-button"
-                onClick={() => {
-                  setError(null);
-                  setIsSignUp(!isSignUp);
-                }}
-              >
+              <button type="button" className="toggle-button" onClick={() => { setError(null); setIsSignUp(!isSignUp); }}>
                 {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
               </button>
             </div>
           </form>
-
           {!isSignUp ? (
             <>
               <p className="forgot-password"><Link to="/forgot-password">Forgot Password?</Link></p>
