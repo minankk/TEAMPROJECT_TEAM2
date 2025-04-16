@@ -5,14 +5,48 @@ import newsletterImage from "./assets/newsletter_vv_1by1.jpeg";
 function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [preferences, setPreferences] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email.trim()) {
+const handlePreferenceChange = (pref) => {
+  setPreferences(prev => 
+    prev.includes(pref) ? prev.filter(p => p !== pref) : [...prev, pref]
+  );
+};
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!email.trim() || preferences.length === 0) {
+    alert("Please enter your email and select at least one preference.");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5001/subscribe", { 
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        preferences,
+      }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      console.log(data.token);
       setSubmitted(true);
       setEmail("");
+      setPreferences([]);
+    } else {
+      console.error("Subscription failed:", data.message);
+      alert(data.message || "Subscription failed.");
     }
-  };
+  } catch (err) {
+    console.error("Error sending subscription request:", err);
+    alert("An error occurred. Please try again later.");
+  }
+};
+
 
   useEffect(() => {
     const vinyl = document.querySelector(".vinyl-svg");
@@ -58,6 +92,13 @@ function Newsletter() {
             <p className="newsletter-thankyou">You're all set! 🎵</p>
           )}
         </div>
+
+        <div className="newsletter-preferences">
+  <label><input type="checkbox" onChange={() => handlePreferenceChange("hiphop")} /> Hip-Hop</label>
+  <label><input type="checkbox" onChange={() => handlePreferenceChange("jazz")} /> Jazz</label>
+  <label><input type="checkbox" onChange={() => handlePreferenceChange("events")} /> Events</label>
+</div>
+
 
         <div className="newsletter-image-box">
           <img src={newsletterImage} alt="Newsletter visual: glowing record and key" />
