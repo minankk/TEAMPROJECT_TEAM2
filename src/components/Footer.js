@@ -17,11 +17,11 @@ const Footer = () => {
     setMessage('');
     setError('');
     setLoading(true);
-
+  
     try {
       const token = localStorage.getItem('token');
       let user_id = null;
-
+  
       if (token) {
         try {
           const decodedToken = JSON.parse(atob(token.split('.')[1]));
@@ -33,36 +33,37 @@ const Footer = () => {
           return;
         }
       }
-
+  
       const payload = {
-        email: email,
+        email,
         preferences: ["footer"],
       };
-
+  
       if (user_id) {
         payload.user_id = user_id;
       }
-
-      const response = await fetch('http://localhost:5001/newsletter', {
+  
+      const response = await fetch('http://localhost:5001/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
-
-      if (!response.ok) {
-        const text = await response.text();
-        try {
-          const errorData = JSON.parse(text);
-          throw new Error(errorData.message || 'Failed to subscribe.');
-        } catch {
-          throw new Error('Unexpected error. Please try again later.');
-        }
-      }
-
+  
       const data = await response.json();
-      setMessage(data.message || 'Subscribed successfully!');
+  
+      if (!response.ok) {
+        throw new Error(data.message || 'Subscription failed.');
+      }
+  
+      // Show different messages based on guest or registered
+      if (data.token) {
+        setMessage("🎉 Check your inbox to confirm your subscription!");
+      } else {
+        setMessage("🎶 You're subscribed! Thanks for joining Vinyl Vault.");
+      }
+  
       setEmail('');
     } catch (err) {
       setError(err.message || 'Subscription failed.');
@@ -70,6 +71,7 @@ const Footer = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <footer className="footer-container">

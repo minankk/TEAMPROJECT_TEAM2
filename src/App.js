@@ -45,7 +45,7 @@ import ArtistsPage from './ArtistsPage';
 import BlogPage from './BlogPage';
 import DecadesPage from './DecadesPage';
 import NewestAddition from './NewestAddition';
-import Newsletter from './Newsletter';
+import Newsletter from './LandNewsletter';
 import AdminLoginPage from './AdminLoginPage';
 import VIPSignupPage from './VIPSignupPage';
 import VipPaymentPage from './VipPaymentPage';

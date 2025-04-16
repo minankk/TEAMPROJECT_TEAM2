@@ -5,56 +5,49 @@ import newsletterImage from "./assets/newsletter_vv_1by1.jpeg";
 function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const [preferences, setPreferences] = useState([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+const handlePreferenceChange = (pref) => {
+  setPreferences(prev => 
+    prev.includes(pref) ? prev.filter(p => p !== pref) : [...prev, pref]
+  );
+};
 
-    if (!email.trim()) return;
 
-    const payload = {
-      email: email.trim(),
-      preferences: ["landing"], // ← can be changed to "footer" if needed
-    };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!email.trim() || preferences.length === 0) {
+    alert("Please enter your email and select at least one preference.");
+    return;
+  }
 
-    // If logged in, append user_id from token
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = JSON.parse(atob(token.split(".")[1]));
-        if (decoded?.user_id) {
-          payload.user_id = decoded.user_id;
-        }
-      } catch (err) {
-        console.error("Token decoding failed:", err);
-        setError("Login session error. Please re-login.");
-        return;
-      }
-    }
+  try {
+    const res = await fetch("http://localhost:5001/subscribe", { 
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        preferences,
+      }),
+    });
 
-    try {
-      const response = await fetch("http://localhost:5001/newsletter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Subscription failed.");
-      }
-
+    const data = await res.json();
+    if (res.ok) {
+      console.log(data.token);
       setSubmitted(true);
       setEmail("");
-    } catch (err) {
-      console.error("Subscription error:", err);
-      setError(err.message || "Something went wrong.");
+      setPreferences([]);
+    } else {
+      console.error("Subscription failed:", data.message);
+      alert(data.message || "Subscription failed.");
+
     }
-  };
+  } catch (err) {
+    console.error("Error sending subscription request:", err);
+    alert("An error occurred. Please try again later.");
+  }
+};
+
 
   useEffect(() => {
     const vinyl = document.querySelector(".vinyl-svg");
@@ -103,6 +96,13 @@ function Newsletter() {
             <p className="newsletter-thankyou">You're all set! 🎵</p>
           )}
         </div>
+
+        <div className="newsletter-preferences">
+  <label><input type="checkbox" onChange={() => handlePreferenceChange("hiphop")} /> Hip-Hop</label>
+  <label><input type="checkbox" onChange={() => handlePreferenceChange("jazz")} /> Jazz</label>
+  <label><input type="checkbox" onChange={() => handlePreferenceChange("events")} /> Events</label>
+</div>
+
 
         <div className="newsletter-image-box">
           <img
