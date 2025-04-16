@@ -40,6 +40,7 @@ const handleSubmit = async (e) => {
     } else {
       console.error("Subscription failed:", data.message);
       alert(data.message || "Subscription failed.");
+
     }
   } catch (err) {
     console.error("Error sending subscription request:", err);
@@ -86,7 +87,10 @@ const handleSubmit = async (e) => {
                 required
                 className="newsletter-input"
               />
-              <button type="submit" className="newsletter-button">Subscribe Now</button>
+              <button type="submit" className="newsletter-button">
+                Subscribe Now
+              </button>
+              {error && <p className="error-message">{error}</p>}
             </form>
           ) : (
             <p className="newsletter-thankyou">You're all set! 🎵</p>
@@ -101,7 +105,10 @@ const handleSubmit = async (e) => {
 
 
         <div className="newsletter-image-box">
-          <img src={newsletterImage} alt="Newsletter visual: glowing record and key" />
+          <img
+            src={newsletterImage}
+            alt="Newsletter visual: glowing record and key"
+          />
         </div>
       </div>
     </section>

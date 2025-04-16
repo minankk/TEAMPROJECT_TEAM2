@@ -1,20 +1,28 @@
 body {
-  background-color: #121212;
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
   margin: 0;
-  padding-bottom: 40px;
+  padding: 0;
   font-family: "Trocchi", serif;
+  background-color: black;
+}
+
+.terms-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: rgba(0, 0, 0, 0.85);
 }
 
 .terms-container {
+  background-color: rgba(26, 26, 26, 0.96);
   padding: 30px;
   max-width: 900px;
-  margin: 40px auto;
-  background-color: #1e1e1e;
+  width: 100%;
+  margin: auto;
   border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   color: #dcdcdc;
 }
 
@@ -73,40 +81,9 @@ section:last-child {
   position: absolute;
   left: 0;
   top: 3px;
-  margin-right: 8px;
   color: #c62828;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-}
-
-.terms-container strong {
-  color: #fff;
-  font-weight: 600;
-  font-family: "Trocchi", serif;
-}
-
-.terms-container a {
-  color: #c62828;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-  font-family: "Trocchi", serif;
-  font-size: 1rem;
-}
-
-.terms-container a:hover {
-  color: #e3514e;
-  text-decoration: underline;
-}
-
-.additional-info {
-  margin-top: 30px;
-  text-align: center;
-  font-style: italic;
-  opacity: 0.8;
-  font-size: 0.95rem;
-  font-family: "Trocchi", serif;
-  color: #bbb;
 }
 
 .main-icon {
@@ -114,4 +91,21 @@ section:last-child {
   font-size: 1.2rem;
   color: #c62828;
   vertical-align: middle;
+}
+
+.terms-container strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.terms-container a {
+  color: #c62828;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.terms-container a:hover {
+  color: #e3514e;
+  text-decoration: underline;
 }
