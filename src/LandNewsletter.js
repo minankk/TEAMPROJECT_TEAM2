@@ -5,12 +5,54 @@ import newsletterImage from "./assets/newsletter_vv_1by1.jpeg";
 function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email.trim()) {
+    setError("");
+
+    if (!email.trim()) return;
+
+    const payload = {
+      email: email.trim(),
+      preferences: ["landing"], // ← can be changed to "footer" if needed
+    };
+
+    // If logged in, append user_id from token
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        if (decoded?.user_id) {
+          payload.user_id = decoded.user_id;
+        }
+      } catch (err) {
+        console.error("Token decoding failed:", err);
+        setError("Login session error. Please re-login.");
+        return;
+      }
+    }
+
+    try {
+      const response = await fetch("http://localhost:5001/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Subscription failed.");
+      }
+
       setSubmitted(true);
       setEmail("");
+    } catch (err) {
+      console.error("Subscription error:", err);
+      setError(err.message || "Something went wrong.");
     }
   };
 
@@ -52,7 +94,10 @@ function Newsletter() {
                 required
                 className="newsletter-input"
               />
-              <button type="submit" className="newsletter-button">Subscribe Now</button>
+              <button type="submit" className="newsletter-button">
+                Subscribe Now
+              </button>
+              {error && <p className="error-message">{error}</p>}
             </form>
           ) : (
             <p className="newsletter-thankyou">You're all set! 🎵</p>
@@ -60,7 +105,10 @@ function Newsletter() {
         </div>
 
         <div className="newsletter-image-box">
-          <img src={newsletterImage} alt="Newsletter visual: glowing record and key" />
+          <img
+            src={newsletterImage}
+            alt="Newsletter visual: glowing record and key"
+          />
         </div>
       </div>
     </section>
